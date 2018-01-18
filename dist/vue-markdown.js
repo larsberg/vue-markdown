@@ -1,6 +1,6 @@
 /**
- * vue-helmet v1.1.0
- * https://github.com/miaolz123/vue-helmet
+ * vue-markdown v2.2.4
+ * https://github.com/miaolz123/vue-markdown
  * MIT License
  */
 
@@ -58,7 +58,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -77,9 +77,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  Vue.component('vue-markdown', _VueMarkdown2.default);
 	}
 
-/***/ },
+/***/ }),
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -87,91 +87,76 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 
-	var _markdownIt = __webpack_require__(2);
+	var _getIterator2 = __webpack_require__(2);
+
+	var _getIterator3 = _interopRequireDefault(_getIterator2);
+
+	var _keys = __webpack_require__(55);
+
+	var _keys2 = _interopRequireDefault(_keys);
+
+	var _markdownIt = __webpack_require__(59);
 
 	var _markdownIt2 = _interopRequireDefault(_markdownIt);
 
-	var _markdownItEmoji = __webpack_require__(70);
+	var _markdownItEmoji = __webpack_require__(127);
 
 	var _markdownItEmoji2 = _interopRequireDefault(_markdownItEmoji);
 
-	var _markdownItSub = __webpack_require__(76);
+	var _markdownItSub = __webpack_require__(133);
 
 	var _markdownItSub2 = _interopRequireDefault(_markdownItSub);
 
-	var _markdownItSup = __webpack_require__(77);
+	var _markdownItSup = __webpack_require__(134);
 
 	var _markdownItSup2 = _interopRequireDefault(_markdownItSup);
 
-	var _markdownItFootnote = __webpack_require__(78);
+	var _markdownItFootnote = __webpack_require__(135);
 
 	var _markdownItFootnote2 = _interopRequireDefault(_markdownItFootnote);
 
-	var _markdownItDeflist = __webpack_require__(79);
+	var _markdownItDeflist = __webpack_require__(136);
 
 	var _markdownItDeflist2 = _interopRequireDefault(_markdownItDeflist);
 
-	var _markdownItAbbr = __webpack_require__(80);
+	var _markdownItAbbr = __webpack_require__(137);
 
 	var _markdownItAbbr2 = _interopRequireDefault(_markdownItAbbr);
 
-	var _markdownItIns = __webpack_require__(81);
+	var _markdownItIns = __webpack_require__(138);
 
 	var _markdownItIns2 = _interopRequireDefault(_markdownItIns);
 
-	var _markdownItMark = __webpack_require__(82);
+	var _markdownItMark = __webpack_require__(139);
 
 	var _markdownItMark2 = _interopRequireDefault(_markdownItMark);
 
-	var _markdownItTocAndAnchor = __webpack_require__(83);
+	var _markdownItTocAndAnchor = __webpack_require__(140);
 
 	var _markdownItTocAndAnchor2 = _interopRequireDefault(_markdownItTocAndAnchor);
 
+	var _markdownItKatex = __webpack_require__(153);
+
+	var _markdownItKatex2 = _interopRequireDefault(_markdownItKatex);
+
+	var _markdownItTaskLists = __webpack_require__(177);
+
+	var _markdownItTaskLists2 = _interopRequireDefault(_markdownItTaskLists);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var md = new _markdownIt2.default();
-
-	var rende = function rende(root) {
-	  md = new _markdownIt2.default().use(_markdownItSub2.default).use(_markdownItSup2.default).use(_markdownItFootnote2.default).use(_markdownItDeflist2.default).use(_markdownItAbbr2.default).use(_markdownItIns2.default).use(_markdownItMark2.default);
-	  if (root.emoji) md.use(_markdownItEmoji2.default);
-	  md.set({
-	    html: root.html,
-	    xhtmlOut: root.xhtmlOut,
-	    breaks: root.breaks,
-	    linkify: root.linkify,
-	    typographer: root.typographer,
-	    langPrefix: root.langPrefix,
-	    quotes: root.quotes
-	  });
-	  md.renderer.rules.table_open = function () {
-	    return '<table class="' + root.tableClass + '">\n';
-	  };
-	  if (!root.tocLastLevel) root.tocLastLevel = root.tocFirstLevel + 1;
-	  if (root.toc) {
-	    md.use(_markdownItTocAndAnchor2.default, {
-	      tocClassName: root.tocClass,
-	      tocFirstLevel: root.tocFirstLevel,
-	      tocLastLevel: root.tocLastLevel,
-	      anchorLink: root.tocAnchorLink,
-	      anchorLinkSymbol: root.tocAnchorLinkSymbol,
-	      anchorLinkSpace: root.tocAnchorLinkSpace,
-	      anchorClassName: root.tocAnchorClass,
-	      anchorLinkSymbolClassName: root.tocAnchorLinkClass,
-	      tocCallback: function tocCallback(tocMarkdown, tocArray, tocHtml) {
-	        if (tocHtml) {
-	          if (root.tocId && document.getElementById(root.tocId)) document.getElementById(root.tocId).innerHTML = tocHtml;
-	          root.$dispatch('toc-rendered', tocHtml);
-	        }
-	      }
-	    });
-	  } else if (root.tocId && document.getElementById(root.tocId)) document.getElementById(root.tocId).innerHTML = '';
-	  var outHtml = root.show ? md.render(root.source) : '';
-	  root.$el.innerHTML = outHtml;
-	  root.$dispatch('rendered', outHtml);
-	};
-
 	exports.default = {
-	  template: '<div></div>',
+	  md: new _markdownIt2.default(),
+
+	  template: '<div><slot></slot></div>',
+
+	  data: function data() {
+	    return {
+	      sourceData: this.source
+	    };
+	  },
+
+
 	  props: {
 	    watches: {
 	      type: Array,
@@ -184,6 +169,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      default: ''
 	    },
 	    show: {
+	      type: Boolean,
+	      default: true
+	    },
+	    highlight: {
 	      type: Boolean,
 	      default: true
 	    },
@@ -223,6 +212,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      type: String,
 	      default: 'table'
 	    },
+	    taskLists: {
+	      type: Boolean,
+	      default: true
+	    },
 	    toc: {
 	      type: Boolean,
 	      default: false
@@ -260,62 +253,1065 @@ return /******/ (function(modules) { // webpackBootstrap
 	    tocAnchorLinkClass: {
 	      type: String,
 	      default: 'toc-anchor-link'
+	    },
+	    anchorAttributes: {
+	      type: Object,
+	      default: function _default() {
+	        return {};
+	      }
+	    },
+	    prerender: {
+	      type: Function,
+	      default: function _default(sourceData) {
+	        return sourceData;
+	      }
+	    },
+	    postrender: {
+	      type: Function,
+	      default: function _default(htmlData) {
+	        return htmlData;
+	      }
 	    }
 	  },
-	  data: function data() {
-	    return {
-	      msg: 'hello'
-	    };
+
+	  computed: {
+	    tocLastLevelComputed: function tocLastLevelComputed() {
+	      return this.tocLastLevel > this.tocFirstLevel ? this.tocLastLevel : this.tocFirstLevel + 1;
+	    }
 	  },
-	  ready: function ready() {
+
+	  render: function render(createElement) {
 	    var _this = this;
 
-	    rende(this);
-	    this.$watch('source', function () {
-	      rende(_this);
+	    this.md = new _markdownIt2.default().use(_markdownItSub2.default).use(_markdownItSup2.default).use(_markdownItFootnote2.default).use(_markdownItDeflist2.default).use(_markdownItAbbr2.default).use(_markdownItIns2.default).use(_markdownItMark2.default).use(_markdownItKatex2.default, { "throwOnError": false, "errorColor": " #cc0000" }).use(_markdownItTaskLists2.default, { enabled: this.taskLists });
+
+	    if (this.emoji) {
+	      this.md.use(_markdownItEmoji2.default);
+	    }
+
+	    this.md.set({
+	      html: this.html,
+	      xhtmlOut: this.xhtmlOut,
+	      breaks: this.breaks,
+	      linkify: this.linkify,
+	      typographer: this.typographer,
+	      langPrefix: this.langPrefix,
+	      quotes: this.quotes
 	    });
+	    this.md.renderer.rules.table_open = function () {
+	      return '<table class="' + _this.tableClass + '">\n';
+	    };
+	    var defaultLinkRenderer = this.md.renderer.rules.link_open || function (tokens, idx, options, env, self) {
+	      return self.renderToken(tokens, idx, options);
+	    };
+	    this.md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
+	      (0, _keys2.default)(_this.anchorAttributes).map(function (attribute) {
+	        var aIndex = tokens[idx].attrIndex(attribute);
+	        var value = _this.anchorAttributes[attribute];
+	        if (aIndex < 0) {
+	          tokens[idx].attrPush([attribute, value]); // add new attribute
+	        } else {
+	          tokens[idx].attrs[aIndex][1] = value;
+	        }
+	      });
+	      return defaultLinkRenderer(tokens, idx, options, env, self);
+	    };
+
+	    if (this.toc) {
+	      this.md.use(_markdownItTocAndAnchor2.default, {
+	        tocClassName: this.tocClass,
+	        tocFirstLevel: this.tocFirstLevel,
+	        tocLastLevel: this.tocLastLevelComputed,
+	        anchorLink: this.tocAnchorLink,
+	        anchorLinkSymbol: this.tocAnchorLinkSymbol,
+	        anchorLinkSpace: this.tocAnchorLinkSpace,
+	        anchorClassName: this.tocAnchorClass,
+	        anchorLinkSymbolClassName: this.tocAnchorLinkClass,
+	        tocCallback: function tocCallback(tocMarkdown, tocArray, tocHtml) {
+	          if (tocHtml) {
+	            if (_this.tocId && document.getElementById(_this.tocId)) {
+	              document.getElementById(_this.tocId).innerHTML = tocHtml;
+	            }
+
+	            _this.$emit('toc-rendered', tocHtml);
+	          }
+	        }
+	      });
+	    }
+
+	    var outHtml = this.show ? this.md.render(this.prerender(this.sourceData)) : '';
+	    outHtml = this.postrender(outHtml);
+
+	    this.$emit('rendered', outHtml);
+	    return createElement('div', {
+	      domProps: {
+	        innerHTML: outHtml
+	      }
+	    });
+	  },
+	  beforeMount: function beforeMount() {
+	    var _this2 = this;
+
+	    if (this.$slots.default) {
+	      this.sourceData = '';
+	      var _iteratorNormalCompletion = true;
+	      var _didIteratorError = false;
+	      var _iteratorError = undefined;
+
+	      try {
+	        for (var _iterator = (0, _getIterator3.default)(this.$slots.default), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	          var slot = _step.value;
+
+	          this.sourceData += slot.text;
+	        }
+	      } catch (err) {
+	        _didIteratorError = true;
+	        _iteratorError = err;
+	      } finally {
+	        try {
+	          if (!_iteratorNormalCompletion && _iterator.return) {
+	            _iterator.return();
+	          }
+	        } finally {
+	          if (_didIteratorError) {
+	            throw _iteratorError;
+	          }
+	        }
+	      }
+	    }
+
+	    this.$watch('source', function () {
+	      _this2.sourceData = _this2.prerender(_this2.source);
+	      _this2.$forceUpdate();
+	    });
+
 	    this.watches.forEach(function (v) {
-	      _this.$watch(v, function () {
-	        rende(_this);
+	      _this2.$watch(v, function () {
+	        _this2.$forceUpdate();
 	      });
 	    });
 	  }
 	};
 
-/***/ },
+/***/ }),
 /* 2 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(3), __esModule: true };
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	__webpack_require__(4);
+	__webpack_require__(50);
+	module.exports = __webpack_require__(52);
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	__webpack_require__(5);
+	var global        = __webpack_require__(16)
+	  , hide          = __webpack_require__(20)
+	  , Iterators     = __webpack_require__(8)
+	  , TO_STRING_TAG = __webpack_require__(47)('toStringTag');
+
+	for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList', 'CSSRuleList'], i = 0; i < 5; i++){
+	  var NAME       = collections[i]
+	    , Collection = global[NAME]
+	    , proto      = Collection && Collection.prototype;
+	  if(proto && !proto[TO_STRING_TAG])hide(proto, TO_STRING_TAG, NAME);
+	  Iterators[NAME] = Iterators.Array;
+	}
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var addToUnscopables = __webpack_require__(6)
+	  , step             = __webpack_require__(7)
+	  , Iterators        = __webpack_require__(8)
+	  , toIObject        = __webpack_require__(9);
+
+	// 22.1.3.4 Array.prototype.entries()
+	// 22.1.3.13 Array.prototype.keys()
+	// 22.1.3.29 Array.prototype.values()
+	// 22.1.3.30 Array.prototype[@@iterator]()
+	module.exports = __webpack_require__(13)(Array, 'Array', function(iterated, kind){
+	  this._t = toIObject(iterated); // target
+	  this._i = 0;                   // next index
+	  this._k = kind;                // kind
+	// 22.1.5.2.1 %ArrayIteratorPrototype%.next()
+	}, function(){
+	  var O     = this._t
+	    , kind  = this._k
+	    , index = this._i++;
+	  if(!O || index >= O.length){
+	    this._t = undefined;
+	    return step(1);
+	  }
+	  if(kind == 'keys'  )return step(0, index);
+	  if(kind == 'values')return step(0, O[index]);
+	  return step(0, [index, O[index]]);
+	}, 'values');
+
+	// argumentsList[@@iterator] is %ArrayProto_values% (9.4.4.6, 9.4.4.7)
+	Iterators.Arguments = Iterators.Array;
+
+	addToUnscopables('keys');
+	addToUnscopables('values');
+	addToUnscopables('entries');
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+	module.exports = function(){ /* empty */ };
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+	module.exports = function(done, value){
+	  return {value: value, done: !!done};
+	};
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports) {
+
+	module.exports = {};
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// to indexed object, toObject with fallback for non-array-like ES3 strings
+	var IObject = __webpack_require__(10)
+	  , defined = __webpack_require__(12);
+	module.exports = function(it){
+	  return IObject(defined(it));
+	};
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// fallback for non-array-like ES3 and non-enumerable old V8 strings
+	var cof = __webpack_require__(11);
+	module.exports = Object('z').propertyIsEnumerable(0) ? Object : function(it){
+	  return cof(it) == 'String' ? it.split('') : Object(it);
+	};
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports) {
+
+	var toString = {}.toString;
+
+	module.exports = function(it){
+	  return toString.call(it).slice(8, -1);
+	};
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports) {
+
+	// 7.2.1 RequireObjectCoercible(argument)
+	module.exports = function(it){
+	  if(it == undefined)throw TypeError("Can't call method on  " + it);
+	  return it;
+	};
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var LIBRARY        = __webpack_require__(14)
+	  , $export        = __webpack_require__(15)
+	  , redefine       = __webpack_require__(30)
+	  , hide           = __webpack_require__(20)
+	  , has            = __webpack_require__(31)
+	  , Iterators      = __webpack_require__(8)
+	  , $iterCreate    = __webpack_require__(32)
+	  , setToStringTag = __webpack_require__(46)
+	  , getPrototypeOf = __webpack_require__(48)
+	  , ITERATOR       = __webpack_require__(47)('iterator')
+	  , BUGGY          = !([].keys && 'next' in [].keys()) // Safari has buggy iterators w/o `next`
+	  , FF_ITERATOR    = '@@iterator'
+	  , KEYS           = 'keys'
+	  , VALUES         = 'values';
+
+	var returnThis = function(){ return this; };
+
+	module.exports = function(Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCED){
+	  $iterCreate(Constructor, NAME, next);
+	  var getMethod = function(kind){
+	    if(!BUGGY && kind in proto)return proto[kind];
+	    switch(kind){
+	      case KEYS: return function keys(){ return new Constructor(this, kind); };
+	      case VALUES: return function values(){ return new Constructor(this, kind); };
+	    } return function entries(){ return new Constructor(this, kind); };
+	  };
+	  var TAG        = NAME + ' Iterator'
+	    , DEF_VALUES = DEFAULT == VALUES
+	    , VALUES_BUG = false
+	    , proto      = Base.prototype
+	    , $native    = proto[ITERATOR] || proto[FF_ITERATOR] || DEFAULT && proto[DEFAULT]
+	    , $default   = $native || getMethod(DEFAULT)
+	    , $entries   = DEFAULT ? !DEF_VALUES ? $default : getMethod('entries') : undefined
+	    , $anyNative = NAME == 'Array' ? proto.entries || $native : $native
+	    , methods, key, IteratorPrototype;
+	  // Fix native
+	  if($anyNative){
+	    IteratorPrototype = getPrototypeOf($anyNative.call(new Base));
+	    if(IteratorPrototype !== Object.prototype){
+	      // Set @@toStringTag to native iterators
+	      setToStringTag(IteratorPrototype, TAG, true);
+	      // fix for some old engines
+	      if(!LIBRARY && !has(IteratorPrototype, ITERATOR))hide(IteratorPrototype, ITERATOR, returnThis);
+	    }
+	  }
+	  // fix Array#{values, @@iterator}.name in V8 / FF
+	  if(DEF_VALUES && $native && $native.name !== VALUES){
+	    VALUES_BUG = true;
+	    $default = function values(){ return $native.call(this); };
+	  }
+	  // Define iterator
+	  if((!LIBRARY || FORCED) && (BUGGY || VALUES_BUG || !proto[ITERATOR])){
+	    hide(proto, ITERATOR, $default);
+	  }
+	  // Plug for library
+	  Iterators[NAME] = $default;
+	  Iterators[TAG]  = returnThis;
+	  if(DEFAULT){
+	    methods = {
+	      values:  DEF_VALUES ? $default : getMethod(VALUES),
+	      keys:    IS_SET     ? $default : getMethod(KEYS),
+	      entries: $entries
+	    };
+	    if(FORCED)for(key in methods){
+	      if(!(key in proto))redefine(proto, key, methods[key]);
+	    } else $export($export.P + $export.F * (BUGGY || VALUES_BUG), NAME, methods);
+	  }
+	  return methods;
+	};
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports) {
+
+	module.exports = true;
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var global    = __webpack_require__(16)
+	  , core      = __webpack_require__(17)
+	  , ctx       = __webpack_require__(18)
+	  , hide      = __webpack_require__(20)
+	  , PROTOTYPE = 'prototype';
+
+	var $export = function(type, name, source){
+	  var IS_FORCED = type & $export.F
+	    , IS_GLOBAL = type & $export.G
+	    , IS_STATIC = type & $export.S
+	    , IS_PROTO  = type & $export.P
+	    , IS_BIND   = type & $export.B
+	    , IS_WRAP   = type & $export.W
+	    , exports   = IS_GLOBAL ? core : core[name] || (core[name] = {})
+	    , expProto  = exports[PROTOTYPE]
+	    , target    = IS_GLOBAL ? global : IS_STATIC ? global[name] : (global[name] || {})[PROTOTYPE]
+	    , key, own, out;
+	  if(IS_GLOBAL)source = name;
+	  for(key in source){
+	    // contains in native
+	    own = !IS_FORCED && target && target[key] !== undefined;
+	    if(own && key in exports)continue;
+	    // export native or passed
+	    out = own ? target[key] : source[key];
+	    // prevent global pollution for namespaces
+	    exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key]
+	    // bind timers to global for call from export context
+	    : IS_BIND && own ? ctx(out, global)
+	    // wrap global constructors for prevent change them in library
+	    : IS_WRAP && target[key] == out ? (function(C){
+	      var F = function(a, b, c){
+	        if(this instanceof C){
+	          switch(arguments.length){
+	            case 0: return new C;
+	            case 1: return new C(a);
+	            case 2: return new C(a, b);
+	          } return new C(a, b, c);
+	        } return C.apply(this, arguments);
+	      };
+	      F[PROTOTYPE] = C[PROTOTYPE];
+	      return F;
+	    // make static versions for prototype methods
+	    })(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
+	    // export proto methods to core.%CONSTRUCTOR%.methods.%NAME%
+	    if(IS_PROTO){
+	      (exports.virtual || (exports.virtual = {}))[key] = out;
+	      // export proto methods to core.%CONSTRUCTOR%.prototype.%NAME%
+	      if(type & $export.R && expProto && !expProto[key])hide(expProto, key, out);
+	    }
+	  }
+	};
+	// type bitmap
+	$export.F = 1;   // forced
+	$export.G = 2;   // global
+	$export.S = 4;   // static
+	$export.P = 8;   // proto
+	$export.B = 16;  // bind
+	$export.W = 32;  // wrap
+	$export.U = 64;  // safe
+	$export.R = 128; // real proto method for `library` 
+	module.exports = $export;
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports) {
+
+	// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
+	var global = module.exports = typeof window != 'undefined' && window.Math == Math
+	  ? window : typeof self != 'undefined' && self.Math == Math ? self : Function('return this')();
+	if(typeof __g == 'number')__g = global; // eslint-disable-line no-undef
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports) {
+
+	var core = module.exports = {version: '2.4.0'};
+	if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// optional / simple context binding
+	var aFunction = __webpack_require__(19);
+	module.exports = function(fn, that, length){
+	  aFunction(fn);
+	  if(that === undefined)return fn;
+	  switch(length){
+	    case 1: return function(a){
+	      return fn.call(that, a);
+	    };
+	    case 2: return function(a, b){
+	      return fn.call(that, a, b);
+	    };
+	    case 3: return function(a, b, c){
+	      return fn.call(that, a, b, c);
+	    };
+	  }
+	  return function(/* ...args */){
+	    return fn.apply(that, arguments);
+	  };
+	};
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports) {
+
+	module.exports = function(it){
+	  if(typeof it != 'function')throw TypeError(it + ' is not a function!');
+	  return it;
+	};
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var dP         = __webpack_require__(21)
+	  , createDesc = __webpack_require__(29);
+	module.exports = __webpack_require__(25) ? function(object, key, value){
+	  return dP.f(object, key, createDesc(1, value));
+	} : function(object, key, value){
+	  object[key] = value;
+	  return object;
+	};
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var anObject       = __webpack_require__(22)
+	  , IE8_DOM_DEFINE = __webpack_require__(24)
+	  , toPrimitive    = __webpack_require__(28)
+	  , dP             = Object.defineProperty;
+
+	exports.f = __webpack_require__(25) ? Object.defineProperty : function defineProperty(O, P, Attributes){
+	  anObject(O);
+	  P = toPrimitive(P, true);
+	  anObject(Attributes);
+	  if(IE8_DOM_DEFINE)try {
+	    return dP(O, P, Attributes);
+	  } catch(e){ /* empty */ }
+	  if('get' in Attributes || 'set' in Attributes)throw TypeError('Accessors not supported!');
+	  if('value' in Attributes)O[P] = Attributes.value;
+	  return O;
+	};
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var isObject = __webpack_require__(23);
+	module.exports = function(it){
+	  if(!isObject(it))throw TypeError(it + ' is not an object!');
+	  return it;
+	};
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports) {
+
+	module.exports = function(it){
+	  return typeof it === 'object' ? it !== null : typeof it === 'function';
+	};
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	module.exports = !__webpack_require__(25) && !__webpack_require__(26)(function(){
+	  return Object.defineProperty(__webpack_require__(27)('div'), 'a', {get: function(){ return 7; }}).a != 7;
+	});
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// Thank's IE8 for his funny defineProperty
+	module.exports = !__webpack_require__(26)(function(){
+	  return Object.defineProperty({}, 'a', {get: function(){ return 7; }}).a != 7;
+	});
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports) {
+
+	module.exports = function(exec){
+	  try {
+	    return !!exec();
+	  } catch(e){
+	    return true;
+	  }
+	};
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var isObject = __webpack_require__(23)
+	  , document = __webpack_require__(16).document
+	  // in old IE typeof document.createElement is 'object'
+	  , is = isObject(document) && isObject(document.createElement);
+	module.exports = function(it){
+	  return is ? document.createElement(it) : {};
+	};
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// 7.1.1 ToPrimitive(input [, PreferredType])
+	var isObject = __webpack_require__(23);
+	// instead of the ES6 spec version, we didn't implement @@toPrimitive case
+	// and the second argument - flag - preferred type is a string
+	module.exports = function(it, S){
+	  if(!isObject(it))return it;
+	  var fn, val;
+	  if(S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
+	  if(typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it)))return val;
+	  if(!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
+	  throw TypeError("Can't convert object to primitive value");
+	};
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports) {
+
+	module.exports = function(bitmap, value){
+	  return {
+	    enumerable  : !(bitmap & 1),
+	    configurable: !(bitmap & 2),
+	    writable    : !(bitmap & 4),
+	    value       : value
+	  };
+	};
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(20);
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports) {
+
+	var hasOwnProperty = {}.hasOwnProperty;
+	module.exports = function(it, key){
+	  return hasOwnProperty.call(it, key);
+	};
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var create         = __webpack_require__(33)
+	  , descriptor     = __webpack_require__(29)
+	  , setToStringTag = __webpack_require__(46)
+	  , IteratorPrototype = {};
+
+	// 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
+	__webpack_require__(20)(IteratorPrototype, __webpack_require__(47)('iterator'), function(){ return this; });
+
+	module.exports = function(Constructor, NAME, next){
+	  Constructor.prototype = create(IteratorPrototype, {next: descriptor(1, next)});
+	  setToStringTag(Constructor, NAME + ' Iterator');
+	};
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
+	var anObject    = __webpack_require__(22)
+	  , dPs         = __webpack_require__(34)
+	  , enumBugKeys = __webpack_require__(44)
+	  , IE_PROTO    = __webpack_require__(41)('IE_PROTO')
+	  , Empty       = function(){ /* empty */ }
+	  , PROTOTYPE   = 'prototype';
+
+	// Create object with fake `null` prototype: use iframe Object with cleared prototype
+	var createDict = function(){
+	  // Thrash, waste and sodomy: IE GC bug
+	  var iframe = __webpack_require__(27)('iframe')
+	    , i      = enumBugKeys.length
+	    , lt     = '<'
+	    , gt     = '>'
+	    , iframeDocument;
+	  iframe.style.display = 'none';
+	  __webpack_require__(45).appendChild(iframe);
+	  iframe.src = 'javascript:'; // eslint-disable-line no-script-url
+	  // createDict = iframe.contentWindow.Object;
+	  // html.removeChild(iframe);
+	  iframeDocument = iframe.contentWindow.document;
+	  iframeDocument.open();
+	  iframeDocument.write(lt + 'script' + gt + 'document.F=Object' + lt + '/script' + gt);
+	  iframeDocument.close();
+	  createDict = iframeDocument.F;
+	  while(i--)delete createDict[PROTOTYPE][enumBugKeys[i]];
+	  return createDict();
+	};
+
+	module.exports = Object.create || function create(O, Properties){
+	  var result;
+	  if(O !== null){
+	    Empty[PROTOTYPE] = anObject(O);
+	    result = new Empty;
+	    Empty[PROTOTYPE] = null;
+	    // add "__proto__" for Object.getPrototypeOf polyfill
+	    result[IE_PROTO] = O;
+	  } else result = createDict();
+	  return Properties === undefined ? result : dPs(result, Properties);
+	};
+
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var dP       = __webpack_require__(21)
+	  , anObject = __webpack_require__(22)
+	  , getKeys  = __webpack_require__(35);
+
+	module.exports = __webpack_require__(25) ? Object.defineProperties : function defineProperties(O, Properties){
+	  anObject(O);
+	  var keys   = getKeys(Properties)
+	    , length = keys.length
+	    , i = 0
+	    , P;
+	  while(length > i)dP.f(O, P = keys[i++], Properties[P]);
+	  return O;
+	};
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// 19.1.2.14 / 15.2.3.14 Object.keys(O)
+	var $keys       = __webpack_require__(36)
+	  , enumBugKeys = __webpack_require__(44);
+
+	module.exports = Object.keys || function keys(O){
+	  return $keys(O, enumBugKeys);
+	};
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var has          = __webpack_require__(31)
+	  , toIObject    = __webpack_require__(9)
+	  , arrayIndexOf = __webpack_require__(37)(false)
+	  , IE_PROTO     = __webpack_require__(41)('IE_PROTO');
+
+	module.exports = function(object, names){
+	  var O      = toIObject(object)
+	    , i      = 0
+	    , result = []
+	    , key;
+	  for(key in O)if(key != IE_PROTO)has(O, key) && result.push(key);
+	  // Don't enum bug & hidden keys
+	  while(names.length > i)if(has(O, key = names[i++])){
+	    ~arrayIndexOf(result, key) || result.push(key);
+	  }
+	  return result;
+	};
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// false -> Array#indexOf
+	// true  -> Array#includes
+	var toIObject = __webpack_require__(9)
+	  , toLength  = __webpack_require__(38)
+	  , toIndex   = __webpack_require__(40);
+	module.exports = function(IS_INCLUDES){
+	  return function($this, el, fromIndex){
+	    var O      = toIObject($this)
+	      , length = toLength(O.length)
+	      , index  = toIndex(fromIndex, length)
+	      , value;
+	    // Array#includes uses SameValueZero equality algorithm
+	    if(IS_INCLUDES && el != el)while(length > index){
+	      value = O[index++];
+	      if(value != value)return true;
+	    // Array#toIndex ignores holes, Array#includes - not
+	    } else for(;length > index; index++)if(IS_INCLUDES || index in O){
+	      if(O[index] === el)return IS_INCLUDES || index || 0;
+	    } return !IS_INCLUDES && -1;
+	  };
+	};
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// 7.1.15 ToLength
+	var toInteger = __webpack_require__(39)
+	  , min       = Math.min;
+	module.exports = function(it){
+	  return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
+	};
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports) {
+
+	// 7.1.4 ToInteger
+	var ceil  = Math.ceil
+	  , floor = Math.floor;
+	module.exports = function(it){
+	  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
+	};
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var toInteger = __webpack_require__(39)
+	  , max       = Math.max
+	  , min       = Math.min;
+	module.exports = function(index, length){
+	  index = toInteger(index);
+	  return index < 0 ? max(index + length, 0) : min(index, length);
+	};
+
+/***/ }),
+/* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var shared = __webpack_require__(42)('keys')
+	  , uid    = __webpack_require__(43);
+	module.exports = function(key){
+	  return shared[key] || (shared[key] = uid(key));
+	};
+
+/***/ }),
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var global = __webpack_require__(16)
+	  , SHARED = '__core-js_shared__'
+	  , store  = global[SHARED] || (global[SHARED] = {});
+	module.exports = function(key){
+	  return store[key] || (store[key] = {});
+	};
+
+/***/ }),
+/* 43 */
+/***/ (function(module, exports) {
+
+	var id = 0
+	  , px = Math.random();
+	module.exports = function(key){
+	  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
+	};
+
+/***/ }),
+/* 44 */
+/***/ (function(module, exports) {
+
+	// IE 8- don't enum bug keys
+	module.exports = (
+	  'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
+	).split(',');
+
+/***/ }),
+/* 45 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(16).document && document.documentElement;
+
+/***/ }),
+/* 46 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var def = __webpack_require__(21).f
+	  , has = __webpack_require__(31)
+	  , TAG = __webpack_require__(47)('toStringTag');
+
+	module.exports = function(it, tag, stat){
+	  if(it && !has(it = stat ? it : it.prototype, TAG))def(it, TAG, {configurable: true, value: tag});
+	};
+
+/***/ }),
+/* 47 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var store      = __webpack_require__(42)('wks')
+	  , uid        = __webpack_require__(43)
+	  , Symbol     = __webpack_require__(16).Symbol
+	  , USE_SYMBOL = typeof Symbol == 'function';
+
+	var $exports = module.exports = function(name){
+	  return store[name] || (store[name] =
+	    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
+	};
+
+	$exports.store = store;
+
+/***/ }),
+/* 48 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
+	var has         = __webpack_require__(31)
+	  , toObject    = __webpack_require__(49)
+	  , IE_PROTO    = __webpack_require__(41)('IE_PROTO')
+	  , ObjectProto = Object.prototype;
+
+	module.exports = Object.getPrototypeOf || function(O){
+	  O = toObject(O);
+	  if(has(O, IE_PROTO))return O[IE_PROTO];
+	  if(typeof O.constructor == 'function' && O instanceof O.constructor){
+	    return O.constructor.prototype;
+	  } return O instanceof Object ? ObjectProto : null;
+	};
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// 7.1.13 ToObject(argument)
+	var defined = __webpack_require__(12);
+	module.exports = function(it){
+	  return Object(defined(it));
+	};
+
+/***/ }),
+/* 50 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var $at  = __webpack_require__(51)(true);
+
+	// 21.1.3.27 String.prototype[@@iterator]()
+	__webpack_require__(13)(String, 'String', function(iterated){
+	  this._t = String(iterated); // target
+	  this._i = 0;                // next index
+	// 21.1.5.2.1 %StringIteratorPrototype%.next()
+	}, function(){
+	  var O     = this._t
+	    , index = this._i
+	    , point;
+	  if(index >= O.length)return {value: undefined, done: true};
+	  point = $at(O, index);
+	  this._i += point.length;
+	  return {value: point, done: false};
+	});
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var toInteger = __webpack_require__(39)
+	  , defined   = __webpack_require__(12);
+	// true  -> String#at
+	// false -> String#codePointAt
+	module.exports = function(TO_STRING){
+	  return function(that, pos){
+	    var s = String(defined(that))
+	      , i = toInteger(pos)
+	      , l = s.length
+	      , a, b;
+	    if(i < 0 || i >= l)return TO_STRING ? '' : undefined;
+	    a = s.charCodeAt(i);
+	    return a < 0xd800 || a > 0xdbff || i + 1 === l || (b = s.charCodeAt(i + 1)) < 0xdc00 || b > 0xdfff
+	      ? TO_STRING ? s.charAt(i) : a
+	      : TO_STRING ? s.slice(i, i + 2) : (a - 0xd800 << 10) + (b - 0xdc00) + 0x10000;
+	  };
+	};
+
+/***/ }),
+/* 52 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var anObject = __webpack_require__(22)
+	  , get      = __webpack_require__(53);
+	module.exports = __webpack_require__(17).getIterator = function(it){
+	  var iterFn = get(it);
+	  if(typeof iterFn != 'function')throw TypeError(it + ' is not iterable!');
+	  return anObject(iterFn.call(it));
+	};
+
+/***/ }),
+/* 53 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var classof   = __webpack_require__(54)
+	  , ITERATOR  = __webpack_require__(47)('iterator')
+	  , Iterators = __webpack_require__(8);
+	module.exports = __webpack_require__(17).getIteratorMethod = function(it){
+	  if(it != undefined)return it[ITERATOR]
+	    || it['@@iterator']
+	    || Iterators[classof(it)];
+	};
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// getting tag from 19.1.3.6 Object.prototype.toString()
+	var cof = __webpack_require__(11)
+	  , TAG = __webpack_require__(47)('toStringTag')
+	  // ES3 wrong here
+	  , ARG = cof(function(){ return arguments; }()) == 'Arguments';
+
+	// fallback for IE11 Script Access Denied error
+	var tryGet = function(it, key){
+	  try {
+	    return it[key];
+	  } catch(e){ /* empty */ }
+	};
+
+	module.exports = function(it){
+	  var O, T, B;
+	  return it === undefined ? 'Undefined' : it === null ? 'Null'
+	    // @@toStringTag case
+	    : typeof (T = tryGet(O = Object(it), TAG)) == 'string' ? T
+	    // builtinTag case
+	    : ARG ? cof(O)
+	    // ES3 arguments fallback
+	    : (B = cof(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : B;
+	};
+
+/***/ }),
+/* 55 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(56), __esModule: true };
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	__webpack_require__(57);
+	module.exports = __webpack_require__(17).Object.keys;
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// 19.1.2.14 Object.keys(O)
+	var toObject = __webpack_require__(49)
+	  , $keys    = __webpack_require__(35);
+
+	__webpack_require__(58)('keys', function(){
+	  return function keys(it){
+	    return $keys(toObject(it));
+	  };
+	});
+
+/***/ }),
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// most Object methods by ES6 should accept primitives
+	var $export = __webpack_require__(15)
+	  , core    = __webpack_require__(17)
+	  , fails   = __webpack_require__(26);
+	module.exports = function(KEY, exec){
+	  var fn  = (core.Object || {})[KEY] || Object[KEY]
+	    , exp = {};
+	  exp[KEY] = exec(fn);
+	  $export($export.S + $export.F * fails(function(){ fn(1); }), 'Object', exp);
+	};
+
+/***/ }),
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 
-	module.exports = __webpack_require__(3);
+	module.exports = __webpack_require__(60);
 
 
-/***/ },
-/* 3 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// Main parser class
 
 	'use strict';
 
 
-	var utils        = __webpack_require__(4);
-	var helpers      = __webpack_require__(18);
-	var Renderer     = __webpack_require__(22);
-	var ParserCore   = __webpack_require__(23);
-	var ParserBlock  = __webpack_require__(33);
-	var ParserInline = __webpack_require__(48);
-	var LinkifyIt    = __webpack_require__(63);
-	var mdurl        = __webpack_require__(8);
-	var punycode     = __webpack_require__(65);
+	var utils        = __webpack_require__(61);
+	var helpers      = __webpack_require__(75);
+	var Renderer     = __webpack_require__(79);
+	var ParserCore   = __webpack_require__(80);
+	var ParserBlock  = __webpack_require__(90);
+	var ParserInline = __webpack_require__(105);
+	var LinkifyIt    = __webpack_require__(120);
+	var mdurl        = __webpack_require__(65);
+	var punycode     = __webpack_require__(122);
 
 
 	var config = {
-	  'default': __webpack_require__(67),
-	  zero: __webpack_require__(68),
-	  commonmark: __webpack_require__(69)
+	  'default': __webpack_require__(124),
+	  zero: __webpack_require__(125),
+	  commonmark: __webpack_require__(126)
 	};
 
 	////////////////////////////////////////////////////////////////////////////////
@@ -875,9 +1871,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = MarkdownIt;
 
 
-/***/ },
-/* 4 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// Utilities
 	//
@@ -958,7 +1954,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var DIGITAL_ENTITY_TEST_RE = /^#((?:x[a-f0-9]{1,8}|[0-9]{1,8}))/i;
 
-	var entities = __webpack_require__(5);
+	var entities = __webpack_require__(62);
 
 	function replaceEntityPattern(match, name) {
 	  var code = 0;
@@ -1064,7 +2060,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	////////////////////////////////////////////////////////////////////////////////
 
 	/*eslint-disable max-len*/
-	var UNICODE_PUNCT_RE = __webpack_require__(7);
+	var UNICODE_PUNCT_RE = __webpack_require__(64);
 
 	// Currently without astral characters support.
 	function isPunctChar(ch) {
@@ -1135,8 +2131,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	// bundled size (e.g. a browser build).
 	//
 	exports.lib                 = {};
-	exports.lib.mdurl           = __webpack_require__(8);
-	exports.lib.ucmicro         = __webpack_require__(13);
+	exports.lib.mdurl           = __webpack_require__(65);
+	exports.lib.ucmicro         = __webpack_require__(70);
 
 	exports.assign              = assign;
 	exports.isString            = isString;
@@ -1156,2172 +2152,46 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.normalizeReference  = normalizeReference;
 
 
-/***/ },
-/* 5 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 62 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// HTML5 entities map: { name -> utf16string }
 	//
 	'use strict';
 
 	/*eslint quotes:0*/
-	module.exports = __webpack_require__(6);
+	module.exports = __webpack_require__(63);
 
 
-/***/ },
-/* 6 */
-/***/ function(module, exports) {
+/***/ }),
+/* 63 */
+/***/ (function(module, exports) {
 
-	module.exports = {
-		"Aacute": "Á",
-		"aacute": "á",
-		"Abreve": "Ă",
-		"abreve": "ă",
-		"ac": "∾",
-		"acd": "∿",
-		"acE": "∾̳",
-		"Acirc": "Â",
-		"acirc": "â",
-		"acute": "´",
-		"Acy": "А",
-		"acy": "а",
-		"AElig": "Æ",
-		"aelig": "æ",
-		"af": "⁡",
-		"Afr": "𝔄",
-		"afr": "𝔞",
-		"Agrave": "À",
-		"agrave": "à",
-		"alefsym": "ℵ",
-		"aleph": "ℵ",
-		"Alpha": "Α",
-		"alpha": "α",
-		"Amacr": "Ā",
-		"amacr": "ā",
-		"amalg": "⨿",
-		"amp": "&",
-		"AMP": "&",
-		"andand": "⩕",
-		"And": "⩓",
-		"and": "∧",
-		"andd": "⩜",
-		"andslope": "⩘",
-		"andv": "⩚",
-		"ang": "∠",
-		"ange": "⦤",
-		"angle": "∠",
-		"angmsdaa": "⦨",
-		"angmsdab": "⦩",
-		"angmsdac": "⦪",
-		"angmsdad": "⦫",
-		"angmsdae": "⦬",
-		"angmsdaf": "⦭",
-		"angmsdag": "⦮",
-		"angmsdah": "⦯",
-		"angmsd": "∡",
-		"angrt": "∟",
-		"angrtvb": "⊾",
-		"angrtvbd": "⦝",
-		"angsph": "∢",
-		"angst": "Å",
-		"angzarr": "⍼",
-		"Aogon": "Ą",
-		"aogon": "ą",
-		"Aopf": "𝔸",
-		"aopf": "𝕒",
-		"apacir": "⩯",
-		"ap": "≈",
-		"apE": "⩰",
-		"ape": "≊",
-		"apid": "≋",
-		"apos": "'",
-		"ApplyFunction": "⁡",
-		"approx": "≈",
-		"approxeq": "≊",
-		"Aring": "Å",
-		"aring": "å",
-		"Ascr": "𝒜",
-		"ascr": "𝒶",
-		"Assign": "≔",
-		"ast": "*",
-		"asymp": "≈",
-		"asympeq": "≍",
-		"Atilde": "Ã",
-		"atilde": "ã",
-		"Auml": "Ä",
-		"auml": "ä",
-		"awconint": "∳",
-		"awint": "⨑",
-		"backcong": "≌",
-		"backepsilon": "϶",
-		"backprime": "‵",
-		"backsim": "∽",
-		"backsimeq": "⋍",
-		"Backslash": "∖",
-		"Barv": "⫧",
-		"barvee": "⊽",
-		"barwed": "⌅",
-		"Barwed": "⌆",
-		"barwedge": "⌅",
-		"bbrk": "⎵",
-		"bbrktbrk": "⎶",
-		"bcong": "≌",
-		"Bcy": "Б",
-		"bcy": "б",
-		"bdquo": "„",
-		"becaus": "∵",
-		"because": "∵",
-		"Because": "∵",
-		"bemptyv": "⦰",
-		"bepsi": "϶",
-		"bernou": "ℬ",
-		"Bernoullis": "ℬ",
-		"Beta": "Β",
-		"beta": "β",
-		"beth": "ℶ",
-		"between": "≬",
-		"Bfr": "𝔅",
-		"bfr": "𝔟",
-		"bigcap": "⋂",
-		"bigcirc": "◯",
-		"bigcup": "⋃",
-		"bigodot": "⨀",
-		"bigoplus": "⨁",
-		"bigotimes": "⨂",
-		"bigsqcup": "⨆",
-		"bigstar": "★",
-		"bigtriangledown": "▽",
-		"bigtriangleup": "△",
-		"biguplus": "⨄",
-		"bigvee": "⋁",
-		"bigwedge": "⋀",
-		"bkarow": "⤍",
-		"blacklozenge": "⧫",
-		"blacksquare": "▪",
-		"blacktriangle": "▴",
-		"blacktriangledown": "▾",
-		"blacktriangleleft": "◂",
-		"blacktriangleright": "▸",
-		"blank": "␣",
-		"blk12": "▒",
-		"blk14": "░",
-		"blk34": "▓",
-		"block": "█",
-		"bne": "=⃥",
-		"bnequiv": "≡⃥",
-		"bNot": "⫭",
-		"bnot": "⌐",
-		"Bopf": "𝔹",
-		"bopf": "𝕓",
-		"bot": "⊥",
-		"bottom": "⊥",
-		"bowtie": "⋈",
-		"boxbox": "⧉",
-		"boxdl": "┐",
-		"boxdL": "╕",
-		"boxDl": "╖",
-		"boxDL": "╗",
-		"boxdr": "┌",
-		"boxdR": "╒",
-		"boxDr": "╓",
-		"boxDR": "╔",
-		"boxh": "─",
-		"boxH": "═",
-		"boxhd": "┬",
-		"boxHd": "╤",
-		"boxhD": "╥",
-		"boxHD": "╦",
-		"boxhu": "┴",
-		"boxHu": "╧",
-		"boxhU": "╨",
-		"boxHU": "╩",
-		"boxminus": "⊟",
-		"boxplus": "⊞",
-		"boxtimes": "⊠",
-		"boxul": "┘",
-		"boxuL": "╛",
-		"boxUl": "╜",
-		"boxUL": "╝",
-		"boxur": "└",
-		"boxuR": "╘",
-		"boxUr": "╙",
-		"boxUR": "╚",
-		"boxv": "│",
-		"boxV": "║",
-		"boxvh": "┼",
-		"boxvH": "╪",
-		"boxVh": "╫",
-		"boxVH": "╬",
-		"boxvl": "┤",
-		"boxvL": "╡",
-		"boxVl": "╢",
-		"boxVL": "╣",
-		"boxvr": "├",
-		"boxvR": "╞",
-		"boxVr": "╟",
-		"boxVR": "╠",
-		"bprime": "‵",
-		"breve": "˘",
-		"Breve": "˘",
-		"brvbar": "¦",
-		"bscr": "𝒷",
-		"Bscr": "ℬ",
-		"bsemi": "⁏",
-		"bsim": "∽",
-		"bsime": "⋍",
-		"bsolb": "⧅",
-		"bsol": "\\",
-		"bsolhsub": "⟈",
-		"bull": "•",
-		"bullet": "•",
-		"bump": "≎",
-		"bumpE": "⪮",
-		"bumpe": "≏",
-		"Bumpeq": "≎",
-		"bumpeq": "≏",
-		"Cacute": "Ć",
-		"cacute": "ć",
-		"capand": "⩄",
-		"capbrcup": "⩉",
-		"capcap": "⩋",
-		"cap": "∩",
-		"Cap": "⋒",
-		"capcup": "⩇",
-		"capdot": "⩀",
-		"CapitalDifferentialD": "ⅅ",
-		"caps": "∩︀",
-		"caret": "⁁",
-		"caron": "ˇ",
-		"Cayleys": "ℭ",
-		"ccaps": "⩍",
-		"Ccaron": "Č",
-		"ccaron": "č",
-		"Ccedil": "Ç",
-		"ccedil": "ç",
-		"Ccirc": "Ĉ",
-		"ccirc": "ĉ",
-		"Cconint": "∰",
-		"ccups": "⩌",
-		"ccupssm": "⩐",
-		"Cdot": "Ċ",
-		"cdot": "ċ",
-		"cedil": "¸",
-		"Cedilla": "¸",
-		"cemptyv": "⦲",
-		"cent": "¢",
-		"centerdot": "·",
-		"CenterDot": "·",
-		"cfr": "𝔠",
-		"Cfr": "ℭ",
-		"CHcy": "Ч",
-		"chcy": "ч",
-		"check": "✓",
-		"checkmark": "✓",
-		"Chi": "Χ",
-		"chi": "χ",
-		"circ": "ˆ",
-		"circeq": "≗",
-		"circlearrowleft": "↺",
-		"circlearrowright": "↻",
-		"circledast": "⊛",
-		"circledcirc": "⊚",
-		"circleddash": "⊝",
-		"CircleDot": "⊙",
-		"circledR": "®",
-		"circledS": "Ⓢ",
-		"CircleMinus": "⊖",
-		"CirclePlus": "⊕",
-		"CircleTimes": "⊗",
-		"cir": "○",
-		"cirE": "⧃",
-		"cire": "≗",
-		"cirfnint": "⨐",
-		"cirmid": "⫯",
-		"cirscir": "⧂",
-		"ClockwiseContourIntegral": "∲",
-		"CloseCurlyDoubleQuote": "”",
-		"CloseCurlyQuote": "’",
-		"clubs": "♣",
-		"clubsuit": "♣",
-		"colon": ":",
-		"Colon": "∷",
-		"Colone": "⩴",
-		"colone": "≔",
-		"coloneq": "≔",
-		"comma": ",",
-		"commat": "@",
-		"comp": "∁",
-		"compfn": "∘",
-		"complement": "∁",
-		"complexes": "ℂ",
-		"cong": "≅",
-		"congdot": "⩭",
-		"Congruent": "≡",
-		"conint": "∮",
-		"Conint": "∯",
-		"ContourIntegral": "∮",
-		"copf": "𝕔",
-		"Copf": "ℂ",
-		"coprod": "∐",
-		"Coproduct": "∐",
-		"copy": "©",
-		"COPY": "©",
-		"copysr": "℗",
-		"CounterClockwiseContourIntegral": "∳",
-		"crarr": "↵",
-		"cross": "✗",
-		"Cross": "⨯",
-		"Cscr": "𝒞",
-		"cscr": "𝒸",
-		"csub": "⫏",
-		"csube": "⫑",
-		"csup": "⫐",
-		"csupe": "⫒",
-		"ctdot": "⋯",
-		"cudarrl": "⤸",
-		"cudarrr": "⤵",
-		"cuepr": "⋞",
-		"cuesc": "⋟",
-		"cularr": "↶",
-		"cularrp": "⤽",
-		"cupbrcap": "⩈",
-		"cupcap": "⩆",
-		"CupCap": "≍",
-		"cup": "∪",
-		"Cup": "⋓",
-		"cupcup": "⩊",
-		"cupdot": "⊍",
-		"cupor": "⩅",
-		"cups": "∪︀",
-		"curarr": "↷",
-		"curarrm": "⤼",
-		"curlyeqprec": "⋞",
-		"curlyeqsucc": "⋟",
-		"curlyvee": "⋎",
-		"curlywedge": "⋏",
-		"curren": "¤",
-		"curvearrowleft": "↶",
-		"curvearrowright": "↷",
-		"cuvee": "⋎",
-		"cuwed": "⋏",
-		"cwconint": "∲",
-		"cwint": "∱",
-		"cylcty": "⌭",
-		"dagger": "†",
-		"Dagger": "‡",
-		"daleth": "ℸ",
-		"darr": "↓",
-		"Darr": "↡",
-		"dArr": "⇓",
-		"dash": "‐",
-		"Dashv": "⫤",
-		"dashv": "⊣",
-		"dbkarow": "⤏",
-		"dblac": "˝",
-		"Dcaron": "Ď",
-		"dcaron": "ď",
-		"Dcy": "Д",
-		"dcy": "д",
-		"ddagger": "‡",
-		"ddarr": "⇊",
-		"DD": "ⅅ",
-		"dd": "ⅆ",
-		"DDotrahd": "⤑",
-		"ddotseq": "⩷",
-		"deg": "°",
-		"Del": "∇",
-		"Delta": "Δ",
-		"delta": "δ",
-		"demptyv": "⦱",
-		"dfisht": "⥿",
-		"Dfr": "𝔇",
-		"dfr": "𝔡",
-		"dHar": "⥥",
-		"dharl": "⇃",
-		"dharr": "⇂",
-		"DiacriticalAcute": "´",
-		"DiacriticalDot": "˙",
-		"DiacriticalDoubleAcute": "˝",
-		"DiacriticalGrave": "`",
-		"DiacriticalTilde": "˜",
-		"diam": "⋄",
-		"diamond": "⋄",
-		"Diamond": "⋄",
-		"diamondsuit": "♦",
-		"diams": "♦",
-		"die": "¨",
-		"DifferentialD": "ⅆ",
-		"digamma": "ϝ",
-		"disin": "⋲",
-		"div": "÷",
-		"divide": "÷",
-		"divideontimes": "⋇",
-		"divonx": "⋇",
-		"DJcy": "Ђ",
-		"djcy": "ђ",
-		"dlcorn": "⌞",
-		"dlcrop": "⌍",
-		"dollar": "$",
-		"Dopf": "𝔻",
-		"dopf": "𝕕",
-		"Dot": "¨",
-		"dot": "˙",
-		"DotDot": "⃜",
-		"doteq": "≐",
-		"doteqdot": "≑",
-		"DotEqual": "≐",
-		"dotminus": "∸",
-		"dotplus": "∔",
-		"dotsquare": "⊡",
-		"doublebarwedge": "⌆",
-		"DoubleContourIntegral": "∯",
-		"DoubleDot": "¨",
-		"DoubleDownArrow": "⇓",
-		"DoubleLeftArrow": "⇐",
-		"DoubleLeftRightArrow": "⇔",
-		"DoubleLeftTee": "⫤",
-		"DoubleLongLeftArrow": "⟸",
-		"DoubleLongLeftRightArrow": "⟺",
-		"DoubleLongRightArrow": "⟹",
-		"DoubleRightArrow": "⇒",
-		"DoubleRightTee": "⊨",
-		"DoubleUpArrow": "⇑",
-		"DoubleUpDownArrow": "⇕",
-		"DoubleVerticalBar": "∥",
-		"DownArrowBar": "⤓",
-		"downarrow": "↓",
-		"DownArrow": "↓",
-		"Downarrow": "⇓",
-		"DownArrowUpArrow": "⇵",
-		"DownBreve": "̑",
-		"downdownarrows": "⇊",
-		"downharpoonleft": "⇃",
-		"downharpoonright": "⇂",
-		"DownLeftRightVector": "⥐",
-		"DownLeftTeeVector": "⥞",
-		"DownLeftVectorBar": "⥖",
-		"DownLeftVector": "↽",
-		"DownRightTeeVector": "⥟",
-		"DownRightVectorBar": "⥗",
-		"DownRightVector": "⇁",
-		"DownTeeArrow": "↧",
-		"DownTee": "⊤",
-		"drbkarow": "⤐",
-		"drcorn": "⌟",
-		"drcrop": "⌌",
-		"Dscr": "𝒟",
-		"dscr": "𝒹",
-		"DScy": "Ѕ",
-		"dscy": "ѕ",
-		"dsol": "⧶",
-		"Dstrok": "Đ",
-		"dstrok": "đ",
-		"dtdot": "⋱",
-		"dtri": "▿",
-		"dtrif": "▾",
-		"duarr": "⇵",
-		"duhar": "⥯",
-		"dwangle": "⦦",
-		"DZcy": "Џ",
-		"dzcy": "џ",
-		"dzigrarr": "⟿",
-		"Eacute": "É",
-		"eacute": "é",
-		"easter": "⩮",
-		"Ecaron": "Ě",
-		"ecaron": "ě",
-		"Ecirc": "Ê",
-		"ecirc": "ê",
-		"ecir": "≖",
-		"ecolon": "≕",
-		"Ecy": "Э",
-		"ecy": "э",
-		"eDDot": "⩷",
-		"Edot": "Ė",
-		"edot": "ė",
-		"eDot": "≑",
-		"ee": "ⅇ",
-		"efDot": "≒",
-		"Efr": "𝔈",
-		"efr": "𝔢",
-		"eg": "⪚",
-		"Egrave": "È",
-		"egrave": "è",
-		"egs": "⪖",
-		"egsdot": "⪘",
-		"el": "⪙",
-		"Element": "∈",
-		"elinters": "⏧",
-		"ell": "ℓ",
-		"els": "⪕",
-		"elsdot": "⪗",
-		"Emacr": "Ē",
-		"emacr": "ē",
-		"empty": "∅",
-		"emptyset": "∅",
-		"EmptySmallSquare": "◻",
-		"emptyv": "∅",
-		"EmptyVerySmallSquare": "▫",
-		"emsp13": " ",
-		"emsp14": " ",
-		"emsp": " ",
-		"ENG": "Ŋ",
-		"eng": "ŋ",
-		"ensp": " ",
-		"Eogon": "Ę",
-		"eogon": "ę",
-		"Eopf": "𝔼",
-		"eopf": "𝕖",
-		"epar": "⋕",
-		"eparsl": "⧣",
-		"eplus": "⩱",
-		"epsi": "ε",
-		"Epsilon": "Ε",
-		"epsilon": "ε",
-		"epsiv": "ϵ",
-		"eqcirc": "≖",
-		"eqcolon": "≕",
-		"eqsim": "≂",
-		"eqslantgtr": "⪖",
-		"eqslantless": "⪕",
-		"Equal": "⩵",
-		"equals": "=",
-		"EqualTilde": "≂",
-		"equest": "≟",
-		"Equilibrium": "⇌",
-		"equiv": "≡",
-		"equivDD": "⩸",
-		"eqvparsl": "⧥",
-		"erarr": "⥱",
-		"erDot": "≓",
-		"escr": "ℯ",
-		"Escr": "ℰ",
-		"esdot": "≐",
-		"Esim": "⩳",
-		"esim": "≂",
-		"Eta": "Η",
-		"eta": "η",
-		"ETH": "Ð",
-		"eth": "ð",
-		"Euml": "Ë",
-		"euml": "ë",
-		"euro": "€",
-		"excl": "!",
-		"exist": "∃",
-		"Exists": "∃",
-		"expectation": "ℰ",
-		"exponentiale": "ⅇ",
-		"ExponentialE": "ⅇ",
-		"fallingdotseq": "≒",
-		"Fcy": "Ф",
-		"fcy": "ф",
-		"female": "♀",
-		"ffilig": "ﬃ",
-		"fflig": "ﬀ",
-		"ffllig": "ﬄ",
-		"Ffr": "𝔉",
-		"ffr": "𝔣",
-		"filig": "ﬁ",
-		"FilledSmallSquare": "◼",
-		"FilledVerySmallSquare": "▪",
-		"fjlig": "fj",
-		"flat": "♭",
-		"fllig": "ﬂ",
-		"fltns": "▱",
-		"fnof": "ƒ",
-		"Fopf": "𝔽",
-		"fopf": "𝕗",
-		"forall": "∀",
-		"ForAll": "∀",
-		"fork": "⋔",
-		"forkv": "⫙",
-		"Fouriertrf": "ℱ",
-		"fpartint": "⨍",
-		"frac12": "½",
-		"frac13": "⅓",
-		"frac14": "¼",
-		"frac15": "⅕",
-		"frac16": "⅙",
-		"frac18": "⅛",
-		"frac23": "⅔",
-		"frac25": "⅖",
-		"frac34": "¾",
-		"frac35": "⅗",
-		"frac38": "⅜",
-		"frac45": "⅘",
-		"frac56": "⅚",
-		"frac58": "⅝",
-		"frac78": "⅞",
-		"frasl": "⁄",
-		"frown": "⌢",
-		"fscr": "𝒻",
-		"Fscr": "ℱ",
-		"gacute": "ǵ",
-		"Gamma": "Γ",
-		"gamma": "γ",
-		"Gammad": "Ϝ",
-		"gammad": "ϝ",
-		"gap": "⪆",
-		"Gbreve": "Ğ",
-		"gbreve": "ğ",
-		"Gcedil": "Ģ",
-		"Gcirc": "Ĝ",
-		"gcirc": "ĝ",
-		"Gcy": "Г",
-		"gcy": "г",
-		"Gdot": "Ġ",
-		"gdot": "ġ",
-		"ge": "≥",
-		"gE": "≧",
-		"gEl": "⪌",
-		"gel": "⋛",
-		"geq": "≥",
-		"geqq": "≧",
-		"geqslant": "⩾",
-		"gescc": "⪩",
-		"ges": "⩾",
-		"gesdot": "⪀",
-		"gesdoto": "⪂",
-		"gesdotol": "⪄",
-		"gesl": "⋛︀",
-		"gesles": "⪔",
-		"Gfr": "𝔊",
-		"gfr": "𝔤",
-		"gg": "≫",
-		"Gg": "⋙",
-		"ggg": "⋙",
-		"gimel": "ℷ",
-		"GJcy": "Ѓ",
-		"gjcy": "ѓ",
-		"gla": "⪥",
-		"gl": "≷",
-		"glE": "⪒",
-		"glj": "⪤",
-		"gnap": "⪊",
-		"gnapprox": "⪊",
-		"gne": "⪈",
-		"gnE": "≩",
-		"gneq": "⪈",
-		"gneqq": "≩",
-		"gnsim": "⋧",
-		"Gopf": "𝔾",
-		"gopf": "𝕘",
-		"grave": "`",
-		"GreaterEqual": "≥",
-		"GreaterEqualLess": "⋛",
-		"GreaterFullEqual": "≧",
-		"GreaterGreater": "⪢",
-		"GreaterLess": "≷",
-		"GreaterSlantEqual": "⩾",
-		"GreaterTilde": "≳",
-		"Gscr": "𝒢",
-		"gscr": "ℊ",
-		"gsim": "≳",
-		"gsime": "⪎",
-		"gsiml": "⪐",
-		"gtcc": "⪧",
-		"gtcir": "⩺",
-		"gt": ">",
-		"GT": ">",
-		"Gt": "≫",
-		"gtdot": "⋗",
-		"gtlPar": "⦕",
-		"gtquest": "⩼",
-		"gtrapprox": "⪆",
-		"gtrarr": "⥸",
-		"gtrdot": "⋗",
-		"gtreqless": "⋛",
-		"gtreqqless": "⪌",
-		"gtrless": "≷",
-		"gtrsim": "≳",
-		"gvertneqq": "≩︀",
-		"gvnE": "≩︀",
-		"Hacek": "ˇ",
-		"hairsp": " ",
-		"half": "½",
-		"hamilt": "ℋ",
-		"HARDcy": "Ъ",
-		"hardcy": "ъ",
-		"harrcir": "⥈",
-		"harr": "↔",
-		"hArr": "⇔",
-		"harrw": "↭",
-		"Hat": "^",
-		"hbar": "ℏ",
-		"Hcirc": "Ĥ",
-		"hcirc": "ĥ",
-		"hearts": "♥",
-		"heartsuit": "♥",
-		"hellip": "…",
-		"hercon": "⊹",
-		"hfr": "𝔥",
-		"Hfr": "ℌ",
-		"HilbertSpace": "ℋ",
-		"hksearow": "⤥",
-		"hkswarow": "⤦",
-		"hoarr": "⇿",
-		"homtht": "∻",
-		"hookleftarrow": "↩",
-		"hookrightarrow": "↪",
-		"hopf": "𝕙",
-		"Hopf": "ℍ",
-		"horbar": "―",
-		"HorizontalLine": "─",
-		"hscr": "𝒽",
-		"Hscr": "ℋ",
-		"hslash": "ℏ",
-		"Hstrok": "Ħ",
-		"hstrok": "ħ",
-		"HumpDownHump": "≎",
-		"HumpEqual": "≏",
-		"hybull": "⁃",
-		"hyphen": "‐",
-		"Iacute": "Í",
-		"iacute": "í",
-		"ic": "⁣",
-		"Icirc": "Î",
-		"icirc": "î",
-		"Icy": "И",
-		"icy": "и",
-		"Idot": "İ",
-		"IEcy": "Е",
-		"iecy": "е",
-		"iexcl": "¡",
-		"iff": "⇔",
-		"ifr": "𝔦",
-		"Ifr": "ℑ",
-		"Igrave": "Ì",
-		"igrave": "ì",
-		"ii": "ⅈ",
-		"iiiint": "⨌",
-		"iiint": "∭",
-		"iinfin": "⧜",
-		"iiota": "℩",
-		"IJlig": "Ĳ",
-		"ijlig": "ĳ",
-		"Imacr": "Ī",
-		"imacr": "ī",
-		"image": "ℑ",
-		"ImaginaryI": "ⅈ",
-		"imagline": "ℐ",
-		"imagpart": "ℑ",
-		"imath": "ı",
-		"Im": "ℑ",
-		"imof": "⊷",
-		"imped": "Ƶ",
-		"Implies": "⇒",
-		"incare": "℅",
-		"in": "∈",
-		"infin": "∞",
-		"infintie": "⧝",
-		"inodot": "ı",
-		"intcal": "⊺",
-		"int": "∫",
-		"Int": "∬",
-		"integers": "ℤ",
-		"Integral": "∫",
-		"intercal": "⊺",
-		"Intersection": "⋂",
-		"intlarhk": "⨗",
-		"intprod": "⨼",
-		"InvisibleComma": "⁣",
-		"InvisibleTimes": "⁢",
-		"IOcy": "Ё",
-		"iocy": "ё",
-		"Iogon": "Į",
-		"iogon": "į",
-		"Iopf": "𝕀",
-		"iopf": "𝕚",
-		"Iota": "Ι",
-		"iota": "ι",
-		"iprod": "⨼",
-		"iquest": "¿",
-		"iscr": "𝒾",
-		"Iscr": "ℐ",
-		"isin": "∈",
-		"isindot": "⋵",
-		"isinE": "⋹",
-		"isins": "⋴",
-		"isinsv": "⋳",
-		"isinv": "∈",
-		"it": "⁢",
-		"Itilde": "Ĩ",
-		"itilde": "ĩ",
-		"Iukcy": "І",
-		"iukcy": "і",
-		"Iuml": "Ï",
-		"iuml": "ï",
-		"Jcirc": "Ĵ",
-		"jcirc": "ĵ",
-		"Jcy": "Й",
-		"jcy": "й",
-		"Jfr": "𝔍",
-		"jfr": "𝔧",
-		"jmath": "ȷ",
-		"Jopf": "𝕁",
-		"jopf": "𝕛",
-		"Jscr": "𝒥",
-		"jscr": "𝒿",
-		"Jsercy": "Ј",
-		"jsercy": "ј",
-		"Jukcy": "Є",
-		"jukcy": "є",
-		"Kappa": "Κ",
-		"kappa": "κ",
-		"kappav": "ϰ",
-		"Kcedil": "Ķ",
-		"kcedil": "ķ",
-		"Kcy": "К",
-		"kcy": "к",
-		"Kfr": "𝔎",
-		"kfr": "𝔨",
-		"kgreen": "ĸ",
-		"KHcy": "Х",
-		"khcy": "х",
-		"KJcy": "Ќ",
-		"kjcy": "ќ",
-		"Kopf": "𝕂",
-		"kopf": "𝕜",
-		"Kscr": "𝒦",
-		"kscr": "𝓀",
-		"lAarr": "⇚",
-		"Lacute": "Ĺ",
-		"lacute": "ĺ",
-		"laemptyv": "⦴",
-		"lagran": "ℒ",
-		"Lambda": "Λ",
-		"lambda": "λ",
-		"lang": "⟨",
-		"Lang": "⟪",
-		"langd": "⦑",
-		"langle": "⟨",
-		"lap": "⪅",
-		"Laplacetrf": "ℒ",
-		"laquo": "«",
-		"larrb": "⇤",
-		"larrbfs": "⤟",
-		"larr": "←",
-		"Larr": "↞",
-		"lArr": "⇐",
-		"larrfs": "⤝",
-		"larrhk": "↩",
-		"larrlp": "↫",
-		"larrpl": "⤹",
-		"larrsim": "⥳",
-		"larrtl": "↢",
-		"latail": "⤙",
-		"lAtail": "⤛",
-		"lat": "⪫",
-		"late": "⪭",
-		"lates": "⪭︀",
-		"lbarr": "⤌",
-		"lBarr": "⤎",
-		"lbbrk": "❲",
-		"lbrace": "{",
-		"lbrack": "[",
-		"lbrke": "⦋",
-		"lbrksld": "⦏",
-		"lbrkslu": "⦍",
-		"Lcaron": "Ľ",
-		"lcaron": "ľ",
-		"Lcedil": "Ļ",
-		"lcedil": "ļ",
-		"lceil": "⌈",
-		"lcub": "{",
-		"Lcy": "Л",
-		"lcy": "л",
-		"ldca": "⤶",
-		"ldquo": "“",
-		"ldquor": "„",
-		"ldrdhar": "⥧",
-		"ldrushar": "⥋",
-		"ldsh": "↲",
-		"le": "≤",
-		"lE": "≦",
-		"LeftAngleBracket": "⟨",
-		"LeftArrowBar": "⇤",
-		"leftarrow": "←",
-		"LeftArrow": "←",
-		"Leftarrow": "⇐",
-		"LeftArrowRightArrow": "⇆",
-		"leftarrowtail": "↢",
-		"LeftCeiling": "⌈",
-		"LeftDoubleBracket": "⟦",
-		"LeftDownTeeVector": "⥡",
-		"LeftDownVectorBar": "⥙",
-		"LeftDownVector": "⇃",
-		"LeftFloor": "⌊",
-		"leftharpoondown": "↽",
-		"leftharpoonup": "↼",
-		"leftleftarrows": "⇇",
-		"leftrightarrow": "↔",
-		"LeftRightArrow": "↔",
-		"Leftrightarrow": "⇔",
-		"leftrightarrows": "⇆",
-		"leftrightharpoons": "⇋",
-		"leftrightsquigarrow": "↭",
-		"LeftRightVector": "⥎",
-		"LeftTeeArrow": "↤",
-		"LeftTee": "⊣",
-		"LeftTeeVector": "⥚",
-		"leftthreetimes": "⋋",
-		"LeftTriangleBar": "⧏",
-		"LeftTriangle": "⊲",
-		"LeftTriangleEqual": "⊴",
-		"LeftUpDownVector": "⥑",
-		"LeftUpTeeVector": "⥠",
-		"LeftUpVectorBar": "⥘",
-		"LeftUpVector": "↿",
-		"LeftVectorBar": "⥒",
-		"LeftVector": "↼",
-		"lEg": "⪋",
-		"leg": "⋚",
-		"leq": "≤",
-		"leqq": "≦",
-		"leqslant": "⩽",
-		"lescc": "⪨",
-		"les": "⩽",
-		"lesdot": "⩿",
-		"lesdoto": "⪁",
-		"lesdotor": "⪃",
-		"lesg": "⋚︀",
-		"lesges": "⪓",
-		"lessapprox": "⪅",
-		"lessdot": "⋖",
-		"lesseqgtr": "⋚",
-		"lesseqqgtr": "⪋",
-		"LessEqualGreater": "⋚",
-		"LessFullEqual": "≦",
-		"LessGreater": "≶",
-		"lessgtr": "≶",
-		"LessLess": "⪡",
-		"lesssim": "≲",
-		"LessSlantEqual": "⩽",
-		"LessTilde": "≲",
-		"lfisht": "⥼",
-		"lfloor": "⌊",
-		"Lfr": "𝔏",
-		"lfr": "𝔩",
-		"lg": "≶",
-		"lgE": "⪑",
-		"lHar": "⥢",
-		"lhard": "↽",
-		"lharu": "↼",
-		"lharul": "⥪",
-		"lhblk": "▄",
-		"LJcy": "Љ",
-		"ljcy": "љ",
-		"llarr": "⇇",
-		"ll": "≪",
-		"Ll": "⋘",
-		"llcorner": "⌞",
-		"Lleftarrow": "⇚",
-		"llhard": "⥫",
-		"lltri": "◺",
-		"Lmidot": "Ŀ",
-		"lmidot": "ŀ",
-		"lmoustache": "⎰",
-		"lmoust": "⎰",
-		"lnap": "⪉",
-		"lnapprox": "⪉",
-		"lne": "⪇",
-		"lnE": "≨",
-		"lneq": "⪇",
-		"lneqq": "≨",
-		"lnsim": "⋦",
-		"loang": "⟬",
-		"loarr": "⇽",
-		"lobrk": "⟦",
-		"longleftarrow": "⟵",
-		"LongLeftArrow": "⟵",
-		"Longleftarrow": "⟸",
-		"longleftrightarrow": "⟷",
-		"LongLeftRightArrow": "⟷",
-		"Longleftrightarrow": "⟺",
-		"longmapsto": "⟼",
-		"longrightarrow": "⟶",
-		"LongRightArrow": "⟶",
-		"Longrightarrow": "⟹",
-		"looparrowleft": "↫",
-		"looparrowright": "↬",
-		"lopar": "⦅",
-		"Lopf": "𝕃",
-		"lopf": "𝕝",
-		"loplus": "⨭",
-		"lotimes": "⨴",
-		"lowast": "∗",
-		"lowbar": "_",
-		"LowerLeftArrow": "↙",
-		"LowerRightArrow": "↘",
-		"loz": "◊",
-		"lozenge": "◊",
-		"lozf": "⧫",
-		"lpar": "(",
-		"lparlt": "⦓",
-		"lrarr": "⇆",
-		"lrcorner": "⌟",
-		"lrhar": "⇋",
-		"lrhard": "⥭",
-		"lrm": "‎",
-		"lrtri": "⊿",
-		"lsaquo": "‹",
-		"lscr": "𝓁",
-		"Lscr": "ℒ",
-		"lsh": "↰",
-		"Lsh": "↰",
-		"lsim": "≲",
-		"lsime": "⪍",
-		"lsimg": "⪏",
-		"lsqb": "[",
-		"lsquo": "‘",
-		"lsquor": "‚",
-		"Lstrok": "Ł",
-		"lstrok": "ł",
-		"ltcc": "⪦",
-		"ltcir": "⩹",
-		"lt": "<",
-		"LT": "<",
-		"Lt": "≪",
-		"ltdot": "⋖",
-		"lthree": "⋋",
-		"ltimes": "⋉",
-		"ltlarr": "⥶",
-		"ltquest": "⩻",
-		"ltri": "◃",
-		"ltrie": "⊴",
-		"ltrif": "◂",
-		"ltrPar": "⦖",
-		"lurdshar": "⥊",
-		"luruhar": "⥦",
-		"lvertneqq": "≨︀",
-		"lvnE": "≨︀",
-		"macr": "¯",
-		"male": "♂",
-		"malt": "✠",
-		"maltese": "✠",
-		"Map": "⤅",
-		"map": "↦",
-		"mapsto": "↦",
-		"mapstodown": "↧",
-		"mapstoleft": "↤",
-		"mapstoup": "↥",
-		"marker": "▮",
-		"mcomma": "⨩",
-		"Mcy": "М",
-		"mcy": "м",
-		"mdash": "—",
-		"mDDot": "∺",
-		"measuredangle": "∡",
-		"MediumSpace": " ",
-		"Mellintrf": "ℳ",
-		"Mfr": "𝔐",
-		"mfr": "𝔪",
-		"mho": "℧",
-		"micro": "µ",
-		"midast": "*",
-		"midcir": "⫰",
-		"mid": "∣",
-		"middot": "·",
-		"minusb": "⊟",
-		"minus": "−",
-		"minusd": "∸",
-		"minusdu": "⨪",
-		"MinusPlus": "∓",
-		"mlcp": "⫛",
-		"mldr": "…",
-		"mnplus": "∓",
-		"models": "⊧",
-		"Mopf": "𝕄",
-		"mopf": "𝕞",
-		"mp": "∓",
-		"mscr": "𝓂",
-		"Mscr": "ℳ",
-		"mstpos": "∾",
-		"Mu": "Μ",
-		"mu": "μ",
-		"multimap": "⊸",
-		"mumap": "⊸",
-		"nabla": "∇",
-		"Nacute": "Ń",
-		"nacute": "ń",
-		"nang": "∠⃒",
-		"nap": "≉",
-		"napE": "⩰̸",
-		"napid": "≋̸",
-		"napos": "ŉ",
-		"napprox": "≉",
-		"natural": "♮",
-		"naturals": "ℕ",
-		"natur": "♮",
-		"nbsp": " ",
-		"nbump": "≎̸",
-		"nbumpe": "≏̸",
-		"ncap": "⩃",
-		"Ncaron": "Ň",
-		"ncaron": "ň",
-		"Ncedil": "Ņ",
-		"ncedil": "ņ",
-		"ncong": "≇",
-		"ncongdot": "⩭̸",
-		"ncup": "⩂",
-		"Ncy": "Н",
-		"ncy": "н",
-		"ndash": "–",
-		"nearhk": "⤤",
-		"nearr": "↗",
-		"neArr": "⇗",
-		"nearrow": "↗",
-		"ne": "≠",
-		"nedot": "≐̸",
-		"NegativeMediumSpace": "​",
-		"NegativeThickSpace": "​",
-		"NegativeThinSpace": "​",
-		"NegativeVeryThinSpace": "​",
-		"nequiv": "≢",
-		"nesear": "⤨",
-		"nesim": "≂̸",
-		"NestedGreaterGreater": "≫",
-		"NestedLessLess": "≪",
-		"NewLine": "\n",
-		"nexist": "∄",
-		"nexists": "∄",
-		"Nfr": "𝔑",
-		"nfr": "𝔫",
-		"ngE": "≧̸",
-		"nge": "≱",
-		"ngeq": "≱",
-		"ngeqq": "≧̸",
-		"ngeqslant": "⩾̸",
-		"nges": "⩾̸",
-		"nGg": "⋙̸",
-		"ngsim": "≵",
-		"nGt": "≫⃒",
-		"ngt": "≯",
-		"ngtr": "≯",
-		"nGtv": "≫̸",
-		"nharr": "↮",
-		"nhArr": "⇎",
-		"nhpar": "⫲",
-		"ni": "∋",
-		"nis": "⋼",
-		"nisd": "⋺",
-		"niv": "∋",
-		"NJcy": "Њ",
-		"njcy": "њ",
-		"nlarr": "↚",
-		"nlArr": "⇍",
-		"nldr": "‥",
-		"nlE": "≦̸",
-		"nle": "≰",
-		"nleftarrow": "↚",
-		"nLeftarrow": "⇍",
-		"nleftrightarrow": "↮",
-		"nLeftrightarrow": "⇎",
-		"nleq": "≰",
-		"nleqq": "≦̸",
-		"nleqslant": "⩽̸",
-		"nles": "⩽̸",
-		"nless": "≮",
-		"nLl": "⋘̸",
-		"nlsim": "≴",
-		"nLt": "≪⃒",
-		"nlt": "≮",
-		"nltri": "⋪",
-		"nltrie": "⋬",
-		"nLtv": "≪̸",
-		"nmid": "∤",
-		"NoBreak": "⁠",
-		"NonBreakingSpace": " ",
-		"nopf": "𝕟",
-		"Nopf": "ℕ",
-		"Not": "⫬",
-		"not": "¬",
-		"NotCongruent": "≢",
-		"NotCupCap": "≭",
-		"NotDoubleVerticalBar": "∦",
-		"NotElement": "∉",
-		"NotEqual": "≠",
-		"NotEqualTilde": "≂̸",
-		"NotExists": "∄",
-		"NotGreater": "≯",
-		"NotGreaterEqual": "≱",
-		"NotGreaterFullEqual": "≧̸",
-		"NotGreaterGreater": "≫̸",
-		"NotGreaterLess": "≹",
-		"NotGreaterSlantEqual": "⩾̸",
-		"NotGreaterTilde": "≵",
-		"NotHumpDownHump": "≎̸",
-		"NotHumpEqual": "≏̸",
-		"notin": "∉",
-		"notindot": "⋵̸",
-		"notinE": "⋹̸",
-		"notinva": "∉",
-		"notinvb": "⋷",
-		"notinvc": "⋶",
-		"NotLeftTriangleBar": "⧏̸",
-		"NotLeftTriangle": "⋪",
-		"NotLeftTriangleEqual": "⋬",
-		"NotLess": "≮",
-		"NotLessEqual": "≰",
-		"NotLessGreater": "≸",
-		"NotLessLess": "≪̸",
-		"NotLessSlantEqual": "⩽̸",
-		"NotLessTilde": "≴",
-		"NotNestedGreaterGreater": "⪢̸",
-		"NotNestedLessLess": "⪡̸",
-		"notni": "∌",
-		"notniva": "∌",
-		"notnivb": "⋾",
-		"notnivc": "⋽",
-		"NotPrecedes": "⊀",
-		"NotPrecedesEqual": "⪯̸",
-		"NotPrecedesSlantEqual": "⋠",
-		"NotReverseElement": "∌",
-		"NotRightTriangleBar": "⧐̸",
-		"NotRightTriangle": "⋫",
-		"NotRightTriangleEqual": "⋭",
-		"NotSquareSubset": "⊏̸",
-		"NotSquareSubsetEqual": "⋢",
-		"NotSquareSuperset": "⊐̸",
-		"NotSquareSupersetEqual": "⋣",
-		"NotSubset": "⊂⃒",
-		"NotSubsetEqual": "⊈",
-		"NotSucceeds": "⊁",
-		"NotSucceedsEqual": "⪰̸",
-		"NotSucceedsSlantEqual": "⋡",
-		"NotSucceedsTilde": "≿̸",
-		"NotSuperset": "⊃⃒",
-		"NotSupersetEqual": "⊉",
-		"NotTilde": "≁",
-		"NotTildeEqual": "≄",
-		"NotTildeFullEqual": "≇",
-		"NotTildeTilde": "≉",
-		"NotVerticalBar": "∤",
-		"nparallel": "∦",
-		"npar": "∦",
-		"nparsl": "⫽⃥",
-		"npart": "∂̸",
-		"npolint": "⨔",
-		"npr": "⊀",
-		"nprcue": "⋠",
-		"nprec": "⊀",
-		"npreceq": "⪯̸",
-		"npre": "⪯̸",
-		"nrarrc": "⤳̸",
-		"nrarr": "↛",
-		"nrArr": "⇏",
-		"nrarrw": "↝̸",
-		"nrightarrow": "↛",
-		"nRightarrow": "⇏",
-		"nrtri": "⋫",
-		"nrtrie": "⋭",
-		"nsc": "⊁",
-		"nsccue": "⋡",
-		"nsce": "⪰̸",
-		"Nscr": "𝒩",
-		"nscr": "𝓃",
-		"nshortmid": "∤",
-		"nshortparallel": "∦",
-		"nsim": "≁",
-		"nsime": "≄",
-		"nsimeq": "≄",
-		"nsmid": "∤",
-		"nspar": "∦",
-		"nsqsube": "⋢",
-		"nsqsupe": "⋣",
-		"nsub": "⊄",
-		"nsubE": "⫅̸",
-		"nsube": "⊈",
-		"nsubset": "⊂⃒",
-		"nsubseteq": "⊈",
-		"nsubseteqq": "⫅̸",
-		"nsucc": "⊁",
-		"nsucceq": "⪰̸",
-		"nsup": "⊅",
-		"nsupE": "⫆̸",
-		"nsupe": "⊉",
-		"nsupset": "⊃⃒",
-		"nsupseteq": "⊉",
-		"nsupseteqq": "⫆̸",
-		"ntgl": "≹",
-		"Ntilde": "Ñ",
-		"ntilde": "ñ",
-		"ntlg": "≸",
-		"ntriangleleft": "⋪",
-		"ntrianglelefteq": "⋬",
-		"ntriangleright": "⋫",
-		"ntrianglerighteq": "⋭",
-		"Nu": "Ν",
-		"nu": "ν",
-		"num": "#",
-		"numero": "№",
-		"numsp": " ",
-		"nvap": "≍⃒",
-		"nvdash": "⊬",
-		"nvDash": "⊭",
-		"nVdash": "⊮",
-		"nVDash": "⊯",
-		"nvge": "≥⃒",
-		"nvgt": ">⃒",
-		"nvHarr": "⤄",
-		"nvinfin": "⧞",
-		"nvlArr": "⤂",
-		"nvle": "≤⃒",
-		"nvlt": "<⃒",
-		"nvltrie": "⊴⃒",
-		"nvrArr": "⤃",
-		"nvrtrie": "⊵⃒",
-		"nvsim": "∼⃒",
-		"nwarhk": "⤣",
-		"nwarr": "↖",
-		"nwArr": "⇖",
-		"nwarrow": "↖",
-		"nwnear": "⤧",
-		"Oacute": "Ó",
-		"oacute": "ó",
-		"oast": "⊛",
-		"Ocirc": "Ô",
-		"ocirc": "ô",
-		"ocir": "⊚",
-		"Ocy": "О",
-		"ocy": "о",
-		"odash": "⊝",
-		"Odblac": "Ő",
-		"odblac": "ő",
-		"odiv": "⨸",
-		"odot": "⊙",
-		"odsold": "⦼",
-		"OElig": "Œ",
-		"oelig": "œ",
-		"ofcir": "⦿",
-		"Ofr": "𝔒",
-		"ofr": "𝔬",
-		"ogon": "˛",
-		"Ograve": "Ò",
-		"ograve": "ò",
-		"ogt": "⧁",
-		"ohbar": "⦵",
-		"ohm": "Ω",
-		"oint": "∮",
-		"olarr": "↺",
-		"olcir": "⦾",
-		"olcross": "⦻",
-		"oline": "‾",
-		"olt": "⧀",
-		"Omacr": "Ō",
-		"omacr": "ō",
-		"Omega": "Ω",
-		"omega": "ω",
-		"Omicron": "Ο",
-		"omicron": "ο",
-		"omid": "⦶",
-		"ominus": "⊖",
-		"Oopf": "𝕆",
-		"oopf": "𝕠",
-		"opar": "⦷",
-		"OpenCurlyDoubleQuote": "“",
-		"OpenCurlyQuote": "‘",
-		"operp": "⦹",
-		"oplus": "⊕",
-		"orarr": "↻",
-		"Or": "⩔",
-		"or": "∨",
-		"ord": "⩝",
-		"order": "ℴ",
-		"orderof": "ℴ",
-		"ordf": "ª",
-		"ordm": "º",
-		"origof": "⊶",
-		"oror": "⩖",
-		"orslope": "⩗",
-		"orv": "⩛",
-		"oS": "Ⓢ",
-		"Oscr": "𝒪",
-		"oscr": "ℴ",
-		"Oslash": "Ø",
-		"oslash": "ø",
-		"osol": "⊘",
-		"Otilde": "Õ",
-		"otilde": "õ",
-		"otimesas": "⨶",
-		"Otimes": "⨷",
-		"otimes": "⊗",
-		"Ouml": "Ö",
-		"ouml": "ö",
-		"ovbar": "⌽",
-		"OverBar": "‾",
-		"OverBrace": "⏞",
-		"OverBracket": "⎴",
-		"OverParenthesis": "⏜",
-		"para": "¶",
-		"parallel": "∥",
-		"par": "∥",
-		"parsim": "⫳",
-		"parsl": "⫽",
-		"part": "∂",
-		"PartialD": "∂",
-		"Pcy": "П",
-		"pcy": "п",
-		"percnt": "%",
-		"period": ".",
-		"permil": "‰",
-		"perp": "⊥",
-		"pertenk": "‱",
-		"Pfr": "𝔓",
-		"pfr": "𝔭",
-		"Phi": "Φ",
-		"phi": "φ",
-		"phiv": "ϕ",
-		"phmmat": "ℳ",
-		"phone": "☎",
-		"Pi": "Π",
-		"pi": "π",
-		"pitchfork": "⋔",
-		"piv": "ϖ",
-		"planck": "ℏ",
-		"planckh": "ℎ",
-		"plankv": "ℏ",
-		"plusacir": "⨣",
-		"plusb": "⊞",
-		"pluscir": "⨢",
-		"plus": "+",
-		"plusdo": "∔",
-		"plusdu": "⨥",
-		"pluse": "⩲",
-		"PlusMinus": "±",
-		"plusmn": "±",
-		"plussim": "⨦",
-		"plustwo": "⨧",
-		"pm": "±",
-		"Poincareplane": "ℌ",
-		"pointint": "⨕",
-		"popf": "𝕡",
-		"Popf": "ℙ",
-		"pound": "£",
-		"prap": "⪷",
-		"Pr": "⪻",
-		"pr": "≺",
-		"prcue": "≼",
-		"precapprox": "⪷",
-		"prec": "≺",
-		"preccurlyeq": "≼",
-		"Precedes": "≺",
-		"PrecedesEqual": "⪯",
-		"PrecedesSlantEqual": "≼",
-		"PrecedesTilde": "≾",
-		"preceq": "⪯",
-		"precnapprox": "⪹",
-		"precneqq": "⪵",
-		"precnsim": "⋨",
-		"pre": "⪯",
-		"prE": "⪳",
-		"precsim": "≾",
-		"prime": "′",
-		"Prime": "″",
-		"primes": "ℙ",
-		"prnap": "⪹",
-		"prnE": "⪵",
-		"prnsim": "⋨",
-		"prod": "∏",
-		"Product": "∏",
-		"profalar": "⌮",
-		"profline": "⌒",
-		"profsurf": "⌓",
-		"prop": "∝",
-		"Proportional": "∝",
-		"Proportion": "∷",
-		"propto": "∝",
-		"prsim": "≾",
-		"prurel": "⊰",
-		"Pscr": "𝒫",
-		"pscr": "𝓅",
-		"Psi": "Ψ",
-		"psi": "ψ",
-		"puncsp": " ",
-		"Qfr": "𝔔",
-		"qfr": "𝔮",
-		"qint": "⨌",
-		"qopf": "𝕢",
-		"Qopf": "ℚ",
-		"qprime": "⁗",
-		"Qscr": "𝒬",
-		"qscr": "𝓆",
-		"quaternions": "ℍ",
-		"quatint": "⨖",
-		"quest": "?",
-		"questeq": "≟",
-		"quot": "\"",
-		"QUOT": "\"",
-		"rAarr": "⇛",
-		"race": "∽̱",
-		"Racute": "Ŕ",
-		"racute": "ŕ",
-		"radic": "√",
-		"raemptyv": "⦳",
-		"rang": "⟩",
-		"Rang": "⟫",
-		"rangd": "⦒",
-		"range": "⦥",
-		"rangle": "⟩",
-		"raquo": "»",
-		"rarrap": "⥵",
-		"rarrb": "⇥",
-		"rarrbfs": "⤠",
-		"rarrc": "⤳",
-		"rarr": "→",
-		"Rarr": "↠",
-		"rArr": "⇒",
-		"rarrfs": "⤞",
-		"rarrhk": "↪",
-		"rarrlp": "↬",
-		"rarrpl": "⥅",
-		"rarrsim": "⥴",
-		"Rarrtl": "⤖",
-		"rarrtl": "↣",
-		"rarrw": "↝",
-		"ratail": "⤚",
-		"rAtail": "⤜",
-		"ratio": "∶",
-		"rationals": "ℚ",
-		"rbarr": "⤍",
-		"rBarr": "⤏",
-		"RBarr": "⤐",
-		"rbbrk": "❳",
-		"rbrace": "}",
-		"rbrack": "]",
-		"rbrke": "⦌",
-		"rbrksld": "⦎",
-		"rbrkslu": "⦐",
-		"Rcaron": "Ř",
-		"rcaron": "ř",
-		"Rcedil": "Ŗ",
-		"rcedil": "ŗ",
-		"rceil": "⌉",
-		"rcub": "}",
-		"Rcy": "Р",
-		"rcy": "р",
-		"rdca": "⤷",
-		"rdldhar": "⥩",
-		"rdquo": "”",
-		"rdquor": "”",
-		"rdsh": "↳",
-		"real": "ℜ",
-		"realine": "ℛ",
-		"realpart": "ℜ",
-		"reals": "ℝ",
-		"Re": "ℜ",
-		"rect": "▭",
-		"reg": "®",
-		"REG": "®",
-		"ReverseElement": "∋",
-		"ReverseEquilibrium": "⇋",
-		"ReverseUpEquilibrium": "⥯",
-		"rfisht": "⥽",
-		"rfloor": "⌋",
-		"rfr": "𝔯",
-		"Rfr": "ℜ",
-		"rHar": "⥤",
-		"rhard": "⇁",
-		"rharu": "⇀",
-		"rharul": "⥬",
-		"Rho": "Ρ",
-		"rho": "ρ",
-		"rhov": "ϱ",
-		"RightAngleBracket": "⟩",
-		"RightArrowBar": "⇥",
-		"rightarrow": "→",
-		"RightArrow": "→",
-		"Rightarrow": "⇒",
-		"RightArrowLeftArrow": "⇄",
-		"rightarrowtail": "↣",
-		"RightCeiling": "⌉",
-		"RightDoubleBracket": "⟧",
-		"RightDownTeeVector": "⥝",
-		"RightDownVectorBar": "⥕",
-		"RightDownVector": "⇂",
-		"RightFloor": "⌋",
-		"rightharpoondown": "⇁",
-		"rightharpoonup": "⇀",
-		"rightleftarrows": "⇄",
-		"rightleftharpoons": "⇌",
-		"rightrightarrows": "⇉",
-		"rightsquigarrow": "↝",
-		"RightTeeArrow": "↦",
-		"RightTee": "⊢",
-		"RightTeeVector": "⥛",
-		"rightthreetimes": "⋌",
-		"RightTriangleBar": "⧐",
-		"RightTriangle": "⊳",
-		"RightTriangleEqual": "⊵",
-		"RightUpDownVector": "⥏",
-		"RightUpTeeVector": "⥜",
-		"RightUpVectorBar": "⥔",
-		"RightUpVector": "↾",
-		"RightVectorBar": "⥓",
-		"RightVector": "⇀",
-		"ring": "˚",
-		"risingdotseq": "≓",
-		"rlarr": "⇄",
-		"rlhar": "⇌",
-		"rlm": "‏",
-		"rmoustache": "⎱",
-		"rmoust": "⎱",
-		"rnmid": "⫮",
-		"roang": "⟭",
-		"roarr": "⇾",
-		"robrk": "⟧",
-		"ropar": "⦆",
-		"ropf": "𝕣",
-		"Ropf": "ℝ",
-		"roplus": "⨮",
-		"rotimes": "⨵",
-		"RoundImplies": "⥰",
-		"rpar": ")",
-		"rpargt": "⦔",
-		"rppolint": "⨒",
-		"rrarr": "⇉",
-		"Rrightarrow": "⇛",
-		"rsaquo": "›",
-		"rscr": "𝓇",
-		"Rscr": "ℛ",
-		"rsh": "↱",
-		"Rsh": "↱",
-		"rsqb": "]",
-		"rsquo": "’",
-		"rsquor": "’",
-		"rthree": "⋌",
-		"rtimes": "⋊",
-		"rtri": "▹",
-		"rtrie": "⊵",
-		"rtrif": "▸",
-		"rtriltri": "⧎",
-		"RuleDelayed": "⧴",
-		"ruluhar": "⥨",
-		"rx": "℞",
-		"Sacute": "Ś",
-		"sacute": "ś",
-		"sbquo": "‚",
-		"scap": "⪸",
-		"Scaron": "Š",
-		"scaron": "š",
-		"Sc": "⪼",
-		"sc": "≻",
-		"sccue": "≽",
-		"sce": "⪰",
-		"scE": "⪴",
-		"Scedil": "Ş",
-		"scedil": "ş",
-		"Scirc": "Ŝ",
-		"scirc": "ŝ",
-		"scnap": "⪺",
-		"scnE": "⪶",
-		"scnsim": "⋩",
-		"scpolint": "⨓",
-		"scsim": "≿",
-		"Scy": "С",
-		"scy": "с",
-		"sdotb": "⊡",
-		"sdot": "⋅",
-		"sdote": "⩦",
-		"searhk": "⤥",
-		"searr": "↘",
-		"seArr": "⇘",
-		"searrow": "↘",
-		"sect": "§",
-		"semi": ";",
-		"seswar": "⤩",
-		"setminus": "∖",
-		"setmn": "∖",
-		"sext": "✶",
-		"Sfr": "𝔖",
-		"sfr": "𝔰",
-		"sfrown": "⌢",
-		"sharp": "♯",
-		"SHCHcy": "Щ",
-		"shchcy": "щ",
-		"SHcy": "Ш",
-		"shcy": "ш",
-		"ShortDownArrow": "↓",
-		"ShortLeftArrow": "←",
-		"shortmid": "∣",
-		"shortparallel": "∥",
-		"ShortRightArrow": "→",
-		"ShortUpArrow": "↑",
-		"shy": "­",
-		"Sigma": "Σ",
-		"sigma": "σ",
-		"sigmaf": "ς",
-		"sigmav": "ς",
-		"sim": "∼",
-		"simdot": "⩪",
-		"sime": "≃",
-		"simeq": "≃",
-		"simg": "⪞",
-		"simgE": "⪠",
-		"siml": "⪝",
-		"simlE": "⪟",
-		"simne": "≆",
-		"simplus": "⨤",
-		"simrarr": "⥲",
-		"slarr": "←",
-		"SmallCircle": "∘",
-		"smallsetminus": "∖",
-		"smashp": "⨳",
-		"smeparsl": "⧤",
-		"smid": "∣",
-		"smile": "⌣",
-		"smt": "⪪",
-		"smte": "⪬",
-		"smtes": "⪬︀",
-		"SOFTcy": "Ь",
-		"softcy": "ь",
-		"solbar": "⌿",
-		"solb": "⧄",
-		"sol": "/",
-		"Sopf": "𝕊",
-		"sopf": "𝕤",
-		"spades": "♠",
-		"spadesuit": "♠",
-		"spar": "∥",
-		"sqcap": "⊓",
-		"sqcaps": "⊓︀",
-		"sqcup": "⊔",
-		"sqcups": "⊔︀",
-		"Sqrt": "√",
-		"sqsub": "⊏",
-		"sqsube": "⊑",
-		"sqsubset": "⊏",
-		"sqsubseteq": "⊑",
-		"sqsup": "⊐",
-		"sqsupe": "⊒",
-		"sqsupset": "⊐",
-		"sqsupseteq": "⊒",
-		"square": "□",
-		"Square": "□",
-		"SquareIntersection": "⊓",
-		"SquareSubset": "⊏",
-		"SquareSubsetEqual": "⊑",
-		"SquareSuperset": "⊐",
-		"SquareSupersetEqual": "⊒",
-		"SquareUnion": "⊔",
-		"squarf": "▪",
-		"squ": "□",
-		"squf": "▪",
-		"srarr": "→",
-		"Sscr": "𝒮",
-		"sscr": "𝓈",
-		"ssetmn": "∖",
-		"ssmile": "⌣",
-		"sstarf": "⋆",
-		"Star": "⋆",
-		"star": "☆",
-		"starf": "★",
-		"straightepsilon": "ϵ",
-		"straightphi": "ϕ",
-		"strns": "¯",
-		"sub": "⊂",
-		"Sub": "⋐",
-		"subdot": "⪽",
-		"subE": "⫅",
-		"sube": "⊆",
-		"subedot": "⫃",
-		"submult": "⫁",
-		"subnE": "⫋",
-		"subne": "⊊",
-		"subplus": "⪿",
-		"subrarr": "⥹",
-		"subset": "⊂",
-		"Subset": "⋐",
-		"subseteq": "⊆",
-		"subseteqq": "⫅",
-		"SubsetEqual": "⊆",
-		"subsetneq": "⊊",
-		"subsetneqq": "⫋",
-		"subsim": "⫇",
-		"subsub": "⫕",
-		"subsup": "⫓",
-		"succapprox": "⪸",
-		"succ": "≻",
-		"succcurlyeq": "≽",
-		"Succeeds": "≻",
-		"SucceedsEqual": "⪰",
-		"SucceedsSlantEqual": "≽",
-		"SucceedsTilde": "≿",
-		"succeq": "⪰",
-		"succnapprox": "⪺",
-		"succneqq": "⪶",
-		"succnsim": "⋩",
-		"succsim": "≿",
-		"SuchThat": "∋",
-		"sum": "∑",
-		"Sum": "∑",
-		"sung": "♪",
-		"sup1": "¹",
-		"sup2": "²",
-		"sup3": "³",
-		"sup": "⊃",
-		"Sup": "⋑",
-		"supdot": "⪾",
-		"supdsub": "⫘",
-		"supE": "⫆",
-		"supe": "⊇",
-		"supedot": "⫄",
-		"Superset": "⊃",
-		"SupersetEqual": "⊇",
-		"suphsol": "⟉",
-		"suphsub": "⫗",
-		"suplarr": "⥻",
-		"supmult": "⫂",
-		"supnE": "⫌",
-		"supne": "⊋",
-		"supplus": "⫀",
-		"supset": "⊃",
-		"Supset": "⋑",
-		"supseteq": "⊇",
-		"supseteqq": "⫆",
-		"supsetneq": "⊋",
-		"supsetneqq": "⫌",
-		"supsim": "⫈",
-		"supsub": "⫔",
-		"supsup": "⫖",
-		"swarhk": "⤦",
-		"swarr": "↙",
-		"swArr": "⇙",
-		"swarrow": "↙",
-		"swnwar": "⤪",
-		"szlig": "ß",
-		"Tab": "\t",
-		"target": "⌖",
-		"Tau": "Τ",
-		"tau": "τ",
-		"tbrk": "⎴",
-		"Tcaron": "Ť",
-		"tcaron": "ť",
-		"Tcedil": "Ţ",
-		"tcedil": "ţ",
-		"Tcy": "Т",
-		"tcy": "т",
-		"tdot": "⃛",
-		"telrec": "⌕",
-		"Tfr": "𝔗",
-		"tfr": "𝔱",
-		"there4": "∴",
-		"therefore": "∴",
-		"Therefore": "∴",
-		"Theta": "Θ",
-		"theta": "θ",
-		"thetasym": "ϑ",
-		"thetav": "ϑ",
-		"thickapprox": "≈",
-		"thicksim": "∼",
-		"ThickSpace": "  ",
-		"ThinSpace": " ",
-		"thinsp": " ",
-		"thkap": "≈",
-		"thksim": "∼",
-		"THORN": "Þ",
-		"thorn": "þ",
-		"tilde": "˜",
-		"Tilde": "∼",
-		"TildeEqual": "≃",
-		"TildeFullEqual": "≅",
-		"TildeTilde": "≈",
-		"timesbar": "⨱",
-		"timesb": "⊠",
-		"times": "×",
-		"timesd": "⨰",
-		"tint": "∭",
-		"toea": "⤨",
-		"topbot": "⌶",
-		"topcir": "⫱",
-		"top": "⊤",
-		"Topf": "𝕋",
-		"topf": "𝕥",
-		"topfork": "⫚",
-		"tosa": "⤩",
-		"tprime": "‴",
-		"trade": "™",
-		"TRADE": "™",
-		"triangle": "▵",
-		"triangledown": "▿",
-		"triangleleft": "◃",
-		"trianglelefteq": "⊴",
-		"triangleq": "≜",
-		"triangleright": "▹",
-		"trianglerighteq": "⊵",
-		"tridot": "◬",
-		"trie": "≜",
-		"triminus": "⨺",
-		"TripleDot": "⃛",
-		"triplus": "⨹",
-		"trisb": "⧍",
-		"tritime": "⨻",
-		"trpezium": "⏢",
-		"Tscr": "𝒯",
-		"tscr": "𝓉",
-		"TScy": "Ц",
-		"tscy": "ц",
-		"TSHcy": "Ћ",
-		"tshcy": "ћ",
-		"Tstrok": "Ŧ",
-		"tstrok": "ŧ",
-		"twixt": "≬",
-		"twoheadleftarrow": "↞",
-		"twoheadrightarrow": "↠",
-		"Uacute": "Ú",
-		"uacute": "ú",
-		"uarr": "↑",
-		"Uarr": "↟",
-		"uArr": "⇑",
-		"Uarrocir": "⥉",
-		"Ubrcy": "Ў",
-		"ubrcy": "ў",
-		"Ubreve": "Ŭ",
-		"ubreve": "ŭ",
-		"Ucirc": "Û",
-		"ucirc": "û",
-		"Ucy": "У",
-		"ucy": "у",
-		"udarr": "⇅",
-		"Udblac": "Ű",
-		"udblac": "ű",
-		"udhar": "⥮",
-		"ufisht": "⥾",
-		"Ufr": "𝔘",
-		"ufr": "𝔲",
-		"Ugrave": "Ù",
-		"ugrave": "ù",
-		"uHar": "⥣",
-		"uharl": "↿",
-		"uharr": "↾",
-		"uhblk": "▀",
-		"ulcorn": "⌜",
-		"ulcorner": "⌜",
-		"ulcrop": "⌏",
-		"ultri": "◸",
-		"Umacr": "Ū",
-		"umacr": "ū",
-		"uml": "¨",
-		"UnderBar": "_",
-		"UnderBrace": "⏟",
-		"UnderBracket": "⎵",
-		"UnderParenthesis": "⏝",
-		"Union": "⋃",
-		"UnionPlus": "⊎",
-		"Uogon": "Ų",
-		"uogon": "ų",
-		"Uopf": "𝕌",
-		"uopf": "𝕦",
-		"UpArrowBar": "⤒",
-		"uparrow": "↑",
-		"UpArrow": "↑",
-		"Uparrow": "⇑",
-		"UpArrowDownArrow": "⇅",
-		"updownarrow": "↕",
-		"UpDownArrow": "↕",
-		"Updownarrow": "⇕",
-		"UpEquilibrium": "⥮",
-		"upharpoonleft": "↿",
-		"upharpoonright": "↾",
-		"uplus": "⊎",
-		"UpperLeftArrow": "↖",
-		"UpperRightArrow": "↗",
-		"upsi": "υ",
-		"Upsi": "ϒ",
-		"upsih": "ϒ",
-		"Upsilon": "Υ",
-		"upsilon": "υ",
-		"UpTeeArrow": "↥",
-		"UpTee": "⊥",
-		"upuparrows": "⇈",
-		"urcorn": "⌝",
-		"urcorner": "⌝",
-		"urcrop": "⌎",
-		"Uring": "Ů",
-		"uring": "ů",
-		"urtri": "◹",
-		"Uscr": "𝒰",
-		"uscr": "𝓊",
-		"utdot": "⋰",
-		"Utilde": "Ũ",
-		"utilde": "ũ",
-		"utri": "▵",
-		"utrif": "▴",
-		"uuarr": "⇈",
-		"Uuml": "Ü",
-		"uuml": "ü",
-		"uwangle": "⦧",
-		"vangrt": "⦜",
-		"varepsilon": "ϵ",
-		"varkappa": "ϰ",
-		"varnothing": "∅",
-		"varphi": "ϕ",
-		"varpi": "ϖ",
-		"varpropto": "∝",
-		"varr": "↕",
-		"vArr": "⇕",
-		"varrho": "ϱ",
-		"varsigma": "ς",
-		"varsubsetneq": "⊊︀",
-		"varsubsetneqq": "⫋︀",
-		"varsupsetneq": "⊋︀",
-		"varsupsetneqq": "⫌︀",
-		"vartheta": "ϑ",
-		"vartriangleleft": "⊲",
-		"vartriangleright": "⊳",
-		"vBar": "⫨",
-		"Vbar": "⫫",
-		"vBarv": "⫩",
-		"Vcy": "В",
-		"vcy": "в",
-		"vdash": "⊢",
-		"vDash": "⊨",
-		"Vdash": "⊩",
-		"VDash": "⊫",
-		"Vdashl": "⫦",
-		"veebar": "⊻",
-		"vee": "∨",
-		"Vee": "⋁",
-		"veeeq": "≚",
-		"vellip": "⋮",
-		"verbar": "|",
-		"Verbar": "‖",
-		"vert": "|",
-		"Vert": "‖",
-		"VerticalBar": "∣",
-		"VerticalLine": "|",
-		"VerticalSeparator": "❘",
-		"VerticalTilde": "≀",
-		"VeryThinSpace": " ",
-		"Vfr": "𝔙",
-		"vfr": "𝔳",
-		"vltri": "⊲",
-		"vnsub": "⊂⃒",
-		"vnsup": "⊃⃒",
-		"Vopf": "𝕍",
-		"vopf": "𝕧",
-		"vprop": "∝",
-		"vrtri": "⊳",
-		"Vscr": "𝒱",
-		"vscr": "𝓋",
-		"vsubnE": "⫋︀",
-		"vsubne": "⊊︀",
-		"vsupnE": "⫌︀",
-		"vsupne": "⊋︀",
-		"Vvdash": "⊪",
-		"vzigzag": "⦚",
-		"Wcirc": "Ŵ",
-		"wcirc": "ŵ",
-		"wedbar": "⩟",
-		"wedge": "∧",
-		"Wedge": "⋀",
-		"wedgeq": "≙",
-		"weierp": "℘",
-		"Wfr": "𝔚",
-		"wfr": "𝔴",
-		"Wopf": "𝕎",
-		"wopf": "𝕨",
-		"wp": "℘",
-		"wr": "≀",
-		"wreath": "≀",
-		"Wscr": "𝒲",
-		"wscr": "𝓌",
-		"xcap": "⋂",
-		"xcirc": "◯",
-		"xcup": "⋃",
-		"xdtri": "▽",
-		"Xfr": "𝔛",
-		"xfr": "𝔵",
-		"xharr": "⟷",
-		"xhArr": "⟺",
-		"Xi": "Ξ",
-		"xi": "ξ",
-		"xlarr": "⟵",
-		"xlArr": "⟸",
-		"xmap": "⟼",
-		"xnis": "⋻",
-		"xodot": "⨀",
-		"Xopf": "𝕏",
-		"xopf": "𝕩",
-		"xoplus": "⨁",
-		"xotime": "⨂",
-		"xrarr": "⟶",
-		"xrArr": "⟹",
-		"Xscr": "𝒳",
-		"xscr": "𝓍",
-		"xsqcup": "⨆",
-		"xuplus": "⨄",
-		"xutri": "△",
-		"xvee": "⋁",
-		"xwedge": "⋀",
-		"Yacute": "Ý",
-		"yacute": "ý",
-		"YAcy": "Я",
-		"yacy": "я",
-		"Ycirc": "Ŷ",
-		"ycirc": "ŷ",
-		"Ycy": "Ы",
-		"ycy": "ы",
-		"yen": "¥",
-		"Yfr": "𝔜",
-		"yfr": "𝔶",
-		"YIcy": "Ї",
-		"yicy": "ї",
-		"Yopf": "𝕐",
-		"yopf": "𝕪",
-		"Yscr": "𝒴",
-		"yscr": "𝓎",
-		"YUcy": "Ю",
-		"yucy": "ю",
-		"yuml": "ÿ",
-		"Yuml": "Ÿ",
-		"Zacute": "Ź",
-		"zacute": "ź",
-		"Zcaron": "Ž",
-		"zcaron": "ž",
-		"Zcy": "З",
-		"zcy": "з",
-		"Zdot": "Ż",
-		"zdot": "ż",
-		"zeetrf": "ℨ",
-		"ZeroWidthSpace": "​",
-		"Zeta": "Ζ",
-		"zeta": "ζ",
-		"zfr": "𝔷",
-		"Zfr": "ℨ",
-		"ZHcy": "Ж",
-		"zhcy": "ж",
-		"zigrarr": "⇝",
-		"zopf": "𝕫",
-		"Zopf": "ℤ",
-		"Zscr": "𝒵",
-		"zscr": "𝓏",
-		"zwj": "‍",
-		"zwnj": "‌"
-	};
+	module.exports = {"Aacute":"Á","aacute":"á","Abreve":"Ă","abreve":"ă","ac":"∾","acd":"∿","acE":"∾̳","Acirc":"Â","acirc":"â","acute":"´","Acy":"А","acy":"а","AElig":"Æ","aelig":"æ","af":"⁡","Afr":"𝔄","afr":"𝔞","Agrave":"À","agrave":"à","alefsym":"ℵ","aleph":"ℵ","Alpha":"Α","alpha":"α","Amacr":"Ā","amacr":"ā","amalg":"⨿","amp":"&","AMP":"&","andand":"⩕","And":"⩓","and":"∧","andd":"⩜","andslope":"⩘","andv":"⩚","ang":"∠","ange":"⦤","angle":"∠","angmsdaa":"⦨","angmsdab":"⦩","angmsdac":"⦪","angmsdad":"⦫","angmsdae":"⦬","angmsdaf":"⦭","angmsdag":"⦮","angmsdah":"⦯","angmsd":"∡","angrt":"∟","angrtvb":"⊾","angrtvbd":"⦝","angsph":"∢","angst":"Å","angzarr":"⍼","Aogon":"Ą","aogon":"ą","Aopf":"𝔸","aopf":"𝕒","apacir":"⩯","ap":"≈","apE":"⩰","ape":"≊","apid":"≋","apos":"'","ApplyFunction":"⁡","approx":"≈","approxeq":"≊","Aring":"Å","aring":"å","Ascr":"𝒜","ascr":"𝒶","Assign":"≔","ast":"*","asymp":"≈","asympeq":"≍","Atilde":"Ã","atilde":"ã","Auml":"Ä","auml":"ä","awconint":"∳","awint":"⨑","backcong":"≌","backepsilon":"϶","backprime":"‵","backsim":"∽","backsimeq":"⋍","Backslash":"∖","Barv":"⫧","barvee":"⊽","barwed":"⌅","Barwed":"⌆","barwedge":"⌅","bbrk":"⎵","bbrktbrk":"⎶","bcong":"≌","Bcy":"Б","bcy":"б","bdquo":"„","becaus":"∵","because":"∵","Because":"∵","bemptyv":"⦰","bepsi":"϶","bernou":"ℬ","Bernoullis":"ℬ","Beta":"Β","beta":"β","beth":"ℶ","between":"≬","Bfr":"𝔅","bfr":"𝔟","bigcap":"⋂","bigcirc":"◯","bigcup":"⋃","bigodot":"⨀","bigoplus":"⨁","bigotimes":"⨂","bigsqcup":"⨆","bigstar":"★","bigtriangledown":"▽","bigtriangleup":"△","biguplus":"⨄","bigvee":"⋁","bigwedge":"⋀","bkarow":"⤍","blacklozenge":"⧫","blacksquare":"▪","blacktriangle":"▴","blacktriangledown":"▾","blacktriangleleft":"◂","blacktriangleright":"▸","blank":"␣","blk12":"▒","blk14":"░","blk34":"▓","block":"█","bne":"=⃥","bnequiv":"≡⃥","bNot":"⫭","bnot":"⌐","Bopf":"𝔹","bopf":"𝕓","bot":"⊥","bottom":"⊥","bowtie":"⋈","boxbox":"⧉","boxdl":"┐","boxdL":"╕","boxDl":"╖","boxDL":"╗","boxdr":"┌","boxdR":"╒","boxDr":"╓","boxDR":"╔","boxh":"─","boxH":"═","boxhd":"┬","boxHd":"╤","boxhD":"╥","boxHD":"╦","boxhu":"┴","boxHu":"╧","boxhU":"╨","boxHU":"╩","boxminus":"⊟","boxplus":"⊞","boxtimes":"⊠","boxul":"┘","boxuL":"╛","boxUl":"╜","boxUL":"╝","boxur":"└","boxuR":"╘","boxUr":"╙","boxUR":"╚","boxv":"│","boxV":"║","boxvh":"┼","boxvH":"╪","boxVh":"╫","boxVH":"╬","boxvl":"┤","boxvL":"╡","boxVl":"╢","boxVL":"╣","boxvr":"├","boxvR":"╞","boxVr":"╟","boxVR":"╠","bprime":"‵","breve":"˘","Breve":"˘","brvbar":"¦","bscr":"𝒷","Bscr":"ℬ","bsemi":"⁏","bsim":"∽","bsime":"⋍","bsolb":"⧅","bsol":"\\","bsolhsub":"⟈","bull":"•","bullet":"•","bump":"≎","bumpE":"⪮","bumpe":"≏","Bumpeq":"≎","bumpeq":"≏","Cacute":"Ć","cacute":"ć","capand":"⩄","capbrcup":"⩉","capcap":"⩋","cap":"∩","Cap":"⋒","capcup":"⩇","capdot":"⩀","CapitalDifferentialD":"ⅅ","caps":"∩︀","caret":"⁁","caron":"ˇ","Cayleys":"ℭ","ccaps":"⩍","Ccaron":"Č","ccaron":"č","Ccedil":"Ç","ccedil":"ç","Ccirc":"Ĉ","ccirc":"ĉ","Cconint":"∰","ccups":"⩌","ccupssm":"⩐","Cdot":"Ċ","cdot":"ċ","cedil":"¸","Cedilla":"¸","cemptyv":"⦲","cent":"¢","centerdot":"·","CenterDot":"·","cfr":"𝔠","Cfr":"ℭ","CHcy":"Ч","chcy":"ч","check":"✓","checkmark":"✓","Chi":"Χ","chi":"χ","circ":"ˆ","circeq":"≗","circlearrowleft":"↺","circlearrowright":"↻","circledast":"⊛","circledcirc":"⊚","circleddash":"⊝","CircleDot":"⊙","circledR":"®","circledS":"Ⓢ","CircleMinus":"⊖","CirclePlus":"⊕","CircleTimes":"⊗","cir":"○","cirE":"⧃","cire":"≗","cirfnint":"⨐","cirmid":"⫯","cirscir":"⧂","ClockwiseContourIntegral":"∲","CloseCurlyDoubleQuote":"”","CloseCurlyQuote":"’","clubs":"♣","clubsuit":"♣","colon":":","Colon":"∷","Colone":"⩴","colone":"≔","coloneq":"≔","comma":",","commat":"@","comp":"∁","compfn":"∘","complement":"∁","complexes":"ℂ","cong":"≅","congdot":"⩭","Congruent":"≡","conint":"∮","Conint":"∯","ContourIntegral":"∮","copf":"𝕔","Copf":"ℂ","coprod":"∐","Coproduct":"∐","copy":"©","COPY":"©","copysr":"℗","CounterClockwiseContourIntegral":"∳","crarr":"↵","cross":"✗","Cross":"⨯","Cscr":"𝒞","cscr":"𝒸","csub":"⫏","csube":"⫑","csup":"⫐","csupe":"⫒","ctdot":"⋯","cudarrl":"⤸","cudarrr":"⤵","cuepr":"⋞","cuesc":"⋟","cularr":"↶","cularrp":"⤽","cupbrcap":"⩈","cupcap":"⩆","CupCap":"≍","cup":"∪","Cup":"⋓","cupcup":"⩊","cupdot":"⊍","cupor":"⩅","cups":"∪︀","curarr":"↷","curarrm":"⤼","curlyeqprec":"⋞","curlyeqsucc":"⋟","curlyvee":"⋎","curlywedge":"⋏","curren":"¤","curvearrowleft":"↶","curvearrowright":"↷","cuvee":"⋎","cuwed":"⋏","cwconint":"∲","cwint":"∱","cylcty":"⌭","dagger":"†","Dagger":"‡","daleth":"ℸ","darr":"↓","Darr":"↡","dArr":"⇓","dash":"‐","Dashv":"⫤","dashv":"⊣","dbkarow":"⤏","dblac":"˝","Dcaron":"Ď","dcaron":"ď","Dcy":"Д","dcy":"д","ddagger":"‡","ddarr":"⇊","DD":"ⅅ","dd":"ⅆ","DDotrahd":"⤑","ddotseq":"⩷","deg":"°","Del":"∇","Delta":"Δ","delta":"δ","demptyv":"⦱","dfisht":"⥿","Dfr":"𝔇","dfr":"𝔡","dHar":"⥥","dharl":"⇃","dharr":"⇂","DiacriticalAcute":"´","DiacriticalDot":"˙","DiacriticalDoubleAcute":"˝","DiacriticalGrave":"`","DiacriticalTilde":"˜","diam":"⋄","diamond":"⋄","Diamond":"⋄","diamondsuit":"♦","diams":"♦","die":"¨","DifferentialD":"ⅆ","digamma":"ϝ","disin":"⋲","div":"÷","divide":"÷","divideontimes":"⋇","divonx":"⋇","DJcy":"Ђ","djcy":"ђ","dlcorn":"⌞","dlcrop":"⌍","dollar":"$","Dopf":"𝔻","dopf":"𝕕","Dot":"¨","dot":"˙","DotDot":"⃜","doteq":"≐","doteqdot":"≑","DotEqual":"≐","dotminus":"∸","dotplus":"∔","dotsquare":"⊡","doublebarwedge":"⌆","DoubleContourIntegral":"∯","DoubleDot":"¨","DoubleDownArrow":"⇓","DoubleLeftArrow":"⇐","DoubleLeftRightArrow":"⇔","DoubleLeftTee":"⫤","DoubleLongLeftArrow":"⟸","DoubleLongLeftRightArrow":"⟺","DoubleLongRightArrow":"⟹","DoubleRightArrow":"⇒","DoubleRightTee":"⊨","DoubleUpArrow":"⇑","DoubleUpDownArrow":"⇕","DoubleVerticalBar":"∥","DownArrowBar":"⤓","downarrow":"↓","DownArrow":"↓","Downarrow":"⇓","DownArrowUpArrow":"⇵","DownBreve":"̑","downdownarrows":"⇊","downharpoonleft":"⇃","downharpoonright":"⇂","DownLeftRightVector":"⥐","DownLeftTeeVector":"⥞","DownLeftVectorBar":"⥖","DownLeftVector":"↽","DownRightTeeVector":"⥟","DownRightVectorBar":"⥗","DownRightVector":"⇁","DownTeeArrow":"↧","DownTee":"⊤","drbkarow":"⤐","drcorn":"⌟","drcrop":"⌌","Dscr":"𝒟","dscr":"𝒹","DScy":"Ѕ","dscy":"ѕ","dsol":"⧶","Dstrok":"Đ","dstrok":"đ","dtdot":"⋱","dtri":"▿","dtrif":"▾","duarr":"⇵","duhar":"⥯","dwangle":"⦦","DZcy":"Џ","dzcy":"џ","dzigrarr":"⟿","Eacute":"É","eacute":"é","easter":"⩮","Ecaron":"Ě","ecaron":"ě","Ecirc":"Ê","ecirc":"ê","ecir":"≖","ecolon":"≕","Ecy":"Э","ecy":"э","eDDot":"⩷","Edot":"Ė","edot":"ė","eDot":"≑","ee":"ⅇ","efDot":"≒","Efr":"𝔈","efr":"𝔢","eg":"⪚","Egrave":"È","egrave":"è","egs":"⪖","egsdot":"⪘","el":"⪙","Element":"∈","elinters":"⏧","ell":"ℓ","els":"⪕","elsdot":"⪗","Emacr":"Ē","emacr":"ē","empty":"∅","emptyset":"∅","EmptySmallSquare":"◻","emptyv":"∅","EmptyVerySmallSquare":"▫","emsp13":" ","emsp14":" ","emsp":" ","ENG":"Ŋ","eng":"ŋ","ensp":" ","Eogon":"Ę","eogon":"ę","Eopf":"𝔼","eopf":"𝕖","epar":"⋕","eparsl":"⧣","eplus":"⩱","epsi":"ε","Epsilon":"Ε","epsilon":"ε","epsiv":"ϵ","eqcirc":"≖","eqcolon":"≕","eqsim":"≂","eqslantgtr":"⪖","eqslantless":"⪕","Equal":"⩵","equals":"=","EqualTilde":"≂","equest":"≟","Equilibrium":"⇌","equiv":"≡","equivDD":"⩸","eqvparsl":"⧥","erarr":"⥱","erDot":"≓","escr":"ℯ","Escr":"ℰ","esdot":"≐","Esim":"⩳","esim":"≂","Eta":"Η","eta":"η","ETH":"Ð","eth":"ð","Euml":"Ë","euml":"ë","euro":"€","excl":"!","exist":"∃","Exists":"∃","expectation":"ℰ","exponentiale":"ⅇ","ExponentialE":"ⅇ","fallingdotseq":"≒","Fcy":"Ф","fcy":"ф","female":"♀","ffilig":"ﬃ","fflig":"ﬀ","ffllig":"ﬄ","Ffr":"𝔉","ffr":"𝔣","filig":"ﬁ","FilledSmallSquare":"◼","FilledVerySmallSquare":"▪","fjlig":"fj","flat":"♭","fllig":"ﬂ","fltns":"▱","fnof":"ƒ","Fopf":"𝔽","fopf":"𝕗","forall":"∀","ForAll":"∀","fork":"⋔","forkv":"⫙","Fouriertrf":"ℱ","fpartint":"⨍","frac12":"½","frac13":"⅓","frac14":"¼","frac15":"⅕","frac16":"⅙","frac18":"⅛","frac23":"⅔","frac25":"⅖","frac34":"¾","frac35":"⅗","frac38":"⅜","frac45":"⅘","frac56":"⅚","frac58":"⅝","frac78":"⅞","frasl":"⁄","frown":"⌢","fscr":"𝒻","Fscr":"ℱ","gacute":"ǵ","Gamma":"Γ","gamma":"γ","Gammad":"Ϝ","gammad":"ϝ","gap":"⪆","Gbreve":"Ğ","gbreve":"ğ","Gcedil":"Ģ","Gcirc":"Ĝ","gcirc":"ĝ","Gcy":"Г","gcy":"г","Gdot":"Ġ","gdot":"ġ","ge":"≥","gE":"≧","gEl":"⪌","gel":"⋛","geq":"≥","geqq":"≧","geqslant":"⩾","gescc":"⪩","ges":"⩾","gesdot":"⪀","gesdoto":"⪂","gesdotol":"⪄","gesl":"⋛︀","gesles":"⪔","Gfr":"𝔊","gfr":"𝔤","gg":"≫","Gg":"⋙","ggg":"⋙","gimel":"ℷ","GJcy":"Ѓ","gjcy":"ѓ","gla":"⪥","gl":"≷","glE":"⪒","glj":"⪤","gnap":"⪊","gnapprox":"⪊","gne":"⪈","gnE":"≩","gneq":"⪈","gneqq":"≩","gnsim":"⋧","Gopf":"𝔾","gopf":"𝕘","grave":"`","GreaterEqual":"≥","GreaterEqualLess":"⋛","GreaterFullEqual":"≧","GreaterGreater":"⪢","GreaterLess":"≷","GreaterSlantEqual":"⩾","GreaterTilde":"≳","Gscr":"𝒢","gscr":"ℊ","gsim":"≳","gsime":"⪎","gsiml":"⪐","gtcc":"⪧","gtcir":"⩺","gt":">","GT":">","Gt":"≫","gtdot":"⋗","gtlPar":"⦕","gtquest":"⩼","gtrapprox":"⪆","gtrarr":"⥸","gtrdot":"⋗","gtreqless":"⋛","gtreqqless":"⪌","gtrless":"≷","gtrsim":"≳","gvertneqq":"≩︀","gvnE":"≩︀","Hacek":"ˇ","hairsp":" ","half":"½","hamilt":"ℋ","HARDcy":"Ъ","hardcy":"ъ","harrcir":"⥈","harr":"↔","hArr":"⇔","harrw":"↭","Hat":"^","hbar":"ℏ","Hcirc":"Ĥ","hcirc":"ĥ","hearts":"♥","heartsuit":"♥","hellip":"…","hercon":"⊹","hfr":"𝔥","Hfr":"ℌ","HilbertSpace":"ℋ","hksearow":"⤥","hkswarow":"⤦","hoarr":"⇿","homtht":"∻","hookleftarrow":"↩","hookrightarrow":"↪","hopf":"𝕙","Hopf":"ℍ","horbar":"―","HorizontalLine":"─","hscr":"𝒽","Hscr":"ℋ","hslash":"ℏ","Hstrok":"Ħ","hstrok":"ħ","HumpDownHump":"≎","HumpEqual":"≏","hybull":"⁃","hyphen":"‐","Iacute":"Í","iacute":"í","ic":"⁣","Icirc":"Î","icirc":"î","Icy":"И","icy":"и","Idot":"İ","IEcy":"Е","iecy":"е","iexcl":"¡","iff":"⇔","ifr":"𝔦","Ifr":"ℑ","Igrave":"Ì","igrave":"ì","ii":"ⅈ","iiiint":"⨌","iiint":"∭","iinfin":"⧜","iiota":"℩","IJlig":"Ĳ","ijlig":"ĳ","Imacr":"Ī","imacr":"ī","image":"ℑ","ImaginaryI":"ⅈ","imagline":"ℐ","imagpart":"ℑ","imath":"ı","Im":"ℑ","imof":"⊷","imped":"Ƶ","Implies":"⇒","incare":"℅","in":"∈","infin":"∞","infintie":"⧝","inodot":"ı","intcal":"⊺","int":"∫","Int":"∬","integers":"ℤ","Integral":"∫","intercal":"⊺","Intersection":"⋂","intlarhk":"⨗","intprod":"⨼","InvisibleComma":"⁣","InvisibleTimes":"⁢","IOcy":"Ё","iocy":"ё","Iogon":"Į","iogon":"į","Iopf":"𝕀","iopf":"𝕚","Iota":"Ι","iota":"ι","iprod":"⨼","iquest":"¿","iscr":"𝒾","Iscr":"ℐ","isin":"∈","isindot":"⋵","isinE":"⋹","isins":"⋴","isinsv":"⋳","isinv":"∈","it":"⁢","Itilde":"Ĩ","itilde":"ĩ","Iukcy":"І","iukcy":"і","Iuml":"Ï","iuml":"ï","Jcirc":"Ĵ","jcirc":"ĵ","Jcy":"Й","jcy":"й","Jfr":"𝔍","jfr":"𝔧","jmath":"ȷ","Jopf":"𝕁","jopf":"𝕛","Jscr":"𝒥","jscr":"𝒿","Jsercy":"Ј","jsercy":"ј","Jukcy":"Є","jukcy":"є","Kappa":"Κ","kappa":"κ","kappav":"ϰ","Kcedil":"Ķ","kcedil":"ķ","Kcy":"К","kcy":"к","Kfr":"𝔎","kfr":"𝔨","kgreen":"ĸ","KHcy":"Х","khcy":"х","KJcy":"Ќ","kjcy":"ќ","Kopf":"𝕂","kopf":"𝕜","Kscr":"𝒦","kscr":"𝓀","lAarr":"⇚","Lacute":"Ĺ","lacute":"ĺ","laemptyv":"⦴","lagran":"ℒ","Lambda":"Λ","lambda":"λ","lang":"⟨","Lang":"⟪","langd":"⦑","langle":"⟨","lap":"⪅","Laplacetrf":"ℒ","laquo":"«","larrb":"⇤","larrbfs":"⤟","larr":"←","Larr":"↞","lArr":"⇐","larrfs":"⤝","larrhk":"↩","larrlp":"↫","larrpl":"⤹","larrsim":"⥳","larrtl":"↢","latail":"⤙","lAtail":"⤛","lat":"⪫","late":"⪭","lates":"⪭︀","lbarr":"⤌","lBarr":"⤎","lbbrk":"❲","lbrace":"{","lbrack":"[","lbrke":"⦋","lbrksld":"⦏","lbrkslu":"⦍","Lcaron":"Ľ","lcaron":"ľ","Lcedil":"Ļ","lcedil":"ļ","lceil":"⌈","lcub":"{","Lcy":"Л","lcy":"л","ldca":"⤶","ldquo":"“","ldquor":"„","ldrdhar":"⥧","ldrushar":"⥋","ldsh":"↲","le":"≤","lE":"≦","LeftAngleBracket":"⟨","LeftArrowBar":"⇤","leftarrow":"←","LeftArrow":"←","Leftarrow":"⇐","LeftArrowRightArrow":"⇆","leftarrowtail":"↢","LeftCeiling":"⌈","LeftDoubleBracket":"⟦","LeftDownTeeVector":"⥡","LeftDownVectorBar":"⥙","LeftDownVector":"⇃","LeftFloor":"⌊","leftharpoondown":"↽","leftharpoonup":"↼","leftleftarrows":"⇇","leftrightarrow":"↔","LeftRightArrow":"↔","Leftrightarrow":"⇔","leftrightarrows":"⇆","leftrightharpoons":"⇋","leftrightsquigarrow":"↭","LeftRightVector":"⥎","LeftTeeArrow":"↤","LeftTee":"⊣","LeftTeeVector":"⥚","leftthreetimes":"⋋","LeftTriangleBar":"⧏","LeftTriangle":"⊲","LeftTriangleEqual":"⊴","LeftUpDownVector":"⥑","LeftUpTeeVector":"⥠","LeftUpVectorBar":"⥘","LeftUpVector":"↿","LeftVectorBar":"⥒","LeftVector":"↼","lEg":"⪋","leg":"⋚","leq":"≤","leqq":"≦","leqslant":"⩽","lescc":"⪨","les":"⩽","lesdot":"⩿","lesdoto":"⪁","lesdotor":"⪃","lesg":"⋚︀","lesges":"⪓","lessapprox":"⪅","lessdot":"⋖","lesseqgtr":"⋚","lesseqqgtr":"⪋","LessEqualGreater":"⋚","LessFullEqual":"≦","LessGreater":"≶","lessgtr":"≶","LessLess":"⪡","lesssim":"≲","LessSlantEqual":"⩽","LessTilde":"≲","lfisht":"⥼","lfloor":"⌊","Lfr":"𝔏","lfr":"𝔩","lg":"≶","lgE":"⪑","lHar":"⥢","lhard":"↽","lharu":"↼","lharul":"⥪","lhblk":"▄","LJcy":"Љ","ljcy":"љ","llarr":"⇇","ll":"≪","Ll":"⋘","llcorner":"⌞","Lleftarrow":"⇚","llhard":"⥫","lltri":"◺","Lmidot":"Ŀ","lmidot":"ŀ","lmoustache":"⎰","lmoust":"⎰","lnap":"⪉","lnapprox":"⪉","lne":"⪇","lnE":"≨","lneq":"⪇","lneqq":"≨","lnsim":"⋦","loang":"⟬","loarr":"⇽","lobrk":"⟦","longleftarrow":"⟵","LongLeftArrow":"⟵","Longleftarrow":"⟸","longleftrightarrow":"⟷","LongLeftRightArrow":"⟷","Longleftrightarrow":"⟺","longmapsto":"⟼","longrightarrow":"⟶","LongRightArrow":"⟶","Longrightarrow":"⟹","looparrowleft":"↫","looparrowright":"↬","lopar":"⦅","Lopf":"𝕃","lopf":"𝕝","loplus":"⨭","lotimes":"⨴","lowast":"∗","lowbar":"_","LowerLeftArrow":"↙","LowerRightArrow":"↘","loz":"◊","lozenge":"◊","lozf":"⧫","lpar":"(","lparlt":"⦓","lrarr":"⇆","lrcorner":"⌟","lrhar":"⇋","lrhard":"⥭","lrm":"‎","lrtri":"⊿","lsaquo":"‹","lscr":"𝓁","Lscr":"ℒ","lsh":"↰","Lsh":"↰","lsim":"≲","lsime":"⪍","lsimg":"⪏","lsqb":"[","lsquo":"‘","lsquor":"‚","Lstrok":"Ł","lstrok":"ł","ltcc":"⪦","ltcir":"⩹","lt":"<","LT":"<","Lt":"≪","ltdot":"⋖","lthree":"⋋","ltimes":"⋉","ltlarr":"⥶","ltquest":"⩻","ltri":"◃","ltrie":"⊴","ltrif":"◂","ltrPar":"⦖","lurdshar":"⥊","luruhar":"⥦","lvertneqq":"≨︀","lvnE":"≨︀","macr":"¯","male":"♂","malt":"✠","maltese":"✠","Map":"⤅","map":"↦","mapsto":"↦","mapstodown":"↧","mapstoleft":"↤","mapstoup":"↥","marker":"▮","mcomma":"⨩","Mcy":"М","mcy":"м","mdash":"—","mDDot":"∺","measuredangle":"∡","MediumSpace":" ","Mellintrf":"ℳ","Mfr":"𝔐","mfr":"𝔪","mho":"℧","micro":"µ","midast":"*","midcir":"⫰","mid":"∣","middot":"·","minusb":"⊟","minus":"−","minusd":"∸","minusdu":"⨪","MinusPlus":"∓","mlcp":"⫛","mldr":"…","mnplus":"∓","models":"⊧","Mopf":"𝕄","mopf":"𝕞","mp":"∓","mscr":"𝓂","Mscr":"ℳ","mstpos":"∾","Mu":"Μ","mu":"μ","multimap":"⊸","mumap":"⊸","nabla":"∇","Nacute":"Ń","nacute":"ń","nang":"∠⃒","nap":"≉","napE":"⩰̸","napid":"≋̸","napos":"ŉ","napprox":"≉","natural":"♮","naturals":"ℕ","natur":"♮","nbsp":" ","nbump":"≎̸","nbumpe":"≏̸","ncap":"⩃","Ncaron":"Ň","ncaron":"ň","Ncedil":"Ņ","ncedil":"ņ","ncong":"≇","ncongdot":"⩭̸","ncup":"⩂","Ncy":"Н","ncy":"н","ndash":"–","nearhk":"⤤","nearr":"↗","neArr":"⇗","nearrow":"↗","ne":"≠","nedot":"≐̸","NegativeMediumSpace":"​","NegativeThickSpace":"​","NegativeThinSpace":"​","NegativeVeryThinSpace":"​","nequiv":"≢","nesear":"⤨","nesim":"≂̸","NestedGreaterGreater":"≫","NestedLessLess":"≪","NewLine":"\n","nexist":"∄","nexists":"∄","Nfr":"𝔑","nfr":"𝔫","ngE":"≧̸","nge":"≱","ngeq":"≱","ngeqq":"≧̸","ngeqslant":"⩾̸","nges":"⩾̸","nGg":"⋙̸","ngsim":"≵","nGt":"≫⃒","ngt":"≯","ngtr":"≯","nGtv":"≫̸","nharr":"↮","nhArr":"⇎","nhpar":"⫲","ni":"∋","nis":"⋼","nisd":"⋺","niv":"∋","NJcy":"Њ","njcy":"њ","nlarr":"↚","nlArr":"⇍","nldr":"‥","nlE":"≦̸","nle":"≰","nleftarrow":"↚","nLeftarrow":"⇍","nleftrightarrow":"↮","nLeftrightarrow":"⇎","nleq":"≰","nleqq":"≦̸","nleqslant":"⩽̸","nles":"⩽̸","nless":"≮","nLl":"⋘̸","nlsim":"≴","nLt":"≪⃒","nlt":"≮","nltri":"⋪","nltrie":"⋬","nLtv":"≪̸","nmid":"∤","NoBreak":"⁠","NonBreakingSpace":" ","nopf":"𝕟","Nopf":"ℕ","Not":"⫬","not":"¬","NotCongruent":"≢","NotCupCap":"≭","NotDoubleVerticalBar":"∦","NotElement":"∉","NotEqual":"≠","NotEqualTilde":"≂̸","NotExists":"∄","NotGreater":"≯","NotGreaterEqual":"≱","NotGreaterFullEqual":"≧̸","NotGreaterGreater":"≫̸","NotGreaterLess":"≹","NotGreaterSlantEqual":"⩾̸","NotGreaterTilde":"≵","NotHumpDownHump":"≎̸","NotHumpEqual":"≏̸","notin":"∉","notindot":"⋵̸","notinE":"⋹̸","notinva":"∉","notinvb":"⋷","notinvc":"⋶","NotLeftTriangleBar":"⧏̸","NotLeftTriangle":"⋪","NotLeftTriangleEqual":"⋬","NotLess":"≮","NotLessEqual":"≰","NotLessGreater":"≸","NotLessLess":"≪̸","NotLessSlantEqual":"⩽̸","NotLessTilde":"≴","NotNestedGreaterGreater":"⪢̸","NotNestedLessLess":"⪡̸","notni":"∌","notniva":"∌","notnivb":"⋾","notnivc":"⋽","NotPrecedes":"⊀","NotPrecedesEqual":"⪯̸","NotPrecedesSlantEqual":"⋠","NotReverseElement":"∌","NotRightTriangleBar":"⧐̸","NotRightTriangle":"⋫","NotRightTriangleEqual":"⋭","NotSquareSubset":"⊏̸","NotSquareSubsetEqual":"⋢","NotSquareSuperset":"⊐̸","NotSquareSupersetEqual":"⋣","NotSubset":"⊂⃒","NotSubsetEqual":"⊈","NotSucceeds":"⊁","NotSucceedsEqual":"⪰̸","NotSucceedsSlantEqual":"⋡","NotSucceedsTilde":"≿̸","NotSuperset":"⊃⃒","NotSupersetEqual":"⊉","NotTilde":"≁","NotTildeEqual":"≄","NotTildeFullEqual":"≇","NotTildeTilde":"≉","NotVerticalBar":"∤","nparallel":"∦","npar":"∦","nparsl":"⫽⃥","npart":"∂̸","npolint":"⨔","npr":"⊀","nprcue":"⋠","nprec":"⊀","npreceq":"⪯̸","npre":"⪯̸","nrarrc":"⤳̸","nrarr":"↛","nrArr":"⇏","nrarrw":"↝̸","nrightarrow":"↛","nRightarrow":"⇏","nrtri":"⋫","nrtrie":"⋭","nsc":"⊁","nsccue":"⋡","nsce":"⪰̸","Nscr":"𝒩","nscr":"𝓃","nshortmid":"∤","nshortparallel":"∦","nsim":"≁","nsime":"≄","nsimeq":"≄","nsmid":"∤","nspar":"∦","nsqsube":"⋢","nsqsupe":"⋣","nsub":"⊄","nsubE":"⫅̸","nsube":"⊈","nsubset":"⊂⃒","nsubseteq":"⊈","nsubseteqq":"⫅̸","nsucc":"⊁","nsucceq":"⪰̸","nsup":"⊅","nsupE":"⫆̸","nsupe":"⊉","nsupset":"⊃⃒","nsupseteq":"⊉","nsupseteqq":"⫆̸","ntgl":"≹","Ntilde":"Ñ","ntilde":"ñ","ntlg":"≸","ntriangleleft":"⋪","ntrianglelefteq":"⋬","ntriangleright":"⋫","ntrianglerighteq":"⋭","Nu":"Ν","nu":"ν","num":"#","numero":"№","numsp":" ","nvap":"≍⃒","nvdash":"⊬","nvDash":"⊭","nVdash":"⊮","nVDash":"⊯","nvge":"≥⃒","nvgt":">⃒","nvHarr":"⤄","nvinfin":"⧞","nvlArr":"⤂","nvle":"≤⃒","nvlt":"<⃒","nvltrie":"⊴⃒","nvrArr":"⤃","nvrtrie":"⊵⃒","nvsim":"∼⃒","nwarhk":"⤣","nwarr":"↖","nwArr":"⇖","nwarrow":"↖","nwnear":"⤧","Oacute":"Ó","oacute":"ó","oast":"⊛","Ocirc":"Ô","ocirc":"ô","ocir":"⊚","Ocy":"О","ocy":"о","odash":"⊝","Odblac":"Ő","odblac":"ő","odiv":"⨸","odot":"⊙","odsold":"⦼","OElig":"Œ","oelig":"œ","ofcir":"⦿","Ofr":"𝔒","ofr":"𝔬","ogon":"˛","Ograve":"Ò","ograve":"ò","ogt":"⧁","ohbar":"⦵","ohm":"Ω","oint":"∮","olarr":"↺","olcir":"⦾","olcross":"⦻","oline":"‾","olt":"⧀","Omacr":"Ō","omacr":"ō","Omega":"Ω","omega":"ω","Omicron":"Ο","omicron":"ο","omid":"⦶","ominus":"⊖","Oopf":"𝕆","oopf":"𝕠","opar":"⦷","OpenCurlyDoubleQuote":"“","OpenCurlyQuote":"‘","operp":"⦹","oplus":"⊕","orarr":"↻","Or":"⩔","or":"∨","ord":"⩝","order":"ℴ","orderof":"ℴ","ordf":"ª","ordm":"º","origof":"⊶","oror":"⩖","orslope":"⩗","orv":"⩛","oS":"Ⓢ","Oscr":"𝒪","oscr":"ℴ","Oslash":"Ø","oslash":"ø","osol":"⊘","Otilde":"Õ","otilde":"õ","otimesas":"⨶","Otimes":"⨷","otimes":"⊗","Ouml":"Ö","ouml":"ö","ovbar":"⌽","OverBar":"‾","OverBrace":"⏞","OverBracket":"⎴","OverParenthesis":"⏜","para":"¶","parallel":"∥","par":"∥","parsim":"⫳","parsl":"⫽","part":"∂","PartialD":"∂","Pcy":"П","pcy":"п","percnt":"%","period":".","permil":"‰","perp":"⊥","pertenk":"‱","Pfr":"𝔓","pfr":"𝔭","Phi":"Φ","phi":"φ","phiv":"ϕ","phmmat":"ℳ","phone":"☎","Pi":"Π","pi":"π","pitchfork":"⋔","piv":"ϖ","planck":"ℏ","planckh":"ℎ","plankv":"ℏ","plusacir":"⨣","plusb":"⊞","pluscir":"⨢","plus":"+","plusdo":"∔","plusdu":"⨥","pluse":"⩲","PlusMinus":"±","plusmn":"±","plussim":"⨦","plustwo":"⨧","pm":"±","Poincareplane":"ℌ","pointint":"⨕","popf":"𝕡","Popf":"ℙ","pound":"£","prap":"⪷","Pr":"⪻","pr":"≺","prcue":"≼","precapprox":"⪷","prec":"≺","preccurlyeq":"≼","Precedes":"≺","PrecedesEqual":"⪯","PrecedesSlantEqual":"≼","PrecedesTilde":"≾","preceq":"⪯","precnapprox":"⪹","precneqq":"⪵","precnsim":"⋨","pre":"⪯","prE":"⪳","precsim":"≾","prime":"′","Prime":"″","primes":"ℙ","prnap":"⪹","prnE":"⪵","prnsim":"⋨","prod":"∏","Product":"∏","profalar":"⌮","profline":"⌒","profsurf":"⌓","prop":"∝","Proportional":"∝","Proportion":"∷","propto":"∝","prsim":"≾","prurel":"⊰","Pscr":"𝒫","pscr":"𝓅","Psi":"Ψ","psi":"ψ","puncsp":" ","Qfr":"𝔔","qfr":"𝔮","qint":"⨌","qopf":"𝕢","Qopf":"ℚ","qprime":"⁗","Qscr":"𝒬","qscr":"𝓆","quaternions":"ℍ","quatint":"⨖","quest":"?","questeq":"≟","quot":"\"","QUOT":"\"","rAarr":"⇛","race":"∽̱","Racute":"Ŕ","racute":"ŕ","radic":"√","raemptyv":"⦳","rang":"⟩","Rang":"⟫","rangd":"⦒","range":"⦥","rangle":"⟩","raquo":"»","rarrap":"⥵","rarrb":"⇥","rarrbfs":"⤠","rarrc":"⤳","rarr":"→","Rarr":"↠","rArr":"⇒","rarrfs":"⤞","rarrhk":"↪","rarrlp":"↬","rarrpl":"⥅","rarrsim":"⥴","Rarrtl":"⤖","rarrtl":"↣","rarrw":"↝","ratail":"⤚","rAtail":"⤜","ratio":"∶","rationals":"ℚ","rbarr":"⤍","rBarr":"⤏","RBarr":"⤐","rbbrk":"❳","rbrace":"}","rbrack":"]","rbrke":"⦌","rbrksld":"⦎","rbrkslu":"⦐","Rcaron":"Ř","rcaron":"ř","Rcedil":"Ŗ","rcedil":"ŗ","rceil":"⌉","rcub":"}","Rcy":"Р","rcy":"р","rdca":"⤷","rdldhar":"⥩","rdquo":"”","rdquor":"”","rdsh":"↳","real":"ℜ","realine":"ℛ","realpart":"ℜ","reals":"ℝ","Re":"ℜ","rect":"▭","reg":"®","REG":"®","ReverseElement":"∋","ReverseEquilibrium":"⇋","ReverseUpEquilibrium":"⥯","rfisht":"⥽","rfloor":"⌋","rfr":"𝔯","Rfr":"ℜ","rHar":"⥤","rhard":"⇁","rharu":"⇀","rharul":"⥬","Rho":"Ρ","rho":"ρ","rhov":"ϱ","RightAngleBracket":"⟩","RightArrowBar":"⇥","rightarrow":"→","RightArrow":"→","Rightarrow":"⇒","RightArrowLeftArrow":"⇄","rightarrowtail":"↣","RightCeiling":"⌉","RightDoubleBracket":"⟧","RightDownTeeVector":"⥝","RightDownVectorBar":"⥕","RightDownVector":"⇂","RightFloor":"⌋","rightharpoondown":"⇁","rightharpoonup":"⇀","rightleftarrows":"⇄","rightleftharpoons":"⇌","rightrightarrows":"⇉","rightsquigarrow":"↝","RightTeeArrow":"↦","RightTee":"⊢","RightTeeVector":"⥛","rightthreetimes":"⋌","RightTriangleBar":"⧐","RightTriangle":"⊳","RightTriangleEqual":"⊵","RightUpDownVector":"⥏","RightUpTeeVector":"⥜","RightUpVectorBar":"⥔","RightUpVector":"↾","RightVectorBar":"⥓","RightVector":"⇀","ring":"˚","risingdotseq":"≓","rlarr":"⇄","rlhar":"⇌","rlm":"‏","rmoustache":"⎱","rmoust":"⎱","rnmid":"⫮","roang":"⟭","roarr":"⇾","robrk":"⟧","ropar":"⦆","ropf":"𝕣","Ropf":"ℝ","roplus":"⨮","rotimes":"⨵","RoundImplies":"⥰","rpar":")","rpargt":"⦔","rppolint":"⨒","rrarr":"⇉","Rrightarrow":"⇛","rsaquo":"›","rscr":"𝓇","Rscr":"ℛ","rsh":"↱","Rsh":"↱","rsqb":"]","rsquo":"’","rsquor":"’","rthree":"⋌","rtimes":"⋊","rtri":"▹","rtrie":"⊵","rtrif":"▸","rtriltri":"⧎","RuleDelayed":"⧴","ruluhar":"⥨","rx":"℞","Sacute":"Ś","sacute":"ś","sbquo":"‚","scap":"⪸","Scaron":"Š","scaron":"š","Sc":"⪼","sc":"≻","sccue":"≽","sce":"⪰","scE":"⪴","Scedil":"Ş","scedil":"ş","Scirc":"Ŝ","scirc":"ŝ","scnap":"⪺","scnE":"⪶","scnsim":"⋩","scpolint":"⨓","scsim":"≿","Scy":"С","scy":"с","sdotb":"⊡","sdot":"⋅","sdote":"⩦","searhk":"⤥","searr":"↘","seArr":"⇘","searrow":"↘","sect":"§","semi":";","seswar":"⤩","setminus":"∖","setmn":"∖","sext":"✶","Sfr":"𝔖","sfr":"𝔰","sfrown":"⌢","sharp":"♯","SHCHcy":"Щ","shchcy":"щ","SHcy":"Ш","shcy":"ш","ShortDownArrow":"↓","ShortLeftArrow":"←","shortmid":"∣","shortparallel":"∥","ShortRightArrow":"→","ShortUpArrow":"↑","shy":"­","Sigma":"Σ","sigma":"σ","sigmaf":"ς","sigmav":"ς","sim":"∼","simdot":"⩪","sime":"≃","simeq":"≃","simg":"⪞","simgE":"⪠","siml":"⪝","simlE":"⪟","simne":"≆","simplus":"⨤","simrarr":"⥲","slarr":"←","SmallCircle":"∘","smallsetminus":"∖","smashp":"⨳","smeparsl":"⧤","smid":"∣","smile":"⌣","smt":"⪪","smte":"⪬","smtes":"⪬︀","SOFTcy":"Ь","softcy":"ь","solbar":"⌿","solb":"⧄","sol":"/","Sopf":"𝕊","sopf":"𝕤","spades":"♠","spadesuit":"♠","spar":"∥","sqcap":"⊓","sqcaps":"⊓︀","sqcup":"⊔","sqcups":"⊔︀","Sqrt":"√","sqsub":"⊏","sqsube":"⊑","sqsubset":"⊏","sqsubseteq":"⊑","sqsup":"⊐","sqsupe":"⊒","sqsupset":"⊐","sqsupseteq":"⊒","square":"□","Square":"□","SquareIntersection":"⊓","SquareSubset":"⊏","SquareSubsetEqual":"⊑","SquareSuperset":"⊐","SquareSupersetEqual":"⊒","SquareUnion":"⊔","squarf":"▪","squ":"□","squf":"▪","srarr":"→","Sscr":"𝒮","sscr":"𝓈","ssetmn":"∖","ssmile":"⌣","sstarf":"⋆","Star":"⋆","star":"☆","starf":"★","straightepsilon":"ϵ","straightphi":"ϕ","strns":"¯","sub":"⊂","Sub":"⋐","subdot":"⪽","subE":"⫅","sube":"⊆","subedot":"⫃","submult":"⫁","subnE":"⫋","subne":"⊊","subplus":"⪿","subrarr":"⥹","subset":"⊂","Subset":"⋐","subseteq":"⊆","subseteqq":"⫅","SubsetEqual":"⊆","subsetneq":"⊊","subsetneqq":"⫋","subsim":"⫇","subsub":"⫕","subsup":"⫓","succapprox":"⪸","succ":"≻","succcurlyeq":"≽","Succeeds":"≻","SucceedsEqual":"⪰","SucceedsSlantEqual":"≽","SucceedsTilde":"≿","succeq":"⪰","succnapprox":"⪺","succneqq":"⪶","succnsim":"⋩","succsim":"≿","SuchThat":"∋","sum":"∑","Sum":"∑","sung":"♪","sup1":"¹","sup2":"²","sup3":"³","sup":"⊃","Sup":"⋑","supdot":"⪾","supdsub":"⫘","supE":"⫆","supe":"⊇","supedot":"⫄","Superset":"⊃","SupersetEqual":"⊇","suphsol":"⟉","suphsub":"⫗","suplarr":"⥻","supmult":"⫂","supnE":"⫌","supne":"⊋","supplus":"⫀","supset":"⊃","Supset":"⋑","supseteq":"⊇","supseteqq":"⫆","supsetneq":"⊋","supsetneqq":"⫌","supsim":"⫈","supsub":"⫔","supsup":"⫖","swarhk":"⤦","swarr":"↙","swArr":"⇙","swarrow":"↙","swnwar":"⤪","szlig":"ß","Tab":"\t","target":"⌖","Tau":"Τ","tau":"τ","tbrk":"⎴","Tcaron":"Ť","tcaron":"ť","Tcedil":"Ţ","tcedil":"ţ","Tcy":"Т","tcy":"т","tdot":"⃛","telrec":"⌕","Tfr":"𝔗","tfr":"𝔱","there4":"∴","therefore":"∴","Therefore":"∴","Theta":"Θ","theta":"θ","thetasym":"ϑ","thetav":"ϑ","thickapprox":"≈","thicksim":"∼","ThickSpace":"  ","ThinSpace":" ","thinsp":" ","thkap":"≈","thksim":"∼","THORN":"Þ","thorn":"þ","tilde":"˜","Tilde":"∼","TildeEqual":"≃","TildeFullEqual":"≅","TildeTilde":"≈","timesbar":"⨱","timesb":"⊠","times":"×","timesd":"⨰","tint":"∭","toea":"⤨","topbot":"⌶","topcir":"⫱","top":"⊤","Topf":"𝕋","topf":"𝕥","topfork":"⫚","tosa":"⤩","tprime":"‴","trade":"™","TRADE":"™","triangle":"▵","triangledown":"▿","triangleleft":"◃","trianglelefteq":"⊴","triangleq":"≜","triangleright":"▹","trianglerighteq":"⊵","tridot":"◬","trie":"≜","triminus":"⨺","TripleDot":"⃛","triplus":"⨹","trisb":"⧍","tritime":"⨻","trpezium":"⏢","Tscr":"𝒯","tscr":"𝓉","TScy":"Ц","tscy":"ц","TSHcy":"Ћ","tshcy":"ћ","Tstrok":"Ŧ","tstrok":"ŧ","twixt":"≬","twoheadleftarrow":"↞","twoheadrightarrow":"↠","Uacute":"Ú","uacute":"ú","uarr":"↑","Uarr":"↟","uArr":"⇑","Uarrocir":"⥉","Ubrcy":"Ў","ubrcy":"ў","Ubreve":"Ŭ","ubreve":"ŭ","Ucirc":"Û","ucirc":"û","Ucy":"У","ucy":"у","udarr":"⇅","Udblac":"Ű","udblac":"ű","udhar":"⥮","ufisht":"⥾","Ufr":"𝔘","ufr":"𝔲","Ugrave":"Ù","ugrave":"ù","uHar":"⥣","uharl":"↿","uharr":"↾","uhblk":"▀","ulcorn":"⌜","ulcorner":"⌜","ulcrop":"⌏","ultri":"◸","Umacr":"Ū","umacr":"ū","uml":"¨","UnderBar":"_","UnderBrace":"⏟","UnderBracket":"⎵","UnderParenthesis":"⏝","Union":"⋃","UnionPlus":"⊎","Uogon":"Ų","uogon":"ų","Uopf":"𝕌","uopf":"𝕦","UpArrowBar":"⤒","uparrow":"↑","UpArrow":"↑","Uparrow":"⇑","UpArrowDownArrow":"⇅","updownarrow":"↕","UpDownArrow":"↕","Updownarrow":"⇕","UpEquilibrium":"⥮","upharpoonleft":"↿","upharpoonright":"↾","uplus":"⊎","UpperLeftArrow":"↖","UpperRightArrow":"↗","upsi":"υ","Upsi":"ϒ","upsih":"ϒ","Upsilon":"Υ","upsilon":"υ","UpTeeArrow":"↥","UpTee":"⊥","upuparrows":"⇈","urcorn":"⌝","urcorner":"⌝","urcrop":"⌎","Uring":"Ů","uring":"ů","urtri":"◹","Uscr":"𝒰","uscr":"𝓊","utdot":"⋰","Utilde":"Ũ","utilde":"ũ","utri":"▵","utrif":"▴","uuarr":"⇈","Uuml":"Ü","uuml":"ü","uwangle":"⦧","vangrt":"⦜","varepsilon":"ϵ","varkappa":"ϰ","varnothing":"∅","varphi":"ϕ","varpi":"ϖ","varpropto":"∝","varr":"↕","vArr":"⇕","varrho":"ϱ","varsigma":"ς","varsubsetneq":"⊊︀","varsubsetneqq":"⫋︀","varsupsetneq":"⊋︀","varsupsetneqq":"⫌︀","vartheta":"ϑ","vartriangleleft":"⊲","vartriangleright":"⊳","vBar":"⫨","Vbar":"⫫","vBarv":"⫩","Vcy":"В","vcy":"в","vdash":"⊢","vDash":"⊨","Vdash":"⊩","VDash":"⊫","Vdashl":"⫦","veebar":"⊻","vee":"∨","Vee":"⋁","veeeq":"≚","vellip":"⋮","verbar":"|","Verbar":"‖","vert":"|","Vert":"‖","VerticalBar":"∣","VerticalLine":"|","VerticalSeparator":"❘","VerticalTilde":"≀","VeryThinSpace":" ","Vfr":"𝔙","vfr":"𝔳","vltri":"⊲","vnsub":"⊂⃒","vnsup":"⊃⃒","Vopf":"𝕍","vopf":"𝕧","vprop":"∝","vrtri":"⊳","Vscr":"𝒱","vscr":"𝓋","vsubnE":"⫋︀","vsubne":"⊊︀","vsupnE":"⫌︀","vsupne":"⊋︀","Vvdash":"⊪","vzigzag":"⦚","Wcirc":"Ŵ","wcirc":"ŵ","wedbar":"⩟","wedge":"∧","Wedge":"⋀","wedgeq":"≙","weierp":"℘","Wfr":"𝔚","wfr":"𝔴","Wopf":"𝕎","wopf":"𝕨","wp":"℘","wr":"≀","wreath":"≀","Wscr":"𝒲","wscr":"𝓌","xcap":"⋂","xcirc":"◯","xcup":"⋃","xdtri":"▽","Xfr":"𝔛","xfr":"𝔵","xharr":"⟷","xhArr":"⟺","Xi":"Ξ","xi":"ξ","xlarr":"⟵","xlArr":"⟸","xmap":"⟼","xnis":"⋻","xodot":"⨀","Xopf":"𝕏","xopf":"𝕩","xoplus":"⨁","xotime":"⨂","xrarr":"⟶","xrArr":"⟹","Xscr":"𝒳","xscr":"𝓍","xsqcup":"⨆","xuplus":"⨄","xutri":"△","xvee":"⋁","xwedge":"⋀","Yacute":"Ý","yacute":"ý","YAcy":"Я","yacy":"я","Ycirc":"Ŷ","ycirc":"ŷ","Ycy":"Ы","ycy":"ы","yen":"¥","Yfr":"𝔜","yfr":"𝔶","YIcy":"Ї","yicy":"ї","Yopf":"𝕐","yopf":"𝕪","Yscr":"𝒴","yscr":"𝓎","YUcy":"Ю","yucy":"ю","yuml":"ÿ","Yuml":"Ÿ","Zacute":"Ź","zacute":"ź","Zcaron":"Ž","zcaron":"ž","Zcy":"З","zcy":"з","Zdot":"Ż","zdot":"ż","zeetrf":"ℨ","ZeroWidthSpace":"​","Zeta":"Ζ","zeta":"ζ","zfr":"𝔷","Zfr":"ℨ","ZHcy":"Ж","zhcy":"ж","zigrarr":"⇝","zopf":"𝕫","Zopf":"ℤ","Zscr":"𝒵","zscr":"𝓏","zwj":"‍","zwnj":"‌"}
 
-/***/ },
-/* 7 */
-/***/ function(module, exports) {
+/***/ }),
+/* 64 */
+/***/ (function(module, exports) {
 
-	module.exports=/[!-#%-\*,-/:;\?@\[-\]_\{\}\xA1\xA7\xAB\xB6\xB7\xBB\xBF\u037E\u0387\u055A-\u055F\u0589\u058A\u05BE\u05C0\u05C3\u05C6\u05F3\u05F4\u0609\u060A\u060C\u060D\u061B\u061E\u061F\u066A-\u066D\u06D4\u0700-\u070D\u07F7-\u07F9\u0830-\u083E\u085E\u0964\u0965\u0970\u0AF0\u0DF4\u0E4F\u0E5A\u0E5B\u0F04-\u0F12\u0F14\u0F3A-\u0F3D\u0F85\u0FD0-\u0FD4\u0FD9\u0FDA\u104A-\u104F\u10FB\u1360-\u1368\u1400\u166D\u166E\u169B\u169C\u16EB-\u16ED\u1735\u1736\u17D4-\u17D6\u17D8-\u17DA\u1800-\u180A\u1944\u1945\u1A1E\u1A1F\u1AA0-\u1AA6\u1AA8-\u1AAD\u1B5A-\u1B60\u1BFC-\u1BFF\u1C3B-\u1C3F\u1C7E\u1C7F\u1CC0-\u1CC7\u1CD3\u2010-\u2027\u2030-\u2043\u2045-\u2051\u2053-\u205E\u207D\u207E\u208D\u208E\u2308-\u230B\u2329\u232A\u2768-\u2775\u27C5\u27C6\u27E6-\u27EF\u2983-\u2998\u29D8-\u29DB\u29FC\u29FD\u2CF9-\u2CFC\u2CFE\u2CFF\u2D70\u2E00-\u2E2E\u2E30-\u2E42\u3001-\u3003\u3008-\u3011\u3014-\u301F\u3030\u303D\u30A0\u30FB\uA4FE\uA4FF\uA60D-\uA60F\uA673\uA67E\uA6F2-\uA6F7\uA874-\uA877\uA8CE\uA8CF\uA8F8-\uA8FA\uA92E\uA92F\uA95F\uA9C1-\uA9CD\uA9DE\uA9DF\uAA5C-\uAA5F\uAADE\uAADF\uAAF0\uAAF1\uABEB\uFD3E\uFD3F\uFE10-\uFE19\uFE30-\uFE52\uFE54-\uFE61\uFE63\uFE68\uFE6A\uFE6B\uFF01-\uFF03\uFF05-\uFF0A\uFF0C-\uFF0F\uFF1A\uFF1B\uFF1F\uFF20\uFF3B-\uFF3D\uFF3F\uFF5B\uFF5D\uFF5F-\uFF65]|\uD800[\uDD00-\uDD02\uDF9F\uDFD0]|\uD801\uDD6F|\uD802[\uDC57\uDD1F\uDD3F\uDE50-\uDE58\uDE7F\uDEF0-\uDEF6\uDF39-\uDF3F\uDF99-\uDF9C]|\uD804[\uDC47-\uDC4D\uDCBB\uDCBC\uDCBE-\uDCC1\uDD40-\uDD43\uDD74\uDD75\uDDC5-\uDDC8\uDDCD\uDE38-\uDE3D]|\uD805[\uDCC6\uDDC1-\uDDC9\uDE41-\uDE43]|\uD809[\uDC70-\uDC74]|\uD81A[\uDE6E\uDE6F\uDEF5\uDF37-\uDF3B\uDF44]|\uD82F\uDC9F/
+	module.exports=/[!-#%-\*,-/:;\?@\[-\]_\{\}\xA1\xA7\xAB\xB6\xB7\xBB\xBF\u037E\u0387\u055A-\u055F\u0589\u058A\u05BE\u05C0\u05C3\u05C6\u05F3\u05F4\u0609\u060A\u060C\u060D\u061B\u061E\u061F\u066A-\u066D\u06D4\u0700-\u070D\u07F7-\u07F9\u0830-\u083E\u085E\u0964\u0965\u0970\u0AF0\u0DF4\u0E4F\u0E5A\u0E5B\u0F04-\u0F12\u0F14\u0F3A-\u0F3D\u0F85\u0FD0-\u0FD4\u0FD9\u0FDA\u104A-\u104F\u10FB\u1360-\u1368\u1400\u166D\u166E\u169B\u169C\u16EB-\u16ED\u1735\u1736\u17D4-\u17D6\u17D8-\u17DA\u1800-\u180A\u1944\u1945\u1A1E\u1A1F\u1AA0-\u1AA6\u1AA8-\u1AAD\u1B5A-\u1B60\u1BFC-\u1BFF\u1C3B-\u1C3F\u1C7E\u1C7F\u1CC0-\u1CC7\u1CD3\u2010-\u2027\u2030-\u2043\u2045-\u2051\u2053-\u205E\u207D\u207E\u208D\u208E\u2308-\u230B\u2329\u232A\u2768-\u2775\u27C5\u27C6\u27E6-\u27EF\u2983-\u2998\u29D8-\u29DB\u29FC\u29FD\u2CF9-\u2CFC\u2CFE\u2CFF\u2D70\u2E00-\u2E2E\u2E30-\u2E44\u3001-\u3003\u3008-\u3011\u3014-\u301F\u3030\u303D\u30A0\u30FB\uA4FE\uA4FF\uA60D-\uA60F\uA673\uA67E\uA6F2-\uA6F7\uA874-\uA877\uA8CE\uA8CF\uA8F8-\uA8FA\uA8FC\uA92E\uA92F\uA95F\uA9C1-\uA9CD\uA9DE\uA9DF\uAA5C-\uAA5F\uAADE\uAADF\uAAF0\uAAF1\uABEB\uFD3E\uFD3F\uFE10-\uFE19\uFE30-\uFE52\uFE54-\uFE61\uFE63\uFE68\uFE6A\uFE6B\uFF01-\uFF03\uFF05-\uFF0A\uFF0C-\uFF0F\uFF1A\uFF1B\uFF1F\uFF20\uFF3B-\uFF3D\uFF3F\uFF5B\uFF5D\uFF5F-\uFF65]|\uD800[\uDD00-\uDD02\uDF9F\uDFD0]|\uD801\uDD6F|\uD802[\uDC57\uDD1F\uDD3F\uDE50-\uDE58\uDE7F\uDEF0-\uDEF6\uDF39-\uDF3F\uDF99-\uDF9C]|\uD804[\uDC47-\uDC4D\uDCBB\uDCBC\uDCBE-\uDCC1\uDD40-\uDD43\uDD74\uDD75\uDDC5-\uDDC9\uDDCD\uDDDB\uDDDD-\uDDDF\uDE38-\uDE3D\uDEA9]|\uD805[\uDC4B-\uDC4F\uDC5B\uDC5D\uDCC6\uDDC1-\uDDD7\uDE41-\uDE43\uDE60-\uDE6C\uDF3C-\uDF3E]|\uD807[\uDC41-\uDC45\uDC70\uDC71]|\uD809[\uDC70-\uDC74]|\uD81A[\uDE6E\uDE6F\uDEF5\uDF37-\uDF3B\uDF44]|\uD82F\uDC9F|\uD836[\uDE87-\uDE8B]|\uD83A[\uDD5E\uDD5F]/
 
-/***/ },
-/* 8 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 65 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 
-	module.exports.encode = __webpack_require__(9);
-	module.exports.decode = __webpack_require__(10);
-	module.exports.format = __webpack_require__(11);
-	module.exports.parse  = __webpack_require__(12);
+	module.exports.encode = __webpack_require__(66);
+	module.exports.decode = __webpack_require__(67);
+	module.exports.format = __webpack_require__(68);
+	module.exports.parse  = __webpack_require__(69);
 
 
-/***/ },
-/* 9 */
-/***/ function(module, exports) {
+/***/ }),
+/* 66 */
+/***/ (function(module, exports) {
 
 	
 	'use strict';
@@ -3423,9 +2293,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = encode;
 
 
-/***/ },
-/* 10 */
-/***/ function(module, exports) {
+/***/ }),
+/* 67 */
+/***/ (function(module, exports) {
 
 	
 	'use strict';
@@ -3551,9 +2421,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = decode;
 
 
-/***/ },
-/* 11 */
-/***/ function(module, exports) {
+/***/ }),
+/* 68 */
+/***/ (function(module, exports) {
 
 	
 	'use strict';
@@ -3582,9 +2452,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 12 */
-/***/ function(module, exports) {
+/***/ }),
+/* 69 */
+/***/ (function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
 	//
@@ -3900,58 +2770,59 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = urlParse;
 
 
-/***/ },
-/* 13 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 70 */
+/***/ (function(module, exports, __webpack_require__) {
 
-	
-	module.exports.Any = __webpack_require__(14);
-	module.exports.Cc  = __webpack_require__(15);
-	module.exports.Cf  = __webpack_require__(16);
-	module.exports.P   = __webpack_require__(7);
-	module.exports.Z   = __webpack_require__(17);
+	'use strict';
+
+	exports.Any = __webpack_require__(71);
+	exports.Cc  = __webpack_require__(72);
+	exports.Cf  = __webpack_require__(73);
+	exports.P   = __webpack_require__(64);
+	exports.Z   = __webpack_require__(74);
 
 
-/***/ },
-/* 14 */
-/***/ function(module, exports) {
+/***/ }),
+/* 71 */
+/***/ (function(module, exports) {
 
-	module.exports=/[\0-\uD7FF\uDC00-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF]/
+	module.exports=/[\0-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF]/
 
-/***/ },
-/* 15 */
-/***/ function(module, exports) {
+/***/ }),
+/* 72 */
+/***/ (function(module, exports) {
 
 	module.exports=/[\0-\x1F\x7F-\x9F]/
 
-/***/ },
-/* 16 */
-/***/ function(module, exports) {
+/***/ }),
+/* 73 */
+/***/ (function(module, exports) {
 
-	module.exports=/[\xAD\u0600-\u0605\u061C\u06DD\u070F\u180E\u200B-\u200F\u202A-\u202E\u2060-\u2064\u2066-\u206F\uFEFF\uFFF9-\uFFFB]|\uD804\uDCBD|\uD82F[\uDCA0-\uDCA3]|\uD834[\uDD73-\uDD7A]|\uDB40[\uDC01\uDC20-\uDC7F]/
+	module.exports=/[\xAD\u0600-\u0605\u061C\u06DD\u070F\u08E2\u180E\u200B-\u200F\u202A-\u202E\u2060-\u2064\u2066-\u206F\uFEFF\uFFF9-\uFFFB]|\uD804\uDCBD|\uD82F[\uDCA0-\uDCA3]|\uD834[\uDD73-\uDD7A]|\uDB40[\uDC01\uDC20-\uDC7F]/
 
-/***/ },
-/* 17 */
-/***/ function(module, exports) {
+/***/ }),
+/* 74 */
+/***/ (function(module, exports) {
 
-	module.exports=/[ \xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000]/
+	module.exports=/[ \xA0\u1680\u2000-\u200A\u202F\u205F\u3000]/
 
-/***/ },
-/* 18 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 75 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// Just a shortcut for bulk export
 	'use strict';
 
 
-	exports.parseLinkLabel       = __webpack_require__(19);
-	exports.parseLinkDestination = __webpack_require__(20);
-	exports.parseLinkTitle       = __webpack_require__(21);
+	exports.parseLinkLabel       = __webpack_require__(76);
+	exports.parseLinkDestination = __webpack_require__(77);
+	exports.parseLinkTitle       = __webpack_require__(78);
 
 
-/***/ },
-/* 19 */
-/***/ function(module, exports) {
+/***/ }),
+/* 76 */
+/***/ (function(module, exports) {
 
 	// Parse link label
 	//
@@ -4003,17 +2874,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 20 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 77 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// Parse link destination
 	//
 	'use strict';
 
 
-	var isSpace     = __webpack_require__(4).isSpace;
-	var unescapeAll = __webpack_require__(4).unescapeAll;
+	var isSpace     = __webpack_require__(61).isSpace;
+	var unescapeAll = __webpack_require__(61).unescapeAll;
 
 
 	module.exports = function parseLinkDestination(str, pos, max) {
@@ -4089,16 +2960,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 21 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 78 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// Parse link title
 	//
 	'use strict';
 
 
-	var unescapeAll = __webpack_require__(4).unescapeAll;
+	var unescapeAll = __webpack_require__(61).unescapeAll;
 
 
 	module.exports = function parseLinkTitle(str, pos, max) {
@@ -4148,9 +3019,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 22 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 79 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * class Renderer
@@ -4162,9 +3033,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 
 
-	var assign          = __webpack_require__(4).assign;
-	var unescapeAll     = __webpack_require__(4).unescapeAll;
-	var escapeHtml      = __webpack_require__(4).escapeHtml;
+	var assign          = __webpack_require__(61).assign;
+	var unescapeAll     = __webpack_require__(61).unescapeAll;
+	var escapeHtml      = __webpack_require__(61).escapeHtml;
 
 
 	////////////////////////////////////////////////////////////////////////////////
@@ -4172,13 +3043,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	var default_rules = {};
 
 
-	default_rules.code_inline = function (tokens, idx /*, options, env */) {
-	  return '<code>' + escapeHtml(tokens[idx].content) + '</code>';
+	default_rules.code_inline = function (tokens, idx, options, env, slf) {
+	  var token = tokens[idx],
+	      attrs = slf.renderAttrs(token);
+
+	  return  '<code' + (attrs ? ' ' + attrs : '') + '>' +
+	          escapeHtml(tokens[idx].content) +
+	          '</code>';
 	};
 
 
-	default_rules.code_block = function (tokens, idx /*, options, env */) {
-	  return '<pre><code>' + escapeHtml(tokens[idx].content) + '</code></pre>\n';
+	default_rules.code_block = function (tokens, idx, options, env, slf) {
+	  var token = tokens[idx],
+	      attrs = slf.renderAttrs(token);
+
+	  return  '<pre' + (attrs ? ' ' + attrs : '') + '><code>' +
+	          escapeHtml(tokens[idx].content) +
+	          '</code></pre>\n';
 	};
 
 
@@ -4186,11 +3067,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var token = tokens[idx],
 	      info = token.info ? unescapeAll(token.info).trim() : '',
 	      langName = '',
-	      highlighted;
+	      highlighted, i, tmpAttrs, tmpToken;
 
 	  if (info) {
 	    langName = info.split(/\s+/g)[0];
-	    token.attrJoin('class', options.langPrefix + langName);
 	  }
 
 	  if (options.highlight) {
@@ -4202,6 +3082,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (highlighted.indexOf('<pre') === 0) {
 	    return highlighted + '\n';
 	  }
+
+	  // If language exists, inject class gently, without mudofying original token.
+	  // May be, one day we will add .clone() for token and simplify this part, but
+	  // now we prefer to keep things local.
+	  if (info) {
+	    i        = token.attrIndex('class');
+	    tmpAttrs = token.attrs ? token.attrs.slice() : [];
+
+	    if (i < 0) {
+	      tmpAttrs.push([ 'class', options.langPrefix + langName ]);
+	    } else {
+	      tmpAttrs[i] += ' ' + options.langPrefix + langName;
+	    }
+
+	    // Fake token just to render attributes
+	    tmpToken = {
+	      attrs: tmpAttrs
+	    };
+
+	    return  '<pre><code' + slf.renderAttrs(tmpToken) + '>'
+	          + highlighted
+	          + '</code></pre>\n';
+	  }
+
 
 	  return  '<pre><code' + slf.renderAttrs(token) + '>'
 	        + highlighted
@@ -4412,12 +3316,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * instead of simple escaping.
 	 **/
 	Renderer.prototype.renderInlineAsText = function (tokens, options, env) {
-	  var result = '',
-	      rules = this.rules;
+	  var result = '';
 
 	  for (var i = 0, len = tokens.length; i < len; i++) {
 	    if (tokens[i].type === 'text') {
-	      result += rules.text(tokens, i, options, env, this);
+	      result += tokens[i].content;
 	    } else if (tokens[i].type === 'image') {
 	      result += this.renderInlineAsText(tokens[i].children, options, env);
 	    }
@@ -4459,9 +3362,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = Renderer;
 
 
-/***/ },
-/* 23 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 80 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/** internal
 	 * class Core
@@ -4472,16 +3375,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 
 
-	var Ruler  = __webpack_require__(24);
+	var Ruler  = __webpack_require__(81);
 
 
 	var _rules = [
-	  [ 'normalize',      __webpack_require__(25)      ],
-	  [ 'block',          __webpack_require__(26)          ],
-	  [ 'inline',         __webpack_require__(27)         ],
-	  [ 'linkify',        __webpack_require__(28)        ],
-	  [ 'replacements',   __webpack_require__(29)   ],
-	  [ 'smartquotes',    __webpack_require__(30)    ]
+	  [ 'normalize',      __webpack_require__(82)      ],
+	  [ 'block',          __webpack_require__(83)          ],
+	  [ 'inline',         __webpack_require__(84)         ],
+	  [ 'linkify',        __webpack_require__(85)        ],
+	  [ 'replacements',   __webpack_require__(86)   ],
+	  [ 'smartquotes',    __webpack_require__(87)    ]
 	];
 
 
@@ -4517,15 +3420,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	};
 
-	Core.prototype.State = __webpack_require__(31);
+	Core.prototype.State = __webpack_require__(88);
 
 
 	module.exports = Core;
 
 
-/***/ },
-/* 24 */
-/***/ function(module, exports) {
+/***/ }),
+/* 81 */
+/***/ (function(module, exports) {
 
 	/**
 	 * class Ruler
@@ -4881,16 +3784,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = Ruler;
 
 
-/***/ },
-/* 25 */
-/***/ function(module, exports) {
+/***/ }),
+/* 82 */
+/***/ (function(module, exports) {
 
 	// Normalize input string
 
 	'use strict';
 
 
-	var NEWLINES_RE  = /\r[\n\u0085]|[\u2424\u2028\u0085]/g;
+	var NEWLINES_RE  = /\r[\n\u0085]?|[\u2424\u2028\u0085]/g;
 	var NULL_RE      = /\u0000/g;
 
 
@@ -4907,9 +3810,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 26 */
-/***/ function(module, exports) {
+/***/ }),
+/* 83 */
+/***/ (function(module, exports) {
 
 	'use strict';
 
@@ -4929,9 +3832,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 27 */
-/***/ function(module, exports) {
+/***/ }),
+/* 84 */
+/***/ (function(module, exports) {
 
 	'use strict';
 
@@ -4948,9 +3851,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 28 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 85 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// Replace link-like texts with link nodes.
 	//
@@ -4959,7 +3862,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 
 
-	var arrayReplaceAt = __webpack_require__(4).arrayReplaceAt;
+	var arrayReplaceAt = __webpack_require__(61).arrayReplaceAt;
 
 
 	function isLinkOpen(str) {
@@ -5087,9 +3990,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 29 */
-/***/ function(module, exports) {
+/***/ }),
+/* 86 */
+/***/ (function(module, exports) {
 
 	// Simple typographyc replacements
 	//
@@ -5182,18 +4085,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 30 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 87 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// Convert straight quotation marks to typographic ones
 	//
 	'use strict';
 
 
-	var isWhiteSpace   = __webpack_require__(4).isWhiteSpace;
-	var isPunctChar    = __webpack_require__(4).isPunctChar;
-	var isMdAsciiPunct = __webpack_require__(4).isMdAsciiPunct;
+	var isWhiteSpace   = __webpack_require__(61).isWhiteSpace;
+	var isPunctChar    = __webpack_require__(61).isPunctChar;
+	var isMdAsciiPunct = __webpack_require__(61).isMdAsciiPunct;
 
 	var QUOTE_TEST_RE = /['"]/;
 	var QUOTE_RE = /['"]/g;
@@ -5381,15 +4284,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 31 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 88 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// Core state object
 	//
 	'use strict';
 
-	var Token = __webpack_require__(32);
+	var Token = __webpack_require__(89);
 
 
 	function StateCore(src, md, env) {
@@ -5407,9 +4310,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = StateCore;
 
 
-/***/ },
-/* 32 */
-/***/ function(module, exports) {
+/***/ }),
+/* 89 */
+/***/ (function(module, exports) {
 
 	// Token class
 
@@ -5577,6 +4480,20 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 	/**
+	 * Token.attrGet(name)
+	 *
+	 * Get the value of attribute `name`, or null if it does not exist.
+	 **/
+	Token.prototype.attrGet = function attrGet(name) {
+	  var idx = this.attrIndex(name), value = null;
+	  if (idx >= 0) {
+	    value = this.attrs[idx][1];
+	  }
+	  return value;
+	};
+
+
+	/**
 	 * Token.attrJoin(name, value)
 	 *
 	 * Join value to existing attribute via space. Or create new attribute if not
@@ -5596,9 +4513,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = Token;
 
 
-/***/ },
-/* 33 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 90 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/** internal
 	 * class ParserBlock
@@ -5608,23 +4525,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 
 
-	var Ruler           = __webpack_require__(24);
+	var Ruler           = __webpack_require__(81);
 
 
 	var _rules = [
 	  // First 2 params - rule name & source. Secondary array - list of rules,
 	  // which can be terminated by this one.
-	  [ 'table',      __webpack_require__(34),      [ 'paragraph', 'reference' ] ],
-	  [ 'code',       __webpack_require__(35) ],
-	  [ 'fence',      __webpack_require__(36),      [ 'paragraph', 'reference', 'blockquote', 'list' ] ],
-	  [ 'blockquote', __webpack_require__(37), [ 'paragraph', 'reference', 'list' ] ],
-	  [ 'hr',         __webpack_require__(38),         [ 'paragraph', 'reference', 'blockquote', 'list' ] ],
-	  [ 'list',       __webpack_require__(39),       [ 'paragraph', 'reference', 'blockquote' ] ],
-	  [ 'reference',  __webpack_require__(40) ],
-	  [ 'heading',    __webpack_require__(41),    [ 'paragraph', 'reference', 'blockquote' ] ],
-	  [ 'lheading',   __webpack_require__(42) ],
-	  [ 'html_block', __webpack_require__(43), [ 'paragraph', 'reference', 'blockquote' ] ],
-	  [ 'paragraph',  __webpack_require__(46) ]
+	  [ 'table',      __webpack_require__(91),      [ 'paragraph', 'reference' ] ],
+	  [ 'code',       __webpack_require__(92) ],
+	  [ 'fence',      __webpack_require__(93),      [ 'paragraph', 'reference', 'blockquote', 'list' ] ],
+	  [ 'blockquote', __webpack_require__(94), [ 'paragraph', 'reference', 'list' ] ],
+	  [ 'hr',         __webpack_require__(95),         [ 'paragraph', 'reference', 'blockquote', 'list' ] ],
+	  [ 'list',       __webpack_require__(96),       [ 'paragraph', 'reference', 'blockquote' ] ],
+	  [ 'reference',  __webpack_require__(97) ],
+	  [ 'heading',    __webpack_require__(98),    [ 'paragraph', 'reference', 'blockquote' ] ],
+	  [ 'lheading',   __webpack_require__(99) ],
+	  [ 'html_block', __webpack_require__(100), [ 'paragraph', 'reference', 'blockquote' ] ],
+	  [ 'paragraph',  __webpack_require__(103) ]
 	];
 
 
@@ -5721,15 +4638,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-	ParserBlock.prototype.State = __webpack_require__(47);
+	ParserBlock.prototype.State = __webpack_require__(104);
 
 
 	module.exports = ParserBlock;
 
 
-/***/ },
-/* 34 */
-/***/ function(module, exports) {
+/***/ }),
+/* 91 */
+/***/ (function(module, exports) {
 
 	// GFM table, non-standard
 
@@ -5907,9 +4824,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 35 */
-/***/ function(module, exports) {
+/***/ }),
+/* 92 */
+/***/ (function(module, exports) {
 
 	// Code block (4 spaces padded)
 
@@ -5957,9 +4874,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 36 */
-/***/ function(module, exports) {
+/***/ }),
+/* 93 */
+/***/ (function(module, exports) {
 
 	// fences (``` lang, ~~~ lang)
 
@@ -6054,15 +4971,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 37 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 94 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// Block quotes
 
 	'use strict';
 
-	var isSpace = __webpack_require__(4).isSpace;
+	var isSpace = __webpack_require__(61).isSpace;
 
 
 	module.exports = function blockquote(state, startLine, endLine, silent) {
@@ -6234,15 +5151,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 38 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 95 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// Horizontal rule
 
 	'use strict';
 
-	var isSpace = __webpack_require__(4).isSpace;
+	var isSpace = __webpack_require__(61).isSpace;
 
 
 	module.exports = function hr(state, startLine, endLine, silent) {
@@ -6282,15 +5199,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 39 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 96 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// Lists
 
 	'use strict';
 
-	var isSpace = __webpack_require__(4).isSpace;
+	var isSpace = __webpack_require__(61).isSpace;
 
 
 	// Search `[-+*][\n ]`, returns next pos arter marker on success
@@ -6598,17 +5515,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 40 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 97 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 
-	var parseLinkDestination = __webpack_require__(20);
-	var parseLinkTitle       = __webpack_require__(21);
-	var normalizeReference   = __webpack_require__(4).normalizeReference;
-	var isSpace              = __webpack_require__(4).isSpace;
+	var parseLinkDestination = __webpack_require__(77);
+	var parseLinkTitle       = __webpack_require__(78);
+	var normalizeReference   = __webpack_require__(61).normalizeReference;
+	var isSpace              = __webpack_require__(61).isSpace;
 
 
 	module.exports = function reference(state, startLine, _endLine, silent) {
@@ -6795,15 +5712,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 41 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 98 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// heading (#, ##, ...)
 
 	'use strict';
 
-	var isSpace = __webpack_require__(4).isSpace;
+	var isSpace = __webpack_require__(61).isSpace;
 
 
 	module.exports = function heading(state, startLine, endLine, silent) {
@@ -6853,9 +5770,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 42 */
-/***/ function(module, exports) {
+/***/ }),
+/* 99 */
+/***/ (function(module, exports) {
 
 	// lheading (---, ===)
 
@@ -6934,17 +5851,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 43 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 100 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// HTML block
 
 	'use strict';
 
 
-	var block_names = __webpack_require__(44);
-	var HTML_OPEN_CLOSE_TAG_RE = __webpack_require__(45).HTML_OPEN_CLOSE_TAG_RE;
+	var block_names = __webpack_require__(101);
+	var HTML_OPEN_CLOSE_TAG_RE = __webpack_require__(102).HTML_OPEN_CLOSE_TAG_RE;
 
 	// An array of opening and corresponding closing sequences for html tags,
 	// last argument defines whether it can terminate a paragraph or not
@@ -7011,9 +5928,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 44 */
-/***/ function(module, exports) {
+/***/ }),
+/* 101 */
+/***/ (function(module, exports) {
 
 	// List of valid html blocks names, accorting to commonmark spec
 	// http://jgm.github.io/CommonMark/spec.html#html-blocks
@@ -7085,9 +6002,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	];
 
 
-/***/ },
-/* 45 */
-/***/ function(module, exports) {
+/***/ }),
+/* 102 */
+/***/ (function(module, exports) {
 
 	// Regexps to match html elements
 
@@ -7119,9 +6036,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports.HTML_OPEN_CLOSE_TAG_RE = HTML_OPEN_CLOSE_TAG_RE;
 
 
-/***/ },
-/* 46 */
-/***/ function(module, exports) {
+/***/ }),
+/* 103 */
+/***/ (function(module, exports) {
 
 	// Paragraph
 
@@ -7172,16 +6089,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 47 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 104 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// Parser state class
 
 	'use strict';
 
-	var Token = __webpack_require__(32);
-	var isSpace = __webpack_require__(4).isSpace;
+	var Token = __webpack_require__(89);
+	var isSpace = __webpack_require__(61).isSpace;
 
 
 	function StateBlock(src, md, env, tokens) {
@@ -7385,9 +6302,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = StateBlock;
 
 
-/***/ },
-/* 48 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 105 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/** internal
 	 * class ParserInline
@@ -7397,31 +6314,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 
 
-	var Ruler           = __webpack_require__(24);
+	var Ruler           = __webpack_require__(81);
 
 
 	////////////////////////////////////////////////////////////////////////////////
 	// Parser rules
 
 	var _rules = [
-	  [ 'text',            __webpack_require__(49) ],
-	  [ 'newline',         __webpack_require__(50) ],
-	  [ 'escape',          __webpack_require__(51) ],
-	  [ 'backticks',       __webpack_require__(52) ],
-	  [ 'strikethrough',   __webpack_require__(53).tokenize ],
-	  [ 'emphasis',        __webpack_require__(54).tokenize ],
-	  [ 'link',            __webpack_require__(55) ],
-	  [ 'image',           __webpack_require__(56) ],
-	  [ 'autolink',        __webpack_require__(57) ],
-	  [ 'html_inline',     __webpack_require__(58) ],
-	  [ 'entity',          __webpack_require__(59) ]
+	  [ 'text',            __webpack_require__(106) ],
+	  [ 'newline',         __webpack_require__(107) ],
+	  [ 'escape',          __webpack_require__(108) ],
+	  [ 'backticks',       __webpack_require__(109) ],
+	  [ 'strikethrough',   __webpack_require__(110).tokenize ],
+	  [ 'emphasis',        __webpack_require__(111).tokenize ],
+	  [ 'link',            __webpack_require__(112) ],
+	  [ 'image',           __webpack_require__(113) ],
+	  [ 'autolink',        __webpack_require__(114) ],
+	  [ 'html_inline',     __webpack_require__(115) ],
+	  [ 'entity',          __webpack_require__(116) ]
 	];
 
 	var _rules2 = [
-	  [ 'balance_pairs',   __webpack_require__(60) ],
-	  [ 'strikethrough',   __webpack_require__(53).postProcess ],
-	  [ 'emphasis',        __webpack_require__(54).postProcess ],
-	  [ 'text_collapse',   __webpack_require__(61) ]
+	  [ 'balance_pairs',   __webpack_require__(117) ],
+	  [ 'strikethrough',   __webpack_require__(110).postProcess ],
+	  [ 'emphasis',        __webpack_require__(111).postProcess ],
+	  [ 'text_collapse',   __webpack_require__(118) ]
 	];
 
 
@@ -7562,15 +6479,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-	ParserInline.prototype.State = __webpack_require__(62);
+	ParserInline.prototype.State = __webpack_require__(119);
 
 
 	module.exports = ParserInline;
 
 
-/***/ },
-/* 49 */
-/***/ function(module, exports) {
+/***/ }),
+/* 106 */
+/***/ (function(module, exports) {
 
 	// Skip text characters for text token, place those to pending buffer
 	// and increment current pos
@@ -7663,9 +6580,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};*/
 
 
-/***/ },
-/* 50 */
-/***/ function(module, exports) {
+/***/ }),
+/* 107 */
+/***/ (function(module, exports) {
 
 	// Proceess '\n'
 
@@ -7708,15 +6625,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 51 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 108 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// Proceess escaped chars and hardbreaks
 
 	'use strict';
 
-	var isSpace = __webpack_require__(4).isSpace;
+	var isSpace = __webpack_require__(61).isSpace;
 
 	var ESCAPED = [];
 
@@ -7766,9 +6683,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 52 */
-/***/ function(module, exports) {
+/***/ }),
+/* 109 */
+/***/ (function(module, exports) {
 
 	// Parse backticks
 
@@ -7815,9 +6732,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 53 */
-/***/ function(module, exports) {
+/***/ }),
+/* 110 */
+/***/ (function(module, exports) {
 
 	// ~~strike through~~
 	//
@@ -7938,9 +6855,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 54 */
-/***/ function(module, exports) {
+/***/ }),
+/* 111 */
+/***/ (function(module, exports) {
 
 	// Process *this* and _that_
 	//
@@ -8067,19 +6984,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 55 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 112 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// Process [link](<to> "stuff")
 
 	'use strict';
 
-	var parseLinkLabel       = __webpack_require__(19);
-	var parseLinkDestination = __webpack_require__(20);
-	var parseLinkTitle       = __webpack_require__(21);
-	var normalizeReference   = __webpack_require__(4).normalizeReference;
-	var isSpace              = __webpack_require__(4).isSpace;
+	var parseLinkLabel       = __webpack_require__(76);
+	var parseLinkDestination = __webpack_require__(77);
+	var parseLinkTitle       = __webpack_require__(78);
+	var normalizeReference   = __webpack_require__(61).normalizeReference;
+	var isSpace              = __webpack_require__(61).isSpace;
 
 
 	module.exports = function link(state, silent) {
@@ -8220,19 +7137,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 56 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 113 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// Process ![image](<src> "title")
 
 	'use strict';
 
-	var parseLinkLabel       = __webpack_require__(19);
-	var parseLinkDestination = __webpack_require__(20);
-	var parseLinkTitle       = __webpack_require__(21);
-	var normalizeReference   = __webpack_require__(4).normalizeReference;
-	var isSpace              = __webpack_require__(4).isSpace;
+	var parseLinkLabel       = __webpack_require__(76);
+	var parseLinkDestination = __webpack_require__(77);
+	var parseLinkTitle       = __webpack_require__(78);
+	var normalizeReference   = __webpack_require__(61).normalizeReference;
+	var isSpace              = __webpack_require__(61).isSpace;
 
 
 	module.exports = function image(state, silent) {
@@ -8381,9 +7298,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 57 */
-/***/ function(module, exports) {
+/***/ }),
+/* 114 */
+/***/ (function(module, exports) {
 
 	// Process autolinks '<protocol:...>'
 
@@ -8459,16 +7376,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 58 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 115 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// Process html tags
 
 	'use strict';
 
 
-	var HTML_TAG_RE = __webpack_require__(45).HTML_TAG_RE;
+	var HTML_TAG_RE = __webpack_require__(102).HTML_TAG_RE;
 
 
 	function isLetter(ch) {
@@ -8512,18 +7429,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 59 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 116 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// Process html entity - &#123;, &#xAF;, &quot;, ...
 
 	'use strict';
 
-	var entities          = __webpack_require__(5);
-	var has               = __webpack_require__(4).has;
-	var isValidEntityCode = __webpack_require__(4).isValidEntityCode;
-	var fromCodePoint     = __webpack_require__(4).fromCodePoint;
+	var entities          = __webpack_require__(62);
+	var has               = __webpack_require__(61).has;
+	var isValidEntityCode = __webpack_require__(61).isValidEntityCode;
+	var fromCodePoint     = __webpack_require__(61).fromCodePoint;
 
 
 	var DIGITAL_RE = /^&#((?:x[a-f0-9]{1,8}|[0-9]{1,8}));/i;
@@ -8566,9 +7483,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 60 */
-/***/ function(module, exports) {
+/***/ }),
+/* 117 */
+/***/ (function(module, exports) {
 
 	// For each opening emphasis-like marker find a matching closing one
 	//
@@ -8608,9 +7525,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 61 */
-/***/ function(module, exports) {
+/***/ }),
+/* 118 */
+/***/ (function(module, exports) {
 
 	// Merge adjacent text nodes into one, and re-calculate all token levels
 	//
@@ -8647,19 +7564,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 62 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 119 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	// Inline parser state
 
 	'use strict';
 
 
-	var Token          = __webpack_require__(32);
-	var isWhiteSpace   = __webpack_require__(4).isWhiteSpace;
-	var isPunctChar    = __webpack_require__(4).isPunctChar;
-	var isMdAsciiPunct = __webpack_require__(4).isMdAsciiPunct;
+	var Token          = __webpack_require__(89);
+	var isWhiteSpace   = __webpack_require__(61).isWhiteSpace;
+	var isPunctChar    = __webpack_require__(61).isPunctChar;
+	var isMdAsciiPunct = __webpack_require__(61).isMdAsciiPunct;
 
 
 	function StateInline(src, md, env, outTokens) {
@@ -8783,9 +7700,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = StateInline;
 
 
-/***/ },
-/* 63 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 120 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -8859,15 +7776,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var tail = text.slice(pos);
 
 	      if (!self.re.no_http) {
-	      // compile lazily, becayse "host"-containing variables can change on tlds update.
+	      // compile lazily, because "host"-containing variables can change on tlds update.
 	        self.re.no_http =  new RegExp(
-	          '^' + self.re.src_auth + self.re.src_host_port_strict + self.re.src_path, 'i'
+	          '^' +
+	          self.re.src_auth +
+	          // Don't allow single-level domains, because of false positives like '//test'
+	          // with code comments
+	          '(?:localhost|(?:(?:' + self.re.src_domain + ')\\.)+' + self.re.src_domain_root + ')' +
+	          self.re.src_port +
+	          self.re.src_host_terminator +
+	          self.re.src_path,
+
+	          'i'
 	        );
 	      }
 
 	      if (self.re.no_http.test(tail)) {
-	        // should not be `://`, that protects from errors in protocol name
+	        // should not be `://` & `///`, that protects from errors in protocol name
 	        if (pos >= 3 && text[pos - 3] === ':') { return 0; }
+	        if (pos >= 3 && text[pos - 3] === '/') { return 0; }
 	        return tail.match(self.re.no_http)[0].length;
 	      }
 	      return 0;
@@ -8929,7 +7856,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	function compile(self) {
 
 	  // Load & clone RE patterns.
-	  var re = self.re = assign({}, __webpack_require__(64));
+	  var re = self.re = assign({}, __webpack_require__(121));
 
 	  // Define dynamic patterns
 	  var tlds = self.__tlds__.slice();
@@ -9031,8 +7958,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                      .map(escapeRE)
 	                      .join('|');
 	  // (?!_) cause 1.5x slowdown
-	  self.re.schema_test   = RegExp('(^|(?!_)(?:>|' + re.src_ZPCc + '))(' + slist + ')', 'i');
-	  self.re.schema_search = RegExp('(^|(?!_)(?:>|' + re.src_ZPCc + '))(' + slist + ')', 'ig');
+	  self.re.schema_test   = RegExp('(^|(?!_)(?:[><]|' + re.src_ZPCc + '))(' + slist + ')', 'i');
+	  self.re.schema_search = RegExp('(^|(?!_)(?:[><]|' + re.src_ZPCc + '))(' + slist + ')', 'ig');
 
 	  self.re.pretest       = RegExp(
 	                            '(' + self.re.schema_test.source + ')|' +
@@ -9405,17 +8332,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = LinkifyIt;
 
 
-/***/ },
-/* 64 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 121 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	// Use direct extract instead of `regenerate` to reduse browserified size
-	var src_Any = exports.src_Any = __webpack_require__(14).source;
-	var src_Cc  = exports.src_Cc = __webpack_require__(15).source;
-	var src_Z   = exports.src_Z  = __webpack_require__(17).source;
-	var src_P   = exports.src_P  = __webpack_require__(7).source;
+	var src_Any = exports.src_Any = __webpack_require__(71).source;
+	var src_Cc  = exports.src_Cc = __webpack_require__(72).source;
+	var src_Z   = exports.src_Z  = __webpack_require__(74).source;
+	var src_P   = exports.src_P  = __webpack_require__(64).source;
 
 	// \p{\Z\P\Cc\CF} (white spaces + control + format + punctuation)
 	var src_ZPCc = exports.src_ZPCc = [ src_Z, src_P, src_Cc ].join('|');
@@ -9426,9 +8353,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	// All possible word characters (everything without punctuation, spaces & controls)
 	// Defined via punctuation & spaces to save space
 	// Should be something like \p{\L\N\S\M} (\w but without `_`)
-	var src_pseudo_letter       = '(?:(?!' + src_ZPCc + ')' + src_Any + ')';
+	var src_pseudo_letter       = '(?:(?!>|<|' + src_ZPCc + ')' + src_Any + ')';
 	// The same as abothe but without [0-9]
-	var src_pseudo_letter_non_d = '(?:(?![0-9]|' + src_ZPCc + ')' + src_Any + ')';
+	// var src_pseudo_letter_non_d = '(?:(?![0-9]|' + src_ZPCc + ')' + src_Any + ')';
 
 	////////////////////////////////////////////////////////////////////////////////
 
@@ -9436,7 +8363,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  '(?:(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)';
 
-	exports.src_auth    = '(?:(?:(?!' + src_ZCc + ').)+@)?';
+	// Prohibit [@/] in user/pass to avoid wrong domain fetch.
+	exports.src_auth    = '(?:(?:(?!' + src_ZCc + '|[@/]).)+@)?';
 
 	var src_port = exports.src_port =
 
@@ -9444,14 +8372,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var src_host_terminator = exports.src_host_terminator =
 
-	  '(?=$|' + src_ZPCc + ')(?!-|_|:\\d|\\.-|\\.(?!$|' + src_ZPCc + '))';
+	  '(?=$|>|<|' + src_ZPCc + ')(?!-|_|:\\d|\\.-|\\.(?!$|' + src_ZPCc + '))';
 
 	var src_path = exports.src_path =
 
 	  '(?:' +
 	    '[/?#]' +
 	      '(?:' +
-	        '(?!' + src_ZCc + '|[()[\\]{}.,"\'?!\\-]).|' +
+	        '(?!' + src_ZCc + '|[()[\\]{}.,"\'?!\\-<>]).|' +
 	        '\\[(?:(?!' + src_ZCc + '|\\]).)*\\]|' +
 	        '\\((?:(?!' + src_ZCc + '|[)]).)*\\)|' +
 	        '\\{(?:(?!' + src_ZCc + '|[}]).)*\\}|' +
@@ -9485,11 +8413,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var src_domain_root = exports.src_domain_root =
 
-	  // Can't have digits and dashes
+	  // Allow letters & digits (http://test1)
 	  '(?:' +
 	    src_xn +
 	    '|' +
-	    src_pseudo_letter_non_d + '{1,63}' +
+	    src_pseudo_letter + '{1,63}' +
 	  ')';
 
 	var src_domain = exports.src_domain =
@@ -9508,8 +8436,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	var src_host = exports.src_host =
 
 	  '(?:' +
-	    src_ip4 +
-	  '|' +
+	  // Don't need IP check, because digits are already allowed in normal domain names
+	  //   src_ip4 +
+	  // '|' +
 	    '(?:(?:(?:' + src_domain + ')\\.)*' + src_domain_root + ')' +
 	  ')';
 
@@ -9552,11 +8481,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	// Rude test fuzzy links by host, for quick deny
 	exports.tpl_host_fuzzy_test =
 
-	  'localhost|\\.\\d{1,3}\\.|(?:\\.(?:%TLDS%)(?:' + src_ZPCc + '|$))';
+	  'localhost|www\\.|\\.\\d{1,3}\\.|(?:\\.(?:%TLDS%)(?:' + src_ZPCc + '|>|$))';
 
 	exports.tpl_email_fuzzy =
 
-	    '(^|>|\\(|' + src_ZCc + ')(' + src_email_name + '@' + tpl_host_fuzzy_strict + ')';
+	    '(^|<|>|\\(|' + src_ZCc + ')(' + src_email_name + '@' + tpl_host_fuzzy_strict + ')';
 
 	exports.tpl_link_fuzzy =
 	    // Fuzzy link can't be prepended with .:/\- and non punctuation.
@@ -9571,9 +8500,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    '((?![$+<=>^`|])' + tpl_host_port_no_ip_fuzzy_strict + src_path + ')';
 
 
-/***/ },
-/* 65 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 122 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! https://mths.be/punycode v1.4.1 by @mathias */
 	;(function(root) {
@@ -10107,11 +9036,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	}(this));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(66)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(123)(module), (function() { return this; }())))
 
-/***/ },
-/* 66 */
-/***/ function(module, exports) {
+/***/ }),
+/* 123 */
+/***/ (function(module, exports) {
 
 	module.exports = function(module) {
 		if(!module.webpackPolyfill) {
@@ -10125,9 +9054,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 
-/***/ },
-/* 67 */
-/***/ function(module, exports) {
+/***/ }),
+/* 124 */
+/***/ (function(module, exports) {
 
 	// markdown-it default options
 
@@ -10172,9 +9101,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 68 */
-/***/ function(module, exports) {
+/***/ }),
+/* 125 */
+/***/ (function(module, exports) {
 
 	// "Zero" preset, with nothing enabled. Useful for manual configuring of simple
 	// modes. For example, to parse bold/italic only.
@@ -10240,9 +9169,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 69 */
-/***/ function(module, exports) {
+/***/ }),
+/* 126 */
+/***/ (function(module, exports) {
 
 	// Commonmark default options
 
@@ -10326,18 +9255,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 70 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 127 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 
-	var emojies_defs      = __webpack_require__(71);
-	var emojies_shortcuts = __webpack_require__(72);
-	var emoji_html        = __webpack_require__(73);
-	var emoji_replace     = __webpack_require__(74);
-	var normalize_opts    = __webpack_require__(75);
+	var emojies_defs      = __webpack_require__(128);
+	var emojies_shortcuts = __webpack_require__(129);
+	var emoji_html        = __webpack_require__(130);
+	var emoji_replace     = __webpack_require__(131);
+	var normalize_opts    = __webpack_require__(132);
 
 
 	module.exports = function emoji_plugin(md, options) {
@@ -10351,890 +9280,19 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  md.renderer.rules.emoji = emoji_html;
 
-	  md.core.ruler.push('emoji', emoji_replace(md, opts.defs, opts.shortcuts, opts.scanRE));
+	  md.core.ruler.push('emoji', emoji_replace(md, opts.defs, opts.shortcuts, opts.scanRE, opts.replaceRE));
 	};
 
 
-/***/ },
-/* 71 */
-/***/ function(module, exports) {
+/***/ }),
+/* 128 */
+/***/ (function(module, exports) {
 
-	module.exports = {
-		"100": "💯",
-		"1234": "🔢",
-		"smile": "😄",
-		"smiley": "😃",
-		"grinning": "😀",
-		"blush": "😊",
-		"relaxed": "☺️",
-		"wink": "😉",
-		"heart_eyes": "😍",
-		"kissing_heart": "😘",
-		"kissing_closed_eyes": "😚",
-		"kissing": "😗",
-		"kissing_smiling_eyes": "😙",
-		"stuck_out_tongue_winking_eye": "😜",
-		"stuck_out_tongue_closed_eyes": "😝",
-		"stuck_out_tongue": "😛",
-		"flushed": "😳",
-		"grin": "😁",
-		"pensive": "😔",
-		"relieved": "😌",
-		"unamused": "😒",
-		"disappointed": "😞",
-		"persevere": "😣",
-		"cry": "😢",
-		"joy": "😂",
-		"sob": "😭",
-		"sleepy": "😪",
-		"disappointed_relieved": "😥",
-		"cold_sweat": "😰",
-		"sweat_smile": "😅",
-		"sweat": "😓",
-		"weary": "😩",
-		"tired_face": "😫",
-		"fearful": "😨",
-		"scream": "😱",
-		"angry": "😠",
-		"rage": "😡",
-		"triumph": "😤",
-		"confounded": "😖",
-		"laughing": "😆",
-		"satisfied": "😆",
-		"yum": "😋",
-		"mask": "😷",
-		"sunglasses": "😎",
-		"sleeping": "😴",
-		"dizzy_face": "😵",
-		"astonished": "😲",
-		"worried": "😟",
-		"frowning": "😦",
-		"anguished": "😧",
-		"smiling_imp": "😈",
-		"imp": "👿",
-		"open_mouth": "😮",
-		"grimacing": "😬",
-		"neutral_face": "😐",
-		"confused": "😕",
-		"hushed": "😯",
-		"no_mouth": "😶",
-		"innocent": "😇",
-		"smirk": "😏",
-		"expressionless": "😑",
-		"man_with_gua_pi_mao": "👲",
-		"man_with_turban": "👳",
-		"cop": "👮",
-		"construction_worker": "👷",
-		"guardsman": "💂",
-		"baby": "👶",
-		"boy": "👦",
-		"girl": "👧",
-		"man": "👨",
-		"woman": "👩",
-		"older_man": "👴",
-		"older_woman": "👵",
-		"person_with_blond_hair": "👱",
-		"angel": "👼",
-		"princess": "👸",
-		"smiley_cat": "😺",
-		"smile_cat": "😸",
-		"heart_eyes_cat": "😻",
-		"kissing_cat": "😽",
-		"smirk_cat": "😼",
-		"scream_cat": "🙀",
-		"crying_cat_face": "😿",
-		"joy_cat": "😹",
-		"pouting_cat": "😾",
-		"japanese_ogre": "👹",
-		"japanese_goblin": "👺",
-		"see_no_evil": "🙈",
-		"hear_no_evil": "🙉",
-		"speak_no_evil": "🙊",
-		"skull": "💀",
-		"alien": "👽",
-		"hankey": "💩",
-		"poop": "💩",
-		"shit": "💩",
-		"fire": "🔥",
-		"sparkles": "✨",
-		"star2": "🌟",
-		"dizzy": "💫",
-		"boom": "💥",
-		"collision": "💥",
-		"anger": "💢",
-		"sweat_drops": "💦",
-		"droplet": "💧",
-		"zzz": "💤",
-		"dash": "💨",
-		"ear": "👂",
-		"eyes": "👀",
-		"nose": "👃",
-		"tongue": "👅",
-		"lips": "👄",
-		"+1": "👍",
-		"thumbsup": "👍",
-		"-1": "👎",
-		"thumbsdown": "👎",
-		"ok_hand": "👌",
-		"facepunch": "👊",
-		"punch": "👊",
-		"fist": "✊",
-		"v": "✌️",
-		"wave": "👋",
-		"hand": "✋",
-		"raised_hand": "✋",
-		"open_hands": "👐",
-		"point_up_2": "👆",
-		"point_down": "👇",
-		"point_right": "👉",
-		"point_left": "👈",
-		"raised_hands": "🙌",
-		"pray": "🙏",
-		"point_up": "☝️",
-		"clap": "👏",
-		"muscle": "💪",
-		"walking": "🚶",
-		"runner": "🏃",
-		"running": "🏃",
-		"dancer": "💃",
-		"couple": "👫",
-		"family": "👪",
-		"two_men_holding_hands": "👬",
-		"two_women_holding_hands": "👭",
-		"couplekiss": "💏",
-		"couple_with_heart": "💑",
-		"dancers": "👯",
-		"ok_woman": "🙆",
-		"no_good": "🙅",
-		"information_desk_person": "💁",
-		"raising_hand": "🙋",
-		"massage": "💆",
-		"haircut": "💇",
-		"nail_care": "💅",
-		"bride_with_veil": "👰",
-		"person_with_pouting_face": "🙎",
-		"person_frowning": "🙍",
-		"bow": "🙇",
-		"tophat": "🎩",
-		"crown": "👑",
-		"womans_hat": "👒",
-		"athletic_shoe": "👟",
-		"mans_shoe": "👞",
-		"shoe": "👞",
-		"sandal": "👡",
-		"high_heel": "👠",
-		"boot": "👢",
-		"shirt": "👕",
-		"tshirt": "👕",
-		"necktie": "👔",
-		"womans_clothes": "👚",
-		"dress": "👗",
-		"running_shirt_with_sash": "🎽",
-		"jeans": "👖",
-		"kimono": "👘",
-		"bikini": "👙",
-		"briefcase": "💼",
-		"handbag": "👜",
-		"pouch": "👝",
-		"purse": "👛",
-		"eyeglasses": "👓",
-		"ribbon": "🎀",
-		"closed_umbrella": "🌂",
-		"lipstick": "💄",
-		"yellow_heart": "💛",
-		"blue_heart": "💙",
-		"purple_heart": "💜",
-		"green_heart": "💚",
-		"heart": "❤️",
-		"broken_heart": "💔",
-		"heartpulse": "💗",
-		"heartbeat": "💓",
-		"two_hearts": "💕",
-		"sparkling_heart": "💖",
-		"revolving_hearts": "💞",
-		"cupid": "💘",
-		"love_letter": "💌",
-		"kiss": "💋",
-		"ring": "💍",
-		"gem": "💎",
-		"bust_in_silhouette": "👤",
-		"busts_in_silhouette": "👥",
-		"speech_balloon": "💬",
-		"footprints": "👣",
-		"thought_balloon": "💭",
-		"dog": "🐶",
-		"wolf": "🐺",
-		"cat": "🐱",
-		"mouse": "🐭",
-		"hamster": "🐹",
-		"rabbit": "🐰",
-		"frog": "🐸",
-		"tiger": "🐯",
-		"koala": "🐨",
-		"bear": "🐻",
-		"pig": "🐷",
-		"pig_nose": "🐽",
-		"cow": "🐮",
-		"boar": "🐗",
-		"monkey_face": "🐵",
-		"monkey": "🐒",
-		"horse": "🐴",
-		"sheep": "🐑",
-		"elephant": "🐘",
-		"panda_face": "🐼",
-		"penguin": "🐧",
-		"bird": "🐦",
-		"baby_chick": "🐤",
-		"hatched_chick": "🐥",
-		"hatching_chick": "🐣",
-		"chicken": "🐔",
-		"snake": "🐍",
-		"turtle": "🐢",
-		"bug": "🐛",
-		"bee": "🐝",
-		"honeybee": "🐝",
-		"ant": "🐜",
-		"beetle": "🐞",
-		"snail": "🐌",
-		"octopus": "🐙",
-		"shell": "🐚",
-		"tropical_fish": "🐠",
-		"fish": "🐟",
-		"dolphin": "🐬",
-		"flipper": "🐬",
-		"whale": "🐳",
-		"whale2": "🐋",
-		"cow2": "🐄",
-		"ram": "🐏",
-		"rat": "🐀",
-		"water_buffalo": "🐃",
-		"tiger2": "🐅",
-		"rabbit2": "🐇",
-		"dragon": "🐉",
-		"racehorse": "🐎",
-		"goat": "🐐",
-		"rooster": "🐓",
-		"dog2": "🐕",
-		"pig2": "🐖",
-		"mouse2": "🐁",
-		"ox": "🐂",
-		"dragon_face": "🐲",
-		"blowfish": "🐡",
-		"crocodile": "🐊",
-		"camel": "🐫",
-		"dromedary_camel": "🐪",
-		"leopard": "🐆",
-		"cat2": "🐈",
-		"poodle": "🐩",
-		"feet": "🐾",
-		"paw_prints": "🐾",
-		"bouquet": "💐",
-		"cherry_blossom": "🌸",
-		"tulip": "🌷",
-		"four_leaf_clover": "🍀",
-		"rose": "🌹",
-		"sunflower": "🌻",
-		"hibiscus": "🌺",
-		"maple_leaf": "🍁",
-		"leaves": "🍃",
-		"fallen_leaf": "🍂",
-		"herb": "🌿",
-		"ear_of_rice": "🌾",
-		"mushroom": "🍄",
-		"cactus": "🌵",
-		"palm_tree": "🌴",
-		"evergreen_tree": "🌲",
-		"deciduous_tree": "🌳",
-		"chestnut": "🌰",
-		"seedling": "🌱",
-		"blossom": "🌼",
-		"globe_with_meridians": "🌐",
-		"sun_with_face": "🌞",
-		"full_moon_with_face": "🌝",
-		"new_moon_with_face": "🌚",
-		"new_moon": "🌑",
-		"waxing_crescent_moon": "🌒",
-		"first_quarter_moon": "🌓",
-		"moon": "🌔",
-		"waxing_gibbous_moon": "🌔",
-		"full_moon": "🌕",
-		"waning_gibbous_moon": "🌖",
-		"last_quarter_moon": "🌗",
-		"waning_crescent_moon": "🌘",
-		"last_quarter_moon_with_face": "🌜",
-		"first_quarter_moon_with_face": "🌛",
-		"crescent_moon": "🌙",
-		"earth_africa": "🌍",
-		"earth_americas": "🌎",
-		"earth_asia": "🌏",
-		"volcano": "🌋",
-		"milky_way": "🌌",
-		"stars": "🌠",
-		"star": "⭐",
-		"sunny": "☀️",
-		"partly_sunny": "⛅",
-		"cloud": "☁️",
-		"zap": "⚡",
-		"umbrella": "☔",
-		"snowflake": "❄️",
-		"snowman": "⛄",
-		"cyclone": "🌀",
-		"foggy": "🌁",
-		"rainbow": "🌈",
-		"ocean": "🌊",
-		"bamboo": "🎍",
-		"gift_heart": "💝",
-		"dolls": "🎎",
-		"school_satchel": "🎒",
-		"mortar_board": "🎓",
-		"flags": "🎏",
-		"fireworks": "🎆",
-		"sparkler": "🎇",
-		"wind_chime": "🎐",
-		"rice_scene": "🎑",
-		"jack_o_lantern": "🎃",
-		"ghost": "👻",
-		"santa": "🎅",
-		"christmas_tree": "🎄",
-		"gift": "🎁",
-		"tanabata_tree": "🎋",
-		"tada": "🎉",
-		"confetti_ball": "🎊",
-		"balloon": "🎈",
-		"crossed_flags": "🎌",
-		"crystal_ball": "🔮",
-		"movie_camera": "🎥",
-		"camera": "📷",
-		"video_camera": "📹",
-		"vhs": "📼",
-		"cd": "💿",
-		"dvd": "📀",
-		"minidisc": "💽",
-		"floppy_disk": "💾",
-		"computer": "💻",
-		"iphone": "📱",
-		"phone": "☎️",
-		"telephone": "☎️",
-		"telephone_receiver": "📞",
-		"pager": "📟",
-		"fax": "📠",
-		"satellite": "📡",
-		"tv": "📺",
-		"radio": "📻",
-		"loud_sound": "🔊",
-		"sound": "🔉",
-		"speaker": "🔈",
-		"mute": "🔇",
-		"bell": "🔔",
-		"no_bell": "🔕",
-		"loudspeaker": "📢",
-		"mega": "📣",
-		"hourglass_flowing_sand": "⏳",
-		"hourglass": "⌛",
-		"alarm_clock": "⏰",
-		"watch": "⌚",
-		"unlock": "🔓",
-		"lock": "🔒",
-		"lock_with_ink_pen": "🔏",
-		"closed_lock_with_key": "🔐",
-		"key": "🔑",
-		"mag_right": "🔎",
-		"bulb": "💡",
-		"flashlight": "🔦",
-		"high_brightness": "🔆",
-		"low_brightness": "🔅",
-		"electric_plug": "🔌",
-		"battery": "🔋",
-		"mag": "🔍",
-		"bathtub": "🛁",
-		"bath": "🛀",
-		"shower": "🚿",
-		"toilet": "🚽",
-		"wrench": "🔧",
-		"nut_and_bolt": "🔩",
-		"hammer": "🔨",
-		"door": "🚪",
-		"smoking": "🚬",
-		"bomb": "💣",
-		"gun": "🔫",
-		"hocho": "🔪",
-		"knife": "🔪",
-		"pill": "💊",
-		"syringe": "💉",
-		"moneybag": "💰",
-		"yen": "💴",
-		"dollar": "💵",
-		"pound": "💷",
-		"euro": "💶",
-		"credit_card": "💳",
-		"money_with_wings": "💸",
-		"calling": "📲",
-		"e-mail": "📧",
-		"inbox_tray": "📥",
-		"outbox_tray": "📤",
-		"email": "✉️",
-		"envelope": "✉️",
-		"envelope_with_arrow": "📩",
-		"incoming_envelope": "📨",
-		"postal_horn": "📯",
-		"mailbox": "📫",
-		"mailbox_closed": "📪",
-		"mailbox_with_mail": "📬",
-		"mailbox_with_no_mail": "📭",
-		"postbox": "📮",
-		"package": "📦",
-		"memo": "📝",
-		"pencil": "📝",
-		"page_facing_up": "📄",
-		"page_with_curl": "📃",
-		"bookmark_tabs": "📑",
-		"bar_chart": "📊",
-		"chart_with_upwards_trend": "📈",
-		"chart_with_downwards_trend": "📉",
-		"scroll": "📜",
-		"clipboard": "📋",
-		"date": "📅",
-		"calendar": "📆",
-		"card_index": "📇",
-		"file_folder": "📁",
-		"open_file_folder": "📂",
-		"scissors": "✂️",
-		"pushpin": "📌",
-		"paperclip": "📎",
-		"black_nib": "✒️",
-		"pencil2": "✏️",
-		"straight_ruler": "📏",
-		"triangular_ruler": "📐",
-		"closed_book": "📕",
-		"green_book": "📗",
-		"blue_book": "📘",
-		"orange_book": "📙",
-		"notebook": "📓",
-		"notebook_with_decorative_cover": "📔",
-		"ledger": "📒",
-		"books": "📚",
-		"book": "📖",
-		"open_book": "📖",
-		"bookmark": "🔖",
-		"name_badge": "📛",
-		"microscope": "🔬",
-		"telescope": "🔭",
-		"newspaper": "📰",
-		"art": "🎨",
-		"clapper": "🎬",
-		"microphone": "🎤",
-		"headphones": "🎧",
-		"musical_score": "🎼",
-		"musical_note": "🎵",
-		"notes": "🎶",
-		"musical_keyboard": "🎹",
-		"violin": "🎻",
-		"trumpet": "🎺",
-		"saxophone": "🎷",
-		"guitar": "🎸",
-		"space_invader": "👾",
-		"video_game": "🎮",
-		"black_joker": "🃏",
-		"flower_playing_cards": "🎴",
-		"mahjong": "🀄",
-		"game_die": "🎲",
-		"dart": "🎯",
-		"football": "🏈",
-		"basketball": "🏀",
-		"soccer": "⚽",
-		"baseball": "⚾️",
-		"tennis": "🎾",
-		"8ball": "🎱",
-		"rugby_football": "🏉",
-		"bowling": "🎳",
-		"golf": "⛳",
-		"mountain_bicyclist": "🚵",
-		"bicyclist": "🚴",
-		"checkered_flag": "🏁",
-		"horse_racing": "🏇",
-		"trophy": "🏆",
-		"ski": "🎿",
-		"snowboarder": "🏂",
-		"swimmer": "🏊",
-		"surfer": "🏄",
-		"fishing_pole_and_fish": "🎣",
-		"coffee": "☕",
-		"tea": "🍵",
-		"sake": "🍶",
-		"baby_bottle": "🍼",
-		"beer": "🍺",
-		"beers": "🍻",
-		"cocktail": "🍸",
-		"tropical_drink": "🍹",
-		"wine_glass": "🍷",
-		"fork_and_knife": "🍴",
-		"pizza": "🍕",
-		"hamburger": "🍔",
-		"fries": "🍟",
-		"poultry_leg": "🍗",
-		"meat_on_bone": "🍖",
-		"spaghetti": "🍝",
-		"curry": "🍛",
-		"fried_shrimp": "🍤",
-		"bento": "🍱",
-		"sushi": "🍣",
-		"fish_cake": "🍥",
-		"rice_ball": "🍙",
-		"rice_cracker": "🍘",
-		"rice": "🍚",
-		"ramen": "🍜",
-		"stew": "🍲",
-		"oden": "🍢",
-		"dango": "🍡",
-		"egg": "🍳",
-		"bread": "🍞",
-		"doughnut": "🍩",
-		"custard": "🍮",
-		"icecream": "🍦",
-		"ice_cream": "🍨",
-		"shaved_ice": "🍧",
-		"birthday": "🎂",
-		"cake": "🍰",
-		"cookie": "🍪",
-		"chocolate_bar": "🍫",
-		"candy": "🍬",
-		"lollipop": "🍭",
-		"honey_pot": "🍯",
-		"apple": "🍎",
-		"green_apple": "🍏",
-		"tangerine": "🍊",
-		"lemon": "🍋",
-		"cherries": "🍒",
-		"grapes": "🍇",
-		"watermelon": "🍉",
-		"strawberry": "🍓",
-		"peach": "🍑",
-		"melon": "🍈",
-		"banana": "🍌",
-		"pear": "🍐",
-		"pineapple": "🍍",
-		"sweet_potato": "🍠",
-		"eggplant": "🍆",
-		"tomato": "🍅",
-		"corn": "🌽",
-		"house": "🏠",
-		"house_with_garden": "🏡",
-		"school": "🏫",
-		"office": "🏢",
-		"post_office": "🏣",
-		"hospital": "🏥",
-		"bank": "🏦",
-		"convenience_store": "🏪",
-		"love_hotel": "🏩",
-		"hotel": "🏨",
-		"wedding": "💒",
-		"church": "⛪",
-		"department_store": "🏬",
-		"european_post_office": "🏤",
-		"city_sunrise": "🌇",
-		"city_sunset": "🌆",
-		"japanese_castle": "🏯",
-		"european_castle": "🏰",
-		"tent": "⛺",
-		"factory": "🏭",
-		"tokyo_tower": "🗼",
-		"japan": "🗾",
-		"mount_fuji": "🗻",
-		"sunrise_over_mountains": "🌄",
-		"sunrise": "🌅",
-		"night_with_stars": "🌃",
-		"statue_of_liberty": "🗽",
-		"bridge_at_night": "🌉",
-		"carousel_horse": "🎠",
-		"ferris_wheel": "🎡",
-		"fountain": "⛲",
-		"roller_coaster": "🎢",
-		"ship": "🚢",
-		"boat": "⛵",
-		"sailboat": "⛵",
-		"speedboat": "🚤",
-		"rowboat": "🚣",
-		"anchor": "⚓",
-		"rocket": "🚀",
-		"airplane": "✈️",
-		"seat": "💺",
-		"helicopter": "🚁",
-		"steam_locomotive": "🚂",
-		"tram": "🚊",
-		"station": "🚉",
-		"mountain_railway": "🚞",
-		"train2": "🚆",
-		"bullettrain_side": "🚄",
-		"bullettrain_front": "🚅",
-		"light_rail": "🚈",
-		"metro": "🚇",
-		"monorail": "🚝",
-		"train": "🚋",
-		"railway_car": "🚃",
-		"trolleybus": "🚎",
-		"bus": "🚌",
-		"oncoming_bus": "🚍",
-		"blue_car": "🚙",
-		"oncoming_automobile": "🚘",
-		"car": "🚗",
-		"red_car": "🚗",
-		"taxi": "🚕",
-		"oncoming_taxi": "🚖",
-		"articulated_lorry": "🚛",
-		"truck": "🚚",
-		"rotating_light": "🚨",
-		"police_car": "🚓",
-		"oncoming_police_car": "🚔",
-		"fire_engine": "🚒",
-		"ambulance": "🚑",
-		"minibus": "🚐",
-		"bike": "🚲",
-		"aerial_tramway": "🚡",
-		"suspension_railway": "🚟",
-		"mountain_cableway": "🚠",
-		"tractor": "🚜",
-		"barber": "💈",
-		"busstop": "🚏",
-		"ticket": "🎫",
-		"vertical_traffic_light": "🚦",
-		"traffic_light": "🚥",
-		"warning": "⚠️",
-		"construction": "🚧",
-		"beginner": "🔰",
-		"fuelpump": "⛽",
-		"izakaya_lantern": "🏮",
-		"lantern": "🏮",
-		"slot_machine": "🎰",
-		"hotsprings": "♨️",
-		"moyai": "🗿",
-		"circus_tent": "🎪",
-		"performing_arts": "🎭",
-		"round_pushpin": "📍",
-		"triangular_flag_on_post": "🚩",
-		"jp": "🇯🇵",
-		"kr": "🇰🇷",
-		"de": "🇩🇪",
-		"cn": "🇨🇳",
-		"us": "🇺🇸",
-		"fr": "🇫🇷",
-		"es": "🇪🇸",
-		"it": "🇮🇹",
-		"ru": "🇷🇺",
-		"gb": "🇬🇧",
-		"uk": "🇬🇧",
-		"one": "1️⃣",
-		"two": "2️⃣",
-		"three": "3️⃣",
-		"four": "4️⃣",
-		"five": "5️⃣",
-		"six": "6️⃣",
-		"seven": "7️⃣",
-		"eight": "8️⃣",
-		"nine": "9️⃣",
-		"zero": "0️⃣",
-		"keycap_ten": "🔟",
-		"hash": "#️⃣",
-		"symbols": "🔣",
-		"arrow_up": "⬆️",
-		"arrow_down": "⬇️",
-		"arrow_left": "⬅️",
-		"arrow_right": "➡️",
-		"capital_abcd": "🔠",
-		"abcd": "🔡",
-		"abc": "🔤",
-		"arrow_upper_right": "↗️",
-		"arrow_upper_left": "↖️",
-		"arrow_lower_right": "↘️",
-		"arrow_lower_left": "↙️",
-		"left_right_arrow": "↔️",
-		"arrow_up_down": "↕️",
-		"arrows_counterclockwise": "🔄",
-		"arrow_backward": "◀️",
-		"arrow_forward": "▶️",
-		"arrow_up_small": "🔼",
-		"arrow_down_small": "🔽",
-		"leftwards_arrow_with_hook": "↩️",
-		"arrow_right_hook": "↪️",
-		"information_source": "ℹ️",
-		"rewind": "⏪",
-		"fast_forward": "⏩",
-		"arrow_double_up": "⏫",
-		"arrow_double_down": "⏬",
-		"arrow_heading_down": "⤵️",
-		"arrow_heading_up": "⤴️",
-		"ok": "🆗",
-		"twisted_rightwards_arrows": "🔀",
-		"repeat": "🔁",
-		"repeat_one": "🔂",
-		"new": "🆕",
-		"up": "🆙",
-		"cool": "🆒",
-		"free": "🆓",
-		"ng": "🆖",
-		"signal_strength": "📶",
-		"cinema": "🎦",
-		"koko": "🈁",
-		"u6307": "🈯",
-		"u7a7a": "🈳",
-		"u6e80": "🈵",
-		"u5408": "🈴",
-		"u7981": "🈲",
-		"ideograph_advantage": "🉐",
-		"u5272": "🈹",
-		"u55b6": "🈺",
-		"u6709": "🈶",
-		"u7121": "🈚",
-		"restroom": "🚻",
-		"mens": "🚹",
-		"womens": "🚺",
-		"baby_symbol": "🚼",
-		"wc": "🚾",
-		"potable_water": "🚰",
-		"put_litter_in_its_place": "🚮",
-		"parking": "🅿️",
-		"wheelchair": "♿",
-		"no_smoking": "🚭",
-		"u6708": "🈷️",
-		"u7533": "🈸",
-		"sa": "🈂️",
-		"m": "Ⓜ️",
-		"passport_control": "🛂",
-		"baggage_claim": "🛄",
-		"left_luggage": "🛅",
-		"customs": "🛃",
-		"accept": "🉑",
-		"secret": "㊙️",
-		"congratulations": "㊗️",
-		"cl": "🆑",
-		"sos": "🆘",
-		"id": "🆔",
-		"no_entry_sign": "🚫",
-		"underage": "🔞",
-		"no_mobile_phones": "📵",
-		"do_not_litter": "🚯",
-		"non-potable_water": "🚱",
-		"no_bicycles": "🚳",
-		"no_pedestrians": "🚷",
-		"children_crossing": "🚸",
-		"no_entry": "⛔",
-		"eight_spoked_asterisk": "✳️",
-		"sparkle": "❇️",
-		"negative_squared_cross_mark": "❎",
-		"white_check_mark": "✅",
-		"eight_pointed_black_star": "✴️",
-		"heart_decoration": "💟",
-		"vs": "🆚",
-		"vibration_mode": "📳",
-		"mobile_phone_off": "📴",
-		"a": "🅰️",
-		"b": "🅱️",
-		"ab": "🆎",
-		"o2": "🅾️",
-		"diamond_shape_with_a_dot_inside": "💠",
-		"loop": "➿",
-		"recycle": "♻️",
-		"aries": "♈",
-		"taurus": "♉",
-		"gemini": "♊",
-		"cancer": "♋",
-		"leo": "♌",
-		"virgo": "♍",
-		"libra": "♎",
-		"scorpius": "♏",
-		"sagittarius": "♐",
-		"capricorn": "♑",
-		"aquarius": "♒",
-		"pisces": "♓",
-		"ophiuchus": "⛎",
-		"six_pointed_star": "🔯",
-		"atm": "🏧",
-		"chart": "💹",
-		"heavy_dollar_sign": "💲",
-		"currency_exchange": "💱",
-		"copyright": "©️",
-		"registered": "®️",
-		"tm": "™️",
-		"x": "❌",
-		"bangbang": "‼️",
-		"interrobang": "⁉️",
-		"exclamation": "❗",
-		"heavy_exclamation_mark": "❗",
-		"question": "❓",
-		"grey_exclamation": "❕",
-		"grey_question": "❔",
-		"o": "⭕",
-		"top": "🔝",
-		"end": "🔚",
-		"back": "🔙",
-		"on": "🔛",
-		"soon": "🔜",
-		"arrows_clockwise": "🔃",
-		"clock12": "🕛",
-		"clock1230": "🕧",
-		"clock1": "🕐",
-		"clock130": "🕜",
-		"clock2": "🕑",
-		"clock230": "🕝",
-		"clock3": "🕒",
-		"clock330": "🕞",
-		"clock4": "🕓",
-		"clock430": "🕟",
-		"clock5": "🕔",
-		"clock530": "🕠",
-		"clock6": "🕕",
-		"clock7": "🕖",
-		"clock8": "🕗",
-		"clock9": "🕘",
-		"clock10": "🕙",
-		"clock11": "🕚",
-		"clock630": "🕡",
-		"clock730": "🕢",
-		"clock830": "🕣",
-		"clock930": "🕤",
-		"clock1030": "🕥",
-		"clock1130": "🕦",
-		"heavy_multiplication_x": "✖️",
-		"heavy_plus_sign": "➕",
-		"heavy_minus_sign": "➖",
-		"heavy_division_sign": "➗",
-		"spades": "♠️",
-		"hearts": "♥️",
-		"clubs": "♣️",
-		"diamonds": "♦️",
-		"white_flower": "💮",
-		"heavy_check_mark": "✔️",
-		"ballot_box_with_check": "☑️",
-		"radio_button": "🔘",
-		"link": "🔗",
-		"curly_loop": "➰",
-		"wavy_dash": "〰️",
-		"part_alternation_mark": "〽️",
-		"trident": "🔱",
-		"black_medium_square": "◼️",
-		"white_medium_square": "◻️",
-		"black_medium_small_square": "◾",
-		"white_medium_small_square": "◽",
-		"black_small_square": "▪️",
-		"white_small_square": "▫️",
-		"small_red_triangle": "🔺",
-		"black_square_button": "🔲",
-		"white_square_button": "🔳",
-		"black_circle": "⚫",
-		"white_circle": "⚪",
-		"red_circle": "🔴",
-		"large_blue_circle": "🔵",
-		"small_red_triangle_down": "🔻",
-		"white_large_square": "⬜",
-		"black_large_square": "⬛",
-		"large_orange_diamond": "🔶",
-		"large_blue_diamond": "🔷",
-		"small_orange_diamond": "🔸",
-		"small_blue_diamond": "🔹"
-	};
+	module.exports = {"100":"💯","1234":"🔢","grinning":"😀","smiley":"😃","smile":"😄","grin":"😁","laughing":"😆","satisfied":"😆","sweat_smile":"😅","joy":"😂","rofl":"🤣","relaxed":"☺️","blush":"😊","innocent":"😇","slightly_smiling_face":"🙂","upside_down_face":"🙃","wink":"😉","relieved":"😌","heart_eyes":"😍","kissing_heart":"😘","kissing":"😗","kissing_smiling_eyes":"😙","kissing_closed_eyes":"😚","yum":"😋","stuck_out_tongue_winking_eye":"😜","stuck_out_tongue_closed_eyes":"😝","stuck_out_tongue":"😛","money_mouth_face":"🤑","hugs":"🤗","nerd_face":"🤓","sunglasses":"😎","clown_face":"🤡","cowboy_hat_face":"🤠","smirk":"😏","unamused":"😒","disappointed":"😞","pensive":"😔","worried":"😟","confused":"😕","slightly_frowning_face":"🙁","frowning_face":"☹️","persevere":"😣","confounded":"😖","tired_face":"😫","weary":"😩","triumph":"😤","angry":"😠","rage":"😡","pout":"😡","no_mouth":"😶","neutral_face":"😐","expressionless":"😑","hushed":"😯","frowning":"😦","anguished":"😧","open_mouth":"😮","astonished":"😲","dizzy_face":"😵","flushed":"😳","scream":"😱","fearful":"😨","cold_sweat":"😰","cry":"😢","disappointed_relieved":"😥","drooling_face":"🤤","sob":"😭","sweat":"😓","sleepy":"😪","sleeping":"😴","roll_eyes":"🙄","thinking":"🤔","lying_face":"🤥","grimacing":"😬","zipper_mouth_face":"🤐","nauseated_face":"🤢","sneezing_face":"🤧","mask":"😷","face_with_thermometer":"🤒","face_with_head_bandage":"🤕","smiling_imp":"😈","imp":"👿","japanese_ogre":"👹","japanese_goblin":"👺","hankey":"💩","poop":"💩","shit":"💩","ghost":"👻","skull":"💀","skull_and_crossbones":"☠️","alien":"👽","space_invader":"👾","robot":"🤖","jack_o_lantern":"🎃","smiley_cat":"😺","smile_cat":"😸","joy_cat":"😹","heart_eyes_cat":"😻","smirk_cat":"😼","kissing_cat":"😽","scream_cat":"🙀","crying_cat_face":"😿","pouting_cat":"😾","open_hands":"👐","raised_hands":"🙌","clap":"👏","pray":"🙏","handshake":"🤝","+1":"👍","thumbsup":"👍","-1":"👎","thumbsdown":"👎","fist_oncoming":"👊","facepunch":"👊","punch":"👊","fist_raised":"✊","fist":"✊","fist_left":"🤛","fist_right":"🤜","crossed_fingers":"🤞","v":"✌️","metal":"🤘","ok_hand":"👌","point_left":"👈","point_right":"👉","point_up_2":"👆","point_down":"👇","point_up":"☝️","hand":"✋","raised_hand":"✋","raised_back_of_hand":"🤚","raised_hand_with_fingers_splayed":"🖐","vulcan_salute":"🖖","wave":"👋","call_me_hand":"🤙","muscle":"💪","middle_finger":"🖕","fu":"🖕","writing_hand":"✍️","selfie":"🤳","nail_care":"💅","ring":"💍","lipstick":"💄","kiss":"💋","lips":"👄","tongue":"👅","ear":"👂","nose":"👃","footprints":"👣","eye":"👁","eyes":"👀","speaking_head":"🗣","bust_in_silhouette":"👤","busts_in_silhouette":"👥","baby":"👶","boy":"👦","girl":"👧","man":"👨","woman":"👩","blonde_woman":"👱‍♀","blonde_man":"👱","person_with_blond_hair":"👱","older_man":"👴","older_woman":"👵","man_with_gua_pi_mao":"👲","woman_with_turban":"👳‍♀","man_with_turban":"👳","policewoman":"👮‍♀","policeman":"👮","cop":"👮","construction_worker_woman":"👷‍♀","construction_worker_man":"👷","construction_worker":"👷","guardswoman":"💂‍♀","guardsman":"💂","female_detective":"🕵️‍♀️","male_detective":"🕵","detective":"🕵","woman_health_worker":"👩‍⚕","man_health_worker":"👨‍⚕","woman_farmer":"👩‍🌾","man_farmer":"👨‍🌾","woman_cook":"👩‍🍳","man_cook":"👨‍🍳","woman_student":"👩‍🎓","man_student":"👨‍🎓","woman_singer":"👩‍🎤","man_singer":"👨‍🎤","woman_teacher":"👩‍🏫","man_teacher":"👨‍🏫","woman_factory_worker":"👩‍🏭","man_factory_worker":"👨‍🏭","woman_technologist":"👩‍💻","man_technologist":"👨‍💻","woman_office_worker":"👩‍💼","man_office_worker":"👨‍💼","woman_mechanic":"👩‍🔧","man_mechanic":"👨‍🔧","woman_scientist":"👩‍🔬","man_scientist":"👨‍🔬","woman_artist":"👩‍🎨","man_artist":"👨‍🎨","woman_firefighter":"👩‍🚒","man_firefighter":"👨‍🚒","woman_pilot":"👩‍✈","man_pilot":"👨‍✈","woman_astronaut":"👩‍🚀","man_astronaut":"👨‍🚀","woman_judge":"👩‍⚖","man_judge":"👨‍⚖","mrs_claus":"🤶","santa":"🎅","princess":"👸","prince":"🤴","bride_with_veil":"👰","man_in_tuxedo":"🤵","angel":"👼","pregnant_woman":"🤰","bowing_woman":"🙇‍♀","bowing_man":"🙇","bow":"🙇","tipping_hand_woman":"💁","information_desk_person":"💁","sassy_woman":"💁","tipping_hand_man":"💁‍♂","sassy_man":"💁‍♂","no_good_woman":"🙅","no_good":"🙅","ng_woman":"🙅","no_good_man":"🙅‍♂","ng_man":"🙅‍♂","ok_woman":"🙆","ok_man":"🙆‍♂","raising_hand_woman":"🙋","raising_hand":"🙋","raising_hand_man":"🙋‍♂","woman_facepalming":"🤦‍♀","man_facepalming":"🤦‍♂","woman_shrugging":"🤷‍♀","man_shrugging":"🤷‍♂","pouting_woman":"🙎","person_with_pouting_face":"🙎","pouting_man":"🙎‍♂","frowning_woman":"🙍","person_frowning":"🙍","frowning_man":"🙍‍♂","haircut_woman":"💇","haircut":"💇","haircut_man":"💇‍♂","massage_woman":"💆","massage":"💆","massage_man":"💆‍♂","business_suit_levitating":"🕴","dancer":"💃","man_dancing":"🕺","dancing_women":"👯","dancers":"👯","dancing_men":"👯‍♂","walking_woman":"🚶‍♀","walking_man":"🚶","walking":"🚶","running_woman":"🏃‍♀","running_man":"🏃","runner":"🏃","running":"🏃","couple":"👫","two_women_holding_hands":"👭","two_men_holding_hands":"👬","couple_with_heart_woman_man":"💑","couple_with_heart":"💑","couple_with_heart_woman_woman":"👩‍❤️‍👩","couple_with_heart_man_man":"👨‍❤️‍👨","couplekiss_man_woman":"💏","couplekiss_woman_woman":"👩‍❤️‍💋‍👩","couplekiss_man_man":"👨‍❤️‍💋‍👨","family_man_woman_boy":"👪","family":"👪","family_man_woman_girl":"👨‍👩‍👧","family_man_woman_girl_boy":"👨‍👩‍👧‍👦","family_man_woman_boy_boy":"👨‍👩‍👦‍👦","family_man_woman_girl_girl":"👨‍👩‍👧‍👧","family_woman_woman_boy":"👩‍👩‍👦","family_woman_woman_girl":"👩‍👩‍👧","family_woman_woman_girl_boy":"👩‍👩‍👧‍👦","family_woman_woman_boy_boy":"👩‍👩‍👦‍👦","family_woman_woman_girl_girl":"👩‍👩‍👧‍👧","family_man_man_boy":"👨‍👨‍👦","family_man_man_girl":"👨‍👨‍👧","family_man_man_girl_boy":"👨‍👨‍👧‍👦","family_man_man_boy_boy":"👨‍👨‍👦‍👦","family_man_man_girl_girl":"👨‍👨‍👧‍👧","family_woman_boy":"👩‍👦","family_woman_girl":"👩‍👧","family_woman_girl_boy":"👩‍👧‍👦","family_woman_boy_boy":"👩‍👦‍👦","family_woman_girl_girl":"👩‍👧‍👧","family_man_boy":"👨‍👦","family_man_girl":"👨‍👧","family_man_girl_boy":"👨‍👧‍👦","family_man_boy_boy":"👨‍👦‍👦","family_man_girl_girl":"👨‍👧‍👧","womans_clothes":"👚","shirt":"👕","tshirt":"👕","jeans":"👖","necktie":"👔","dress":"👗","bikini":"👙","kimono":"👘","high_heel":"👠","sandal":"👡","boot":"👢","mans_shoe":"👞","shoe":"👞","athletic_shoe":"👟","womans_hat":"👒","tophat":"🎩","mortar_board":"🎓","crown":"👑","rescue_worker_helmet":"⛑","school_satchel":"🎒","pouch":"👝","purse":"👛","handbag":"👜","briefcase":"💼","eyeglasses":"👓","dark_sunglasses":"🕶","closed_umbrella":"🌂","open_umbrella":"☂️","dog":"🐶","cat":"🐱","mouse":"🐭","hamster":"🐹","rabbit":"🐰","fox_face":"🦊","bear":"🐻","panda_face":"🐼","koala":"🐨","tiger":"🐯","lion":"🦁","cow":"🐮","pig":"🐷","pig_nose":"🐽","frog":"🐸","monkey_face":"🐵","see_no_evil":"🙈","hear_no_evil":"🙉","speak_no_evil":"🙊","monkey":"🐒","chicken":"🐔","penguin":"🐧","bird":"🐦","baby_chick":"🐤","hatching_chick":"🐣","hatched_chick":"🐥","duck":"🦆","eagle":"🦅","owl":"🦉","bat":"🦇","wolf":"🐺","boar":"🐗","horse":"🐴","unicorn":"🦄","bee":"🐝","honeybee":"🐝","bug":"🐛","butterfly":"🦋","snail":"🐌","shell":"🐚","beetle":"🐞","ant":"🐜","spider":"🕷","spider_web":"🕸","turtle":"🐢","snake":"🐍","lizard":"🦎","scorpion":"🦂","crab":"🦀","squid":"🦑","octopus":"🐙","shrimp":"🦐","tropical_fish":"🐠","fish":"🐟","blowfish":"🐡","dolphin":"🐬","flipper":"🐬","shark":"🦈","whale":"🐳","whale2":"🐋","crocodile":"🐊","leopard":"🐆","tiger2":"🐅","water_buffalo":"🐃","ox":"🐂","cow2":"🐄","deer":"🦌","dromedary_camel":"🐪","camel":"🐫","elephant":"🐘","rhinoceros":"🦏","gorilla":"🦍","racehorse":"🐎","pig2":"🐖","goat":"🐐","ram":"🐏","sheep":"🐑","dog2":"🐕","poodle":"🐩","cat2":"🐈","rooster":"🐓","turkey":"🦃","dove":"🕊","rabbit2":"🐇","mouse2":"🐁","rat":"🐀","chipmunk":"🐿","feet":"🐾","paw_prints":"🐾","dragon":"🐉","dragon_face":"🐲","cactus":"🌵","christmas_tree":"🎄","evergreen_tree":"🌲","deciduous_tree":"🌳","palm_tree":"🌴","seedling":"🌱","herb":"🌿","shamrock":"☘️","four_leaf_clover":"🍀","bamboo":"🎍","tanabata_tree":"🎋","leaves":"🍃","fallen_leaf":"🍂","maple_leaf":"🍁","mushroom":"🍄","ear_of_rice":"🌾","bouquet":"💐","tulip":"🌷","rose":"🌹","wilted_flower":"🥀","sunflower":"🌻","blossom":"🌼","cherry_blossom":"🌸","hibiscus":"🌺","earth_americas":"🌎","earth_africa":"🌍","earth_asia":"🌏","full_moon":"🌕","waning_gibbous_moon":"🌖","last_quarter_moon":"🌗","waning_crescent_moon":"🌘","new_moon":"🌑","waxing_crescent_moon":"🌒","first_quarter_moon":"🌓","moon":"🌔","waxing_gibbous_moon":"🌔","new_moon_with_face":"🌚","full_moon_with_face":"🌝","sun_with_face":"🌞","first_quarter_moon_with_face":"🌛","last_quarter_moon_with_face":"🌜","crescent_moon":"🌙","dizzy":"💫","star":"⭐️","star2":"🌟","sparkles":"✨","zap":"⚡️","fire":"🔥","boom":"💥","collision":"💥","comet":"☄","sunny":"☀️","sun_behind_small_cloud":"🌤","partly_sunny":"⛅️","sun_behind_large_cloud":"🌥","sun_behind_rain_cloud":"🌦","rainbow":"🌈","cloud":"☁️","cloud_with_rain":"🌧","cloud_with_lightning_and_rain":"⛈","cloud_with_lightning":"🌩","cloud_with_snow":"🌨","snowman_with_snow":"☃️","snowman":"⛄️","snowflake":"❄️","wind_face":"🌬","dash":"💨","tornado":"🌪","fog":"🌫","ocean":"🌊","droplet":"💧","sweat_drops":"💦","umbrella":"☔️","green_apple":"🍏","apple":"🍎","pear":"🍐","tangerine":"🍊","orange":"🍊","mandarin":"🍊","lemon":"🍋","banana":"🍌","watermelon":"🍉","grapes":"🍇","strawberry":"🍓","melon":"🍈","cherries":"🍒","peach":"🍑","pineapple":"🍍","kiwi_fruit":"🥝","avocado":"🥑","tomato":"🍅","eggplant":"🍆","cucumber":"🥒","carrot":"🥕","corn":"🌽","hot_pepper":"🌶","potato":"🥔","sweet_potato":"🍠","chestnut":"🌰","peanuts":"🥜","honey_pot":"🍯","croissant":"🥐","bread":"🍞","baguette_bread":"🥖","cheese":"🧀","egg":"🥚","fried_egg":"🍳","bacon":"🥓","pancakes":"🥞","fried_shrimp":"🍤","poultry_leg":"🍗","meat_on_bone":"🍖","pizza":"🍕","hotdog":"🌭","hamburger":"🍔","fries":"🍟","stuffed_flatbread":"🥙","taco":"🌮","burrito":"🌯","green_salad":"🥗","shallow_pan_of_food":"🥘","spaghetti":"🍝","ramen":"🍜","stew":"🍲","fish_cake":"🍥","sushi":"🍣","bento":"🍱","curry":"🍛","rice":"🍚","rice_ball":"🍙","rice_cracker":"🍘","oden":"🍢","dango":"🍡","shaved_ice":"🍧","ice_cream":"🍨","icecream":"🍦","cake":"🍰","birthday":"🎂","custard":"🍮","lollipop":"🍭","candy":"🍬","chocolate_bar":"🍫","popcorn":"🍿","doughnut":"🍩","cookie":"🍪","milk_glass":"🥛","baby_bottle":"🍼","coffee":"☕️","tea":"🍵","sake":"🍶","beer":"🍺","beers":"🍻","clinking_glasses":"🥂","wine_glass":"🍷","tumbler_glass":"🥃","cocktail":"🍸","tropical_drink":"🍹","champagne":"🍾","spoon":"🥄","fork_and_knife":"🍴","plate_with_cutlery":"🍽","soccer":"⚽️","basketball":"🏀","football":"🏈","baseball":"⚾️","tennis":"🎾","volleyball":"🏐","rugby_football":"🏉","8ball":"🎱","ping_pong":"🏓","badminton":"🏸","goal_net":"🥅","ice_hockey":"🏒","field_hockey":"🏑","cricket":"🏏","golf":"⛳️","bow_and_arrow":"🏹","fishing_pole_and_fish":"🎣","boxing_glove":"🥊","martial_arts_uniform":"🥋","ice_skate":"⛸","ski":"🎿","skier":"⛷","snowboarder":"🏂","weight_lifting_woman":"🏋️‍♀️","weight_lifting_man":"🏋","person_fencing":"🤺","women_wrestling":"🤼‍♀","men_wrestling":"🤼‍♂","woman_cartwheeling":"🤸‍♀","man_cartwheeling":"🤸‍♂","basketball_woman":"⛹️‍♀️","basketball_man":"⛹","woman_playing_handball":"🤾‍♀","man_playing_handball":"🤾‍♂","golfing_woman":"🏌️‍♀️","golfing_man":"🏌","surfing_woman":"🏄‍♀","surfing_man":"🏄","surfer":"🏄","swimming_woman":"🏊‍♀","swimming_man":"🏊","swimmer":"🏊","woman_playing_water_polo":"🤽‍♀","man_playing_water_polo":"🤽‍♂","rowing_woman":"🚣‍♀","rowing_man":"🚣","rowboat":"🚣","horse_racing":"🏇","biking_woman":"🚴‍♀","biking_man":"🚴","bicyclist":"🚴","mountain_biking_woman":"🚵‍♀","mountain_biking_man":"🚵","mountain_bicyclist":"🚵","running_shirt_with_sash":"🎽","medal_sports":"🏅","medal_military":"🎖","1st_place_medal":"🥇","2nd_place_medal":"🥈","3rd_place_medal":"🥉","trophy":"🏆","rosette":"🏵","reminder_ribbon":"🎗","ticket":"🎫","tickets":"🎟","circus_tent":"🎪","woman_juggling":"🤹‍♀","man_juggling":"🤹‍♂","performing_arts":"🎭","art":"🎨","clapper":"🎬","microphone":"🎤","headphones":"🎧","musical_score":"🎼","musical_keyboard":"🎹","drum":"🥁","saxophone":"🎷","trumpet":"🎺","guitar":"🎸","violin":"🎻","game_die":"🎲","dart":"🎯","bowling":"🎳","video_game":"🎮","slot_machine":"🎰","car":"🚗","red_car":"🚗","taxi":"🚕","blue_car":"🚙","bus":"🚌","trolleybus":"🚎","racing_car":"🏎","police_car":"🚓","ambulance":"🚑","fire_engine":"🚒","minibus":"🚐","truck":"🚚","articulated_lorry":"🚛","tractor":"🚜","kick_scooter":"🛴","bike":"🚲","motor_scooter":"🛵","motorcycle":"🏍","rotating_light":"🚨","oncoming_police_car":"🚔","oncoming_bus":"🚍","oncoming_automobile":"🚘","oncoming_taxi":"🚖","aerial_tramway":"🚡","mountain_cableway":"🚠","suspension_railway":"🚟","railway_car":"🚃","train":"🚋","mountain_railway":"🚞","monorail":"🚝","bullettrain_side":"🚄","bullettrain_front":"🚅","light_rail":"🚈","steam_locomotive":"🚂","train2":"🚆","metro":"🚇","tram":"🚊","station":"🚉","helicopter":"🚁","small_airplane":"🛩","airplane":"✈️","flight_departure":"🛫","flight_arrival":"🛬","rocket":"🚀","artificial_satellite":"🛰","seat":"💺","canoe":"🛶","boat":"⛵️","sailboat":"⛵️","motor_boat":"🛥","speedboat":"🚤","passenger_ship":"🛳","ferry":"⛴","ship":"🚢","anchor":"⚓️","construction":"🚧","fuelpump":"⛽️","busstop":"🚏","vertical_traffic_light":"🚦","traffic_light":"🚥","world_map":"🗺","moyai":"🗿","statue_of_liberty":"🗽","fountain":"⛲️","tokyo_tower":"🗼","european_castle":"🏰","japanese_castle":"🏯","stadium":"🏟","ferris_wheel":"🎡","roller_coaster":"🎢","carousel_horse":"🎠","parasol_on_ground":"⛱","beach_umbrella":"🏖","desert_island":"🏝","mountain":"⛰","mountain_snow":"🏔","mount_fuji":"🗻","volcano":"🌋","desert":"🏜","camping":"🏕","tent":"⛺️","railway_track":"🛤","motorway":"🛣","building_construction":"🏗","factory":"🏭","house":"🏠","house_with_garden":"🏡","houses":"🏘","derelict_house":"🏚","office":"🏢","department_store":"🏬","post_office":"🏣","european_post_office":"🏤","hospital":"🏥","bank":"🏦","hotel":"🏨","convenience_store":"🏪","school":"🏫","love_hotel":"🏩","wedding":"💒","classical_building":"🏛","church":"⛪️","mosque":"🕌","synagogue":"🕍","kaaba":"🕋","shinto_shrine":"⛩","japan":"🗾","rice_scene":"🎑","national_park":"🏞","sunrise":"🌅","sunrise_over_mountains":"🌄","stars":"🌠","sparkler":"🎇","fireworks":"🎆","city_sunrise":"🌇","city_sunset":"🌆","cityscape":"🏙","night_with_stars":"🌃","milky_way":"🌌","bridge_at_night":"🌉","foggy":"🌁","watch":"⌚️","iphone":"📱","calling":"📲","computer":"💻","keyboard":"⌨️","desktop_computer":"🖥","printer":"🖨","computer_mouse":"🖱","trackball":"🖲","joystick":"🕹","clamp":"🗜","minidisc":"💽","floppy_disk":"💾","cd":"💿","dvd":"📀","vhs":"📼","camera":"📷","camera_flash":"📸","video_camera":"📹","movie_camera":"🎥","film_projector":"📽","film_strip":"🎞","telephone_receiver":"📞","phone":"☎️","telephone":"☎️","pager":"📟","fax":"📠","tv":"📺","radio":"📻","studio_microphone":"🎙","level_slider":"🎚","control_knobs":"🎛","stopwatch":"⏱","timer_clock":"⏲","alarm_clock":"⏰","mantelpiece_clock":"🕰","hourglass":"⌛️","hourglass_flowing_sand":"⏳","satellite":"📡","battery":"🔋","electric_plug":"🔌","bulb":"💡","flashlight":"🔦","candle":"🕯","wastebasket":"🗑","oil_drum":"🛢","money_with_wings":"💸","dollar":"💵","yen":"💴","euro":"💶","pound":"💷","moneybag":"💰","credit_card":"💳","gem":"💎","balance_scale":"⚖️","wrench":"🔧","hammer":"🔨","hammer_and_pick":"⚒","hammer_and_wrench":"🛠","pick":"⛏","nut_and_bolt":"🔩","gear":"⚙️","chains":"⛓","gun":"🔫","bomb":"💣","hocho":"🔪","knife":"🔪","dagger":"🗡","crossed_swords":"⚔️","shield":"🛡","smoking":"🚬","coffin":"⚰️","funeral_urn":"⚱️","amphora":"🏺","crystal_ball":"🔮","prayer_beads":"📿","barber":"💈","alembic":"⚗️","telescope":"🔭","microscope":"🔬","hole":"🕳","pill":"💊","syringe":"💉","thermometer":"🌡","toilet":"🚽","potable_water":"🚰","shower":"🚿","bathtub":"🛁","bath":"🛀","bellhop_bell":"🛎","key":"🔑","old_key":"🗝","door":"🚪","couch_and_lamp":"🛋","bed":"🛏","sleeping_bed":"🛌","framed_picture":"🖼","shopping":"🛍","shopping_cart":"🛒","gift":"🎁","balloon":"🎈","flags":"🎏","ribbon":"🎀","confetti_ball":"🎊","tada":"🎉","dolls":"🎎","izakaya_lantern":"🏮","lantern":"🏮","wind_chime":"🎐","email":"✉️","envelope":"✉️","envelope_with_arrow":"📩","incoming_envelope":"📨","e-mail":"📧","love_letter":"💌","inbox_tray":"📥","outbox_tray":"📤","package":"📦","label":"🏷","mailbox_closed":"📪","mailbox":"📫","mailbox_with_mail":"📬","mailbox_with_no_mail":"📭","postbox":"📮","postal_horn":"📯","scroll":"📜","page_with_curl":"📃","page_facing_up":"📄","bookmark_tabs":"📑","bar_chart":"📊","chart_with_upwards_trend":"📈","chart_with_downwards_trend":"📉","spiral_notepad":"🗒","spiral_calendar":"🗓","calendar":"📆","date":"📅","card_index":"📇","card_file_box":"🗃","ballot_box":"🗳","file_cabinet":"🗄","clipboard":"📋","file_folder":"📁","open_file_folder":"📂","card_index_dividers":"🗂","newspaper_roll":"🗞","newspaper":"📰","notebook":"📓","notebook_with_decorative_cover":"📔","ledger":"📒","closed_book":"📕","green_book":"📗","blue_book":"📘","orange_book":"📙","books":"📚","book":"📖","open_book":"📖","bookmark":"🔖","link":"🔗","paperclip":"📎","paperclips":"🖇","triangular_ruler":"📐","straight_ruler":"📏","pushpin":"📌","round_pushpin":"📍","scissors":"✂️","pen":"🖊","fountain_pen":"🖋","black_nib":"✒️","paintbrush":"🖌","crayon":"🖍","memo":"📝","pencil":"📝","pencil2":"✏️","mag":"🔍","mag_right":"🔎","lock_with_ink_pen":"🔏","closed_lock_with_key":"🔐","lock":"🔒","unlock":"🔓","heart":"❤️","yellow_heart":"💛","green_heart":"💚","blue_heart":"💙","purple_heart":"💜","black_heart":"🖤","broken_heart":"💔","heavy_heart_exclamation":"❣️","two_hearts":"💕","revolving_hearts":"💞","heartbeat":"💓","heartpulse":"💗","sparkling_heart":"💖","cupid":"💘","gift_heart":"💝","heart_decoration":"💟","peace_symbol":"☮️","latin_cross":"✝️","star_and_crescent":"☪️","om":"🕉","wheel_of_dharma":"☸️","star_of_david":"✡️","six_pointed_star":"🔯","menorah":"🕎","yin_yang":"☯️","orthodox_cross":"☦️","place_of_worship":"🛐","ophiuchus":"⛎","aries":"♈️","taurus":"♉️","gemini":"♊️","cancer":"♋️","leo":"♌️","virgo":"♍️","libra":"♎️","scorpius":"♏️","sagittarius":"♐️","capricorn":"♑️","aquarius":"♒️","pisces":"♓️","id":"🆔","atom_symbol":"⚛️","accept":"🉑","radioactive":"☢️","biohazard":"☣️","mobile_phone_off":"📴","vibration_mode":"📳","eight_pointed_black_star":"✴️","vs":"🆚","white_flower":"💮","ideograph_advantage":"🉐","secret":"㊙️","congratulations":"㊗️","u6e80":"🈵","a":"🅰️","b":"🅱️","ab":"🆎","cl":"🆑","o2":"🅾️","sos":"🆘","x":"❌","o":"⭕️","stop_sign":"🛑","no_entry":"⛔️","name_badge":"📛","no_entry_sign":"🚫","anger":"💢","hotsprings":"♨️","no_pedestrians":"🚷","do_not_litter":"🚯","no_bicycles":"🚳","non-potable_water":"🚱","underage":"🔞","no_mobile_phones":"📵","no_smoking":"🚭","exclamation":"❗️","heavy_exclamation_mark":"❗️","grey_exclamation":"❕","question":"❓","grey_question":"❔","bangbang":"‼️","interrobang":"⁉️","low_brightness":"🔅","high_brightness":"🔆","part_alternation_mark":"〽️","warning":"⚠️","children_crossing":"🚸","trident":"🔱","fleur_de_lis":"⚜️","beginner":"🔰","recycle":"♻️","white_check_mark":"✅","chart":"💹","sparkle":"❇️","eight_spoked_asterisk":"✳️","negative_squared_cross_mark":"❎","globe_with_meridians":"🌐","diamond_shape_with_a_dot_inside":"💠","m":"Ⓜ️","cyclone":"🌀","zzz":"💤","atm":"🏧","wc":"🚾","wheelchair":"♿️","parking":"🅿️","sa":"🈂️","passport_control":"🛂","customs":"🛃","baggage_claim":"🛄","left_luggage":"🛅","mens":"🚹","womens":"🚺","baby_symbol":"🚼","restroom":"🚻","put_litter_in_its_place":"🚮","cinema":"🎦","signal_strength":"📶","koko":"🈁","symbols":"🔣","information_source":"ℹ️","abc":"🔤","abcd":"🔡","capital_abcd":"🔠","ng":"🆖","ok":"🆗","up":"🆙","cool":"🆒","new":"🆕","free":"🆓","zero":"0️⃣","one":"1️⃣","two":"2️⃣","three":"3️⃣","four":"4️⃣","five":"5️⃣","six":"6️⃣","seven":"7️⃣","eight":"8️⃣","nine":"9️⃣","keycap_ten":"🔟","hash":"#️⃣","asterisk":"*️⃣","arrow_forward":"▶️","pause_button":"⏸","play_or_pause_button":"⏯","stop_button":"⏹","record_button":"⏺","next_track_button":"⏭","previous_track_button":"⏮","fast_forward":"⏩","rewind":"⏪","arrow_double_up":"⏫","arrow_double_down":"⏬","arrow_backward":"◀️","arrow_up_small":"🔼","arrow_down_small":"🔽","arrow_right":"➡️","arrow_left":"⬅️","arrow_up":"⬆️","arrow_down":"⬇️","arrow_upper_right":"↗️","arrow_lower_right":"↘️","arrow_lower_left":"↙️","arrow_upper_left":"↖️","arrow_up_down":"↕️","left_right_arrow":"↔️","arrow_right_hook":"↪️","leftwards_arrow_with_hook":"↩️","arrow_heading_up":"⤴️","arrow_heading_down":"⤵️","twisted_rightwards_arrows":"🔀","repeat":"🔁","repeat_one":"🔂","arrows_counterclockwise":"🔄","arrows_clockwise":"🔃","musical_note":"🎵","notes":"🎶","heavy_plus_sign":"➕","heavy_minus_sign":"➖","heavy_division_sign":"➗","heavy_multiplication_x":"✖️","heavy_dollar_sign":"💲","currency_exchange":"💱","tm":"™️","copyright":"©️","registered":"®️","wavy_dash":"〰️","curly_loop":"➰","loop":"➿","end":"🔚","back":"🔙","on":"🔛","top":"🔝","soon":"🔜","heavy_check_mark":"✔️","ballot_box_with_check":"☑️","radio_button":"🔘","white_circle":"⚪️","black_circle":"⚫️","red_circle":"🔴","large_blue_circle":"🔵","small_red_triangle":"🔺","small_red_triangle_down":"🔻","small_orange_diamond":"🔸","small_blue_diamond":"🔹","large_orange_diamond":"🔶","large_blue_diamond":"🔷","white_square_button":"🔳","black_square_button":"🔲","black_small_square":"▪️","white_small_square":"▫️","black_medium_small_square":"◾️","white_medium_small_square":"◽️","black_medium_square":"◼️","white_medium_square":"◻️","black_large_square":"⬛️","white_large_square":"⬜️","speaker":"🔈","mute":"🔇","sound":"🔉","loud_sound":"🔊","bell":"🔔","no_bell":"🔕","mega":"📣","loudspeaker":"📢","eye_speech_bubble":"👁‍🗨","speech_balloon":"💬","thought_balloon":"💭","right_anger_bubble":"🗯","spades":"♠️","clubs":"♣️","hearts":"♥️","diamonds":"♦️","black_joker":"🃏","flower_playing_cards":"🎴","mahjong":"🀄️","clock1":"🕐","clock2":"🕑","clock3":"🕒","clock4":"🕓","clock5":"🕔","clock6":"🕕","clock7":"🕖","clock8":"🕗","clock9":"🕘","clock10":"🕙","clock11":"🕚","clock12":"🕛","clock130":"🕜","clock230":"🕝","clock330":"🕞","clock430":"🕟","clock530":"🕠","clock630":"🕡","clock730":"🕢","clock830":"🕣","clock930":"🕤","clock1030":"🕥","clock1130":"🕦","clock1230":"🕧","white_flag":"🏳️","black_flag":"🏴","checkered_flag":"🏁","triangular_flag_on_post":"🚩","rainbow_flag":"🏳️‍🌈","afghanistan":"🇦🇫","aland_islands":"🇦🇽","albania":"🇦🇱","algeria":"🇩🇿","american_samoa":"🇦🇸","andorra":"🇦🇩","angola":"🇦🇴","anguilla":"🇦🇮","antarctica":"🇦🇶","antigua_barbuda":"🇦🇬","argentina":"🇦🇷","armenia":"🇦🇲","aruba":"🇦🇼","australia":"🇦🇺","austria":"🇦🇹","azerbaijan":"🇦🇿","bahamas":"🇧🇸","bahrain":"🇧🇭","bangladesh":"🇧🇩","barbados":"🇧🇧","belarus":"🇧🇾","belgium":"🇧🇪","belize":"🇧🇿","benin":"🇧🇯","bermuda":"🇧🇲","bhutan":"🇧🇹","bolivia":"🇧🇴","caribbean_netherlands":"🇧🇶","bosnia_herzegovina":"🇧🇦","botswana":"🇧🇼","brazil":"🇧🇷","british_indian_ocean_territory":"🇮🇴","british_virgin_islands":"🇻🇬","brunei":"🇧🇳","bulgaria":"🇧🇬","burkina_faso":"🇧🇫","burundi":"🇧🇮","cape_verde":"🇨🇻","cambodia":"🇰🇭","cameroon":"🇨🇲","canada":"🇨🇦","canary_islands":"🇮🇨","cayman_islands":"🇰🇾","central_african_republic":"🇨🇫","chad":"🇹🇩","chile":"🇨🇱","cn":"🇨🇳","christmas_island":"🇨🇽","cocos_islands":"🇨🇨","colombia":"🇨🇴","comoros":"🇰🇲","congo_brazzaville":"🇨🇬","congo_kinshasa":"🇨🇩","cook_islands":"🇨🇰","costa_rica":"🇨🇷","cote_divoire":"🇨🇮","croatia":"🇭🇷","cuba":"🇨🇺","curacao":"🇨🇼","cyprus":"🇨🇾","czech_republic":"🇨🇿","denmark":"🇩🇰","djibouti":"🇩🇯","dominica":"🇩🇲","dominican_republic":"🇩🇴","ecuador":"🇪🇨","egypt":"🇪🇬","el_salvador":"🇸🇻","equatorial_guinea":"🇬🇶","eritrea":"🇪🇷","estonia":"🇪🇪","ethiopia":"🇪🇹","eu":"🇪🇺","european_union":"🇪🇺","falkland_islands":"🇫🇰","faroe_islands":"🇫🇴","fiji":"🇫🇯","finland":"🇫🇮","fr":"🇫🇷","french_guiana":"🇬🇫","french_polynesia":"🇵🇫","french_southern_territories":"🇹🇫","gabon":"🇬🇦","gambia":"🇬🇲","georgia":"🇬🇪","de":"🇩🇪","ghana":"🇬🇭","gibraltar":"🇬🇮","greece":"🇬🇷","greenland":"🇬🇱","grenada":"🇬🇩","guadeloupe":"🇬🇵","guam":"🇬🇺","guatemala":"🇬🇹","guernsey":"🇬🇬","guinea":"🇬🇳","guinea_bissau":"🇬🇼","guyana":"🇬🇾","haiti":"🇭🇹","honduras":"🇭🇳","hong_kong":"🇭🇰","hungary":"🇭🇺","iceland":"🇮🇸","india":"🇮🇳","indonesia":"🇮🇩","iran":"🇮🇷","iraq":"🇮🇶","ireland":"🇮🇪","isle_of_man":"🇮🇲","israel":"🇮🇱","it":"🇮🇹","jamaica":"🇯🇲","jp":"🇯🇵","crossed_flags":"🎌","jersey":"🇯🇪","jordan":"🇯🇴","kazakhstan":"🇰🇿","kenya":"🇰🇪","kiribati":"🇰🇮","kosovo":"🇽🇰","kuwait":"🇰🇼","kyrgyzstan":"🇰🇬","laos":"🇱🇦","latvia":"🇱🇻","lebanon":"🇱🇧","lesotho":"🇱🇸","liberia":"🇱🇷","libya":"🇱🇾","liechtenstein":"🇱🇮","lithuania":"🇱🇹","luxembourg":"🇱🇺","macau":"🇲🇴","macedonia":"🇲🇰","madagascar":"🇲🇬","malawi":"🇲🇼","malaysia":"🇲🇾","maldives":"🇲🇻","mali":"🇲🇱","malta":"🇲🇹","marshall_islands":"🇲🇭","martinique":"🇲🇶","mauritania":"🇲🇷","mauritius":"🇲🇺","mayotte":"🇾🇹","mexico":"🇲🇽","micronesia":"🇫🇲","moldova":"🇲🇩","monaco":"🇲🇨","mongolia":"🇲🇳","montenegro":"🇲🇪","montserrat":"🇲🇸","morocco":"🇲🇦","mozambique":"🇲🇿","myanmar":"🇲🇲","namibia":"🇳🇦","nauru":"🇳🇷","nepal":"🇳🇵","netherlands":"🇳🇱","new_caledonia":"🇳🇨","new_zealand":"🇳🇿","nicaragua":"🇳🇮","niger":"🇳🇪","nigeria":"🇳🇬","niue":"🇳🇺","norfolk_island":"🇳🇫","northern_mariana_islands":"🇲🇵","north_korea":"🇰🇵","norway":"🇳🇴","oman":"🇴🇲","pakistan":"🇵🇰","palau":"🇵🇼","palestinian_territories":"🇵🇸","panama":"🇵🇦","papua_new_guinea":"🇵🇬","paraguay":"🇵🇾","peru":"🇵🇪","philippines":"🇵🇭","pitcairn_islands":"🇵🇳","poland":"🇵🇱","portugal":"🇵🇹","puerto_rico":"🇵🇷","qatar":"🇶🇦","reunion":"🇷🇪","romania":"🇷🇴","ru":"🇷🇺","rwanda":"🇷🇼","st_barthelemy":"🇧🇱","st_helena":"🇸🇭","st_kitts_nevis":"🇰🇳","st_lucia":"🇱🇨","st_pierre_miquelon":"🇵🇲","st_vincent_grenadines":"🇻🇨","samoa":"🇼🇸","san_marino":"🇸🇲","sao_tome_principe":"🇸🇹","saudi_arabia":"🇸🇦","senegal":"🇸🇳","serbia":"🇷🇸","seychelles":"🇸🇨","sierra_leone":"🇸🇱","singapore":"🇸🇬","sint_maarten":"🇸🇽","slovakia":"🇸🇰","slovenia":"🇸🇮","solomon_islands":"🇸🇧","somalia":"🇸🇴","south_africa":"🇿🇦","south_georgia_south_sandwich_islands":"🇬🇸","kr":"🇰🇷","south_sudan":"🇸🇸","es":"🇪🇸","sri_lanka":"🇱🇰","sudan":"🇸🇩","suriname":"🇸🇷","swaziland":"🇸🇿","sweden":"🇸🇪","switzerland":"🇨🇭","syria":"🇸🇾","taiwan":"🇹🇼","tajikistan":"🇹🇯","tanzania":"🇹🇿","thailand":"🇹🇭","timor_leste":"🇹🇱","togo":"🇹🇬","tokelau":"🇹🇰","tonga":"🇹🇴","trinidad_tobago":"🇹🇹","tunisia":"🇹🇳","tr":"🇹🇷","turkmenistan":"🇹🇲","turks_caicos_islands":"🇹🇨","tuvalu":"🇹🇻","uganda":"🇺🇬","ukraine":"🇺🇦","united_arab_emirates":"🇦🇪","gb":"🇬🇧","uk":"🇬🇧","us":"🇺🇸","us_virgin_islands":"🇻🇮","uruguay":"🇺🇾","uzbekistan":"🇺🇿","vanuatu":"🇻🇺","vatican_city":"🇻🇦","venezuela":"🇻🇪","vietnam":"🇻🇳","wallis_futuna":"🇼🇫","western_sahara":"🇪🇭","yemen":"🇾🇪","zambia":"🇿🇲","zimbabwe":"🇿🇼"}
 
-/***/ },
-/* 72 */
-/***/ function(module, exports) {
+/***/ }),
+/* 129 */
+/***/ (function(module, exports) {
 
 	// Emoticons -> Emoji mapping.
 	//
@@ -11279,9 +9337,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 73 */
-/***/ function(module, exports) {
+/***/ }),
+/* 130 */
+/***/ (function(module, exports) {
 
 	'use strict';
 
@@ -11290,9 +9348,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 74 */
-/***/ function(module, exports) {
+/***/ }),
+/* 131 */
+/***/ (function(module, exports) {
 
 	// Emojies & shortcuts replacement logic.
 	//
@@ -11303,7 +9361,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 
 
-	module.exports = function create_rule(md, emojies, shortcuts, compiledRE) {
+	module.exports = function create_rule(md, emojies, shortcuts, scanRE, replaceRE) {
 	  var arrayReplaceAt = md.utils.arrayReplaceAt,
 	      ucm = md.utils.lib.ucmicro,
 	      ZPCc = new RegExp([ ucm.Z.source, ucm.P.source, ucm.Cc.source ].join('|'));
@@ -11311,17 +9369,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	  function splitTextToken(text, level, Token) {
 	    var token, last_pos = 0, nodes = [];
 
-	    text.replace(compiledRE, function(match, offset, src) {
-	      // Don't allow letters before :/ shortcut.
-	      if (match === ':/' && offset > 0 && !ZPCc.test(src[offset - 1])) {
-	        return;
-	      }
-
+	    text.replace(replaceRE, function (match, offset, src) {
 	      var emoji_name;
 	      // Validate emoji name
 	      if (shortcuts.hasOwnProperty(match)) {
 	        // replace shortcut with full name
 	        emoji_name = shortcuts[match];
+
+	        // Don't allow letters before any shortcut (as in no ":/" in http://)
+	        if (offset > 0 && !ZPCc.test(src[offset - 1])) {
+	          return;
+	        }
+
+	        // Don't allow letters after any shortcut
+	        if (offset + match.length < src.length && !ZPCc.test(src[offset + match.length])) {
+	          return;
+	        }
 	      } else {
 	        emoji_name = match.slice(1, -1);
 	      }
@@ -11352,7 +9415,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  return function emoji_replace(state) {
 	    var i, j, l, tokens, token,
-	        blockTokens = state.tokens;
+	        blockTokens = state.tokens,
+	        autolinkLevel = 0;
 
 	    for (j = 0, l = blockTokens.length; j < l; j++) {
 	      if (blockTokens[j].type !== 'inline') { continue; }
@@ -11363,7 +9427,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      for (i = tokens.length - 1; i >= 0; i--) {
 	        token = tokens[i];
 
-	        if (token.type === 'text' && compiledRE.test(token.content)) {
+	        if (token.type === 'link_open' || token.type === 'link_close') {
+	          if (token.info === 'auto') { autolinkLevel -= token.nesting; }
+	        }
+
+	        if (token.type === 'text' && autolinkLevel === 0 && scanRE.test(token.content)) {
 	          // replace current node
 	          blockTokens[j].children = tokens = arrayReplaceAt(
 	            tokens, i, splitTextToken(token.content, token.level, state.Token)
@@ -11375,9 +9443,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 75 */
-/***/ function(module, exports) {
+/***/ }),
+/* 132 */
+/***/ (function(module, exports) {
 
 	// Convert input options to more useable format
 	// and compile search regexp
@@ -11385,7 +9453,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 
 
-	function quoteRE (str) {
+	function quoteRE(str) {
 	  return str.replace(/[.?*+^$[\]\\(){}|-]/g, '\\$&');
 	}
 
@@ -11428,20 +9496,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	                .reverse()
 	                .map(function (name) { return quoteRE(name); })
 	                .join('|');
-	  var scanRE = RegExp(names, 'g');
-
+	  var scanRE = RegExp(names);
+	  var replaceRE = RegExp(names, 'g');
 
 	  return {
 	    defs: emojies,
 	    shortcuts: shortcuts,
-	    scanRE: scanRE
+	    scanRE: scanRE,
+	    replaceRE: replaceRE
 	  };
 	};
 
 
-/***/ },
-/* 76 */
-/***/ function(module, exports) {
+/***/ }),
+/* 133 */
+/***/ (function(module, exports) {
 
 	// Process ~subscript~
 
@@ -11511,9 +9580,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 77 */
-/***/ function(module, exports) {
+/***/ }),
+/* 134 */
+/***/ (function(module, exports) {
 
 	// Process ^superscript^
 
@@ -11582,9 +9651,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 78 */
-/***/ function(module, exports) {
+/***/ }),
+/* 135 */
+/***/ (function(module, exports) {
 
 	// Process footnotes
 	//
@@ -11914,9 +9983,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 79 */
-/***/ function(module, exports) {
+/***/ }),
+/* 136 */
+/***/ (function(module, exports) {
 
 	// Process definition lists
 	//
@@ -11992,8 +10061,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    nextLine = startLine + 1;
+	    if (nextLine >= endLine) { return false; }
+
 	    if (state.isEmpty(nextLine)) {
-	      if (++nextLine > endLine) { return false; }
+	      nextLine++;
+	      if (nextLine >= endLine) { return false; }
 	    }
 
 	    if (state.sCount[nextLine] < state.blkIndent) { return false; }
@@ -12145,9 +10217,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 80 */
-/***/ function(module, exports) {
+/***/ }),
+/* 137 */
+/***/ (function(module, exports) {
 
 	// Enclose abbreviations in <abbr> tags
 	//
@@ -12199,6 +10271,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    label = state.src.slice(labelStart, labelEnd).replace(/\\(.)/g, '$1');
 	    title = state.src.slice(labelEnd + 2, max).trim();
+	    if (label.length === 0) { return false; }
 	    if (title.length === 0) { return false; }
 	    if (!state.env.abbreviations) { state.env.abbreviations = {}; }
 	    // prepend ':' to avoid conflict with Object.prototype members
@@ -12298,9 +10371,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 81 */
-/***/ function(module, exports) {
+/***/ }),
+/* 138 */
+/***/ (function(module, exports) {
 
 	'use strict';
 
@@ -12424,9 +10497,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 82 */
-/***/ function(module, exports) {
+/***/ }),
+/* 139 */
+/***/ (function(module, exports) {
 
 	'use strict';
 
@@ -12550,9 +10623,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 83 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 140 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 
@@ -12560,7 +10633,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -12638,7 +10711,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      attrs.push(["class", options.tocClassName]);
 	    }
 
-	    tocHtml = markdownItSecondInstance.renderer.render(tocTokens);
+	    tocHtml = markdownItSecondInstance.renderer.render(tocTokens, markdownItSecondInstance.options);
 
 	    if (typeof state.env.tocCallback === "function") {
 	      state.env.tocCallback.call(undefined, tocMarkdown, tocArray, tocHtml);
@@ -12701,10 +10774,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      args[_key] = arguments[_key];
 	    }
 
-	    var tokens = args[0];
-	    var idx = args[1];
-	    var options = args[2];
-	    var self = args[4];
+	    var tokens = args[0],
+	        idx = args[1],
+	        options = args[2],
+	        self = args[4];
 
 	    return self.renderToken(tokens, idx, options);
 	  };
@@ -12714,8 +10787,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      args[_key2] = arguments[_key2];
 	    }
 
-	    var tokens = args[0];
-	    var idx = args[1];
+	    var tokens = args[0],
+	        idx = args[1];
 
 
 	    var attrs = tokens[idx].attrs = tokens[idx].attrs || [];
@@ -12746,11 +10819,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	};
 
-	var _clone = __webpack_require__(84);
+	var _clone = __webpack_require__(141);
 
 	var _clone2 = _interopRequireDefault(_clone);
 
-	var _uslug = __webpack_require__(89);
+	var _uslug = __webpack_require__(146);
 
 	var _uslug2 = _interopRequireDefault(_uslug);
 
@@ -12819,7 +10892,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 	var treeToMarkdownBulletList = function treeToMarkdownBulletList(tree) {
-	  var indent = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
+	  var indent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
 	  return tree.map(function (item) {
 	    var indentation = "  ";
 	    var node = repeat(indentation, indent) + "*";
@@ -12863,12 +10936,39 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return treeToMarkdownBulletList(tree.nodes);
 	};
 
-/***/ },
-/* 84 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 141 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {var clone = (function() {
 	'use strict';
+
+	function _instanceof(obj, type) {
+	  return type != null && obj instanceof type;
+	}
+
+	var nativeMap;
+	try {
+	  nativeMap = Map;
+	} catch(_) {
+	  // maybe a reference error because no `Map`. Give it a dummy value that no
+	  // value will ever be an instanceof.
+	  nativeMap = function() {};
+	}
+
+	var nativeSet;
+	try {
+	  nativeSet = Set;
+	} catch(_) {
+	  nativeSet = function() {};
+	}
+
+	var nativePromise;
+	try {
+	  nativePromise = Promise;
+	} catch(_) {
+	  nativePromise = function() {};
+	}
 
 	/**
 	 * Clones (copies) an Object using deep copying.
@@ -12887,14 +10987,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *    a particular depth. (optional - defaults to Infinity)
 	 * @param `prototype` - sets the prototype to be used when cloning an object.
 	 *    (optional - defaults to parent prototype).
+	 * @param `includeNonEnumerable` - set to true if the non-enumerable properties
+	 *    should be cloned as well. Non-enumerable properties on the prototype
+	 *    chain will be ignored. (optional - false by default)
 	*/
-	function clone(parent, circular, depth, prototype) {
-	  var filter;
+	function clone(parent, circular, depth, prototype, includeNonEnumerable) {
 	  if (typeof circular === 'object') {
 	    depth = circular.depth;
 	    prototype = circular.prototype;
-	    filter = circular.filter;
-	    circular = circular.circular
+	    includeNonEnumerable = circular.includeNonEnumerable;
+	    circular = circular.circular;
 	  }
 	  // maintain two arrays for circular references, where corresponding parents
 	  // and children have the same index
@@ -12915,7 +11017,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (parent === null)
 	      return null;
 
-	    if (depth == 0)
+	    if (depth === 0)
 	      return parent;
 
 	    var child;
@@ -12924,7 +11026,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return parent;
 	    }
 
-	    if (clone.__isArray(parent)) {
+	    if (_instanceof(parent, nativeMap)) {
+	      child = new nativeMap();
+	    } else if (_instanceof(parent, nativeSet)) {
+	      child = new nativeSet();
+	    } else if (_instanceof(parent, nativePromise)) {
+	      child = new nativePromise(function (resolve, reject) {
+	        parent.then(function(value) {
+	          resolve(_clone(value, depth - 1));
+	        }, function(err) {
+	          reject(_clone(err, depth - 1));
+	        });
+	      });
+	    } else if (clone.__isArray(parent)) {
 	      child = [];
 	    } else if (clone.__isRegExp(parent)) {
 	      child = new RegExp(parent.source, __getRegExpFlags(parent));
@@ -12935,6 +11049,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      child = new Buffer(parent.length);
 	      parent.copy(child);
 	      return child;
+	    } else if (_instanceof(parent, Error)) {
+	      child = Object.create(parent);
 	    } else {
 	      if (typeof prototype == 'undefined') {
 	        proto = Object.getPrototypeOf(parent);
@@ -12956,6 +11072,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	      allChildren.push(child);
 	    }
 
+	    if (_instanceof(parent, nativeMap)) {
+	      parent.forEach(function(value, key) {
+	        var keyChild = _clone(key, depth - 1);
+	        var valueChild = _clone(value, depth - 1);
+	        child.set(keyChild, valueChild);
+	      });
+	    }
+	    if (_instanceof(parent, nativeSet)) {
+	      parent.forEach(function(value) {
+	        var entryChild = _clone(value, depth - 1);
+	        child.add(entryChild);
+	      });
+	    }
+
 	    for (var i in parent) {
 	      var attrs;
 	      if (proto) {
@@ -12966,6 +11096,40 @@ return /******/ (function(modules) { // webpackBootstrap
 	        continue;
 	      }
 	      child[i] = _clone(parent[i], depth - 1);
+	    }
+
+	    if (Object.getOwnPropertySymbols) {
+	      var symbols = Object.getOwnPropertySymbols(parent);
+	      for (var i = 0; i < symbols.length; i++) {
+	        // Don't need to worry about cloning a symbol because it is a primitive,
+	        // like a number or string.
+	        var symbol = symbols[i];
+	        var descriptor = Object.getOwnPropertyDescriptor(parent, symbol);
+	        if (descriptor && !descriptor.enumerable && !includeNonEnumerable) {
+	          continue;
+	        }
+	        child[symbol] = _clone(parent[symbol], depth - 1);
+	        if (!descriptor.enumerable) {
+	          Object.defineProperty(child, symbol, {
+	            enumerable: false
+	          });
+	        }
+	      }
+	    }
+
+	    if (includeNonEnumerable) {
+	      var allPropertyNames = Object.getOwnPropertyNames(parent);
+	      for (var i = 0; i < allPropertyNames.length; i++) {
+	        var propertyName = allPropertyNames[i];
+	        var descriptor = Object.getOwnPropertyDescriptor(parent, propertyName);
+	        if (descriptor && descriptor.enumerable) {
+	          continue;
+	        }
+	        child[propertyName] = _clone(parent[propertyName], depth - 1);
+	        Object.defineProperty(child, propertyName, {
+	          enumerable: false
+	        });
+	      }
 	    }
 
 	    return child;
@@ -12994,22 +11158,22 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function __objToStr(o) {
 	  return Object.prototype.toString.call(o);
-	};
+	}
 	clone.__objToStr = __objToStr;
 
 	function __isDate(o) {
 	  return typeof o === 'object' && __objToStr(o) === '[object Date]';
-	};
+	}
 	clone.__isDate = __isDate;
 
 	function __isArray(o) {
 	  return typeof o === 'object' && __objToStr(o) === '[object Array]';
-	};
+	}
 	clone.__isArray = __isArray;
 
 	function __isRegExp(o) {
 	  return typeof o === 'object' && __objToStr(o) === '[object RegExp]';
-	};
+	}
 	clone.__isRegExp = __isRegExp;
 
 	function __getRegExpFlags(re) {
@@ -13018,7 +11182,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (re.ignoreCase) flags += 'i';
 	  if (re.multiline) flags += 'm';
 	  return flags;
-	};
+	}
 	clone.__getRegExpFlags = __getRegExpFlags;
 
 	return clone;
@@ -13028,13 +11192,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  module.exports = clone;
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(85).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(142).Buffer))
 
-/***/ },
-/* 85 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 142 */
+/***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(Buffer, global) {/*!
+	/* WEBPACK VAR INJECTION */(function(global) {/*!
 	 * The buffer module from node.js, for the browser.
 	 *
 	 * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
@@ -13044,16 +11208,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict'
 
-	var base64 = __webpack_require__(86)
-	var ieee754 = __webpack_require__(87)
-	var isArray = __webpack_require__(88)
+	var base64 = __webpack_require__(143)
+	var ieee754 = __webpack_require__(144)
+	var isArray = __webpack_require__(145)
 
 	exports.Buffer = Buffer
 	exports.SlowBuffer = SlowBuffer
 	exports.INSPECT_MAX_BYTES = 50
-	Buffer.poolSize = 8192 // not used by this implementation
-
-	var rootParent = {}
 
 	/**
 	 * If `Buffer.TYPED_ARRAY_SUPPORT`:
@@ -13071,9 +11232,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *   - Firefox 4-29 lacks support for adding new properties to `Uint8Array` instances,
 	 *     See: https://bugzilla.mozilla.org/show_bug.cgi?id=695438.
 	 *
-	 *   - Safari 5-7 lacks support for changing the `Object.prototype.constructor` property
-	 *     on objects.
-	 *
 	 *   - Chrome 9-10 is missing the `TypedArray.prototype.subarray` function.
 	 *
 	 *   - IE10 has a broken `TypedArray.prototype.subarray` function which returns arrays of
@@ -13086,14 +11244,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	  ? global.TYPED_ARRAY_SUPPORT
 	  : typedArraySupport()
 
+	/*
+	 * Export kMaxLength after typed array support is determined.
+	 */
+	exports.kMaxLength = kMaxLength()
+
 	function typedArraySupport () {
-	  function Bar () {}
 	  try {
 	    var arr = new Uint8Array(1)
-	    arr.foo = function () { return 42 }
-	    arr.constructor = Bar
+	    arr.__proto__ = {__proto__: Uint8Array.prototype, foo: function () { return 42 }}
 	    return arr.foo() === 42 && // typed array instances can be augmented
-	        arr.constructor === Bar && // constructor can be set
 	        typeof arr.subarray === 'function' && // chrome 9-10 lack `subarray`
 	        arr.subarray(1, 1).byteLength === 0 // ie10 has broken `subarray`
 	  } catch (e) {
@@ -13107,184 +11267,252 @@ return /******/ (function(modules) { // webpackBootstrap
 	    : 0x3fffffff
 	}
 
-	/**
-	 * Class: Buffer
-	 * =============
-	 *
-	 * The Buffer constructor returns instances of `Uint8Array` that are augmented
-	 * with function properties for all the node `Buffer` API functions. We use
-	 * `Uint8Array` so that square bracket notation works as expected -- it returns
-	 * a single octet.
-	 *
-	 * By augmenting the instances, we can avoid modifying the `Uint8Array`
-	 * prototype.
-	 */
-	function Buffer (arg) {
-	  if (!(this instanceof Buffer)) {
-	    // Avoid going through an ArgumentsAdaptorTrampoline in the common case.
-	    if (arguments.length > 1) return new Buffer(arg, arguments[1])
-	    return new Buffer(arg)
+	function createBuffer (that, length) {
+	  if (kMaxLength() < length) {
+	    throw new RangeError('Invalid typed array length')
+	  }
+	  if (Buffer.TYPED_ARRAY_SUPPORT) {
+	    // Return an augmented `Uint8Array` instance, for best performance
+	    that = new Uint8Array(length)
+	    that.__proto__ = Buffer.prototype
+	  } else {
+	    // Fallback: Return an object instance of the Buffer class
+	    if (that === null) {
+	      that = new Buffer(length)
+	    }
+	    that.length = length
 	  }
 
-	  if (!Buffer.TYPED_ARRAY_SUPPORT) {
-	    this.length = 0
-	    this.parent = undefined
+	  return that
+	}
+
+	/**
+	 * The Buffer constructor returns instances of `Uint8Array` that have their
+	 * prototype changed to `Buffer.prototype`. Furthermore, `Buffer` is a subclass of
+	 * `Uint8Array`, so the returned instances will have all the node `Buffer` methods
+	 * and the `Uint8Array` methods. Square bracket notation works as expected -- it
+	 * returns a single octet.
+	 *
+	 * The `Uint8Array` prototype remains unmodified.
+	 */
+
+	function Buffer (arg, encodingOrOffset, length) {
+	  if (!Buffer.TYPED_ARRAY_SUPPORT && !(this instanceof Buffer)) {
+	    return new Buffer(arg, encodingOrOffset, length)
 	  }
 
 	  // Common case.
 	  if (typeof arg === 'number') {
-	    return fromNumber(this, arg)
+	    if (typeof encodingOrOffset === 'string') {
+	      throw new Error(
+	        'If encoding is specified then the first argument must be a string'
+	      )
+	    }
+	    return allocUnsafe(this, arg)
 	  }
-
-	  // Slightly less common case.
-	  if (typeof arg === 'string') {
-	    return fromString(this, arg, arguments.length > 1 ? arguments[1] : 'utf8')
-	  }
-
-	  // Unusual.
-	  return fromObject(this, arg)
+	  return from(this, arg, encodingOrOffset, length)
 	}
 
-	function fromNumber (that, length) {
-	  that = allocate(that, length < 0 ? 0 : checked(length) | 0)
+	Buffer.poolSize = 8192 // not used by this implementation
+
+	// TODO: Legacy, not needed anymore. Remove in next major version.
+	Buffer._augment = function (arr) {
+	  arr.__proto__ = Buffer.prototype
+	  return arr
+	}
+
+	function from (that, value, encodingOrOffset, length) {
+	  if (typeof value === 'number') {
+	    throw new TypeError('"value" argument must not be a number')
+	  }
+
+	  if (typeof ArrayBuffer !== 'undefined' && value instanceof ArrayBuffer) {
+	    return fromArrayBuffer(that, value, encodingOrOffset, length)
+	  }
+
+	  if (typeof value === 'string') {
+	    return fromString(that, value, encodingOrOffset)
+	  }
+
+	  return fromObject(that, value)
+	}
+
+	/**
+	 * Functionally equivalent to Buffer(arg, encoding) but throws a TypeError
+	 * if value is a number.
+	 * Buffer.from(str[, encoding])
+	 * Buffer.from(array)
+	 * Buffer.from(buffer)
+	 * Buffer.from(arrayBuffer[, byteOffset[, length]])
+	 **/
+	Buffer.from = function (value, encodingOrOffset, length) {
+	  return from(null, value, encodingOrOffset, length)
+	}
+
+	if (Buffer.TYPED_ARRAY_SUPPORT) {
+	  Buffer.prototype.__proto__ = Uint8Array.prototype
+	  Buffer.__proto__ = Uint8Array
+	  if (typeof Symbol !== 'undefined' && Symbol.species &&
+	      Buffer[Symbol.species] === Buffer) {
+	    // Fix subarray() in ES2016. See: https://github.com/feross/buffer/pull/97
+	    Object.defineProperty(Buffer, Symbol.species, {
+	      value: null,
+	      configurable: true
+	    })
+	  }
+	}
+
+	function assertSize (size) {
+	  if (typeof size !== 'number') {
+	    throw new TypeError('"size" argument must be a number')
+	  } else if (size < 0) {
+	    throw new RangeError('"size" argument must not be negative')
+	  }
+	}
+
+	function alloc (that, size, fill, encoding) {
+	  assertSize(size)
+	  if (size <= 0) {
+	    return createBuffer(that, size)
+	  }
+	  if (fill !== undefined) {
+	    // Only pay attention to encoding if it's a string. This
+	    // prevents accidentally sending in a number that would
+	    // be interpretted as a start offset.
+	    return typeof encoding === 'string'
+	      ? createBuffer(that, size).fill(fill, encoding)
+	      : createBuffer(that, size).fill(fill)
+	  }
+	  return createBuffer(that, size)
+	}
+
+	/**
+	 * Creates a new filled Buffer instance.
+	 * alloc(size[, fill[, encoding]])
+	 **/
+	Buffer.alloc = function (size, fill, encoding) {
+	  return alloc(null, size, fill, encoding)
+	}
+
+	function allocUnsafe (that, size) {
+	  assertSize(size)
+	  that = createBuffer(that, size < 0 ? 0 : checked(size) | 0)
 	  if (!Buffer.TYPED_ARRAY_SUPPORT) {
-	    for (var i = 0; i < length; i++) {
+	    for (var i = 0; i < size; ++i) {
 	      that[i] = 0
 	    }
 	  }
 	  return that
 	}
 
+	/**
+	 * Equivalent to Buffer(num), by default creates a non-zero-filled Buffer instance.
+	 * */
+	Buffer.allocUnsafe = function (size) {
+	  return allocUnsafe(null, size)
+	}
+	/**
+	 * Equivalent to SlowBuffer(num), by default creates a non-zero-filled Buffer instance.
+	 */
+	Buffer.allocUnsafeSlow = function (size) {
+	  return allocUnsafe(null, size)
+	}
+
 	function fromString (that, string, encoding) {
-	  if (typeof encoding !== 'string' || encoding === '') encoding = 'utf8'
+	  if (typeof encoding !== 'string' || encoding === '') {
+	    encoding = 'utf8'
+	  }
 
-	  // Assumption: byteLength() return value is always < kMaxLength.
+	  if (!Buffer.isEncoding(encoding)) {
+	    throw new TypeError('"encoding" must be a valid string encoding')
+	  }
+
 	  var length = byteLength(string, encoding) | 0
-	  that = allocate(that, length)
+	  that = createBuffer(that, length)
 
-	  that.write(string, encoding)
-	  return that
-	}
+	  var actual = that.write(string, encoding)
 
-	function fromObject (that, object) {
-	  if (Buffer.isBuffer(object)) return fromBuffer(that, object)
-
-	  if (isArray(object)) return fromArray(that, object)
-
-	  if (object == null) {
-	    throw new TypeError('must start with number, buffer, array or string')
+	  if (actual !== length) {
+	    // Writing a hex string, for example, that contains invalid characters will
+	    // cause everything after the first invalid character to be ignored. (e.g.
+	    // 'abxxcd' will be treated as 'ab')
+	    that = that.slice(0, actual)
 	  }
 
-	  if (typeof ArrayBuffer !== 'undefined') {
-	    if (object.buffer instanceof ArrayBuffer) {
-	      return fromTypedArray(that, object)
-	    }
-	    if (object instanceof ArrayBuffer) {
-	      return fromArrayBuffer(that, object)
-	    }
-	  }
-
-	  if (object.length) return fromArrayLike(that, object)
-
-	  return fromJsonObject(that, object)
-	}
-
-	function fromBuffer (that, buffer) {
-	  var length = checked(buffer.length) | 0
-	  that = allocate(that, length)
-	  buffer.copy(that, 0, 0, length)
-	  return that
-	}
-
-	function fromArray (that, array) {
-	  var length = checked(array.length) | 0
-	  that = allocate(that, length)
-	  for (var i = 0; i < length; i += 1) {
-	    that[i] = array[i] & 255
-	  }
-	  return that
-	}
-
-	// Duplicate of fromArray() to keep fromArray() monomorphic.
-	function fromTypedArray (that, array) {
-	  var length = checked(array.length) | 0
-	  that = allocate(that, length)
-	  // Truncating the elements is probably not what people expect from typed
-	  // arrays with BYTES_PER_ELEMENT > 1 but it's compatible with the behavior
-	  // of the old Buffer constructor.
-	  for (var i = 0; i < length; i += 1) {
-	    that[i] = array[i] & 255
-	  }
-	  return that
-	}
-
-	function fromArrayBuffer (that, array) {
-	  if (Buffer.TYPED_ARRAY_SUPPORT) {
-	    // Return an augmented `Uint8Array` instance, for best performance
-	    array.byteLength
-	    that = Buffer._augment(new Uint8Array(array))
-	  } else {
-	    // Fallback: Return an object instance of the Buffer class
-	    that = fromTypedArray(that, new Uint8Array(array))
-	  }
 	  return that
 	}
 
 	function fromArrayLike (that, array) {
-	  var length = checked(array.length) | 0
-	  that = allocate(that, length)
+	  var length = array.length < 0 ? 0 : checked(array.length) | 0
+	  that = createBuffer(that, length)
 	  for (var i = 0; i < length; i += 1) {
 	    that[i] = array[i] & 255
 	  }
 	  return that
 	}
 
-	// Deserialize { type: 'Buffer', data: [1,2,3,...] } into a Buffer object.
-	// Returns a zero-length buffer for inputs that don't conform to the spec.
-	function fromJsonObject (that, object) {
-	  var array
-	  var length = 0
+	function fromArrayBuffer (that, array, byteOffset, length) {
+	  array.byteLength // this throws if `array` is not a valid ArrayBuffer
 
-	  if (object.type === 'Buffer' && isArray(object.data)) {
-	    array = object.data
-	    length = checked(array.length) | 0
+	  if (byteOffset < 0 || array.byteLength < byteOffset) {
+	    throw new RangeError('\'offset\' is out of bounds')
 	  }
-	  that = allocate(that, length)
 
-	  for (var i = 0; i < length; i += 1) {
-	    that[i] = array[i] & 255
+	  if (array.byteLength < byteOffset + (length || 0)) {
+	    throw new RangeError('\'length\' is out of bounds')
 	  }
-	  return that
-	}
 
-	if (Buffer.TYPED_ARRAY_SUPPORT) {
-	  Buffer.prototype.__proto__ = Uint8Array.prototype
-	  Buffer.__proto__ = Uint8Array
-	} else {
-	  // pre-set for values that may exist in the future
-	  Buffer.prototype.length = undefined
-	  Buffer.prototype.parent = undefined
-	}
+	  if (byteOffset === undefined && length === undefined) {
+	    array = new Uint8Array(array)
+	  } else if (length === undefined) {
+	    array = new Uint8Array(array, byteOffset)
+	  } else {
+	    array = new Uint8Array(array, byteOffset, length)
+	  }
 
-	function allocate (that, length) {
 	  if (Buffer.TYPED_ARRAY_SUPPORT) {
 	    // Return an augmented `Uint8Array` instance, for best performance
-	    that = Buffer._augment(new Uint8Array(length))
+	    that = array
 	    that.__proto__ = Buffer.prototype
 	  } else {
 	    // Fallback: Return an object instance of the Buffer class
-	    that.length = length
-	    that._isBuffer = true
+	    that = fromArrayLike(that, array)
 	  }
-
-	  var fromPool = length !== 0 && length <= Buffer.poolSize >>> 1
-	  if (fromPool) that.parent = rootParent
-
 	  return that
 	}
 
+	function fromObject (that, obj) {
+	  if (Buffer.isBuffer(obj)) {
+	    var len = checked(obj.length) | 0
+	    that = createBuffer(that, len)
+
+	    if (that.length === 0) {
+	      return that
+	    }
+
+	    obj.copy(that, 0, 0, len)
+	    return that
+	  }
+
+	  if (obj) {
+	    if ((typeof ArrayBuffer !== 'undefined' &&
+	        obj.buffer instanceof ArrayBuffer) || 'length' in obj) {
+	      if (typeof obj.length !== 'number' || isnan(obj.length)) {
+	        return createBuffer(that, 0)
+	      }
+	      return fromArrayLike(that, obj)
+	    }
+
+	    if (obj.type === 'Buffer' && isArray(obj.data)) {
+	      return fromArrayLike(that, obj.data)
+	    }
+	  }
+
+	  throw new TypeError('First argument must be a string, Buffer, ArrayBuffer, Array, or array-like object.')
+	}
+
 	function checked (length) {
-	  // Note: cannot use `length < kMaxLength` here because that fails when
+	  // Note: cannot use `length < kMaxLength()` here because that fails when
 	  // length is NaN (which is otherwise coerced to zero.)
 	  if (length >= kMaxLength()) {
 	    throw new RangeError('Attempt to allocate Buffer larger than maximum ' +
@@ -13293,12 +11521,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return length | 0
 	}
 
-	function SlowBuffer (subject, encoding) {
-	  if (!(this instanceof SlowBuffer)) return new SlowBuffer(subject, encoding)
-
-	  var buf = new Buffer(subject, encoding)
-	  delete buf.parent
-	  return buf
+	function SlowBuffer (length) {
+	  if (+length != length) { // eslint-disable-line eqeqeq
+	    length = 0
+	  }
+	  return Buffer.alloc(+length)
 	}
 
 	Buffer.isBuffer = function isBuffer (b) {
@@ -13315,17 +11542,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var x = a.length
 	  var y = b.length
 
-	  var i = 0
-	  var len = Math.min(x, y)
-	  while (i < len) {
-	    if (a[i] !== b[i]) break
-
-	    ++i
-	  }
-
-	  if (i !== len) {
-	    x = a[i]
-	    y = b[i]
+	  for (var i = 0, len = Math.min(x, y); i < len; ++i) {
+	    if (a[i] !== b[i]) {
+	      x = a[i]
+	      y = b[i]
+	      break
+	    }
 	  }
 
 	  if (x < y) return -1
@@ -13339,9 +11561,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    case 'utf8':
 	    case 'utf-8':
 	    case 'ascii':
+	    case 'latin1':
 	    case 'binary':
 	    case 'base64':
-	    case 'raw':
 	    case 'ucs2':
 	    case 'ucs-2':
 	    case 'utf16le':
@@ -13353,32 +11575,46 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	Buffer.concat = function concat (list, length) {
-	  if (!isArray(list)) throw new TypeError('list argument must be an Array of Buffers.')
+	  if (!isArray(list)) {
+	    throw new TypeError('"list" argument must be an Array of Buffers')
+	  }
 
 	  if (list.length === 0) {
-	    return new Buffer(0)
+	    return Buffer.alloc(0)
 	  }
 
 	  var i
 	  if (length === undefined) {
 	    length = 0
-	    for (i = 0; i < list.length; i++) {
+	    for (i = 0; i < list.length; ++i) {
 	      length += list[i].length
 	    }
 	  }
 
-	  var buf = new Buffer(length)
+	  var buffer = Buffer.allocUnsafe(length)
 	  var pos = 0
-	  for (i = 0; i < list.length; i++) {
-	    var item = list[i]
-	    item.copy(buf, pos)
-	    pos += item.length
+	  for (i = 0; i < list.length; ++i) {
+	    var buf = list[i]
+	    if (!Buffer.isBuffer(buf)) {
+	      throw new TypeError('"list" argument must be an Array of Buffers')
+	    }
+	    buf.copy(buffer, pos)
+	    pos += buf.length
 	  }
-	  return buf
+	  return buffer
 	}
 
 	function byteLength (string, encoding) {
-	  if (typeof string !== 'string') string = '' + string
+	  if (Buffer.isBuffer(string)) {
+	    return string.length
+	  }
+	  if (typeof ArrayBuffer !== 'undefined' && typeof ArrayBuffer.isView === 'function' &&
+	      (ArrayBuffer.isView(string) || string instanceof ArrayBuffer)) {
+	    return string.byteLength
+	  }
+	  if (typeof string !== 'string') {
+	    string = '' + string
+	  }
 
 	  var len = string.length
 	  if (len === 0) return 0
@@ -13388,13 +11624,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  for (;;) {
 	    switch (encoding) {
 	      case 'ascii':
+	      case 'latin1':
 	      case 'binary':
-	      // Deprecated
-	      case 'raw':
-	      case 'raws':
 	        return len
 	      case 'utf8':
 	      case 'utf-8':
+	      case undefined:
 	        return utf8ToBytes(string).length
 	      case 'ucs2':
 	      case 'ucs-2':
@@ -13417,13 +11652,39 @@ return /******/ (function(modules) { // webpackBootstrap
 	function slowToString (encoding, start, end) {
 	  var loweredCase = false
 
-	  start = start | 0
-	  end = end === undefined || end === Infinity ? this.length : end | 0
+	  // No need to verify that "this.length <= MAX_UINT32" since it's a read-only
+	  // property of a typed array.
+
+	  // This behaves neither like String nor Uint8Array in that we set start/end
+	  // to their upper/lower bounds if the value passed is out of range.
+	  // undefined is handled specially as per ECMA-262 6th Edition,
+	  // Section 13.3.3.7 Runtime Semantics: KeyedBindingInitialization.
+	  if (start === undefined || start < 0) {
+	    start = 0
+	  }
+	  // Return early if start > this.length. Done here to prevent potential uint32
+	  // coercion fail below.
+	  if (start > this.length) {
+	    return ''
+	  }
+
+	  if (end === undefined || end > this.length) {
+	    end = this.length
+	  }
+
+	  if (end <= 0) {
+	    return ''
+	  }
+
+	  // Force coersion to uint32. This will also coerce falsey/NaN values to 0.
+	  end >>>= 0
+	  start >>>= 0
+
+	  if (end <= start) {
+	    return ''
+	  }
 
 	  if (!encoding) encoding = 'utf8'
-	  if (start < 0) start = 0
-	  if (end > this.length) end = this.length
-	  if (end <= start) return ''
 
 	  while (true) {
 	    switch (encoding) {
@@ -13437,8 +11698,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      case 'ascii':
 	        return asciiSlice(this, start, end)
 
+	      case 'latin1':
 	      case 'binary':
-	        return binarySlice(this, start, end)
+	        return latin1Slice(this, start, end)
 
 	      case 'base64':
 	        return base64Slice(this, start, end)
@@ -13455,6 +11717,53 @@ return /******/ (function(modules) { // webpackBootstrap
 	        loweredCase = true
 	    }
 	  }
+	}
+
+	// The property is used by `Buffer.isBuffer` and `is-buffer` (in Safari 5-7) to detect
+	// Buffer instances.
+	Buffer.prototype._isBuffer = true
+
+	function swap (b, n, m) {
+	  var i = b[n]
+	  b[n] = b[m]
+	  b[m] = i
+	}
+
+	Buffer.prototype.swap16 = function swap16 () {
+	  var len = this.length
+	  if (len % 2 !== 0) {
+	    throw new RangeError('Buffer size must be a multiple of 16-bits')
+	  }
+	  for (var i = 0; i < len; i += 2) {
+	    swap(this, i, i + 1)
+	  }
+	  return this
+	}
+
+	Buffer.prototype.swap32 = function swap32 () {
+	  var len = this.length
+	  if (len % 4 !== 0) {
+	    throw new RangeError('Buffer size must be a multiple of 32-bits')
+	  }
+	  for (var i = 0; i < len; i += 4) {
+	    swap(this, i, i + 3)
+	    swap(this, i + 1, i + 2)
+	  }
+	  return this
+	}
+
+	Buffer.prototype.swap64 = function swap64 () {
+	  var len = this.length
+	  if (len % 8 !== 0) {
+	    throw new RangeError('Buffer size must be a multiple of 64-bits')
+	  }
+	  for (var i = 0; i < len; i += 8) {
+	    swap(this, i, i + 7)
+	    swap(this, i + 1, i + 6)
+	    swap(this, i + 2, i + 5)
+	    swap(this, i + 3, i + 4)
+	  }
+	  return this
 	}
 
 	Buffer.prototype.toString = function toString () {
@@ -13480,63 +11789,197 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return '<Buffer ' + str + '>'
 	}
 
-	Buffer.prototype.compare = function compare (b) {
-	  if (!Buffer.isBuffer(b)) throw new TypeError('Argument must be a Buffer')
-	  if (this === b) return 0
-	  return Buffer.compare(this, b)
+	Buffer.prototype.compare = function compare (target, start, end, thisStart, thisEnd) {
+	  if (!Buffer.isBuffer(target)) {
+	    throw new TypeError('Argument must be a Buffer')
+	  }
+
+	  if (start === undefined) {
+	    start = 0
+	  }
+	  if (end === undefined) {
+	    end = target ? target.length : 0
+	  }
+	  if (thisStart === undefined) {
+	    thisStart = 0
+	  }
+	  if (thisEnd === undefined) {
+	    thisEnd = this.length
+	  }
+
+	  if (start < 0 || end > target.length || thisStart < 0 || thisEnd > this.length) {
+	    throw new RangeError('out of range index')
+	  }
+
+	  if (thisStart >= thisEnd && start >= end) {
+	    return 0
+	  }
+	  if (thisStart >= thisEnd) {
+	    return -1
+	  }
+	  if (start >= end) {
+	    return 1
+	  }
+
+	  start >>>= 0
+	  end >>>= 0
+	  thisStart >>>= 0
+	  thisEnd >>>= 0
+
+	  if (this === target) return 0
+
+	  var x = thisEnd - thisStart
+	  var y = end - start
+	  var len = Math.min(x, y)
+
+	  var thisCopy = this.slice(thisStart, thisEnd)
+	  var targetCopy = target.slice(start, end)
+
+	  for (var i = 0; i < len; ++i) {
+	    if (thisCopy[i] !== targetCopy[i]) {
+	      x = thisCopy[i]
+	      y = targetCopy[i]
+	      break
+	    }
+	  }
+
+	  if (x < y) return -1
+	  if (y < x) return 1
+	  return 0
 	}
 
-	Buffer.prototype.indexOf = function indexOf (val, byteOffset) {
-	  if (byteOffset > 0x7fffffff) byteOffset = 0x7fffffff
-	  else if (byteOffset < -0x80000000) byteOffset = -0x80000000
-	  byteOffset >>= 0
+	// Finds either the first index of `val` in `buffer` at offset >= `byteOffset`,
+	// OR the last index of `val` in `buffer` at offset <= `byteOffset`.
+	//
+	// Arguments:
+	// - buffer - a Buffer to search
+	// - val - a string, Buffer, or number
+	// - byteOffset - an index into `buffer`; will be clamped to an int32
+	// - encoding - an optional encoding, relevant is val is a string
+	// - dir - true for indexOf, false for lastIndexOf
+	function bidirectionalIndexOf (buffer, val, byteOffset, encoding, dir) {
+	  // Empty buffer means no match
+	  if (buffer.length === 0) return -1
 
-	  if (this.length === 0) return -1
-	  if (byteOffset >= this.length) return -1
+	  // Normalize byteOffset
+	  if (typeof byteOffset === 'string') {
+	    encoding = byteOffset
+	    byteOffset = 0
+	  } else if (byteOffset > 0x7fffffff) {
+	    byteOffset = 0x7fffffff
+	  } else if (byteOffset < -0x80000000) {
+	    byteOffset = -0x80000000
+	  }
+	  byteOffset = +byteOffset  // Coerce to Number.
+	  if (isNaN(byteOffset)) {
+	    // byteOffset: it it's undefined, null, NaN, "foo", etc, search whole buffer
+	    byteOffset = dir ? 0 : (buffer.length - 1)
+	  }
 
-	  // Negative offsets start from the end of the buffer
-	  if (byteOffset < 0) byteOffset = Math.max(this.length + byteOffset, 0)
+	  // Normalize byteOffset: negative offsets start from the end of the buffer
+	  if (byteOffset < 0) byteOffset = buffer.length + byteOffset
+	  if (byteOffset >= buffer.length) {
+	    if (dir) return -1
+	    else byteOffset = buffer.length - 1
+	  } else if (byteOffset < 0) {
+	    if (dir) byteOffset = 0
+	    else return -1
+	  }
 
+	  // Normalize val
 	  if (typeof val === 'string') {
-	    if (val.length === 0) return -1 // special case: looking for empty string always fails
-	    return String.prototype.indexOf.call(this, val, byteOffset)
-	  }
-	  if (Buffer.isBuffer(val)) {
-	    return arrayIndexOf(this, val, byteOffset)
-	  }
-	  if (typeof val === 'number') {
-	    if (Buffer.TYPED_ARRAY_SUPPORT && Uint8Array.prototype.indexOf === 'function') {
-	      return Uint8Array.prototype.indexOf.call(this, val, byteOffset)
-	    }
-	    return arrayIndexOf(this, [ val ], byteOffset)
+	    val = Buffer.from(val, encoding)
 	  }
 
-	  function arrayIndexOf (arr, val, byteOffset) {
-	    var foundIndex = -1
-	    for (var i = 0; byteOffset + i < arr.length; i++) {
-	      if (arr[byteOffset + i] === val[foundIndex === -1 ? 0 : i - foundIndex]) {
-	        if (foundIndex === -1) foundIndex = i
-	        if (i - foundIndex + 1 === val.length) return byteOffset + foundIndex
+	  // Finally, search either indexOf (if dir is true) or lastIndexOf
+	  if (Buffer.isBuffer(val)) {
+	    // Special case: looking for empty string/buffer always fails
+	    if (val.length === 0) {
+	      return -1
+	    }
+	    return arrayIndexOf(buffer, val, byteOffset, encoding, dir)
+	  } else if (typeof val === 'number') {
+	    val = val & 0xFF // Search for a byte value [0-255]
+	    if (Buffer.TYPED_ARRAY_SUPPORT &&
+	        typeof Uint8Array.prototype.indexOf === 'function') {
+	      if (dir) {
+	        return Uint8Array.prototype.indexOf.call(buffer, val, byteOffset)
 	      } else {
-	        foundIndex = -1
+	        return Uint8Array.prototype.lastIndexOf.call(buffer, val, byteOffset)
 	      }
 	    }
-	    return -1
+	    return arrayIndexOf(buffer, [ val ], byteOffset, encoding, dir)
 	  }
 
 	  throw new TypeError('val must be string, number or Buffer')
 	}
 
-	// `get` is deprecated
-	Buffer.prototype.get = function get (offset) {
-	  console.log('.get() is deprecated. Access using array indexes instead.')
-	  return this.readUInt8(offset)
+	function arrayIndexOf (arr, val, byteOffset, encoding, dir) {
+	  var indexSize = 1
+	  var arrLength = arr.length
+	  var valLength = val.length
+
+	  if (encoding !== undefined) {
+	    encoding = String(encoding).toLowerCase()
+	    if (encoding === 'ucs2' || encoding === 'ucs-2' ||
+	        encoding === 'utf16le' || encoding === 'utf-16le') {
+	      if (arr.length < 2 || val.length < 2) {
+	        return -1
+	      }
+	      indexSize = 2
+	      arrLength /= 2
+	      valLength /= 2
+	      byteOffset /= 2
+	    }
+	  }
+
+	  function read (buf, i) {
+	    if (indexSize === 1) {
+	      return buf[i]
+	    } else {
+	      return buf.readUInt16BE(i * indexSize)
+	    }
+	  }
+
+	  var i
+	  if (dir) {
+	    var foundIndex = -1
+	    for (i = byteOffset; i < arrLength; i++) {
+	      if (read(arr, i) === read(val, foundIndex === -1 ? 0 : i - foundIndex)) {
+	        if (foundIndex === -1) foundIndex = i
+	        if (i - foundIndex + 1 === valLength) return foundIndex * indexSize
+	      } else {
+	        if (foundIndex !== -1) i -= i - foundIndex
+	        foundIndex = -1
+	      }
+	    }
+	  } else {
+	    if (byteOffset + valLength > arrLength) byteOffset = arrLength - valLength
+	    for (i = byteOffset; i >= 0; i--) {
+	      var found = true
+	      for (var j = 0; j < valLength; j++) {
+	        if (read(arr, i + j) !== read(val, j)) {
+	          found = false
+	          break
+	        }
+	      }
+	      if (found) return i
+	    }
+	  }
+
+	  return -1
 	}
 
-	// `set` is deprecated
-	Buffer.prototype.set = function set (v, offset) {
-	  console.log('.set() is deprecated. Access using array indexes instead.')
-	  return this.writeUInt8(v, offset)
+	Buffer.prototype.includes = function includes (val, byteOffset, encoding) {
+	  return this.indexOf(val, byteOffset, encoding) !== -1
+	}
+
+	Buffer.prototype.indexOf = function indexOf (val, byteOffset, encoding) {
+	  return bidirectionalIndexOf(this, val, byteOffset, encoding, true)
+	}
+
+	Buffer.prototype.lastIndexOf = function lastIndexOf (val, byteOffset, encoding) {
+	  return bidirectionalIndexOf(this, val, byteOffset, encoding, false)
 	}
 
 	function hexWrite (buf, string, offset, length) {
@@ -13553,14 +11996,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  // must be an even number of digits
 	  var strLen = string.length
-	  if (strLen % 2 !== 0) throw new Error('Invalid hex string')
+	  if (strLen % 2 !== 0) throw new TypeError('Invalid hex string')
 
 	  if (length > strLen / 2) {
 	    length = strLen / 2
 	  }
-	  for (var i = 0; i < length; i++) {
+	  for (var i = 0; i < length; ++i) {
 	    var parsed = parseInt(string.substr(i * 2, 2), 16)
-	    if (isNaN(parsed)) throw new Error('Invalid hex string')
+	    if (isNaN(parsed)) return i
 	    buf[offset + i] = parsed
 	  }
 	  return i
@@ -13574,7 +12017,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return blitBuffer(asciiToBytes(string), buf, offset, length)
 	}
 
-	function binaryWrite (buf, string, offset, length) {
+	function latin1Write (buf, string, offset, length) {
 	  return asciiWrite(buf, string, offset, length)
 	}
 
@@ -13609,17 +12052,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  // legacy write(string, encoding, offset, length) - remove in v0.13
 	  } else {
-	    var swap = encoding
-	    encoding = offset
-	    offset = length | 0
-	    length = swap
+	    throw new Error(
+	      'Buffer.write(string, encoding, offset[, length]) is no longer supported'
+	    )
 	  }
 
 	  var remaining = this.length - offset
 	  if (length === undefined || length > remaining) length = remaining
 
 	  if ((string.length > 0 && (length < 0 || offset < 0)) || offset > this.length) {
-	    throw new RangeError('attempt to write outside buffer bounds')
+	    throw new RangeError('Attempt to write outside buffer bounds')
 	  }
 
 	  if (!encoding) encoding = 'utf8'
@@ -13637,8 +12079,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      case 'ascii':
 	        return asciiWrite(this, string, offset, length)
 
+	      case 'latin1':
 	      case 'binary':
-	        return binaryWrite(this, string, offset, length)
+	        return latin1Write(this, string, offset, length)
 
 	      case 'base64':
 	        // Warning: maxLength not taken into account in base64Write
@@ -13773,17 +12216,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var ret = ''
 	  end = Math.min(buf.length, end)
 
-	  for (var i = start; i < end; i++) {
+	  for (var i = start; i < end; ++i) {
 	    ret += String.fromCharCode(buf[i] & 0x7F)
 	  }
 	  return ret
 	}
 
-	function binarySlice (buf, start, end) {
+	function latin1Slice (buf, start, end) {
 	  var ret = ''
 	  end = Math.min(buf.length, end)
 
-	  for (var i = start; i < end; i++) {
+	  for (var i = start; i < end; ++i) {
 	    ret += String.fromCharCode(buf[i])
 	  }
 	  return ret
@@ -13796,7 +12239,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (!end || end < 0 || end > len) end = len
 
 	  var out = ''
-	  for (var i = start; i < end; i++) {
+	  for (var i = start; i < end; ++i) {
 	    out += toHex(buf[i])
 	  }
 	  return out
@@ -13834,16 +12277,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  var newBuf
 	  if (Buffer.TYPED_ARRAY_SUPPORT) {
-	    newBuf = Buffer._augment(this.subarray(start, end))
+	    newBuf = this.subarray(start, end)
+	    newBuf.__proto__ = Buffer.prototype
 	  } else {
 	    var sliceLen = end - start
 	    newBuf = new Buffer(sliceLen, undefined)
-	    for (var i = 0; i < sliceLen; i++) {
+	    for (var i = 0; i < sliceLen; ++i) {
 	      newBuf[i] = this[i + start]
 	    }
 	  }
-
-	  if (newBuf.length) newBuf.parent = this.parent || this
 
 	  return newBuf
 	}
@@ -14013,16 +12455,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	function checkInt (buf, value, offset, ext, max, min) {
-	  if (!Buffer.isBuffer(buf)) throw new TypeError('buffer must be a Buffer instance')
-	  if (value > max || value < min) throw new RangeError('value is out of bounds')
-	  if (offset + ext > buf.length) throw new RangeError('index out of range')
+	  if (!Buffer.isBuffer(buf)) throw new TypeError('"buffer" argument must be a Buffer instance')
+	  if (value > max || value < min) throw new RangeError('"value" argument is out of bounds')
+	  if (offset + ext > buf.length) throw new RangeError('Index out of range')
 	}
 
 	Buffer.prototype.writeUIntLE = function writeUIntLE (value, offset, byteLength, noAssert) {
 	  value = +value
 	  offset = offset | 0
 	  byteLength = byteLength | 0
-	  if (!noAssert) checkInt(this, value, offset, byteLength, Math.pow(2, 8 * byteLength), 0)
+	  if (!noAssert) {
+	    var maxBytes = Math.pow(2, 8 * byteLength) - 1
+	    checkInt(this, value, offset, byteLength, maxBytes, 0)
+	  }
 
 	  var mul = 1
 	  var i = 0
@@ -14038,7 +12483,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value = +value
 	  offset = offset | 0
 	  byteLength = byteLength | 0
-	  if (!noAssert) checkInt(this, value, offset, byteLength, Math.pow(2, 8 * byteLength), 0)
+	  if (!noAssert) {
+	    var maxBytes = Math.pow(2, 8 * byteLength) - 1
+	    checkInt(this, value, offset, byteLength, maxBytes, 0)
+	  }
 
 	  var i = byteLength - 1
 	  var mul = 1
@@ -14061,7 +12509,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function objectWriteUInt16 (buf, value, offset, littleEndian) {
 	  if (value < 0) value = 0xffff + value + 1
-	  for (var i = 0, j = Math.min(buf.length - offset, 2); i < j; i++) {
+	  for (var i = 0, j = Math.min(buf.length - offset, 2); i < j; ++i) {
 	    buf[offset + i] = (value & (0xff << (8 * (littleEndian ? i : 1 - i)))) >>>
 	      (littleEndian ? i : 1 - i) * 8
 	  }
@@ -14095,7 +12543,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function objectWriteUInt32 (buf, value, offset, littleEndian) {
 	  if (value < 0) value = 0xffffffff + value + 1
-	  for (var i = 0, j = Math.min(buf.length - offset, 4); i < j; i++) {
+	  for (var i = 0, j = Math.min(buf.length - offset, 4); i < j; ++i) {
 	    buf[offset + i] = (value >>> (littleEndian ? i : 3 - i) * 8) & 0xff
 	  }
 	}
@@ -14141,9 +12589,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  var i = 0
 	  var mul = 1
-	  var sub = value < 0 ? 1 : 0
+	  var sub = 0
 	  this[offset] = value & 0xFF
 	  while (++i < byteLength && (mul *= 0x100)) {
+	    if (value < 0 && sub === 0 && this[offset + i - 1] !== 0) {
+	      sub = 1
+	    }
 	    this[offset + i] = ((value / mul) >> 0) - sub & 0xFF
 	  }
 
@@ -14161,9 +12612,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  var i = byteLength - 1
 	  var mul = 1
-	  var sub = value < 0 ? 1 : 0
+	  var sub = 0
 	  this[offset + i] = value & 0xFF
 	  while (--i >= 0 && (mul *= 0x100)) {
+	    if (value < 0 && sub === 0 && this[offset + i + 1] !== 0) {
+	      sub = 1
+	    }
 	    this[offset + i] = ((value / mul) >> 0) - sub & 0xFF
 	  }
 
@@ -14238,9 +12692,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	function checkIEEE754 (buf, value, offset, ext, max, min) {
-	  if (value > max || value < min) throw new RangeError('value is out of bounds')
-	  if (offset + ext > buf.length) throw new RangeError('index out of range')
-	  if (offset < 0) throw new RangeError('index out of range')
+	  if (offset + ext > buf.length) throw new RangeError('Index out of range')
+	  if (offset < 0) throw new RangeError('Index out of range')
 	}
 
 	function writeFloat (buf, value, offset, littleEndian, noAssert) {
@@ -14305,142 +12758,90 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  if (this === target && start < targetStart && targetStart < end) {
 	    // descending copy from end
-	    for (i = len - 1; i >= 0; i--) {
+	    for (i = len - 1; i >= 0; --i) {
 	      target[i + targetStart] = this[i + start]
 	    }
 	  } else if (len < 1000 || !Buffer.TYPED_ARRAY_SUPPORT) {
 	    // ascending copy from start
-	    for (i = 0; i < len; i++) {
+	    for (i = 0; i < len; ++i) {
 	      target[i + targetStart] = this[i + start]
 	    }
 	  } else {
-	    target._set(this.subarray(start, start + len), targetStart)
+	    Uint8Array.prototype.set.call(
+	      target,
+	      this.subarray(start, start + len),
+	      targetStart
+	    )
 	  }
 
 	  return len
 	}
 
-	// fill(value, start=0, end=buffer.length)
-	Buffer.prototype.fill = function fill (value, start, end) {
-	  if (!value) value = 0
-	  if (!start) start = 0
-	  if (!end) end = this.length
+	// Usage:
+	//    buffer.fill(number[, offset[, end]])
+	//    buffer.fill(buffer[, offset[, end]])
+	//    buffer.fill(string[, offset[, end]][, encoding])
+	Buffer.prototype.fill = function fill (val, start, end, encoding) {
+	  // Handle string cases:
+	  if (typeof val === 'string') {
+	    if (typeof start === 'string') {
+	      encoding = start
+	      start = 0
+	      end = this.length
+	    } else if (typeof end === 'string') {
+	      encoding = end
+	      end = this.length
+	    }
+	    if (val.length === 1) {
+	      var code = val.charCodeAt(0)
+	      if (code < 256) {
+	        val = code
+	      }
+	    }
+	    if (encoding !== undefined && typeof encoding !== 'string') {
+	      throw new TypeError('encoding must be a string')
+	    }
+	    if (typeof encoding === 'string' && !Buffer.isEncoding(encoding)) {
+	      throw new TypeError('Unknown encoding: ' + encoding)
+	    }
+	  } else if (typeof val === 'number') {
+	    val = val & 255
+	  }
 
-	  if (end < start) throw new RangeError('end < start')
+	  // Invalid ranges are not set to a default, so can range check early.
+	  if (start < 0 || this.length < start || this.length < end) {
+	    throw new RangeError('Out of range index')
+	  }
 
-	  // Fill 0 bytes; we're done
-	  if (end === start) return
-	  if (this.length === 0) return
+	  if (end <= start) {
+	    return this
+	  }
 
-	  if (start < 0 || start >= this.length) throw new RangeError('start out of bounds')
-	  if (end < 0 || end > this.length) throw new RangeError('end out of bounds')
+	  start = start >>> 0
+	  end = end === undefined ? this.length : end >>> 0
+
+	  if (!val) val = 0
 
 	  var i
-	  if (typeof value === 'number') {
-	    for (i = start; i < end; i++) {
-	      this[i] = value
+	  if (typeof val === 'number') {
+	    for (i = start; i < end; ++i) {
+	      this[i] = val
 	    }
 	  } else {
-	    var bytes = utf8ToBytes(value.toString())
+	    var bytes = Buffer.isBuffer(val)
+	      ? val
+	      : utf8ToBytes(new Buffer(val, encoding).toString())
 	    var len = bytes.length
-	    for (i = start; i < end; i++) {
-	      this[i] = bytes[i % len]
+	    for (i = 0; i < end - start; ++i) {
+	      this[i + start] = bytes[i % len]
 	    }
 	  }
 
 	  return this
 	}
 
-	/**
-	 * Creates a new `ArrayBuffer` with the *copied* memory of the buffer instance.
-	 * Added in Node 0.12. Only available in browsers that support ArrayBuffer.
-	 */
-	Buffer.prototype.toArrayBuffer = function toArrayBuffer () {
-	  if (typeof Uint8Array !== 'undefined') {
-	    if (Buffer.TYPED_ARRAY_SUPPORT) {
-	      return (new Buffer(this)).buffer
-	    } else {
-	      var buf = new Uint8Array(this.length)
-	      for (var i = 0, len = buf.length; i < len; i += 1) {
-	        buf[i] = this[i]
-	      }
-	      return buf.buffer
-	    }
-	  } else {
-	    throw new TypeError('Buffer.toArrayBuffer not supported in this browser')
-	  }
-	}
-
 	// HELPER FUNCTIONS
 	// ================
-
-	var BP = Buffer.prototype
-
-	/**
-	 * Augment a Uint8Array *instance* (not the Uint8Array class!) with Buffer methods
-	 */
-	Buffer._augment = function _augment (arr) {
-	  arr.constructor = Buffer
-	  arr._isBuffer = true
-
-	  // save reference to original Uint8Array set method before overwriting
-	  arr._set = arr.set
-
-	  // deprecated
-	  arr.get = BP.get
-	  arr.set = BP.set
-
-	  arr.write = BP.write
-	  arr.toString = BP.toString
-	  arr.toLocaleString = BP.toString
-	  arr.toJSON = BP.toJSON
-	  arr.equals = BP.equals
-	  arr.compare = BP.compare
-	  arr.indexOf = BP.indexOf
-	  arr.copy = BP.copy
-	  arr.slice = BP.slice
-	  arr.readUIntLE = BP.readUIntLE
-	  arr.readUIntBE = BP.readUIntBE
-	  arr.readUInt8 = BP.readUInt8
-	  arr.readUInt16LE = BP.readUInt16LE
-	  arr.readUInt16BE = BP.readUInt16BE
-	  arr.readUInt32LE = BP.readUInt32LE
-	  arr.readUInt32BE = BP.readUInt32BE
-	  arr.readIntLE = BP.readIntLE
-	  arr.readIntBE = BP.readIntBE
-	  arr.readInt8 = BP.readInt8
-	  arr.readInt16LE = BP.readInt16LE
-	  arr.readInt16BE = BP.readInt16BE
-	  arr.readInt32LE = BP.readInt32LE
-	  arr.readInt32BE = BP.readInt32BE
-	  arr.readFloatLE = BP.readFloatLE
-	  arr.readFloatBE = BP.readFloatBE
-	  arr.readDoubleLE = BP.readDoubleLE
-	  arr.readDoubleBE = BP.readDoubleBE
-	  arr.writeUInt8 = BP.writeUInt8
-	  arr.writeUIntLE = BP.writeUIntLE
-	  arr.writeUIntBE = BP.writeUIntBE
-	  arr.writeUInt16LE = BP.writeUInt16LE
-	  arr.writeUInt16BE = BP.writeUInt16BE
-	  arr.writeUInt32LE = BP.writeUInt32LE
-	  arr.writeUInt32BE = BP.writeUInt32BE
-	  arr.writeIntLE = BP.writeIntLE
-	  arr.writeIntBE = BP.writeIntBE
-	  arr.writeInt8 = BP.writeInt8
-	  arr.writeInt16LE = BP.writeInt16LE
-	  arr.writeInt16BE = BP.writeInt16BE
-	  arr.writeInt32LE = BP.writeInt32LE
-	  arr.writeInt32BE = BP.writeInt32BE
-	  arr.writeFloatLE = BP.writeFloatLE
-	  arr.writeFloatBE = BP.writeFloatBE
-	  arr.writeDoubleLE = BP.writeDoubleLE
-	  arr.writeDoubleBE = BP.writeDoubleBE
-	  arr.fill = BP.fill
-	  arr.inspect = BP.inspect
-	  arr.toArrayBuffer = BP.toArrayBuffer
-
-	  return arr
-	}
 
 	var INVALID_BASE64_RE = /[^+\/0-9A-Za-z-_]/g
 
@@ -14473,7 +12874,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var leadSurrogate = null
 	  var bytes = []
 
-	  for (var i = 0; i < length; i++) {
+	  for (var i = 0; i < length; ++i) {
 	    codePoint = string.charCodeAt(i)
 
 	    // is surrogate component
@@ -14548,7 +12949,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function asciiToBytes (str) {
 	  var byteArray = []
-	  for (var i = 0; i < str.length; i++) {
+	  for (var i = 0; i < str.length; ++i) {
 	    // Node's code seems to be doing this and not & 0x7F..
 	    byteArray.push(str.charCodeAt(i) & 0xFF)
 	  }
@@ -14558,7 +12959,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	function utf16leToBytes (str, units) {
 	  var c, hi, lo
 	  var byteArray = []
-	  for (var i = 0; i < str.length; i++) {
+	  for (var i = 0; i < str.length; ++i) {
 	    if ((units -= 2) < 0) break
 
 	    c = str.charCodeAt(i)
@@ -14576,148 +12977,142 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	function blitBuffer (src, dst, offset, length) {
-	  for (var i = 0; i < length; i++) {
+	  for (var i = 0; i < length; ++i) {
 	    if ((i + offset >= dst.length) || (i >= src.length)) break
 	    dst[i + offset] = src[i]
 	  }
 	  return i
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(85).Buffer, (function() { return this; }())))
+	function isnan (val) {
+	  return val !== val // eslint-disable-line no-self-compare
+	}
 
-/***/ },
-/* 86 */
-/***/ function(module, exports, __webpack_require__) {
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
-	var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+/***/ }),
+/* 143 */
+/***/ (function(module, exports) {
 
-	;(function (exports) {
-		'use strict';
+	'use strict'
 
-	  var Arr = (typeof Uint8Array !== 'undefined')
-	    ? Uint8Array
-	    : Array
+	exports.byteLength = byteLength
+	exports.toByteArray = toByteArray
+	exports.fromByteArray = fromByteArray
 
-		var PLUS   = '+'.charCodeAt(0)
-		var SLASH  = '/'.charCodeAt(0)
-		var NUMBER = '0'.charCodeAt(0)
-		var LOWER  = 'a'.charCodeAt(0)
-		var UPPER  = 'A'.charCodeAt(0)
-		var PLUS_URL_SAFE = '-'.charCodeAt(0)
-		var SLASH_URL_SAFE = '_'.charCodeAt(0)
+	var lookup = []
+	var revLookup = []
+	var Arr = typeof Uint8Array !== 'undefined' ? Uint8Array : Array
 
-		function decode (elt) {
-			var code = elt.charCodeAt(0)
-			if (code === PLUS ||
-			    code === PLUS_URL_SAFE)
-				return 62 // '+'
-			if (code === SLASH ||
-			    code === SLASH_URL_SAFE)
-				return 63 // '/'
-			if (code < NUMBER)
-				return -1 //no match
-			if (code < NUMBER + 10)
-				return code - NUMBER + 26 + 26
-			if (code < UPPER + 26)
-				return code - UPPER
-			if (code < LOWER + 26)
-				return code - LOWER + 26
-		}
+	var code = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+	for (var i = 0, len = code.length; i < len; ++i) {
+	  lookup[i] = code[i]
+	  revLookup[code.charCodeAt(i)] = i
+	}
 
-		function b64ToByteArray (b64) {
-			var i, j, l, tmp, placeHolders, arr
+	revLookup['-'.charCodeAt(0)] = 62
+	revLookup['_'.charCodeAt(0)] = 63
 
-			if (b64.length % 4 > 0) {
-				throw new Error('Invalid string. Length must be a multiple of 4')
-			}
+	function placeHoldersCount (b64) {
+	  var len = b64.length
+	  if (len % 4 > 0) {
+	    throw new Error('Invalid string. Length must be a multiple of 4')
+	  }
 
-			// the number of equal signs (place holders)
-			// if there are two placeholders, than the two characters before it
-			// represent one byte
-			// if there is only one, then the three characters before it represent 2 bytes
-			// this is just a cheap hack to not do indexOf twice
-			var len = b64.length
-			placeHolders = '=' === b64.charAt(len - 2) ? 2 : '=' === b64.charAt(len - 1) ? 1 : 0
+	  // the number of equal signs (place holders)
+	  // if there are two placeholders, than the two characters before it
+	  // represent one byte
+	  // if there is only one, then the three characters before it represent 2 bytes
+	  // this is just a cheap hack to not do indexOf twice
+	  return b64[len - 2] === '=' ? 2 : b64[len - 1] === '=' ? 1 : 0
+	}
 
-			// base64 is 4/3 + up to two characters of the original data
-			arr = new Arr(b64.length * 3 / 4 - placeHolders)
+	function byteLength (b64) {
+	  // base64 is 4/3 + up to two characters of the original data
+	  return (b64.length * 3 / 4) - placeHoldersCount(b64)
+	}
 
-			// if there are placeholders, only get up to the last complete 4 chars
-			l = placeHolders > 0 ? b64.length - 4 : b64.length
+	function toByteArray (b64) {
+	  var i, l, tmp, placeHolders, arr
+	  var len = b64.length
+	  placeHolders = placeHoldersCount(b64)
 
-			var L = 0
+	  arr = new Arr((len * 3 / 4) - placeHolders)
 
-			function push (v) {
-				arr[L++] = v
-			}
+	  // if there are placeholders, only get up to the last complete 4 chars
+	  l = placeHolders > 0 ? len - 4 : len
 
-			for (i = 0, j = 0; i < l; i += 4, j += 3) {
-				tmp = (decode(b64.charAt(i)) << 18) | (decode(b64.charAt(i + 1)) << 12) | (decode(b64.charAt(i + 2)) << 6) | decode(b64.charAt(i + 3))
-				push((tmp & 0xFF0000) >> 16)
-				push((tmp & 0xFF00) >> 8)
-				push(tmp & 0xFF)
-			}
+	  var L = 0
 
-			if (placeHolders === 2) {
-				tmp = (decode(b64.charAt(i)) << 2) | (decode(b64.charAt(i + 1)) >> 4)
-				push(tmp & 0xFF)
-			} else if (placeHolders === 1) {
-				tmp = (decode(b64.charAt(i)) << 10) | (decode(b64.charAt(i + 1)) << 4) | (decode(b64.charAt(i + 2)) >> 2)
-				push((tmp >> 8) & 0xFF)
-				push(tmp & 0xFF)
-			}
+	  for (i = 0; i < l; i += 4) {
+	    tmp = (revLookup[b64.charCodeAt(i)] << 18) | (revLookup[b64.charCodeAt(i + 1)] << 12) | (revLookup[b64.charCodeAt(i + 2)] << 6) | revLookup[b64.charCodeAt(i + 3)]
+	    arr[L++] = (tmp >> 16) & 0xFF
+	    arr[L++] = (tmp >> 8) & 0xFF
+	    arr[L++] = tmp & 0xFF
+	  }
 
-			return arr
-		}
+	  if (placeHolders === 2) {
+	    tmp = (revLookup[b64.charCodeAt(i)] << 2) | (revLookup[b64.charCodeAt(i + 1)] >> 4)
+	    arr[L++] = tmp & 0xFF
+	  } else if (placeHolders === 1) {
+	    tmp = (revLookup[b64.charCodeAt(i)] << 10) | (revLookup[b64.charCodeAt(i + 1)] << 4) | (revLookup[b64.charCodeAt(i + 2)] >> 2)
+	    arr[L++] = (tmp >> 8) & 0xFF
+	    arr[L++] = tmp & 0xFF
+	  }
 
-		function uint8ToBase64 (uint8) {
-			var i,
-				extraBytes = uint8.length % 3, // if we have 1 byte left, pad 2 bytes
-				output = "",
-				temp, length
+	  return arr
+	}
 
-			function encode (num) {
-				return lookup.charAt(num)
-			}
+	function tripletToBase64 (num) {
+	  return lookup[num >> 18 & 0x3F] + lookup[num >> 12 & 0x3F] + lookup[num >> 6 & 0x3F] + lookup[num & 0x3F]
+	}
 
-			function tripletToBase64 (num) {
-				return encode(num >> 18 & 0x3F) + encode(num >> 12 & 0x3F) + encode(num >> 6 & 0x3F) + encode(num & 0x3F)
-			}
+	function encodeChunk (uint8, start, end) {
+	  var tmp
+	  var output = []
+	  for (var i = start; i < end; i += 3) {
+	    tmp = (uint8[i] << 16) + (uint8[i + 1] << 8) + (uint8[i + 2])
+	    output.push(tripletToBase64(tmp))
+	  }
+	  return output.join('')
+	}
 
-			// go through the array every three bytes, we'll deal with trailing stuff later
-			for (i = 0, length = uint8.length - extraBytes; i < length; i += 3) {
-				temp = (uint8[i] << 16) + (uint8[i + 1] << 8) + (uint8[i + 2])
-				output += tripletToBase64(temp)
-			}
+	function fromByteArray (uint8) {
+	  var tmp
+	  var len = uint8.length
+	  var extraBytes = len % 3 // if we have 1 byte left, pad 2 bytes
+	  var output = ''
+	  var parts = []
+	  var maxChunkLength = 16383 // must be multiple of 3
 
-			// pad the end with zeros, but make sure to not forget the extra bytes
-			switch (extraBytes) {
-				case 1:
-					temp = uint8[uint8.length - 1]
-					output += encode(temp >> 2)
-					output += encode((temp << 4) & 0x3F)
-					output += '=='
-					break
-				case 2:
-					temp = (uint8[uint8.length - 2] << 8) + (uint8[uint8.length - 1])
-					output += encode(temp >> 10)
-					output += encode((temp >> 4) & 0x3F)
-					output += encode((temp << 2) & 0x3F)
-					output += '='
-					break
-			}
+	  // go through the array every three bytes, we'll deal with trailing stuff later
+	  for (var i = 0, len2 = len - extraBytes; i < len2; i += maxChunkLength) {
+	    parts.push(encodeChunk(uint8, i, (i + maxChunkLength) > len2 ? len2 : (i + maxChunkLength)))
+	  }
 
-			return output
-		}
+	  // pad the end with zeros, but make sure to not forget the extra bytes
+	  if (extraBytes === 1) {
+	    tmp = uint8[len - 1]
+	    output += lookup[tmp >> 2]
+	    output += lookup[(tmp << 4) & 0x3F]
+	    output += '=='
+	  } else if (extraBytes === 2) {
+	    tmp = (uint8[len - 2] << 8) + (uint8[len - 1])
+	    output += lookup[tmp >> 10]
+	    output += lookup[(tmp >> 4) & 0x3F]
+	    output += lookup[(tmp << 2) & 0x3F]
+	    output += '='
+	  }
 
-		exports.toByteArray = b64ToByteArray
-		exports.fromByteArray = uint8ToBase64
-	}( false ? (this.base64js = {}) : exports))
+	  parts.push(output)
+
+	  return parts.join('')
+	}
 
 
-/***/ },
-/* 87 */
-/***/ function(module, exports) {
+/***/ }),
+/* 144 */
+/***/ (function(module, exports) {
 
 	exports.read = function (buffer, offset, isLE, mLen, nBytes) {
 	  var e, m
@@ -14805,9 +13200,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 
-/***/ },
-/* 88 */
-/***/ function(module, exports) {
+/***/ }),
+/* 145 */
+/***/ (function(module, exports) {
 
 	var toString = {}.toString;
 
@@ -14816,22 +13211,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
-/* 89 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 146 */
+/***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(90);
+	module.exports = __webpack_require__(147);
 
-/***/ },
-/* 90 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 147 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	(function() {
-	  var L = __webpack_require__(91).L,
-	      N = __webpack_require__(92).N,
-	      Z = __webpack_require__(93).Z,
-	      M = __webpack_require__(94).M,
-	      unorm = __webpack_require__(95);
+	  var L = __webpack_require__(148).L,
+	      N = __webpack_require__(149).N,
+	      Z = __webpack_require__(150).Z,
+	      M = __webpack_require__(151).M,
+	      unorm = __webpack_require__(152);
 
 	  var _unicodeCategory = function(code) {
 	    if (~L.indexOf(code)) return 'L';
@@ -14885,9 +13280,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 	}());
 
-/***/ },
-/* 91 */
-/***/ function(module, exports) {
+/***/ }),
+/* 148 */
+/***/ (function(module, exports) {
 
 	/* 
 	 * List of Unicode code that are flagged as letter.
@@ -14906,9 +13301,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.L = [65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 170, 181, 186, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 248, 249, 250, 251, 252, 253, 254, 255, 256, 257, 258, 259, 260, 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287, 288, 289, 290, 291, 292, 293, 294, 295, 296, 297, 298, 299, 300, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313, 314, 315, 316, 317, 318, 319, 320, 321, 322, 323, 324, 325, 326, 327, 328, 329, 330, 331, 332, 333, 334, 335, 336, 337, 338, 339, 340, 341, 342, 343, 344, 345, 346, 347, 348, 349, 350, 351, 352, 353, 354, 355, 356, 357, 358, 359, 360, 361, 362, 363, 364, 365, 366, 367, 368, 369, 370, 371, 372, 373, 374, 375, 376, 377, 378, 379, 380, 381, 382, 383, 384, 385, 386, 387, 388, 389, 390, 391, 392, 393, 394, 395, 396, 397, 398, 399, 400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 414, 415, 416, 417, 418, 419, 420, 421, 422, 423, 424, 425, 426, 427, 428, 429, 430, 431, 432, 433, 434, 435, 436, 437, 438, 439, 440, 441, 442, 443, 444, 445, 446, 447, 448, 449, 450, 451, 452, 453, 454, 455, 456, 457, 458, 459, 460, 461, 462, 463, 464, 465, 466, 467, 468, 469, 470, 471, 472, 473, 474, 475, 476, 477, 478, 479, 480, 481, 482, 483, 484, 485, 486, 487, 488, 489, 490, 491, 492, 493, 494, 495, 496, 497, 498, 499, 500, 501, 502, 503, 504, 505, 506, 507, 508, 509, 510, 511, 512, 513, 514, 515, 516, 517, 518, 519, 520, 521, 522, 523, 524, 525, 526, 527, 528, 529, 530, 531, 532, 533, 534, 535, 536, 537, 538, 539, 540, 541, 542, 543, 544, 545, 546, 547, 548, 549, 550, 551, 552, 553, 554, 555, 556, 557, 558, 559, 560, 561, 562, 563, 564, 565, 566, 567, 568, 569, 570, 571, 572, 573, 574, 575, 576, 577, 578, 579, 580, 581, 582, 583, 584, 585, 586, 587, 588, 589, 590, 591, 592, 593, 594, 595, 596, 597, 598, 599, 600, 601, 602, 603, 604, 605, 606, 607, 608, 609, 610, 611, 612, 613, 614, 615, 616, 617, 618, 619, 620, 621, 622, 623, 624, 625, 626, 627, 628, 629, 630, 631, 632, 633, 634, 635, 636, 637, 638, 639, 640, 641, 642, 643, 644, 645, 646, 647, 648, 649, 650, 651, 652, 653, 654, 655, 656, 657, 658, 659, 660, 661, 662, 663, 664, 665, 666, 667, 668, 669, 670, 671, 672, 673, 674, 675, 676, 677, 678, 679, 680, 681, 682, 683, 684, 685, 686, 687, 688, 689, 690, 691, 692, 693, 694, 695, 696, 697, 698, 699, 700, 701, 702, 703, 704, 705, 710, 711, 712, 713, 714, 715, 716, 717, 718, 719, 720, 721, 736, 737, 738, 739, 740, 748, 750, 880, 881, 882, 883, 884, 886, 887, 890, 891, 892, 893, 895, 902, 904, 905, 906, 908, 910, 911, 912, 913, 914, 915, 916, 917, 918, 919, 920, 921, 922, 923, 924, 925, 926, 927, 928, 929, 931, 932, 933, 934, 935, 936, 937, 938, 939, 940, 941, 942, 943, 944, 945, 946, 947, 948, 949, 950, 951, 952, 953, 954, 955, 956, 957, 958, 959, 960, 961, 962, 963, 964, 965, 966, 967, 968, 969, 970, 971, 972, 973, 974, 975, 976, 977, 978, 979, 980, 981, 982, 983, 984, 985, 986, 987, 988, 989, 990, 991, 992, 993, 994, 995, 996, 997, 998, 999, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1015, 1016, 1017, 1018, 1019, 1020, 1021, 1022, 1023, 1024, 1025, 1026, 1027, 1028, 1029, 1030, 1031, 1032, 1033, 1034, 1035, 1036, 1037, 1038, 1039, 1040, 1041, 1042, 1043, 1044, 1045, 1046, 1047, 1048, 1049, 1050, 1051, 1052, 1053, 1054, 1055, 1056, 1057, 1058, 1059, 1060, 1061, 1062, 1063, 1064, 1065, 1066, 1067, 1068, 1069, 1070, 1071, 1072, 1073, 1074, 1075, 1076, 1077, 1078, 1079, 1080, 1081, 1082, 1083, 1084, 1085, 1086, 1087, 1088, 1089, 1090, 1091, 1092, 1093, 1094, 1095, 1096, 1097, 1098, 1099, 1100, 1101, 1102, 1103, 1104, 1105, 1106, 1107, 1108, 1109, 1110, 1111, 1112, 1113, 1114, 1115, 1116, 1117, 1118, 1119, 1120, 1121, 1122, 1123, 1124, 1125, 1126, 1127, 1128, 1129, 1130, 1131, 1132, 1133, 1134, 1135, 1136, 1137, 1138, 1139, 1140, 1141, 1142, 1143, 1144, 1145, 1146, 1147, 1148, 1149, 1150, 1151, 1152, 1153, 1162, 1163, 1164, 1165, 1166, 1167, 1168, 1169, 1170, 1171, 1172, 1173, 1174, 1175, 1176, 1177, 1178, 1179, 1180, 1181, 1182, 1183, 1184, 1185, 1186, 1187, 1188, 1189, 1190, 1191, 1192, 1193, 1194, 1195, 1196, 1197, 1198, 1199, 1200, 1201, 1202, 1203, 1204, 1205, 1206, 1207, 1208, 1209, 1210, 1211, 1212, 1213, 1214, 1215, 1216, 1217, 1218, 1219, 1220, 1221, 1222, 1223, 1224, 1225, 1226, 1227, 1228, 1229, 1230, 1231, 1232, 1233, 1234, 1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243, 1244, 1245, 1246, 1247, 1248, 1249, 1250, 1251, 1252, 1253, 1254, 1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262, 1263, 1264, 1265, 1266, 1267, 1268, 1269, 1270, 1271, 1272, 1273, 1274, 1275, 1276, 1277, 1278, 1279, 1280, 1281, 1282, 1283, 1284, 1285, 1286, 1287, 1288, 1289, 1290, 1291, 1292, 1293, 1294, 1295, 1296, 1297, 1298, 1299, 1300, 1301, 1302, 1303, 1304, 1305, 1306, 1307, 1308, 1309, 1310, 1311, 1312, 1313, 1314, 1315, 1316, 1317, 1318, 1319, 1320, 1321, 1322, 1323, 1324, 1325, 1326, 1327, 1329, 1330, 1331, 1332, 1333, 1334, 1335, 1336, 1337, 1338, 1339, 1340, 1341, 1342, 1343, 1344, 1345, 1346, 1347, 1348, 1349, 1350, 1351, 1352, 1353, 1354, 1355, 1356, 1357, 1358, 1359, 1360, 1361, 1362, 1363, 1364, 1365, 1366, 1369, 1377, 1378, 1379, 1380, 1381, 1382, 1383, 1384, 1385, 1386, 1387, 1388, 1389, 1390, 1391, 1392, 1393, 1394, 1395, 1396, 1397, 1398, 1399, 1400, 1401, 1402, 1403, 1404, 1405, 1406, 1407, 1408, 1409, 1410, 1411, 1412, 1413, 1414, 1415, 1488, 1489, 1490, 1491, 1492, 1493, 1494, 1495, 1496, 1497, 1498, 1499, 1500, 1501, 1502, 1503, 1504, 1505, 1506, 1507, 1508, 1509, 1510, 1511, 1512, 1513, 1514, 1520, 1521, 1522, 1568, 1569, 1570, 1571, 1572, 1573, 1574, 1575, 1576, 1577, 1578, 1579, 1580, 1581, 1582, 1583, 1584, 1585, 1586, 1587, 1588, 1589, 1590, 1591, 1592, 1593, 1594, 1595, 1596, 1597, 1598, 1599, 1600, 1601, 1602, 1603, 1604, 1605, 1606, 1607, 1608, 1609, 1610, 1646, 1647, 1649, 1650, 1651, 1652, 1653, 1654, 1655, 1656, 1657, 1658, 1659, 1660, 1661, 1662, 1663, 1664, 1665, 1666, 1667, 1668, 1669, 1670, 1671, 1672, 1673, 1674, 1675, 1676, 1677, 1678, 1679, 1680, 1681, 1682, 1683, 1684, 1685, 1686, 1687, 1688, 1689, 1690, 1691, 1692, 1693, 1694, 1695, 1696, 1697, 1698, 1699, 1700, 1701, 1702, 1703, 1704, 1705, 1706, 1707, 1708, 1709, 1710, 1711, 1712, 1713, 1714, 1715, 1716, 1717, 1718, 1719, 1720, 1721, 1722, 1723, 1724, 1725, 1726, 1727, 1728, 1729, 1730, 1731, 1732, 1733, 1734, 1735, 1736, 1737, 1738, 1739, 1740, 1741, 1742, 1743, 1744, 1745, 1746, 1747, 1749, 1765, 1766, 1774, 1775, 1786, 1787, 1788, 1791, 1808, 1810, 1811, 1812, 1813, 1814, 1815, 1816, 1817, 1818, 1819, 1820, 1821, 1822, 1823, 1824, 1825, 1826, 1827, 1828, 1829, 1830, 1831, 1832, 1833, 1834, 1835, 1836, 1837, 1838, 1839, 1869, 1870, 1871, 1872, 1873, 1874, 1875, 1876, 1877, 1878, 1879, 1880, 1881, 1882, 1883, 1884, 1885, 1886, 1887, 1888, 1889, 1890, 1891, 1892, 1893, 1894, 1895, 1896, 1897, 1898, 1899, 1900, 1901, 1902, 1903, 1904, 1905, 1906, 1907, 1908, 1909, 1910, 1911, 1912, 1913, 1914, 1915, 1916, 1917, 1918, 1919, 1920, 1921, 1922, 1923, 1924, 1925, 1926, 1927, 1928, 1929, 1930, 1931, 1932, 1933, 1934, 1935, 1936, 1937, 1938, 1939, 1940, 1941, 1942, 1943, 1944, 1945, 1946, 1947, 1948, 1949, 1950, 1951, 1952, 1953, 1954, 1955, 1956, 1957, 1969, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2036, 2037, 2042, 2048, 2049, 2050, 2051, 2052, 2053, 2054, 2055, 2056, 2057, 2058, 2059, 2060, 2061, 2062, 2063, 2064, 2065, 2066, 2067, 2068, 2069, 2074, 2084, 2088, 2112, 2113, 2114, 2115, 2116, 2117, 2118, 2119, 2120, 2121, 2122, 2123, 2124, 2125, 2126, 2127, 2128, 2129, 2130, 2131, 2132, 2133, 2134, 2135, 2136, 2208, 2209, 2210, 2211, 2212, 2213, 2214, 2215, 2216, 2217, 2218, 2219, 2220, 2221, 2222, 2223, 2224, 2225, 2226, 2227, 2228, 2308, 2309, 2310, 2311, 2312, 2313, 2314, 2315, 2316, 2317, 2318, 2319, 2320, 2321, 2322, 2323, 2324, 2325, 2326, 2327, 2328, 2329, 2330, 2331, 2332, 2333, 2334, 2335, 2336, 2337, 2338, 2339, 2340, 2341, 2342, 2343, 2344, 2345, 2346, 2347, 2348, 2349, 2350, 2351, 2352, 2353, 2354, 2355, 2356, 2357, 2358, 2359, 2360, 2361, 2365, 2384, 2392, 2393, 2394, 2395, 2396, 2397, 2398, 2399, 2400, 2401, 2417, 2418, 2419, 2420, 2421, 2422, 2423, 2424, 2425, 2426, 2427, 2428, 2429, 2430, 2431, 2432, 2437, 2438, 2439, 2440, 2441, 2442, 2443, 2444, 2447, 2448, 2451, 2452, 2453, 2454, 2455, 2456, 2457, 2458, 2459, 2460, 2461, 2462, 2463, 2464, 2465, 2466, 2467, 2468, 2469, 2470, 2471, 2472, 2474, 2475, 2476, 2477, 2478, 2479, 2480, 2482, 2486, 2487, 2488, 2489, 2493, 2510, 2524, 2525, 2527, 2528, 2529, 2544, 2545, 2565, 2566, 2567, 2568, 2569, 2570, 2575, 2576, 2579, 2580, 2581, 2582, 2583, 2584, 2585, 2586, 2587, 2588, 2589, 2590, 2591, 2592, 2593, 2594, 2595, 2596, 2597, 2598, 2599, 2600, 2602, 2603, 2604, 2605, 2606, 2607, 2608, 2610, 2611, 2613, 2614, 2616, 2617, 2649, 2650, 2651, 2652, 2654, 2674, 2675, 2676, 2693, 2694, 2695, 2696, 2697, 2698, 2699, 2700, 2701, 2703, 2704, 2705, 2707, 2708, 2709, 2710, 2711, 2712, 2713, 2714, 2715, 2716, 2717, 2718, 2719, 2720, 2721, 2722, 2723, 2724, 2725, 2726, 2727, 2728, 2730, 2731, 2732, 2733, 2734, 2735, 2736, 2738, 2739, 2741, 2742, 2743, 2744, 2745, 2749, 2768, 2784, 2785, 2809, 2821, 2822, 2823, 2824, 2825, 2826, 2827, 2828, 2831, 2832, 2835, 2836, 2837, 2838, 2839, 2840, 2841, 2842, 2843, 2844, 2845, 2846, 2847, 2848, 2849, 2850, 2851, 2852, 2853, 2854, 2855, 2856, 2858, 2859, 2860, 2861, 2862, 2863, 2864, 2866, 2867, 2869, 2870, 2871, 2872, 2873, 2877, 2908, 2909, 2911, 2912, 2913, 2929, 2947, 2949, 2950, 2951, 2952, 2953, 2954, 2958, 2959, 2960, 2962, 2963, 2964, 2965, 2969, 2970, 2972, 2974, 2975, 2979, 2980, 2984, 2985, 2986, 2990, 2991, 2992, 2993, 2994, 2995, 2996, 2997, 2998, 2999, 3000, 3001, 3024, 3077, 3078, 3079, 3080, 3081, 3082, 3083, 3084, 3086, 3087, 3088, 3090, 3091, 3092, 3093, 3094, 3095, 3096, 3097, 3098, 3099, 3100, 3101, 3102, 3103, 3104, 3105, 3106, 3107, 3108, 3109, 3110, 3111, 3112, 3114, 3115, 3116, 3117, 3118, 3119, 3120, 3121, 3122, 3123, 3124, 3125, 3126, 3127, 3128, 3129, 3133, 3160, 3161, 3162, 3168, 3169, 3205, 3206, 3207, 3208, 3209, 3210, 3211, 3212, 3214, 3215, 3216, 3218, 3219, 3220, 3221, 3222, 3223, 3224, 3225, 3226, 3227, 3228, 3229, 3230, 3231, 3232, 3233, 3234, 3235, 3236, 3237, 3238, 3239, 3240, 3242, 3243, 3244, 3245, 3246, 3247, 3248, 3249, 3250, 3251, 3253, 3254, 3255, 3256, 3257, 3261, 3294, 3296, 3297, 3313, 3314, 3333, 3334, 3335, 3336, 3337, 3338, 3339, 3340, 3342, 3343, 3344, 3346, 3347, 3348, 3349, 3350, 3351, 3352, 3353, 3354, 3355, 3356, 3357, 3358, 3359, 3360, 3361, 3362, 3363, 3364, 3365, 3366, 3367, 3368, 3369, 3370, 3371, 3372, 3373, 3374, 3375, 3376, 3377, 3378, 3379, 3380, 3381, 3382, 3383, 3384, 3385, 3386, 3389, 3406, 3423, 3424, 3425, 3450, 3451, 3452, 3453, 3454, 3455, 3461, 3462, 3463, 3464, 3465, 3466, 3467, 3468, 3469, 3470, 3471, 3472, 3473, 3474, 3475, 3476, 3477, 3478, 3482, 3483, 3484, 3485, 3486, 3487, 3488, 3489, 3490, 3491, 3492, 3493, 3494, 3495, 3496, 3497, 3498, 3499, 3500, 3501, 3502, 3503, 3504, 3505, 3507, 3508, 3509, 3510, 3511, 3512, 3513, 3514, 3515, 3517, 3520, 3521, 3522, 3523, 3524, 3525, 3526, 3585, 3586, 3587, 3588, 3589, 3590, 3591, 3592, 3593, 3594, 3595, 3596, 3597, 3598, 3599, 3600, 3601, 3602, 3603, 3604, 3605, 3606, 3607, 3608, 3609, 3610, 3611, 3612, 3613, 3614, 3615, 3616, 3617, 3618, 3619, 3620, 3621, 3622, 3623, 3624, 3625, 3626, 3627, 3628, 3629, 3630, 3631, 3632, 3634, 3635, 3648, 3649, 3650, 3651, 3652, 3653, 3654, 3713, 3714, 3716, 3719, 3720, 3722, 3725, 3732, 3733, 3734, 3735, 3737, 3738, 3739, 3740, 3741, 3742, 3743, 3745, 3746, 3747, 3749, 3751, 3754, 3755, 3757, 3758, 3759, 3760, 3762, 3763, 3773, 3776, 3777, 3778, 3779, 3780, 3782, 3804, 3805, 3806, 3807, 3840, 3904, 3905, 3906, 3907, 3908, 3909, 3910, 3911, 3913, 3914, 3915, 3916, 3917, 3918, 3919, 3920, 3921, 3922, 3923, 3924, 3925, 3926, 3927, 3928, 3929, 3930, 3931, 3932, 3933, 3934, 3935, 3936, 3937, 3938, 3939, 3940, 3941, 3942, 3943, 3944, 3945, 3946, 3947, 3948, 3976, 3977, 3978, 3979, 3980, 4096, 4097, 4098, 4099, 4100, 4101, 4102, 4103, 4104, 4105, 4106, 4107, 4108, 4109, 4110, 4111, 4112, 4113, 4114, 4115, 4116, 4117, 4118, 4119, 4120, 4121, 4122, 4123, 4124, 4125, 4126, 4127, 4128, 4129, 4130, 4131, 4132, 4133, 4134, 4135, 4136, 4137, 4138, 4159, 4176, 4177, 4178, 4179, 4180, 4181, 4186, 4187, 4188, 4189, 4193, 4197, 4198, 4206, 4207, 4208, 4213, 4214, 4215, 4216, 4217, 4218, 4219, 4220, 4221, 4222, 4223, 4224, 4225, 4238, 4256, 4257, 4258, 4259, 4260, 4261, 4262, 4263, 4264, 4265, 4266, 4267, 4268, 4269, 4270, 4271, 4272, 4273, 4274, 4275, 4276, 4277, 4278, 4279, 4280, 4281, 4282, 4283, 4284, 4285, 4286, 4287, 4288, 4289, 4290, 4291, 4292, 4293, 4295, 4301, 4304, 4305, 4306, 4307, 4308, 4309, 4310, 4311, 4312, 4313, 4314, 4315, 4316, 4317, 4318, 4319, 4320, 4321, 4322, 4323, 4324, 4325, 4326, 4327, 4328, 4329, 4330, 4331, 4332, 4333, 4334, 4335, 4336, 4337, 4338, 4339, 4340, 4341, 4342, 4343, 4344, 4345, 4346, 4348, 4349, 4350, 4351, 4352, 4353, 4354, 4355, 4356, 4357, 4358, 4359, 4360, 4361, 4362, 4363, 4364, 4365, 4366, 4367, 4368, 4369, 4370, 4371, 4372, 4373, 4374, 4375, 4376, 4377, 4378, 4379, 4380, 4381, 4382, 4383, 4384, 4385, 4386, 4387, 4388, 4389, 4390, 4391, 4392, 4393, 4394, 4395, 4396, 4397, 4398, 4399, 4400, 4401, 4402, 4403, 4404, 4405, 4406, 4407, 4408, 4409, 4410, 4411, 4412, 4413, 4414, 4415, 4416, 4417, 4418, 4419, 4420, 4421, 4422, 4423, 4424, 4425, 4426, 4427, 4428, 4429, 4430, 4431, 4432, 4433, 4434, 4435, 4436, 4437, 4438, 4439, 4440, 4441, 4442, 4443, 4444, 4445, 4446, 4447, 4448, 4449, 4450, 4451, 4452, 4453, 4454, 4455, 4456, 4457, 4458, 4459, 4460, 4461, 4462, 4463, 4464, 4465, 4466, 4467, 4468, 4469, 4470, 4471, 4472, 4473, 4474, 4475, 4476, 4477, 4478, 4479, 4480, 4481, 4482, 4483, 4484, 4485, 4486, 4487, 4488, 4489, 4490, 4491, 4492, 4493, 4494, 4495, 4496, 4497, 4498, 4499, 4500, 4501, 4502, 4503, 4504, 4505, 4506, 4507, 4508, 4509, 4510, 4511, 4512, 4513, 4514, 4515, 4516, 4517, 4518, 4519, 4520, 4521, 4522, 4523, 4524, 4525, 4526, 4527, 4528, 4529, 4530, 4531, 4532, 4533, 4534, 4535, 4536, 4537, 4538, 4539, 4540, 4541, 4542, 4543, 4544, 4545, 4546, 4547, 4548, 4549, 4550, 4551, 4552, 4553, 4554, 4555, 4556, 4557, 4558, 4559, 4560, 4561, 4562, 4563, 4564, 4565, 4566, 4567, 4568, 4569, 4570, 4571, 4572, 4573, 4574, 4575, 4576, 4577, 4578, 4579, 4580, 4581, 4582, 4583, 4584, 4585, 4586, 4587, 4588, 4589, 4590, 4591, 4592, 4593, 4594, 4595, 4596, 4597, 4598, 4599, 4600, 4601, 4602, 4603, 4604, 4605, 4606, 4607, 4608, 4609, 4610, 4611, 4612, 4613, 4614, 4615, 4616, 4617, 4618, 4619, 4620, 4621, 4622, 4623, 4624, 4625, 4626, 4627, 4628, 4629, 4630, 4631, 4632, 4633, 4634, 4635, 4636, 4637, 4638, 4639, 4640, 4641, 4642, 4643, 4644, 4645, 4646, 4647, 4648, 4649, 4650, 4651, 4652, 4653, 4654, 4655, 4656, 4657, 4658, 4659, 4660, 4661, 4662, 4663, 4664, 4665, 4666, 4667, 4668, 4669, 4670, 4671, 4672, 4673, 4674, 4675, 4676, 4677, 4678, 4679, 4680, 4682, 4683, 4684, 4685, 4688, 4689, 4690, 4691, 4692, 4693, 4694, 4696, 4698, 4699, 4700, 4701, 4704, 4705, 4706, 4707, 4708, 4709, 4710, 4711, 4712, 4713, 4714, 4715, 4716, 4717, 4718, 4719, 4720, 4721, 4722, 4723, 4724, 4725, 4726, 4727, 4728, 4729, 4730, 4731, 4732, 4733, 4734, 4735, 4736, 4737, 4738, 4739, 4740, 4741, 4742, 4743, 4744, 4746, 4747, 4748, 4749, 4752, 4753, 4754, 4755, 4756, 4757, 4758, 4759, 4760, 4761, 4762, 4763, 4764, 4765, 4766, 4767, 4768, 4769, 4770, 4771, 4772, 4773, 4774, 4775, 4776, 4777, 4778, 4779, 4780, 4781, 4782, 4783, 4784, 4786, 4787, 4788, 4789, 4792, 4793, 4794, 4795, 4796, 4797, 4798, 4800, 4802, 4803, 4804, 4805, 4808, 4809, 4810, 4811, 4812, 4813, 4814, 4815, 4816, 4817, 4818, 4819, 4820, 4821, 4822, 4824, 4825, 4826, 4827, 4828, 4829, 4830, 4831, 4832, 4833, 4834, 4835, 4836, 4837, 4838, 4839, 4840, 4841, 4842, 4843, 4844, 4845, 4846, 4847, 4848, 4849, 4850, 4851, 4852, 4853, 4854, 4855, 4856, 4857, 4858, 4859, 4860, 4861, 4862, 4863, 4864, 4865, 4866, 4867, 4868, 4869, 4870, 4871, 4872, 4873, 4874, 4875, 4876, 4877, 4878, 4879, 4880, 4882, 4883, 4884, 4885, 4888, 4889, 4890, 4891, 4892, 4893, 4894, 4895, 4896, 4897, 4898, 4899, 4900, 4901, 4902, 4903, 4904, 4905, 4906, 4907, 4908, 4909, 4910, 4911, 4912, 4913, 4914, 4915, 4916, 4917, 4918, 4919, 4920, 4921, 4922, 4923, 4924, 4925, 4926, 4927, 4928, 4929, 4930, 4931, 4932, 4933, 4934, 4935, 4936, 4937, 4938, 4939, 4940, 4941, 4942, 4943, 4944, 4945, 4946, 4947, 4948, 4949, 4950, 4951, 4952, 4953, 4954, 4992, 4993, 4994, 4995, 4996, 4997, 4998, 4999, 5000, 5001, 5002, 5003, 5004, 5005, 5006, 5007, 5024, 5025, 5026, 5027, 5028, 5029, 5030, 5031, 5032, 5033, 5034, 5035, 5036, 5037, 5038, 5039, 5040, 5041, 5042, 5043, 5044, 5045, 5046, 5047, 5048, 5049, 5050, 5051, 5052, 5053, 5054, 5055, 5056, 5057, 5058, 5059, 5060, 5061, 5062, 5063, 5064, 5065, 5066, 5067, 5068, 5069, 5070, 5071, 5072, 5073, 5074, 5075, 5076, 5077, 5078, 5079, 5080, 5081, 5082, 5083, 5084, 5085, 5086, 5087, 5088, 5089, 5090, 5091, 5092, 5093, 5094, 5095, 5096, 5097, 5098, 5099, 5100, 5101, 5102, 5103, 5104, 5105, 5106, 5107, 5108, 5109, 5112, 5113, 5114, 5115, 5116, 5117, 5121, 5122, 5123, 5124, 5125, 5126, 5127, 5128, 5129, 5130, 5131, 5132, 5133, 5134, 5135, 5136, 5137, 5138, 5139, 5140, 5141, 5142, 5143, 5144, 5145, 5146, 5147, 5148, 5149, 5150, 5151, 5152, 5153, 5154, 5155, 5156, 5157, 5158, 5159, 5160, 5161, 5162, 5163, 5164, 5165, 5166, 5167, 5168, 5169, 5170, 5171, 5172, 5173, 5174, 5175, 5176, 5177, 5178, 5179, 5180, 5181, 5182, 5183, 5184, 5185, 5186, 5187, 5188, 5189, 5190, 5191, 5192, 5193, 5194, 5195, 5196, 5197, 5198, 5199, 5200, 5201, 5202, 5203, 5204, 5205, 5206, 5207, 5208, 5209, 5210, 5211, 5212, 5213, 5214, 5215, 5216, 5217, 5218, 5219, 5220, 5221, 5222, 5223, 5224, 5225, 5226, 5227, 5228, 5229, 5230, 5231, 5232, 5233, 5234, 5235, 5236, 5237, 5238, 5239, 5240, 5241, 5242, 5243, 5244, 5245, 5246, 5247, 5248, 5249, 5250, 5251, 5252, 5253, 5254, 5255, 5256, 5257, 5258, 5259, 5260, 5261, 5262, 5263, 5264, 5265, 5266, 5267, 5268, 5269, 5270, 5271, 5272, 5273, 5274, 5275, 5276, 5277, 5278, 5279, 5280, 5281, 5282, 5283, 5284, 5285, 5286, 5287, 5288, 5289, 5290, 5291, 5292, 5293, 5294, 5295, 5296, 5297, 5298, 5299, 5300, 5301, 5302, 5303, 5304, 5305, 5306, 5307, 5308, 5309, 5310, 5311, 5312, 5313, 5314, 5315, 5316, 5317, 5318, 5319, 5320, 5321, 5322, 5323, 5324, 5325, 5326, 5327, 5328, 5329, 5330, 5331, 5332, 5333, 5334, 5335, 5336, 5337, 5338, 5339, 5340, 5341, 5342, 5343, 5344, 5345, 5346, 5347, 5348, 5349, 5350, 5351, 5352, 5353, 5354, 5355, 5356, 5357, 5358, 5359, 5360, 5361, 5362, 5363, 5364, 5365, 5366, 5367, 5368, 5369, 5370, 5371, 5372, 5373, 5374, 5375, 5376, 5377, 5378, 5379, 5380, 5381, 5382, 5383, 5384, 5385, 5386, 5387, 5388, 5389, 5390, 5391, 5392, 5393, 5394, 5395, 5396, 5397, 5398, 5399, 5400, 5401, 5402, 5403, 5404, 5405, 5406, 5407, 5408, 5409, 5410, 5411, 5412, 5413, 5414, 5415, 5416, 5417, 5418, 5419, 5420, 5421, 5422, 5423, 5424, 5425, 5426, 5427, 5428, 5429, 5430, 5431, 5432, 5433, 5434, 5435, 5436, 5437, 5438, 5439, 5440, 5441, 5442, 5443, 5444, 5445, 5446, 5447, 5448, 5449, 5450, 5451, 5452, 5453, 5454, 5455, 5456, 5457, 5458, 5459, 5460, 5461, 5462, 5463, 5464, 5465, 5466, 5467, 5468, 5469, 5470, 5471, 5472, 5473, 5474, 5475, 5476, 5477, 5478, 5479, 5480, 5481, 5482, 5483, 5484, 5485, 5486, 5487, 5488, 5489, 5490, 5491, 5492, 5493, 5494, 5495, 5496, 5497, 5498, 5499, 5500, 5501, 5502, 5503, 5504, 5505, 5506, 5507, 5508, 5509, 5510, 5511, 5512, 5513, 5514, 5515, 5516, 5517, 5518, 5519, 5520, 5521, 5522, 5523, 5524, 5525, 5526, 5527, 5528, 5529, 5530, 5531, 5532, 5533, 5534, 5535, 5536, 5537, 5538, 5539, 5540, 5541, 5542, 5543, 5544, 5545, 5546, 5547, 5548, 5549, 5550, 5551, 5552, 5553, 5554, 5555, 5556, 5557, 5558, 5559, 5560, 5561, 5562, 5563, 5564, 5565, 5566, 5567, 5568, 5569, 5570, 5571, 5572, 5573, 5574, 5575, 5576, 5577, 5578, 5579, 5580, 5581, 5582, 5583, 5584, 5585, 5586, 5587, 5588, 5589, 5590, 5591, 5592, 5593, 5594, 5595, 5596, 5597, 5598, 5599, 5600, 5601, 5602, 5603, 5604, 5605, 5606, 5607, 5608, 5609, 5610, 5611, 5612, 5613, 5614, 5615, 5616, 5617, 5618, 5619, 5620, 5621, 5622, 5623, 5624, 5625, 5626, 5627, 5628, 5629, 5630, 5631, 5632, 5633, 5634, 5635, 5636, 5637, 5638, 5639, 5640, 5641, 5642, 5643, 5644, 5645, 5646, 5647, 5648, 5649, 5650, 5651, 5652, 5653, 5654, 5655, 5656, 5657, 5658, 5659, 5660, 5661, 5662, 5663, 5664, 5665, 5666, 5667, 5668, 5669, 5670, 5671, 5672, 5673, 5674, 5675, 5676, 5677, 5678, 5679, 5680, 5681, 5682, 5683, 5684, 5685, 5686, 5687, 5688, 5689, 5690, 5691, 5692, 5693, 5694, 5695, 5696, 5697, 5698, 5699, 5700, 5701, 5702, 5703, 5704, 5705, 5706, 5707, 5708, 5709, 5710, 5711, 5712, 5713, 5714, 5715, 5716, 5717, 5718, 5719, 5720, 5721, 5722, 5723, 5724, 5725, 5726, 5727, 5728, 5729, 5730, 5731, 5732, 5733, 5734, 5735, 5736, 5737, 5738, 5739, 5740, 5743, 5744, 5745, 5746, 5747, 5748, 5749, 5750, 5751, 5752, 5753, 5754, 5755, 5756, 5757, 5758, 5759, 5761, 5762, 5763, 5764, 5765, 5766, 5767, 5768, 5769, 5770, 5771, 5772, 5773, 5774, 5775, 5776, 5777, 5778, 5779, 5780, 5781, 5782, 5783, 5784, 5785, 5786, 5792, 5793, 5794, 5795, 5796, 5797, 5798, 5799, 5800, 5801, 5802, 5803, 5804, 5805, 5806, 5807, 5808, 5809, 5810, 5811, 5812, 5813, 5814, 5815, 5816, 5817, 5818, 5819, 5820, 5821, 5822, 5823, 5824, 5825, 5826, 5827, 5828, 5829, 5830, 5831, 5832, 5833, 5834, 5835, 5836, 5837, 5838, 5839, 5840, 5841, 5842, 5843, 5844, 5845, 5846, 5847, 5848, 5849, 5850, 5851, 5852, 5853, 5854, 5855, 5856, 5857, 5858, 5859, 5860, 5861, 5862, 5863, 5864, 5865, 5866, 5873, 5874, 5875, 5876, 5877, 5878, 5879, 5880, 5888, 5889, 5890, 5891, 5892, 5893, 5894, 5895, 5896, 5897, 5898, 5899, 5900, 5902, 5903, 5904, 5905, 5920, 5921, 5922, 5923, 5924, 5925, 5926, 5927, 5928, 5929, 5930, 5931, 5932, 5933, 5934, 5935, 5936, 5937, 5952, 5953, 5954, 5955, 5956, 5957, 5958, 5959, 5960, 5961, 5962, 5963, 5964, 5965, 5966, 5967, 5968, 5969, 5984, 5985, 5986, 5987, 5988, 5989, 5990, 5991, 5992, 5993, 5994, 5995, 5996, 5998, 5999, 6000, 6016, 6017, 6018, 6019, 6020, 6021, 6022, 6023, 6024, 6025, 6026, 6027, 6028, 6029, 6030, 6031, 6032, 6033, 6034, 6035, 6036, 6037, 6038, 6039, 6040, 6041, 6042, 6043, 6044, 6045, 6046, 6047, 6048, 6049, 6050, 6051, 6052, 6053, 6054, 6055, 6056, 6057, 6058, 6059, 6060, 6061, 6062, 6063, 6064, 6065, 6066, 6067, 6103, 6108, 6176, 6177, 6178, 6179, 6180, 6181, 6182, 6183, 6184, 6185, 6186, 6187, 6188, 6189, 6190, 6191, 6192, 6193, 6194, 6195, 6196, 6197, 6198, 6199, 6200, 6201, 6202, 6203, 6204, 6205, 6206, 6207, 6208, 6209, 6210, 6211, 6212, 6213, 6214, 6215, 6216, 6217, 6218, 6219, 6220, 6221, 6222, 6223, 6224, 6225, 6226, 6227, 6228, 6229, 6230, 6231, 6232, 6233, 6234, 6235, 6236, 6237, 6238, 6239, 6240, 6241, 6242, 6243, 6244, 6245, 6246, 6247, 6248, 6249, 6250, 6251, 6252, 6253, 6254, 6255, 6256, 6257, 6258, 6259, 6260, 6261, 6262, 6263, 6272, 6273, 6274, 6275, 6276, 6277, 6278, 6279, 6280, 6281, 6282, 6283, 6284, 6285, 6286, 6287, 6288, 6289, 6290, 6291, 6292, 6293, 6294, 6295, 6296, 6297, 6298, 6299, 6300, 6301, 6302, 6303, 6304, 6305, 6306, 6307, 6308, 6309, 6310, 6311, 6312, 6314, 6320, 6321, 6322, 6323, 6324, 6325, 6326, 6327, 6328, 6329, 6330, 6331, 6332, 6333, 6334, 6335, 6336, 6337, 6338, 6339, 6340, 6341, 6342, 6343, 6344, 6345, 6346, 6347, 6348, 6349, 6350, 6351, 6352, 6353, 6354, 6355, 6356, 6357, 6358, 6359, 6360, 6361, 6362, 6363, 6364, 6365, 6366, 6367, 6368, 6369, 6370, 6371, 6372, 6373, 6374, 6375, 6376, 6377, 6378, 6379, 6380, 6381, 6382, 6383, 6384, 6385, 6386, 6387, 6388, 6389, 6400, 6401, 6402, 6403, 6404, 6405, 6406, 6407, 6408, 6409, 6410, 6411, 6412, 6413, 6414, 6415, 6416, 6417, 6418, 6419, 6420, 6421, 6422, 6423, 6424, 6425, 6426, 6427, 6428, 6429, 6430, 6480, 6481, 6482, 6483, 6484, 6485, 6486, 6487, 6488, 6489, 6490, 6491, 6492, 6493, 6494, 6495, 6496, 6497, 6498, 6499, 6500, 6501, 6502, 6503, 6504, 6505, 6506, 6507, 6508, 6509, 6512, 6513, 6514, 6515, 6516, 6528, 6529, 6530, 6531, 6532, 6533, 6534, 6535, 6536, 6537, 6538, 6539, 6540, 6541, 6542, 6543, 6544, 6545, 6546, 6547, 6548, 6549, 6550, 6551, 6552, 6553, 6554, 6555, 6556, 6557, 6558, 6559, 6560, 6561, 6562, 6563, 6564, 6565, 6566, 6567, 6568, 6569, 6570, 6571, 6576, 6577, 6578, 6579, 6580, 6581, 6582, 6583, 6584, 6585, 6586, 6587, 6588, 6589, 6590, 6591, 6592, 6593, 6594, 6595, 6596, 6597, 6598, 6599, 6600, 6601, 6656, 6657, 6658, 6659, 6660, 6661, 6662, 6663, 6664, 6665, 6666, 6667, 6668, 6669, 6670, 6671, 6672, 6673, 6674, 6675, 6676, 6677, 6678, 6688, 6689, 6690, 6691, 6692, 6693, 6694, 6695, 6696, 6697, 6698, 6699, 6700, 6701, 6702, 6703, 6704, 6705, 6706, 6707, 6708, 6709, 6710, 6711, 6712, 6713, 6714, 6715, 6716, 6717, 6718, 6719, 6720, 6721, 6722, 6723, 6724, 6725, 6726, 6727, 6728, 6729, 6730, 6731, 6732, 6733, 6734, 6735, 6736, 6737, 6738, 6739, 6740, 6823, 6917, 6918, 6919, 6920, 6921, 6922, 6923, 6924, 6925, 6926, 6927, 6928, 6929, 6930, 6931, 6932, 6933, 6934, 6935, 6936, 6937, 6938, 6939, 6940, 6941, 6942, 6943, 6944, 6945, 6946, 6947, 6948, 6949, 6950, 6951, 6952, 6953, 6954, 6955, 6956, 6957, 6958, 6959, 6960, 6961, 6962, 6963, 6981, 6982, 6983, 6984, 6985, 6986, 6987, 7043, 7044, 7045, 7046, 7047, 7048, 7049, 7050, 7051, 7052, 7053, 7054, 7055, 7056, 7057, 7058, 7059, 7060, 7061, 7062, 7063, 7064, 7065, 7066, 7067, 7068, 7069, 7070, 7071, 7072, 7086, 7087, 7098, 7099, 7100, 7101, 7102, 7103, 7104, 7105, 7106, 7107, 7108, 7109, 7110, 7111, 7112, 7113, 7114, 7115, 7116, 7117, 7118, 7119, 7120, 7121, 7122, 7123, 7124, 7125, 7126, 7127, 7128, 7129, 7130, 7131, 7132, 7133, 7134, 7135, 7136, 7137, 7138, 7139, 7140, 7141, 7168, 7169, 7170, 7171, 7172, 7173, 7174, 7175, 7176, 7177, 7178, 7179, 7180, 7181, 7182, 7183, 7184, 7185, 7186, 7187, 7188, 7189, 7190, 7191, 7192, 7193, 7194, 7195, 7196, 7197, 7198, 7199, 7200, 7201, 7202, 7203, 7245, 7246, 7247, 7258, 7259, 7260, 7261, 7262, 7263, 7264, 7265, 7266, 7267, 7268, 7269, 7270, 7271, 7272, 7273, 7274, 7275, 7276, 7277, 7278, 7279, 7280, 7281, 7282, 7283, 7284, 7285, 7286, 7287, 7288, 7289, 7290, 7291, 7292, 7293, 7401, 7402, 7403, 7404, 7406, 7407, 7408, 7409, 7413, 7414, 7424, 7425, 7426, 7427, 7428, 7429, 7430, 7431, 7432, 7433, 7434, 7435, 7436, 7437, 7438, 7439, 7440, 7441, 7442, 7443, 7444, 7445, 7446, 7447, 7448, 7449, 7450, 7451, 7452, 7453, 7454, 7455, 7456, 7457, 7458, 7459, 7460, 7461, 7462, 7463, 7464, 7465, 7466, 7467, 7468, 7469, 7470, 7471, 7472, 7473, 7474, 7475, 7476, 7477, 7478, 7479, 7480, 7481, 7482, 7483, 7484, 7485, 7486, 7487, 7488, 7489, 7490, 7491, 7492, 7493, 7494, 7495, 7496, 7497, 7498, 7499, 7500, 7501, 7502, 7503, 7504, 7505, 7506, 7507, 7508, 7509, 7510, 7511, 7512, 7513, 7514, 7515, 7516, 7517, 7518, 7519, 7520, 7521, 7522, 7523, 7524, 7525, 7526, 7527, 7528, 7529, 7530, 7531, 7532, 7533, 7534, 7535, 7536, 7537, 7538, 7539, 7540, 7541, 7542, 7543, 7544, 7545, 7546, 7547, 7548, 7549, 7550, 7551, 7552, 7553, 7554, 7555, 7556, 7557, 7558, 7559, 7560, 7561, 7562, 7563, 7564, 7565, 7566, 7567, 7568, 7569, 7570, 7571, 7572, 7573, 7574, 7575, 7576, 7577, 7578, 7579, 7580, 7581, 7582, 7583, 7584, 7585, 7586, 7587, 7588, 7589, 7590, 7591, 7592, 7593, 7594, 7595, 7596, 7597, 7598, 7599, 7600, 7601, 7602, 7603, 7604, 7605, 7606, 7607, 7608, 7609, 7610, 7611, 7612, 7613, 7614, 7615, 7680, 7681, 7682, 7683, 7684, 7685, 7686, 7687, 7688, 7689, 7690, 7691, 7692, 7693, 7694, 7695, 7696, 7697, 7698, 7699, 7700, 7701, 7702, 7703, 7704, 7705, 7706, 7707, 7708, 7709, 7710, 7711, 7712, 7713, 7714, 7715, 7716, 7717, 7718, 7719, 7720, 7721, 7722, 7723, 7724, 7725, 7726, 7727, 7728, 7729, 7730, 7731, 7732, 7733, 7734, 7735, 7736, 7737, 7738, 7739, 7740, 7741, 7742, 7743, 7744, 7745, 7746, 7747, 7748, 7749, 7750, 7751, 7752, 7753, 7754, 7755, 7756, 7757, 7758, 7759, 7760, 7761, 7762, 7763, 7764, 7765, 7766, 7767, 7768, 7769, 7770, 7771, 7772, 7773, 7774, 7775, 7776, 7777, 7778, 7779, 7780, 7781, 7782, 7783, 7784, 7785, 7786, 7787, 7788, 7789, 7790, 7791, 7792, 7793, 7794, 7795, 7796, 7797, 7798, 7799, 7800, 7801, 7802, 7803, 7804, 7805, 7806, 7807, 7808, 7809, 7810, 7811, 7812, 7813, 7814, 7815, 7816, 7817, 7818, 7819, 7820, 7821, 7822, 7823, 7824, 7825, 7826, 7827, 7828, 7829, 7830, 7831, 7832, 7833, 7834, 7835, 7836, 7837, 7838, 7839, 7840, 7841, 7842, 7843, 7844, 7845, 7846, 7847, 7848, 7849, 7850, 7851, 7852, 7853, 7854, 7855, 7856, 7857, 7858, 7859, 7860, 7861, 7862, 7863, 7864, 7865, 7866, 7867, 7868, 7869, 7870, 7871, 7872, 7873, 7874, 7875, 7876, 7877, 7878, 7879, 7880, 7881, 7882, 7883, 7884, 7885, 7886, 7887, 7888, 7889, 7890, 7891, 7892, 7893, 7894, 7895, 7896, 7897, 7898, 7899, 7900, 7901, 7902, 7903, 7904, 7905, 7906, 7907, 7908, 7909, 7910, 7911, 7912, 7913, 7914, 7915, 7916, 7917, 7918, 7919, 7920, 7921, 7922, 7923, 7924, 7925, 7926, 7927, 7928, 7929, 7930, 7931, 7932, 7933, 7934, 7935, 7936, 7937, 7938, 7939, 7940, 7941, 7942, 7943, 7944, 7945, 7946, 7947, 7948, 7949, 7950, 7951, 7952, 7953, 7954, 7955, 7956, 7957, 7960, 7961, 7962, 7963, 7964, 7965, 7968, 7969, 7970, 7971, 7972, 7973, 7974, 7975, 7976, 7977, 7978, 7979, 7980, 7981, 7982, 7983, 7984, 7985, 7986, 7987, 7988, 7989, 7990, 7991, 7992, 7993, 7994, 7995, 7996, 7997, 7998, 7999, 8000, 8001, 8002, 8003, 8004, 8005, 8008, 8009, 8010, 8011, 8012, 8013, 8016, 8017, 8018, 8019, 8020, 8021, 8022, 8023, 8025, 8027, 8029, 8031, 8032, 8033, 8034, 8035, 8036, 8037, 8038, 8039, 8040, 8041, 8042, 8043, 8044, 8045, 8046, 8047, 8048, 8049, 8050, 8051, 8052, 8053, 8054, 8055, 8056, 8057, 8058, 8059, 8060, 8061, 8064, 8065, 8066, 8067, 8068, 8069, 8070, 8071, 8072, 8073, 8074, 8075, 8076, 8077, 8078, 8079, 8080, 8081, 8082, 8083, 8084, 8085, 8086, 8087, 8088, 8089, 8090, 8091, 8092, 8093, 8094, 8095, 8096, 8097, 8098, 8099, 8100, 8101, 8102, 8103, 8104, 8105, 8106, 8107, 8108, 8109, 8110, 8111, 8112, 8113, 8114, 8115, 8116, 8118, 8119, 8120, 8121, 8122, 8123, 8124, 8126, 8130, 8131, 8132, 8134, 8135, 8136, 8137, 8138, 8139, 8140, 8144, 8145, 8146, 8147, 8150, 8151, 8152, 8153, 8154, 8155, 8160, 8161, 8162, 8163, 8164, 8165, 8166, 8167, 8168, 8169, 8170, 8171, 8172, 8178, 8179, 8180, 8182, 8183, 8184, 8185, 8186, 8187, 8188, 8305, 8319, 8336, 8337, 8338, 8339, 8340, 8341, 8342, 8343, 8344, 8345, 8346, 8347, 8348, 8450, 8455, 8458, 8459, 8460, 8461, 8462, 8463, 8464, 8465, 8466, 8467, 8469, 8473, 8474, 8475, 8476, 8477, 8484, 8486, 8488, 8490, 8491, 8492, 8493, 8495, 8496, 8497, 8498, 8499, 8500, 8501, 8502, 8503, 8504, 8505, 8508, 8509, 8510, 8511, 8517, 8518, 8519, 8520, 8521, 8526, 8579, 8580, 11264, 11265, 11266, 11267, 11268, 11269, 11270, 11271, 11272, 11273, 11274, 11275, 11276, 11277, 11278, 11279, 11280, 11281, 11282, 11283, 11284, 11285, 11286, 11287, 11288, 11289, 11290, 11291, 11292, 11293, 11294, 11295, 11296, 11297, 11298, 11299, 11300, 11301, 11302, 11303, 11304, 11305, 11306, 11307, 11308, 11309, 11310, 11312, 11313, 11314, 11315, 11316, 11317, 11318, 11319, 11320, 11321, 11322, 11323, 11324, 11325, 11326, 11327, 11328, 11329, 11330, 11331, 11332, 11333, 11334, 11335, 11336, 11337, 11338, 11339, 11340, 11341, 11342, 11343, 11344, 11345, 11346, 11347, 11348, 11349, 11350, 11351, 11352, 11353, 11354, 11355, 11356, 11357, 11358, 11360, 11361, 11362, 11363, 11364, 11365, 11366, 11367, 11368, 11369, 11370, 11371, 11372, 11373, 11374, 11375, 11376, 11377, 11378, 11379, 11380, 11381, 11382, 11383, 11384, 11385, 11386, 11387, 11388, 11389, 11390, 11391, 11392, 11393, 11394, 11395, 11396, 11397, 11398, 11399, 11400, 11401, 11402, 11403, 11404, 11405, 11406, 11407, 11408, 11409, 11410, 11411, 11412, 11413, 11414, 11415, 11416, 11417, 11418, 11419, 11420, 11421, 11422, 11423, 11424, 11425, 11426, 11427, 11428, 11429, 11430, 11431, 11432, 11433, 11434, 11435, 11436, 11437, 11438, 11439, 11440, 11441, 11442, 11443, 11444, 11445, 11446, 11447, 11448, 11449, 11450, 11451, 11452, 11453, 11454, 11455, 11456, 11457, 11458, 11459, 11460, 11461, 11462, 11463, 11464, 11465, 11466, 11467, 11468, 11469, 11470, 11471, 11472, 11473, 11474, 11475, 11476, 11477, 11478, 11479, 11480, 11481, 11482, 11483, 11484, 11485, 11486, 11487, 11488, 11489, 11490, 11491, 11492, 11499, 11500, 11501, 11502, 11506, 11507, 11520, 11521, 11522, 11523, 11524, 11525, 11526, 11527, 11528, 11529, 11530, 11531, 11532, 11533, 11534, 11535, 11536, 11537, 11538, 11539, 11540, 11541, 11542, 11543, 11544, 11545, 11546, 11547, 11548, 11549, 11550, 11551, 11552, 11553, 11554, 11555, 11556, 11557, 11559, 11565, 11568, 11569, 11570, 11571, 11572, 11573, 11574, 11575, 11576, 11577, 11578, 11579, 11580, 11581, 11582, 11583, 11584, 11585, 11586, 11587, 11588, 11589, 11590, 11591, 11592, 11593, 11594, 11595, 11596, 11597, 11598, 11599, 11600, 11601, 11602, 11603, 11604, 11605, 11606, 11607, 11608, 11609, 11610, 11611, 11612, 11613, 11614, 11615, 11616, 11617, 11618, 11619, 11620, 11621, 11622, 11623, 11631, 11648, 11649, 11650, 11651, 11652, 11653, 11654, 11655, 11656, 11657, 11658, 11659, 11660, 11661, 11662, 11663, 11664, 11665, 11666, 11667, 11668, 11669, 11670, 11680, 11681, 11682, 11683, 11684, 11685, 11686, 11688, 11689, 11690, 11691, 11692, 11693, 11694, 11696, 11697, 11698, 11699, 11700, 11701, 11702, 11704, 11705, 11706, 11707, 11708, 11709, 11710, 11712, 11713, 11714, 11715, 11716, 11717, 11718, 11720, 11721, 11722, 11723, 11724, 11725, 11726, 11728, 11729, 11730, 11731, 11732, 11733, 11734, 11736, 11737, 11738, 11739, 11740, 11741, 11742, 11823, 12293, 12294, 12337, 12338, 12339, 12340, 12341, 12347, 12348, 12353, 12354, 12355, 12356, 12357, 12358, 12359, 12360, 12361, 12362, 12363, 12364, 12365, 12366, 12367, 12368, 12369, 12370, 12371, 12372, 12373, 12374, 12375, 12376, 12377, 12378, 12379, 12380, 12381, 12382, 12383, 12384, 12385, 12386, 12387, 12388, 12389, 12390, 12391, 12392, 12393, 12394, 12395, 12396, 12397, 12398, 12399, 12400, 12401, 12402, 12403, 12404, 12405, 12406, 12407, 12408, 12409, 12410, 12411, 12412, 12413, 12414, 12415, 12416, 12417, 12418, 12419, 12420, 12421, 12422, 12423, 12424, 12425, 12426, 12427, 12428, 12429, 12430, 12431, 12432, 12433, 12434, 12435, 12436, 12437, 12438, 12445, 12446, 12447, 12449, 12450, 12451, 12452, 12453, 12454, 12455, 12456, 12457, 12458, 12459, 12460, 12461, 12462, 12463, 12464, 12465, 12466, 12467, 12468, 12469, 12470, 12471, 12472, 12473, 12474, 12475, 12476, 12477, 12478, 12479, 12480, 12481, 12482, 12483, 12484, 12485, 12486, 12487, 12488, 12489, 12490, 12491, 12492, 12493, 12494, 12495, 12496, 12497, 12498, 12499, 12500, 12501, 12502, 12503, 12504, 12505, 12506, 12507, 12508, 12509, 12510, 12511, 12512, 12513, 12514, 12515, 12516, 12517, 12518, 12519, 12520, 12521, 12522, 12523, 12524, 12525, 12526, 12527, 12528, 12529, 12530, 12531, 12532, 12533, 12534, 12535, 12536, 12537, 12538, 12540, 12541, 12542, 12543, 12549, 12550, 12551, 12552, 12553, 12554, 12555, 12556, 12557, 12558, 12559, 12560, 12561, 12562, 12563, 12564, 12565, 12566, 12567, 12568, 12569, 12570, 12571, 12572, 12573, 12574, 12575, 12576, 12577, 12578, 12579, 12580, 12581, 12582, 12583, 12584, 12585, 12586, 12587, 12588, 12589, 12593, 12594, 12595, 12596, 12597, 12598, 12599, 12600, 12601, 12602, 12603, 12604, 12605, 12606, 12607, 12608, 12609, 12610, 12611, 12612, 12613, 12614, 12615, 12616, 12617, 12618, 12619, 12620, 12621, 12622, 12623, 12624, 12625, 12626, 12627, 12628, 12629, 12630, 12631, 12632, 12633, 12634, 12635, 12636, 12637, 12638, 12639, 12640, 12641, 12642, 12643, 12644, 12645, 12646, 12647, 12648, 12649, 12650, 12651, 12652, 12653, 12654, 12655, 12656, 12657, 12658, 12659, 12660, 12661, 12662, 12663, 12664, 12665, 12666, 12667, 12668, 12669, 12670, 12671, 12672, 12673, 12674, 12675, 12676, 12677, 12678, 12679, 12680, 12681, 12682, 12683, 12684, 12685, 12686, 12704, 12705, 12706, 12707, 12708, 12709, 12710, 12711, 12712, 12713, 12714, 12715, 12716, 12717, 12718, 12719, 12720, 12721, 12722, 12723, 12724, 12725, 12726, 12727, 12728, 12729, 12730, 12784, 12785, 12786, 12787, 12788, 12789, 12790, 12791, 12792, 12793, 12794, 12795, 12796, 12797, 12798, 12799, 13312, 19893, 19968, 40917, 40960, 40961, 40962, 40963, 40964, 40965, 40966, 40967, 40968, 40969, 40970, 40971, 40972, 40973, 40974, 40975, 40976, 40977, 40978, 40979, 40980, 40981, 40982, 40983, 40984, 40985, 40986, 40987, 40988, 40989, 40990, 40991, 40992, 40993, 40994, 40995, 40996, 40997, 40998, 40999, 41000, 41001, 41002, 41003, 41004, 41005, 41006, 41007, 41008, 41009, 41010, 41011, 41012, 41013, 41014, 41015, 41016, 41017, 41018, 41019, 41020, 41021, 41022, 41023, 41024, 41025, 41026, 41027, 41028, 41029, 41030, 41031, 41032, 41033, 41034, 41035, 41036, 41037, 41038, 41039, 41040, 41041, 41042, 41043, 41044, 41045, 41046, 41047, 41048, 41049, 41050, 41051, 41052, 41053, 41054, 41055, 41056, 41057, 41058, 41059, 41060, 41061, 41062, 41063, 41064, 41065, 41066, 41067, 41068, 41069, 41070, 41071, 41072, 41073, 41074, 41075, 41076, 41077, 41078, 41079, 41080, 41081, 41082, 41083, 41084, 41085, 41086, 41087, 41088, 41089, 41090, 41091, 41092, 41093, 41094, 41095, 41096, 41097, 41098, 41099, 41100, 41101, 41102, 41103, 41104, 41105, 41106, 41107, 41108, 41109, 41110, 41111, 41112, 41113, 41114, 41115, 41116, 41117, 41118, 41119, 41120, 41121, 41122, 41123, 41124, 41125, 41126, 41127, 41128, 41129, 41130, 41131, 41132, 41133, 41134, 41135, 41136, 41137, 41138, 41139, 41140, 41141, 41142, 41143, 41144, 41145, 41146, 41147, 41148, 41149, 41150, 41151, 41152, 41153, 41154, 41155, 41156, 41157, 41158, 41159, 41160, 41161, 41162, 41163, 41164, 41165, 41166, 41167, 41168, 41169, 41170, 41171, 41172, 41173, 41174, 41175, 41176, 41177, 41178, 41179, 41180, 41181, 41182, 41183, 41184, 41185, 41186, 41187, 41188, 41189, 41190, 41191, 41192, 41193, 41194, 41195, 41196, 41197, 41198, 41199, 41200, 41201, 41202, 41203, 41204, 41205, 41206, 41207, 41208, 41209, 41210, 41211, 41212, 41213, 41214, 41215, 41216, 41217, 41218, 41219, 41220, 41221, 41222, 41223, 41224, 41225, 41226, 41227, 41228, 41229, 41230, 41231, 41232, 41233, 41234, 41235, 41236, 41237, 41238, 41239, 41240, 41241, 41242, 41243, 41244, 41245, 41246, 41247, 41248, 41249, 41250, 41251, 41252, 41253, 41254, 41255, 41256, 41257, 41258, 41259, 41260, 41261, 41262, 41263, 41264, 41265, 41266, 41267, 41268, 41269, 41270, 41271, 41272, 41273, 41274, 41275, 41276, 41277, 41278, 41279, 41280, 41281, 41282, 41283, 41284, 41285, 41286, 41287, 41288, 41289, 41290, 41291, 41292, 41293, 41294, 41295, 41296, 41297, 41298, 41299, 41300, 41301, 41302, 41303, 41304, 41305, 41306, 41307, 41308, 41309, 41310, 41311, 41312, 41313, 41314, 41315, 41316, 41317, 41318, 41319, 41320, 41321, 41322, 41323, 41324, 41325, 41326, 41327, 41328, 41329, 41330, 41331, 41332, 41333, 41334, 41335, 41336, 41337, 41338, 41339, 41340, 41341, 41342, 41343, 41344, 41345, 41346, 41347, 41348, 41349, 41350, 41351, 41352, 41353, 41354, 41355, 41356, 41357, 41358, 41359, 41360, 41361, 41362, 41363, 41364, 41365, 41366, 41367, 41368, 41369, 41370, 41371, 41372, 41373, 41374, 41375, 41376, 41377, 41378, 41379, 41380, 41381, 41382, 41383, 41384, 41385, 41386, 41387, 41388, 41389, 41390, 41391, 41392, 41393, 41394, 41395, 41396, 41397, 41398, 41399, 41400, 41401, 41402, 41403, 41404, 41405, 41406, 41407, 41408, 41409, 41410, 41411, 41412, 41413, 41414, 41415, 41416, 41417, 41418, 41419, 41420, 41421, 41422, 41423, 41424, 41425, 41426, 41427, 41428, 41429, 41430, 41431, 41432, 41433, 41434, 41435, 41436, 41437, 41438, 41439, 41440, 41441, 41442, 41443, 41444, 41445, 41446, 41447, 41448, 41449, 41450, 41451, 41452, 41453, 41454, 41455, 41456, 41457, 41458, 41459, 41460, 41461, 41462, 41463, 41464, 41465, 41466, 41467, 41468, 41469, 41470, 41471, 41472, 41473, 41474, 41475, 41476, 41477, 41478, 41479, 41480, 41481, 41482, 41483, 41484, 41485, 41486, 41487, 41488, 41489, 41490, 41491, 41492, 41493, 41494, 41495, 41496, 41497, 41498, 41499, 41500, 41501, 41502, 41503, 41504, 41505, 41506, 41507, 41508, 41509, 41510, 41511, 41512, 41513, 41514, 41515, 41516, 41517, 41518, 41519, 41520, 41521, 41522, 41523, 41524, 41525, 41526, 41527, 41528, 41529, 41530, 41531, 41532, 41533, 41534, 41535, 41536, 41537, 41538, 41539, 41540, 41541, 41542, 41543, 41544, 41545, 41546, 41547, 41548, 41549, 41550, 41551, 41552, 41553, 41554, 41555, 41556, 41557, 41558, 41559, 41560, 41561, 41562, 41563, 41564, 41565, 41566, 41567, 41568, 41569, 41570, 41571, 41572, 41573, 41574, 41575, 41576, 41577, 41578, 41579, 41580, 41581, 41582, 41583, 41584, 41585, 41586, 41587, 41588, 41589, 41590, 41591, 41592, 41593, 41594, 41595, 41596, 41597, 41598, 41599, 41600, 41601, 41602, 41603, 41604, 41605, 41606, 41607, 41608, 41609, 41610, 41611, 41612, 41613, 41614, 41615, 41616, 41617, 41618, 41619, 41620, 41621, 41622, 41623, 41624, 41625, 41626, 41627, 41628, 41629, 41630, 41631, 41632, 41633, 41634, 41635, 41636, 41637, 41638, 41639, 41640, 41641, 41642, 41643, 41644, 41645, 41646, 41647, 41648, 41649, 41650, 41651, 41652, 41653, 41654, 41655, 41656, 41657, 41658, 41659, 41660, 41661, 41662, 41663, 41664, 41665, 41666, 41667, 41668, 41669, 41670, 41671, 41672, 41673, 41674, 41675, 41676, 41677, 41678, 41679, 41680, 41681, 41682, 41683, 41684, 41685, 41686, 41687, 41688, 41689, 41690, 41691, 41692, 41693, 41694, 41695, 41696, 41697, 41698, 41699, 41700, 41701, 41702, 41703, 41704, 41705, 41706, 41707, 41708, 41709, 41710, 41711, 41712, 41713, 41714, 41715, 41716, 41717, 41718, 41719, 41720, 41721, 41722, 41723, 41724, 41725, 41726, 41727, 41728, 41729, 41730, 41731, 41732, 41733, 41734, 41735, 41736, 41737, 41738, 41739, 41740, 41741, 41742, 41743, 41744, 41745, 41746, 41747, 41748, 41749, 41750, 41751, 41752, 41753, 41754, 41755, 41756, 41757, 41758, 41759, 41760, 41761, 41762, 41763, 41764, 41765, 41766, 41767, 41768, 41769, 41770, 41771, 41772, 41773, 41774, 41775, 41776, 41777, 41778, 41779, 41780, 41781, 41782, 41783, 41784, 41785, 41786, 41787, 41788, 41789, 41790, 41791, 41792, 41793, 41794, 41795, 41796, 41797, 41798, 41799, 41800, 41801, 41802, 41803, 41804, 41805, 41806, 41807, 41808, 41809, 41810, 41811, 41812, 41813, 41814, 41815, 41816, 41817, 41818, 41819, 41820, 41821, 41822, 41823, 41824, 41825, 41826, 41827, 41828, 41829, 41830, 41831, 41832, 41833, 41834, 41835, 41836, 41837, 41838, 41839, 41840, 41841, 41842, 41843, 41844, 41845, 41846, 41847, 41848, 41849, 41850, 41851, 41852, 41853, 41854, 41855, 41856, 41857, 41858, 41859, 41860, 41861, 41862, 41863, 41864, 41865, 41866, 41867, 41868, 41869, 41870, 41871, 41872, 41873, 41874, 41875, 41876, 41877, 41878, 41879, 41880, 41881, 41882, 41883, 41884, 41885, 41886, 41887, 41888, 41889, 41890, 41891, 41892, 41893, 41894, 41895, 41896, 41897, 41898, 41899, 41900, 41901, 41902, 41903, 41904, 41905, 41906, 41907, 41908, 41909, 41910, 41911, 41912, 41913, 41914, 41915, 41916, 41917, 41918, 41919, 41920, 41921, 41922, 41923, 41924, 41925, 41926, 41927, 41928, 41929, 41930, 41931, 41932, 41933, 41934, 41935, 41936, 41937, 41938, 41939, 41940, 41941, 41942, 41943, 41944, 41945, 41946, 41947, 41948, 41949, 41950, 41951, 41952, 41953, 41954, 41955, 41956, 41957, 41958, 41959, 41960, 41961, 41962, 41963, 41964, 41965, 41966, 41967, 41968, 41969, 41970, 41971, 41972, 41973, 41974, 41975, 41976, 41977, 41978, 41979, 41980, 41981, 41982, 41983, 41984, 41985, 41986, 41987, 41988, 41989, 41990, 41991, 41992, 41993, 41994, 41995, 41996, 41997, 41998, 41999, 42000, 42001, 42002, 42003, 42004, 42005, 42006, 42007, 42008, 42009, 42010, 42011, 42012, 42013, 42014, 42015, 42016, 42017, 42018, 42019, 42020, 42021, 42022, 42023, 42024, 42025, 42026, 42027, 42028, 42029, 42030, 42031, 42032, 42033, 42034, 42035, 42036, 42037, 42038, 42039, 42040, 42041, 42042, 42043, 42044, 42045, 42046, 42047, 42048, 42049, 42050, 42051, 42052, 42053, 42054, 42055, 42056, 42057, 42058, 42059, 42060, 42061, 42062, 42063, 42064, 42065, 42066, 42067, 42068, 42069, 42070, 42071, 42072, 42073, 42074, 42075, 42076, 42077, 42078, 42079, 42080, 42081, 42082, 42083, 42084, 42085, 42086, 42087, 42088, 42089, 42090, 42091, 42092, 42093, 42094, 42095, 42096, 42097, 42098, 42099, 42100, 42101, 42102, 42103, 42104, 42105, 42106, 42107, 42108, 42109, 42110, 42111, 42112, 42113, 42114, 42115, 42116, 42117, 42118, 42119, 42120, 42121, 42122, 42123, 42124, 42192, 42193, 42194, 42195, 42196, 42197, 42198, 42199, 42200, 42201, 42202, 42203, 42204, 42205, 42206, 42207, 42208, 42209, 42210, 42211, 42212, 42213, 42214, 42215, 42216, 42217, 42218, 42219, 42220, 42221, 42222, 42223, 42224, 42225, 42226, 42227, 42228, 42229, 42230, 42231, 42232, 42233, 42234, 42235, 42236, 42237, 42240, 42241, 42242, 42243, 42244, 42245, 42246, 42247, 42248, 42249, 42250, 42251, 42252, 42253, 42254, 42255, 42256, 42257, 42258, 42259, 42260, 42261, 42262, 42263, 42264, 42265, 42266, 42267, 42268, 42269, 42270, 42271, 42272, 42273, 42274, 42275, 42276, 42277, 42278, 42279, 42280, 42281, 42282, 42283, 42284, 42285, 42286, 42287, 42288, 42289, 42290, 42291, 42292, 42293, 42294, 42295, 42296, 42297, 42298, 42299, 42300, 42301, 42302, 42303, 42304, 42305, 42306, 42307, 42308, 42309, 42310, 42311, 42312, 42313, 42314, 42315, 42316, 42317, 42318, 42319, 42320, 42321, 42322, 42323, 42324, 42325, 42326, 42327, 42328, 42329, 42330, 42331, 42332, 42333, 42334, 42335, 42336, 42337, 42338, 42339, 42340, 42341, 42342, 42343, 42344, 42345, 42346, 42347, 42348, 42349, 42350, 42351, 42352, 42353, 42354, 42355, 42356, 42357, 42358, 42359, 42360, 42361, 42362, 42363, 42364, 42365, 42366, 42367, 42368, 42369, 42370, 42371, 42372, 42373, 42374, 42375, 42376, 42377, 42378, 42379, 42380, 42381, 42382, 42383, 42384, 42385, 42386, 42387, 42388, 42389, 42390, 42391, 42392, 42393, 42394, 42395, 42396, 42397, 42398, 42399, 42400, 42401, 42402, 42403, 42404, 42405, 42406, 42407, 42408, 42409, 42410, 42411, 42412, 42413, 42414, 42415, 42416, 42417, 42418, 42419, 42420, 42421, 42422, 42423, 42424, 42425, 42426, 42427, 42428, 42429, 42430, 42431, 42432, 42433, 42434, 42435, 42436, 42437, 42438, 42439, 42440, 42441, 42442, 42443, 42444, 42445, 42446, 42447, 42448, 42449, 42450, 42451, 42452, 42453, 42454, 42455, 42456, 42457, 42458, 42459, 42460, 42461, 42462, 42463, 42464, 42465, 42466, 42467, 42468, 42469, 42470, 42471, 42472, 42473, 42474, 42475, 42476, 42477, 42478, 42479, 42480, 42481, 42482, 42483, 42484, 42485, 42486, 42487, 42488, 42489, 42490, 42491, 42492, 42493, 42494, 42495, 42496, 42497, 42498, 42499, 42500, 42501, 42502, 42503, 42504, 42505, 42506, 42507, 42508, 42512, 42513, 42514, 42515, 42516, 42517, 42518, 42519, 42520, 42521, 42522, 42523, 42524, 42525, 42526, 42527, 42538, 42539, 42560, 42561, 42562, 42563, 42564, 42565, 42566, 42567, 42568, 42569, 42570, 42571, 42572, 42573, 42574, 42575, 42576, 42577, 42578, 42579, 42580, 42581, 42582, 42583, 42584, 42585, 42586, 42587, 42588, 42589, 42590, 42591, 42592, 42593, 42594, 42595, 42596, 42597, 42598, 42599, 42600, 42601, 42602, 42603, 42604, 42605, 42606, 42623, 42624, 42625, 42626, 42627, 42628, 42629, 42630, 42631, 42632, 42633, 42634, 42635, 42636, 42637, 42638, 42639, 42640, 42641, 42642, 42643, 42644, 42645, 42646, 42647, 42648, 42649, 42650, 42651, 42652, 42653, 42656, 42657, 42658, 42659, 42660, 42661, 42662, 42663, 42664, 42665, 42666, 42667, 42668, 42669, 42670, 42671, 42672, 42673, 42674, 42675, 42676, 42677, 42678, 42679, 42680, 42681, 42682, 42683, 42684, 42685, 42686, 42687, 42688, 42689, 42690, 42691, 42692, 42693, 42694, 42695, 42696, 42697, 42698, 42699, 42700, 42701, 42702, 42703, 42704, 42705, 42706, 42707, 42708, 42709, 42710, 42711, 42712, 42713, 42714, 42715, 42716, 42717, 42718, 42719, 42720, 42721, 42722, 42723, 42724, 42725, 42775, 42776, 42777, 42778, 42779, 42780, 42781, 42782, 42783, 42786, 42787, 42788, 42789, 42790, 42791, 42792, 42793, 42794, 42795, 42796, 42797, 42798, 42799, 42800, 42801, 42802, 42803, 42804, 42805, 42806, 42807, 42808, 42809, 42810, 42811, 42812, 42813, 42814, 42815, 42816, 42817, 42818, 42819, 42820, 42821, 42822, 42823, 42824, 42825, 42826, 42827, 42828, 42829, 42830, 42831, 42832, 42833, 42834, 42835, 42836, 42837, 42838, 42839, 42840, 42841, 42842, 42843, 42844, 42845, 42846, 42847, 42848, 42849, 42850, 42851, 42852, 42853, 42854, 42855, 42856, 42857, 42858, 42859, 42860, 42861, 42862, 42863, 42864, 42865, 42866, 42867, 42868, 42869, 42870, 42871, 42872, 42873, 42874, 42875, 42876, 42877, 42878, 42879, 42880, 42881, 42882, 42883, 42884, 42885, 42886, 42887, 42888, 42891, 42892, 42893, 42894, 42895, 42896, 42897, 42898, 42899, 42900, 42901, 42902, 42903, 42904, 42905, 42906, 42907, 42908, 42909, 42910, 42911, 42912, 42913, 42914, 42915, 42916, 42917, 42918, 42919, 42920, 42921, 42922, 42923, 42924, 42925, 42928, 42929, 42930, 42931, 42932, 42933, 42934, 42935, 42999, 43000, 43001, 43002, 43003, 43004, 43005, 43006, 43007, 43008, 43009, 43011, 43012, 43013, 43015, 43016, 43017, 43018, 43020, 43021, 43022, 43023, 43024, 43025, 43026, 43027, 43028, 43029, 43030, 43031, 43032, 43033, 43034, 43035, 43036, 43037, 43038, 43039, 43040, 43041, 43042, 43072, 43073, 43074, 43075, 43076, 43077, 43078, 43079, 43080, 43081, 43082, 43083, 43084, 43085, 43086, 43087, 43088, 43089, 43090, 43091, 43092, 43093, 43094, 43095, 43096, 43097, 43098, 43099, 43100, 43101, 43102, 43103, 43104, 43105, 43106, 43107, 43108, 43109, 43110, 43111, 43112, 43113, 43114, 43115, 43116, 43117, 43118, 43119, 43120, 43121, 43122, 43123, 43138, 43139, 43140, 43141, 43142, 43143, 43144, 43145, 43146, 43147, 43148, 43149, 43150, 43151, 43152, 43153, 43154, 43155, 43156, 43157, 43158, 43159, 43160, 43161, 43162, 43163, 43164, 43165, 43166, 43167, 43168, 43169, 43170, 43171, 43172, 43173, 43174, 43175, 43176, 43177, 43178, 43179, 43180, 43181, 43182, 43183, 43184, 43185, 43186, 43187, 43250, 43251, 43252, 43253, 43254, 43255, 43259, 43261, 43274, 43275, 43276, 43277, 43278, 43279, 43280, 43281, 43282, 43283, 43284, 43285, 43286, 43287, 43288, 43289, 43290, 43291, 43292, 43293, 43294, 43295, 43296, 43297, 43298, 43299, 43300, 43301, 43312, 43313, 43314, 43315, 43316, 43317, 43318, 43319, 43320, 43321, 43322, 43323, 43324, 43325, 43326, 43327, 43328, 43329, 43330, 43331, 43332, 43333, 43334, 43360, 43361, 43362, 43363, 43364, 43365, 43366, 43367, 43368, 43369, 43370, 43371, 43372, 43373, 43374, 43375, 43376, 43377, 43378, 43379, 43380, 43381, 43382, 43383, 43384, 43385, 43386, 43387, 43388, 43396, 43397, 43398, 43399, 43400, 43401, 43402, 43403, 43404, 43405, 43406, 43407, 43408, 43409, 43410, 43411, 43412, 43413, 43414, 43415, 43416, 43417, 43418, 43419, 43420, 43421, 43422, 43423, 43424, 43425, 43426, 43427, 43428, 43429, 43430, 43431, 43432, 43433, 43434, 43435, 43436, 43437, 43438, 43439, 43440, 43441, 43442, 43471, 43488, 43489, 43490, 43491, 43492, 43494, 43495, 43496, 43497, 43498, 43499, 43500, 43501, 43502, 43503, 43514, 43515, 43516, 43517, 43518, 43520, 43521, 43522, 43523, 43524, 43525, 43526, 43527, 43528, 43529, 43530, 43531, 43532, 43533, 43534, 43535, 43536, 43537, 43538, 43539, 43540, 43541, 43542, 43543, 43544, 43545, 43546, 43547, 43548, 43549, 43550, 43551, 43552, 43553, 43554, 43555, 43556, 43557, 43558, 43559, 43560, 43584, 43585, 43586, 43588, 43589, 43590, 43591, 43592, 43593, 43594, 43595, 43616, 43617, 43618, 43619, 43620, 43621, 43622, 43623, 43624, 43625, 43626, 43627, 43628, 43629, 43630, 43631, 43632, 43633, 43634, 43635, 43636, 43637, 43638, 43642, 43646, 43647, 43648, 43649, 43650, 43651, 43652, 43653, 43654, 43655, 43656, 43657, 43658, 43659, 43660, 43661, 43662, 43663, 43664, 43665, 43666, 43667, 43668, 43669, 43670, 43671, 43672, 43673, 43674, 43675, 43676, 43677, 43678, 43679, 43680, 43681, 43682, 43683, 43684, 43685, 43686, 43687, 43688, 43689, 43690, 43691, 43692, 43693, 43694, 43695, 43697, 43701, 43702, 43705, 43706, 43707, 43708, 43709, 43712, 43714, 43739, 43740, 43741, 43744, 43745, 43746, 43747, 43748, 43749, 43750, 43751, 43752, 43753, 43754, 43762, 43763, 43764, 43777, 43778, 43779, 43780, 43781, 43782, 43785, 43786, 43787, 43788, 43789, 43790, 43793, 43794, 43795, 43796, 43797, 43798, 43808, 43809, 43810, 43811, 43812, 43813, 43814, 43816, 43817, 43818, 43819, 43820, 43821, 43822, 43824, 43825, 43826, 43827, 43828, 43829, 43830, 43831, 43832, 43833, 43834, 43835, 43836, 43837, 43838, 43839, 43840, 43841, 43842, 43843, 43844, 43845, 43846, 43847, 43848, 43849, 43850, 43851, 43852, 43853, 43854, 43855, 43856, 43857, 43858, 43859, 43860, 43861, 43862, 43863, 43864, 43865, 43866, 43868, 43869, 43870, 43871, 43872, 43873, 43874, 43875, 43876, 43877, 43888, 43889, 43890, 43891, 43892, 43893, 43894, 43895, 43896, 43897, 43898, 43899, 43900, 43901, 43902, 43903, 43904, 43905, 43906, 43907, 43908, 43909, 43910, 43911, 43912, 43913, 43914, 43915, 43916, 43917, 43918, 43919, 43920, 43921, 43922, 43923, 43924, 43925, 43926, 43927, 43928, 43929, 43930, 43931, 43932, 43933, 43934, 43935, 43936, 43937, 43938, 43939, 43940, 43941, 43942, 43943, 43944, 43945, 43946, 43947, 43948, 43949, 43950, 43951, 43952, 43953, 43954, 43955, 43956, 43957, 43958, 43959, 43960, 43961, 43962, 43963, 43964, 43965, 43966, 43967, 43968, 43969, 43970, 43971, 43972, 43973, 43974, 43975, 43976, 43977, 43978, 43979, 43980, 43981, 43982, 43983, 43984, 43985, 43986, 43987, 43988, 43989, 43990, 43991, 43992, 43993, 43994, 43995, 43996, 43997, 43998, 43999, 44000, 44001, 44002, 44032, 55203, 55216, 55217, 55218, 55219, 55220, 55221, 55222, 55223, 55224, 55225, 55226, 55227, 55228, 55229, 55230, 55231, 55232, 55233, 55234, 55235, 55236, 55237, 55238, 55243, 55244, 55245, 55246, 55247, 55248, 55249, 55250, 55251, 55252, 55253, 55254, 55255, 55256, 55257, 55258, 55259, 55260, 55261, 55262, 55263, 55264, 55265, 55266, 55267, 55268, 55269, 55270, 55271, 55272, 55273, 55274, 55275, 55276, 55277, 55278, 55279, 55280, 55281, 55282, 55283, 55284, 55285, 55286, 55287, 55288, 55289, 55290, 55291, 63744, 63745, 63746, 63747, 63748, 63749, 63750, 63751, 63752, 63753, 63754, 63755, 63756, 63757, 63758, 63759, 63760, 63761, 63762, 63763, 63764, 63765, 63766, 63767, 63768, 63769, 63770, 63771, 63772, 63773, 63774, 63775, 63776, 63777, 63778, 63779, 63780, 63781, 63782, 63783, 63784, 63785, 63786, 63787, 63788, 63789, 63790, 63791, 63792, 63793, 63794, 63795, 63796, 63797, 63798, 63799, 63800, 63801, 63802, 63803, 63804, 63805, 63806, 63807, 63808, 63809, 63810, 63811, 63812, 63813, 63814, 63815, 63816, 63817, 63818, 63819, 63820, 63821, 63822, 63823, 63824, 63825, 63826, 63827, 63828, 63829, 63830, 63831, 63832, 63833, 63834, 63835, 63836, 63837, 63838, 63839, 63840, 63841, 63842, 63843, 63844, 63845, 63846, 63847, 63848, 63849, 63850, 63851, 63852, 63853, 63854, 63855, 63856, 63857, 63858, 63859, 63860, 63861, 63862, 63863, 63864, 63865, 63866, 63867, 63868, 63869, 63870, 63871, 63872, 63873, 63874, 63875, 63876, 63877, 63878, 63879, 63880, 63881, 63882, 63883, 63884, 63885, 63886, 63887, 63888, 63889, 63890, 63891, 63892, 63893, 63894, 63895, 63896, 63897, 63898, 63899, 63900, 63901, 63902, 63903, 63904, 63905, 63906, 63907, 63908, 63909, 63910, 63911, 63912, 63913, 63914, 63915, 63916, 63917, 63918, 63919, 63920, 63921, 63922, 63923, 63924, 63925, 63926, 63927, 63928, 63929, 63930, 63931, 63932, 63933, 63934, 63935, 63936, 63937, 63938, 63939, 63940, 63941, 63942, 63943, 63944, 63945, 63946, 63947, 63948, 63949, 63950, 63951, 63952, 63953, 63954, 63955, 63956, 63957, 63958, 63959, 63960, 63961, 63962, 63963, 63964, 63965, 63966, 63967, 63968, 63969, 63970, 63971, 63972, 63973, 63974, 63975, 63976, 63977, 63978, 63979, 63980, 63981, 63982, 63983, 63984, 63985, 63986, 63987, 63988, 63989, 63990, 63991, 63992, 63993, 63994, 63995, 63996, 63997, 63998, 63999, 64000, 64001, 64002, 64003, 64004, 64005, 64006, 64007, 64008, 64009, 64010, 64011, 64012, 64013, 64014, 64015, 64016, 64017, 64018, 64019, 64020, 64021, 64022, 64023, 64024, 64025, 64026, 64027, 64028, 64029, 64030, 64031, 64032, 64033, 64034, 64035, 64036, 64037, 64038, 64039, 64040, 64041, 64042, 64043, 64044, 64045, 64046, 64047, 64048, 64049, 64050, 64051, 64052, 64053, 64054, 64055, 64056, 64057, 64058, 64059, 64060, 64061, 64062, 64063, 64064, 64065, 64066, 64067, 64068, 64069, 64070, 64071, 64072, 64073, 64074, 64075, 64076, 64077, 64078, 64079, 64080, 64081, 64082, 64083, 64084, 64085, 64086, 64087, 64088, 64089, 64090, 64091, 64092, 64093, 64094, 64095, 64096, 64097, 64098, 64099, 64100, 64101, 64102, 64103, 64104, 64105, 64106, 64107, 64108, 64109, 64112, 64113, 64114, 64115, 64116, 64117, 64118, 64119, 64120, 64121, 64122, 64123, 64124, 64125, 64126, 64127, 64128, 64129, 64130, 64131, 64132, 64133, 64134, 64135, 64136, 64137, 64138, 64139, 64140, 64141, 64142, 64143, 64144, 64145, 64146, 64147, 64148, 64149, 64150, 64151, 64152, 64153, 64154, 64155, 64156, 64157, 64158, 64159, 64160, 64161, 64162, 64163, 64164, 64165, 64166, 64167, 64168, 64169, 64170, 64171, 64172, 64173, 64174, 64175, 64176, 64177, 64178, 64179, 64180, 64181, 64182, 64183, 64184, 64185, 64186, 64187, 64188, 64189, 64190, 64191, 64192, 64193, 64194, 64195, 64196, 64197, 64198, 64199, 64200, 64201, 64202, 64203, 64204, 64205, 64206, 64207, 64208, 64209, 64210, 64211, 64212, 64213, 64214, 64215, 64216, 64217, 64256, 64257, 64258, 64259, 64260, 64261, 64262, 64275, 64276, 64277, 64278, 64279, 64285, 64287, 64288, 64289, 64290, 64291, 64292, 64293, 64294, 64295, 64296, 64298, 64299, 64300, 64301, 64302, 64303, 64304, 64305, 64306, 64307, 64308, 64309, 64310, 64312, 64313, 64314, 64315, 64316, 64318, 64320, 64321, 64323, 64324, 64326, 64327, 64328, 64329, 64330, 64331, 64332, 64333, 64334, 64335, 64336, 64337, 64338, 64339, 64340, 64341, 64342, 64343, 64344, 64345, 64346, 64347, 64348, 64349, 64350, 64351, 64352, 64353, 64354, 64355, 64356, 64357, 64358, 64359, 64360, 64361, 64362, 64363, 64364, 64365, 64366, 64367, 64368, 64369, 64370, 64371, 64372, 64373, 64374, 64375, 64376, 64377, 64378, 64379, 64380, 64381, 64382, 64383, 64384, 64385, 64386, 64387, 64388, 64389, 64390, 64391, 64392, 64393, 64394, 64395, 64396, 64397, 64398, 64399, 64400, 64401, 64402, 64403, 64404, 64405, 64406, 64407, 64408, 64409, 64410, 64411, 64412, 64413, 64414, 64415, 64416, 64417, 64418, 64419, 64420, 64421, 64422, 64423, 64424, 64425, 64426, 64427, 64428, 64429, 64430, 64431, 64432, 64433, 64467, 64468, 64469, 64470, 64471, 64472, 64473, 64474, 64475, 64476, 64477, 64478, 64479, 64480, 64481, 64482, 64483, 64484, 64485, 64486, 64487, 64488, 64489, 64490, 64491, 64492, 64493, 64494, 64495, 64496, 64497, 64498, 64499, 64500, 64501, 64502, 64503, 64504, 64505, 64506, 64507, 64508, 64509, 64510, 64511, 64512, 64513, 64514, 64515, 64516, 64517, 64518, 64519, 64520, 64521, 64522, 64523, 64524, 64525, 64526, 64527, 64528, 64529, 64530, 64531, 64532, 64533, 64534, 64535, 64536, 64537, 64538, 64539, 64540, 64541, 64542, 64543, 64544, 64545, 64546, 64547, 64548, 64549, 64550, 64551, 64552, 64553, 64554, 64555, 64556, 64557, 64558, 64559, 64560, 64561, 64562, 64563, 64564, 64565, 64566, 64567, 64568, 64569, 64570, 64571, 64572, 64573, 64574, 64575, 64576, 64577, 64578, 64579, 64580, 64581, 64582, 64583, 64584, 64585, 64586, 64587, 64588, 64589, 64590, 64591, 64592, 64593, 64594, 64595, 64596, 64597, 64598, 64599, 64600, 64601, 64602, 64603, 64604, 64605, 64606, 64607, 64608, 64609, 64610, 64611, 64612, 64613, 64614, 64615, 64616, 64617, 64618, 64619, 64620, 64621, 64622, 64623, 64624, 64625, 64626, 64627, 64628, 64629, 64630, 64631, 64632, 64633, 64634, 64635, 64636, 64637, 64638, 64639, 64640, 64641, 64642, 64643, 64644, 64645, 64646, 64647, 64648, 64649, 64650, 64651, 64652, 64653, 64654, 64655, 64656, 64657, 64658, 64659, 64660, 64661, 64662, 64663, 64664, 64665, 64666, 64667, 64668, 64669, 64670, 64671, 64672, 64673, 64674, 64675, 64676, 64677, 64678, 64679, 64680, 64681, 64682, 64683, 64684, 64685, 64686, 64687, 64688, 64689, 64690, 64691, 64692, 64693, 64694, 64695, 64696, 64697, 64698, 64699, 64700, 64701, 64702, 64703, 64704, 64705, 64706, 64707, 64708, 64709, 64710, 64711, 64712, 64713, 64714, 64715, 64716, 64717, 64718, 64719, 64720, 64721, 64722, 64723, 64724, 64725, 64726, 64727, 64728, 64729, 64730, 64731, 64732, 64733, 64734, 64735, 64736, 64737, 64738, 64739, 64740, 64741, 64742, 64743, 64744, 64745, 64746, 64747, 64748, 64749, 64750, 64751, 64752, 64753, 64754, 64755, 64756, 64757, 64758, 64759, 64760, 64761, 64762, 64763, 64764, 64765, 64766, 64767, 64768, 64769, 64770, 64771, 64772, 64773, 64774, 64775, 64776, 64777, 64778, 64779, 64780, 64781, 64782, 64783, 64784, 64785, 64786, 64787, 64788, 64789, 64790, 64791, 64792, 64793, 64794, 64795, 64796, 64797, 64798, 64799, 64800, 64801, 64802, 64803, 64804, 64805, 64806, 64807, 64808, 64809, 64810, 64811, 64812, 64813, 64814, 64815, 64816, 64817, 64818, 64819, 64820, 64821, 64822, 64823, 64824, 64825, 64826, 64827, 64828, 64829, 64848, 64849, 64850, 64851, 64852, 64853, 64854, 64855, 64856, 64857, 64858, 64859, 64860, 64861, 64862, 64863, 64864, 64865, 64866, 64867, 64868, 64869, 64870, 64871, 64872, 64873, 64874, 64875, 64876, 64877, 64878, 64879, 64880, 64881, 64882, 64883, 64884, 64885, 64886, 64887, 64888, 64889, 64890, 64891, 64892, 64893, 64894, 64895, 64896, 64897, 64898, 64899, 64900, 64901, 64902, 64903, 64904, 64905, 64906, 64907, 64908, 64909, 64910, 64911, 64914, 64915, 64916, 64917, 64918, 64919, 64920, 64921, 64922, 64923, 64924, 64925, 64926, 64927, 64928, 64929, 64930, 64931, 64932, 64933, 64934, 64935, 64936, 64937, 64938, 64939, 64940, 64941, 64942, 64943, 64944, 64945, 64946, 64947, 64948, 64949, 64950, 64951, 64952, 64953, 64954, 64955, 64956, 64957, 64958, 64959, 64960, 64961, 64962, 64963, 64964, 64965, 64966, 64967, 65008, 65009, 65010, 65011, 65012, 65013, 65014, 65015, 65016, 65017, 65018, 65019, 65136, 65137, 65138, 65139, 65140, 65142, 65143, 65144, 65145, 65146, 65147, 65148, 65149, 65150, 65151, 65152, 65153, 65154, 65155, 65156, 65157, 65158, 65159, 65160, 65161, 65162, 65163, 65164, 65165, 65166, 65167, 65168, 65169, 65170, 65171, 65172, 65173, 65174, 65175, 65176, 65177, 65178, 65179, 65180, 65181, 65182, 65183, 65184, 65185, 65186, 65187, 65188, 65189, 65190, 65191, 65192, 65193, 65194, 65195, 65196, 65197, 65198, 65199, 65200, 65201, 65202, 65203, 65204, 65205, 65206, 65207, 65208, 65209, 65210, 65211, 65212, 65213, 65214, 65215, 65216, 65217, 65218, 65219, 65220, 65221, 65222, 65223, 65224, 65225, 65226, 65227, 65228, 65229, 65230, 65231, 65232, 65233, 65234, 65235, 65236, 65237, 65238, 65239, 65240, 65241, 65242, 65243, 65244, 65245, 65246, 65247, 65248, 65249, 65250, 65251, 65252, 65253, 65254, 65255, 65256, 65257, 65258, 65259, 65260, 65261, 65262, 65263, 65264, 65265, 65266, 65267, 65268, 65269, 65270, 65271, 65272, 65273, 65274, 65275, 65276, 65313, 65314, 65315, 65316, 65317, 65318, 65319, 65320, 65321, 65322, 65323, 65324, 65325, 65326, 65327, 65328, 65329, 65330, 65331, 65332, 65333, 65334, 65335, 65336, 65337, 65338, 65345, 65346, 65347, 65348, 65349, 65350, 65351, 65352, 65353, 65354, 65355, 65356, 65357, 65358, 65359, 65360, 65361, 65362, 65363, 65364, 65365, 65366, 65367, 65368, 65369, 65370, 65382, 65383, 65384, 65385, 65386, 65387, 65388, 65389, 65390, 65391, 65392, 65393, 65394, 65395, 65396, 65397, 65398, 65399, 65400, 65401, 65402, 65403, 65404, 65405, 65406, 65407, 65408, 65409, 65410, 65411, 65412, 65413, 65414, 65415, 65416, 65417, 65418, 65419, 65420, 65421, 65422, 65423, 65424, 65425, 65426, 65427, 65428, 65429, 65430, 65431, 65432, 65433, 65434, 65435, 65436, 65437, 65438, 65439, 65440, 65441, 65442, 65443, 65444, 65445, 65446, 65447, 65448, 65449, 65450, 65451, 65452, 65453, 65454, 65455, 65456, 65457, 65458, 65459, 65460, 65461, 65462, 65463, 65464, 65465, 65466, 65467, 65468, 65469, 65470, 65474, 65475, 65476, 65477, 65478, 65479, 65482, 65483, 65484, 65485, 65486, 65487, 65490, 65491, 65492, 65493, 65494, 65495, 65498, 65499, 65500, 65536, 65537, 65538, 65539, 65540, 65541, 65542, 65543, 65544, 65545, 65546, 65547, 65549, 65550, 65551, 65552, 65553, 65554, 65555, 65556, 65557, 65558, 65559, 65560, 65561, 65562, 65563, 65564, 65565, 65566, 65567, 65568, 65569, 65570, 65571, 65572, 65573, 65574, 65576, 65577, 65578, 65579, 65580, 65581, 65582, 65583, 65584, 65585, 65586, 65587, 65588, 65589, 65590, 65591, 65592, 65593, 65594, 65596, 65597, 65599, 65600, 65601, 65602, 65603, 65604, 65605, 65606, 65607, 65608, 65609, 65610, 65611, 65612, 65613, 65616, 65617, 65618, 65619, 65620, 65621, 65622, 65623, 65624, 65625, 65626, 65627, 65628, 65629, 65664, 65665, 65666, 65667, 65668, 65669, 65670, 65671, 65672, 65673, 65674, 65675, 65676, 65677, 65678, 65679, 65680, 65681, 65682, 65683, 65684, 65685, 65686, 65687, 65688, 65689, 65690, 65691, 65692, 65693, 65694, 65695, 65696, 65697, 65698, 65699, 65700, 65701, 65702, 65703, 65704, 65705, 65706, 65707, 65708, 65709, 65710, 65711, 65712, 65713, 65714, 65715, 65716, 65717, 65718, 65719, 65720, 65721, 65722, 65723, 65724, 65725, 65726, 65727, 65728, 65729, 65730, 65731, 65732, 65733, 65734, 65735, 65736, 65737, 65738, 65739, 65740, 65741, 65742, 65743, 65744, 65745, 65746, 65747, 65748, 65749, 65750, 65751, 65752, 65753, 65754, 65755, 65756, 65757, 65758, 65759, 65760, 65761, 65762, 65763, 65764, 65765, 65766, 65767, 65768, 65769, 65770, 65771, 65772, 65773, 65774, 65775, 65776, 65777, 65778, 65779, 65780, 65781, 65782, 65783, 65784, 65785, 65786, 66176, 66177, 66178, 66179, 66180, 66181, 66182, 66183, 66184, 66185, 66186, 66187, 66188, 66189, 66190, 66191, 66192, 66193, 66194, 66195, 66196, 66197, 66198, 66199, 66200, 66201, 66202, 66203, 66204, 66208, 66209, 66210, 66211, 66212, 66213, 66214, 66215, 66216, 66217, 66218, 66219, 66220, 66221, 66222, 66223, 66224, 66225, 66226, 66227, 66228, 66229, 66230, 66231, 66232, 66233, 66234, 66235, 66236, 66237, 66238, 66239, 66240, 66241, 66242, 66243, 66244, 66245, 66246, 66247, 66248, 66249, 66250, 66251, 66252, 66253, 66254, 66255, 66256, 66304, 66305, 66306, 66307, 66308, 66309, 66310, 66311, 66312, 66313, 66314, 66315, 66316, 66317, 66318, 66319, 66320, 66321, 66322, 66323, 66324, 66325, 66326, 66327, 66328, 66329, 66330, 66331, 66332, 66333, 66334, 66335, 66352, 66353, 66354, 66355, 66356, 66357, 66358, 66359, 66360, 66361, 66362, 66363, 66364, 66365, 66366, 66367, 66368, 66370, 66371, 66372, 66373, 66374, 66375, 66376, 66377, 66384, 66385, 66386, 66387, 66388, 66389, 66390, 66391, 66392, 66393, 66394, 66395, 66396, 66397, 66398, 66399, 66400, 66401, 66402, 66403, 66404, 66405, 66406, 66407, 66408, 66409, 66410, 66411, 66412, 66413, 66414, 66415, 66416, 66417, 66418, 66419, 66420, 66421, 66432, 66433, 66434, 66435, 66436, 66437, 66438, 66439, 66440, 66441, 66442, 66443, 66444, 66445, 66446, 66447, 66448, 66449, 66450, 66451, 66452, 66453, 66454, 66455, 66456, 66457, 66458, 66459, 66460, 66461, 66464, 66465, 66466, 66467, 66468, 66469, 66470, 66471, 66472, 66473, 66474, 66475, 66476, 66477, 66478, 66479, 66480, 66481, 66482, 66483, 66484, 66485, 66486, 66487, 66488, 66489, 66490, 66491, 66492, 66493, 66494, 66495, 66496, 66497, 66498, 66499, 66504, 66505, 66506, 66507, 66508, 66509, 66510, 66511, 66560, 66561, 66562, 66563, 66564, 66565, 66566, 66567, 66568, 66569, 66570, 66571, 66572, 66573, 66574, 66575, 66576, 66577, 66578, 66579, 66580, 66581, 66582, 66583, 66584, 66585, 66586, 66587, 66588, 66589, 66590, 66591, 66592, 66593, 66594, 66595, 66596, 66597, 66598, 66599, 66600, 66601, 66602, 66603, 66604, 66605, 66606, 66607, 66608, 66609, 66610, 66611, 66612, 66613, 66614, 66615, 66616, 66617, 66618, 66619, 66620, 66621, 66622, 66623, 66624, 66625, 66626, 66627, 66628, 66629, 66630, 66631, 66632, 66633, 66634, 66635, 66636, 66637, 66638, 66639, 66640, 66641, 66642, 66643, 66644, 66645, 66646, 66647, 66648, 66649, 66650, 66651, 66652, 66653, 66654, 66655, 66656, 66657, 66658, 66659, 66660, 66661, 66662, 66663, 66664, 66665, 66666, 66667, 66668, 66669, 66670, 66671, 66672, 66673, 66674, 66675, 66676, 66677, 66678, 66679, 66680, 66681, 66682, 66683, 66684, 66685, 66686, 66687, 66688, 66689, 66690, 66691, 66692, 66693, 66694, 66695, 66696, 66697, 66698, 66699, 66700, 66701, 66702, 66703, 66704, 66705, 66706, 66707, 66708, 66709, 66710, 66711, 66712, 66713, 66714, 66715, 66716, 66717, 66816, 66817, 66818, 66819, 66820, 66821, 66822, 66823, 66824, 66825, 66826, 66827, 66828, 66829, 66830, 66831, 66832, 66833, 66834, 66835, 66836, 66837, 66838, 66839, 66840, 66841, 66842, 66843, 66844, 66845, 66846, 66847, 66848, 66849, 66850, 66851, 66852, 66853, 66854, 66855, 66864, 66865, 66866, 66867, 66868, 66869, 66870, 66871, 66872, 66873, 66874, 66875, 66876, 66877, 66878, 66879, 66880, 66881, 66882, 66883, 66884, 66885, 66886, 66887, 66888, 66889, 66890, 66891, 66892, 66893, 66894, 66895, 66896, 66897, 66898, 66899, 66900, 66901, 66902, 66903, 66904, 66905, 66906, 66907, 66908, 66909, 66910, 66911, 66912, 66913, 66914, 66915, 67072, 67073, 67074, 67075, 67076, 67077, 67078, 67079, 67080, 67081, 67082, 67083, 67084, 67085, 67086, 67087, 67088, 67089, 67090, 67091, 67092, 67093, 67094, 67095, 67096, 67097, 67098, 67099, 67100, 67101, 67102, 67103, 67104, 67105, 67106, 67107, 67108, 67109, 67110, 67111, 67112, 67113, 67114, 67115, 67116, 67117, 67118, 67119, 67120, 67121, 67122, 67123, 67124, 67125, 67126, 67127, 67128, 67129, 67130, 67131, 67132, 67133, 67134, 67135, 67136, 67137, 67138, 67139, 67140, 67141, 67142, 67143, 67144, 67145, 67146, 67147, 67148, 67149, 67150, 67151, 67152, 67153, 67154, 67155, 67156, 67157, 67158, 67159, 67160, 67161, 67162, 67163, 67164, 67165, 67166, 67167, 67168, 67169, 67170, 67171, 67172, 67173, 67174, 67175, 67176, 67177, 67178, 67179, 67180, 67181, 67182, 67183, 67184, 67185, 67186, 67187, 67188, 67189, 67190, 67191, 67192, 67193, 67194, 67195, 67196, 67197, 67198, 67199, 67200, 67201, 67202, 67203, 67204, 67205, 67206, 67207, 67208, 67209, 67210, 67211, 67212, 67213, 67214, 67215, 67216, 67217, 67218, 67219, 67220, 67221, 67222, 67223, 67224, 67225, 67226, 67227, 67228, 67229, 67230, 67231, 67232, 67233, 67234, 67235, 67236, 67237, 67238, 67239, 67240, 67241, 67242, 67243, 67244, 67245, 67246, 67247, 67248, 67249, 67250, 67251, 67252, 67253, 67254, 67255, 67256, 67257, 67258, 67259, 67260, 67261, 67262, 67263, 67264, 67265, 67266, 67267, 67268, 67269, 67270, 67271, 67272, 67273, 67274, 67275, 67276, 67277, 67278, 67279, 67280, 67281, 67282, 67283, 67284, 67285, 67286, 67287, 67288, 67289, 67290, 67291, 67292, 67293, 67294, 67295, 67296, 67297, 67298, 67299, 67300, 67301, 67302, 67303, 67304, 67305, 67306, 67307, 67308, 67309, 67310, 67311, 67312, 67313, 67314, 67315, 67316, 67317, 67318, 67319, 67320, 67321, 67322, 67323, 67324, 67325, 67326, 67327, 67328, 67329, 67330, 67331, 67332, 67333, 67334, 67335, 67336, 67337, 67338, 67339, 67340, 67341, 67342, 67343, 67344, 67345, 67346, 67347, 67348, 67349, 67350, 67351, 67352, 67353, 67354, 67355, 67356, 67357, 67358, 67359, 67360, 67361, 67362, 67363, 67364, 67365, 67366, 67367, 67368, 67369, 67370, 67371, 67372, 67373, 67374, 67375, 67376, 67377, 67378, 67379, 67380, 67381, 67382, 67392, 67393, 67394, 67395, 67396, 67397, 67398, 67399, 67400, 67401, 67402, 67403, 67404, 67405, 67406, 67407, 67408, 67409, 67410, 67411, 67412, 67413, 67424, 67425, 67426, 67427, 67428, 67429, 67430, 67431, 67584, 67585, 67586, 67587, 67588, 67589, 67592, 67594, 67595, 67596, 67597, 67598, 67599, 67600, 67601, 67602, 67603, 67604, 67605, 67606, 67607, 67608, 67609, 67610, 67611, 67612, 67613, 67614, 67615, 67616, 67617, 67618, 67619, 67620, 67621, 67622, 67623, 67624, 67625, 67626, 67627, 67628, 67629, 67630, 67631, 67632, 67633, 67634, 67635, 67636, 67637, 67639, 67640, 67644, 67647, 67648, 67649, 67650, 67651, 67652, 67653, 67654, 67655, 67656, 67657, 67658, 67659, 67660, 67661, 67662, 67663, 67664, 67665, 67666, 67667, 67668, 67669, 67680, 67681, 67682, 67683, 67684, 67685, 67686, 67687, 67688, 67689, 67690, 67691, 67692, 67693, 67694, 67695, 67696, 67697, 67698, 67699, 67700, 67701, 67702, 67712, 67713, 67714, 67715, 67716, 67717, 67718, 67719, 67720, 67721, 67722, 67723, 67724, 67725, 67726, 67727, 67728, 67729, 67730, 67731, 67732, 67733, 67734, 67735, 67736, 67737, 67738, 67739, 67740, 67741, 67742, 67808, 67809, 67810, 67811, 67812, 67813, 67814, 67815, 67816, 67817, 67818, 67819, 67820, 67821, 67822, 67823, 67824, 67825, 67826, 67828, 67829, 67840, 67841, 67842, 67843, 67844, 67845, 67846, 67847, 67848, 67849, 67850, 67851, 67852, 67853, 67854, 67855, 67856, 67857, 67858, 67859, 67860, 67861, 67872, 67873, 67874, 67875, 67876, 67877, 67878, 67879, 67880, 67881, 67882, 67883, 67884, 67885, 67886, 67887, 67888, 67889, 67890, 67891, 67892, 67893, 67894, 67895, 67896, 67897, 67968, 67969, 67970, 67971, 67972, 67973, 67974, 67975, 67976, 67977, 67978, 67979, 67980, 67981, 67982, 67983, 67984, 67985, 67986, 67987, 67988, 67989, 67990, 67991, 67992, 67993, 67994, 67995, 67996, 67997, 67998, 67999, 68000, 68001, 68002, 68003, 68004, 68005, 68006, 68007, 68008, 68009, 68010, 68011, 68012, 68013, 68014, 68015, 68016, 68017, 68018, 68019, 68020, 68021, 68022, 68023, 68030, 68031, 68096, 68112, 68113, 68114, 68115, 68117, 68118, 68119, 68121, 68122, 68123, 68124, 68125, 68126, 68127, 68128, 68129, 68130, 68131, 68132, 68133, 68134, 68135, 68136, 68137, 68138, 68139, 68140, 68141, 68142, 68143, 68144, 68145, 68146, 68147, 68192, 68193, 68194, 68195, 68196, 68197, 68198, 68199, 68200, 68201, 68202, 68203, 68204, 68205, 68206, 68207, 68208, 68209, 68210, 68211, 68212, 68213, 68214, 68215, 68216, 68217, 68218, 68219, 68220, 68224, 68225, 68226, 68227, 68228, 68229, 68230, 68231, 68232, 68233, 68234, 68235, 68236, 68237, 68238, 68239, 68240, 68241, 68242, 68243, 68244, 68245, 68246, 68247, 68248, 68249, 68250, 68251, 68252, 68288, 68289, 68290, 68291, 68292, 68293, 68294, 68295, 68297, 68298, 68299, 68300, 68301, 68302, 68303, 68304, 68305, 68306, 68307, 68308, 68309, 68310, 68311, 68312, 68313, 68314, 68315, 68316, 68317, 68318, 68319, 68320, 68321, 68322, 68323, 68324, 68352, 68353, 68354, 68355, 68356, 68357, 68358, 68359, 68360, 68361, 68362, 68363, 68364, 68365, 68366, 68367, 68368, 68369, 68370, 68371, 68372, 68373, 68374, 68375, 68376, 68377, 68378, 68379, 68380, 68381, 68382, 68383, 68384, 68385, 68386, 68387, 68388, 68389, 68390, 68391, 68392, 68393, 68394, 68395, 68396, 68397, 68398, 68399, 68400, 68401, 68402, 68403, 68404, 68405, 68416, 68417, 68418, 68419, 68420, 68421, 68422, 68423, 68424, 68425, 68426, 68427, 68428, 68429, 68430, 68431, 68432, 68433, 68434, 68435, 68436, 68437, 68448, 68449, 68450, 68451, 68452, 68453, 68454, 68455, 68456, 68457, 68458, 68459, 68460, 68461, 68462, 68463, 68464, 68465, 68466, 68480, 68481, 68482, 68483, 68484, 68485, 68486, 68487, 68488, 68489, 68490, 68491, 68492, 68493, 68494, 68495, 68496, 68497, 68608, 68609, 68610, 68611, 68612, 68613, 68614, 68615, 68616, 68617, 68618, 68619, 68620, 68621, 68622, 68623, 68624, 68625, 68626, 68627, 68628, 68629, 68630, 68631, 68632, 68633, 68634, 68635, 68636, 68637, 68638, 68639, 68640, 68641, 68642, 68643, 68644, 68645, 68646, 68647, 68648, 68649, 68650, 68651, 68652, 68653, 68654, 68655, 68656, 68657, 68658, 68659, 68660, 68661, 68662, 68663, 68664, 68665, 68666, 68667, 68668, 68669, 68670, 68671, 68672, 68673, 68674, 68675, 68676, 68677, 68678, 68679, 68680, 68736, 68737, 68738, 68739, 68740, 68741, 68742, 68743, 68744, 68745, 68746, 68747, 68748, 68749, 68750, 68751, 68752, 68753, 68754, 68755, 68756, 68757, 68758, 68759, 68760, 68761, 68762, 68763, 68764, 68765, 68766, 68767, 68768, 68769, 68770, 68771, 68772, 68773, 68774, 68775, 68776, 68777, 68778, 68779, 68780, 68781, 68782, 68783, 68784, 68785, 68786, 68800, 68801, 68802, 68803, 68804, 68805, 68806, 68807, 68808, 68809, 68810, 68811, 68812, 68813, 68814, 68815, 68816, 68817, 68818, 68819, 68820, 68821, 68822, 68823, 68824, 68825, 68826, 68827, 68828, 68829, 68830, 68831, 68832, 68833, 68834, 68835, 68836, 68837, 68838, 68839, 68840, 68841, 68842, 68843, 68844, 68845, 68846, 68847, 68848, 68849, 68850, 69635, 69636, 69637, 69638, 69639, 69640, 69641, 69642, 69643, 69644, 69645, 69646, 69647, 69648, 69649, 69650, 69651, 69652, 69653, 69654, 69655, 69656, 69657, 69658, 69659, 69660, 69661, 69662, 69663, 69664, 69665, 69666, 69667, 69668, 69669, 69670, 69671, 69672, 69673, 69674, 69675, 69676, 69677, 69678, 69679, 69680, 69681, 69682, 69683, 69684, 69685, 69686, 69687, 69763, 69764, 69765, 69766, 69767, 69768, 69769, 69770, 69771, 69772, 69773, 69774, 69775, 69776, 69777, 69778, 69779, 69780, 69781, 69782, 69783, 69784, 69785, 69786, 69787, 69788, 69789, 69790, 69791, 69792, 69793, 69794, 69795, 69796, 69797, 69798, 69799, 69800, 69801, 69802, 69803, 69804, 69805, 69806, 69807, 69840, 69841, 69842, 69843, 69844, 69845, 69846, 69847, 69848, 69849, 69850, 69851, 69852, 69853, 69854, 69855, 69856, 69857, 69858, 69859, 69860, 69861, 69862, 69863, 69864, 69891, 69892, 69893, 69894, 69895, 69896, 69897, 69898, 69899, 69900, 69901, 69902, 69903, 69904, 69905, 69906, 69907, 69908, 69909, 69910, 69911, 69912, 69913, 69914, 69915, 69916, 69917, 69918, 69919, 69920, 69921, 69922, 69923, 69924, 69925, 69926, 69968, 69969, 69970, 69971, 69972, 69973, 69974, 69975, 69976, 69977, 69978, 69979, 69980, 69981, 69982, 69983, 69984, 69985, 69986, 69987, 69988, 69989, 69990, 69991, 69992, 69993, 69994, 69995, 69996, 69997, 69998, 69999, 70000, 70001, 70002, 70006, 70019, 70020, 70021, 70022, 70023, 70024, 70025, 70026, 70027, 70028, 70029, 70030, 70031, 70032, 70033, 70034, 70035, 70036, 70037, 70038, 70039, 70040, 70041, 70042, 70043, 70044, 70045, 70046, 70047, 70048, 70049, 70050, 70051, 70052, 70053, 70054, 70055, 70056, 70057, 70058, 70059, 70060, 70061, 70062, 70063, 70064, 70065, 70066, 70081, 70082, 70083, 70084, 70106, 70108, 70144, 70145, 70146, 70147, 70148, 70149, 70150, 70151, 70152, 70153, 70154, 70155, 70156, 70157, 70158, 70159, 70160, 70161, 70163, 70164, 70165, 70166, 70167, 70168, 70169, 70170, 70171, 70172, 70173, 70174, 70175, 70176, 70177, 70178, 70179, 70180, 70181, 70182, 70183, 70184, 70185, 70186, 70187, 70272, 70273, 70274, 70275, 70276, 70277, 70278, 70280, 70282, 70283, 70284, 70285, 70287, 70288, 70289, 70290, 70291, 70292, 70293, 70294, 70295, 70296, 70297, 70298, 70299, 70300, 70301, 70303, 70304, 70305, 70306, 70307, 70308, 70309, 70310, 70311, 70312, 70320, 70321, 70322, 70323, 70324, 70325, 70326, 70327, 70328, 70329, 70330, 70331, 70332, 70333, 70334, 70335, 70336, 70337, 70338, 70339, 70340, 70341, 70342, 70343, 70344, 70345, 70346, 70347, 70348, 70349, 70350, 70351, 70352, 70353, 70354, 70355, 70356, 70357, 70358, 70359, 70360, 70361, 70362, 70363, 70364, 70365, 70366, 70405, 70406, 70407, 70408, 70409, 70410, 70411, 70412, 70415, 70416, 70419, 70420, 70421, 70422, 70423, 70424, 70425, 70426, 70427, 70428, 70429, 70430, 70431, 70432, 70433, 70434, 70435, 70436, 70437, 70438, 70439, 70440, 70442, 70443, 70444, 70445, 70446, 70447, 70448, 70450, 70451, 70453, 70454, 70455, 70456, 70457, 70461, 70480, 70493, 70494, 70495, 70496, 70497, 70784, 70785, 70786, 70787, 70788, 70789, 70790, 70791, 70792, 70793, 70794, 70795, 70796, 70797, 70798, 70799, 70800, 70801, 70802, 70803, 70804, 70805, 70806, 70807, 70808, 70809, 70810, 70811, 70812, 70813, 70814, 70815, 70816, 70817, 70818, 70819, 70820, 70821, 70822, 70823, 70824, 70825, 70826, 70827, 70828, 70829, 70830, 70831, 70852, 70853, 70855, 71040, 71041, 71042, 71043, 71044, 71045, 71046, 71047, 71048, 71049, 71050, 71051, 71052, 71053, 71054, 71055, 71056, 71057, 71058, 71059, 71060, 71061, 71062, 71063, 71064, 71065, 71066, 71067, 71068, 71069, 71070, 71071, 71072, 71073, 71074, 71075, 71076, 71077, 71078, 71079, 71080, 71081, 71082, 71083, 71084, 71085, 71086, 71128, 71129, 71130, 71131, 71168, 71169, 71170, 71171, 71172, 71173, 71174, 71175, 71176, 71177, 71178, 71179, 71180, 71181, 71182, 71183, 71184, 71185, 71186, 71187, 71188, 71189, 71190, 71191, 71192, 71193, 71194, 71195, 71196, 71197, 71198, 71199, 71200, 71201, 71202, 71203, 71204, 71205, 71206, 71207, 71208, 71209, 71210, 71211, 71212, 71213, 71214, 71215, 71236, 71296, 71297, 71298, 71299, 71300, 71301, 71302, 71303, 71304, 71305, 71306, 71307, 71308, 71309, 71310, 71311, 71312, 71313, 71314, 71315, 71316, 71317, 71318, 71319, 71320, 71321, 71322, 71323, 71324, 71325, 71326, 71327, 71328, 71329, 71330, 71331, 71332, 71333, 71334, 71335, 71336, 71337, 71338, 71424, 71425, 71426, 71427, 71428, 71429, 71430, 71431, 71432, 71433, 71434, 71435, 71436, 71437, 71438, 71439, 71440, 71441, 71442, 71443, 71444, 71445, 71446, 71447, 71448, 71449, 71840, 71841, 71842, 71843, 71844, 71845, 71846, 71847, 71848, 71849, 71850, 71851, 71852, 71853, 71854, 71855, 71856, 71857, 71858, 71859, 71860, 71861, 71862, 71863, 71864, 71865, 71866, 71867, 71868, 71869, 71870, 71871, 71872, 71873, 71874, 71875, 71876, 71877, 71878, 71879, 71880, 71881, 71882, 71883, 71884, 71885, 71886, 71887, 71888, 71889, 71890, 71891, 71892, 71893, 71894, 71895, 71896, 71897, 71898, 71899, 71900, 71901, 71902, 71903, 71935, 72384, 72385, 72386, 72387, 72388, 72389, 72390, 72391, 72392, 72393, 72394, 72395, 72396, 72397, 72398, 72399, 72400, 72401, 72402, 72403, 72404, 72405, 72406, 72407, 72408, 72409, 72410, 72411, 72412, 72413, 72414, 72415, 72416, 72417, 72418, 72419, 72420, 72421, 72422, 72423, 72424, 72425, 72426, 72427, 72428, 72429, 72430, 72431, 72432, 72433, 72434, 72435, 72436, 72437, 72438, 72439, 72440, 73728, 73729, 73730, 73731, 73732, 73733, 73734, 73735, 73736, 73737, 73738, 73739, 73740, 73741, 73742, 73743, 73744, 73745, 73746, 73747, 73748, 73749, 73750, 73751, 73752, 73753, 73754, 73755, 73756, 73757, 73758, 73759, 73760, 73761, 73762, 73763, 73764, 73765, 73766, 73767, 73768, 73769, 73770, 73771, 73772, 73773, 73774, 73775, 73776, 73777, 73778, 73779, 73780, 73781, 73782, 73783, 73784, 73785, 73786, 73787, 73788, 73789, 73790, 73791, 73792, 73793, 73794, 73795, 73796, 73797, 73798, 73799, 73800, 73801, 73802, 73803, 73804, 73805, 73806, 73807, 73808, 73809, 73810, 73811, 73812, 73813, 73814, 73815, 73816, 73817, 73818, 73819, 73820, 73821, 73822, 73823, 73824, 73825, 73826, 73827, 73828, 73829, 73830, 73831, 73832, 73833, 73834, 73835, 73836, 73837, 73838, 73839, 73840, 73841, 73842, 73843, 73844, 73845, 73846, 73847, 73848, 73849, 73850, 73851, 73852, 73853, 73854, 73855, 73856, 73857, 73858, 73859, 73860, 73861, 73862, 73863, 73864, 73865, 73866, 73867, 73868, 73869, 73870, 73871, 73872, 73873, 73874, 73875, 73876, 73877, 73878, 73879, 73880, 73881, 73882, 73883, 73884, 73885, 73886, 73887, 73888, 73889, 73890, 73891, 73892, 73893, 73894, 73895, 73896, 73897, 73898, 73899, 73900, 73901, 73902, 73903, 73904, 73905, 73906, 73907, 73908, 73909, 73910, 73911, 73912, 73913, 73914, 73915, 73916, 73917, 73918, 73919, 73920, 73921, 73922, 73923, 73924, 73925, 73926, 73927, 73928, 73929, 73930, 73931, 73932, 73933, 73934, 73935, 73936, 73937, 73938, 73939, 73940, 73941, 73942, 73943, 73944, 73945, 73946, 73947, 73948, 73949, 73950, 73951, 73952, 73953, 73954, 73955, 73956, 73957, 73958, 73959, 73960, 73961, 73962, 73963, 73964, 73965, 73966, 73967, 73968, 73969, 73970, 73971, 73972, 73973, 73974, 73975, 73976, 73977, 73978, 73979, 73980, 73981, 73982, 73983, 73984, 73985, 73986, 73987, 73988, 73989, 73990, 73991, 73992, 73993, 73994, 73995, 73996, 73997, 73998, 73999, 74000, 74001, 74002, 74003, 74004, 74005, 74006, 74007, 74008, 74009, 74010, 74011, 74012, 74013, 74014, 74015, 74016, 74017, 74018, 74019, 74020, 74021, 74022, 74023, 74024, 74025, 74026, 74027, 74028, 74029, 74030, 74031, 74032, 74033, 74034, 74035, 74036, 74037, 74038, 74039, 74040, 74041, 74042, 74043, 74044, 74045, 74046, 74047, 74048, 74049, 74050, 74051, 74052, 74053, 74054, 74055, 74056, 74057, 74058, 74059, 74060, 74061, 74062, 74063, 74064, 74065, 74066, 74067, 74068, 74069, 74070, 74071, 74072, 74073, 74074, 74075, 74076, 74077, 74078, 74079, 74080, 74081, 74082, 74083, 74084, 74085, 74086, 74087, 74088, 74089, 74090, 74091, 74092, 74093, 74094, 74095, 74096, 74097, 74098, 74099, 74100, 74101, 74102, 74103, 74104, 74105, 74106, 74107, 74108, 74109, 74110, 74111, 74112, 74113, 74114, 74115, 74116, 74117, 74118, 74119, 74120, 74121, 74122, 74123, 74124, 74125, 74126, 74127, 74128, 74129, 74130, 74131, 74132, 74133, 74134, 74135, 74136, 74137, 74138, 74139, 74140, 74141, 74142, 74143, 74144, 74145, 74146, 74147, 74148, 74149, 74150, 74151, 74152, 74153, 74154, 74155, 74156, 74157, 74158, 74159, 74160, 74161, 74162, 74163, 74164, 74165, 74166, 74167, 74168, 74169, 74170, 74171, 74172, 74173, 74174, 74175, 74176, 74177, 74178, 74179, 74180, 74181, 74182, 74183, 74184, 74185, 74186, 74187, 74188, 74189, 74190, 74191, 74192, 74193, 74194, 74195, 74196, 74197, 74198, 74199, 74200, 74201, 74202, 74203, 74204, 74205, 74206, 74207, 74208, 74209, 74210, 74211, 74212, 74213, 74214, 74215, 74216, 74217, 74218, 74219, 74220, 74221, 74222, 74223, 74224, 74225, 74226, 74227, 74228, 74229, 74230, 74231, 74232, 74233, 74234, 74235, 74236, 74237, 74238, 74239, 74240, 74241, 74242, 74243, 74244, 74245, 74246, 74247, 74248, 74249, 74250, 74251, 74252, 74253, 74254, 74255, 74256, 74257, 74258, 74259, 74260, 74261, 74262, 74263, 74264, 74265, 74266, 74267, 74268, 74269, 74270, 74271, 74272, 74273, 74274, 74275, 74276, 74277, 74278, 74279, 74280, 74281, 74282, 74283, 74284, 74285, 74286, 74287, 74288, 74289, 74290, 74291, 74292, 74293, 74294, 74295, 74296, 74297, 74298, 74299, 74300, 74301, 74302, 74303, 74304, 74305, 74306, 74307, 74308, 74309, 74310, 74311, 74312, 74313, 74314, 74315, 74316, 74317, 74318, 74319, 74320, 74321, 74322, 74323, 74324, 74325, 74326, 74327, 74328, 74329, 74330, 74331, 74332, 74333, 74334, 74335, 74336, 74337, 74338, 74339, 74340, 74341, 74342, 74343, 74344, 74345, 74346, 74347, 74348, 74349, 74350, 74351, 74352, 74353, 74354, 74355, 74356, 74357, 74358, 74359, 74360, 74361, 74362, 74363, 74364, 74365, 74366, 74367, 74368, 74369, 74370, 74371, 74372, 74373, 74374, 74375, 74376, 74377, 74378, 74379, 74380, 74381, 74382, 74383, 74384, 74385, 74386, 74387, 74388, 74389, 74390, 74391, 74392, 74393, 74394, 74395, 74396, 74397, 74398, 74399, 74400, 74401, 74402, 74403, 74404, 74405, 74406, 74407, 74408, 74409, 74410, 74411, 74412, 74413, 74414, 74415, 74416, 74417, 74418, 74419, 74420, 74421, 74422, 74423, 74424, 74425, 74426, 74427, 74428, 74429, 74430, 74431, 74432, 74433, 74434, 74435, 74436, 74437, 74438, 74439, 74440, 74441, 74442, 74443, 74444, 74445, 74446, 74447, 74448, 74449, 74450, 74451, 74452, 74453, 74454, 74455, 74456, 74457, 74458, 74459, 74460, 74461, 74462, 74463, 74464, 74465, 74466, 74467, 74468, 74469, 74470, 74471, 74472, 74473, 74474, 74475, 74476, 74477, 74478, 74479, 74480, 74481, 74482, 74483, 74484, 74485, 74486, 74487, 74488, 74489, 74490, 74491, 74492, 74493, 74494, 74495, 74496, 74497, 74498, 74499, 74500, 74501, 74502, 74503, 74504, 74505, 74506, 74507, 74508, 74509, 74510, 74511, 74512, 74513, 74514, 74515, 74516, 74517, 74518, 74519, 74520, 74521, 74522, 74523, 74524, 74525, 74526, 74527, 74528, 74529, 74530, 74531, 74532, 74533, 74534, 74535, 74536, 74537, 74538, 74539, 74540, 74541, 74542, 74543, 74544, 74545, 74546, 74547, 74548, 74549, 74550, 74551, 74552, 74553, 74554, 74555, 74556, 74557, 74558, 74559, 74560, 74561, 74562, 74563, 74564, 74565, 74566, 74567, 74568, 74569, 74570, 74571, 74572, 74573, 74574, 74575, 74576, 74577, 74578, 74579, 74580, 74581, 74582, 74583, 74584, 74585, 74586, 74587, 74588, 74589, 74590, 74591, 74592, 74593, 74594, 74595, 74596, 74597, 74598, 74599, 74600, 74601, 74602, 74603, 74604, 74605, 74606, 74607, 74608, 74609, 74610, 74611, 74612, 74613, 74614, 74615, 74616, 74617, 74618, 74619, 74620, 74621, 74622, 74623, 74624, 74625, 74626, 74627, 74628, 74629, 74630, 74631, 74632, 74633, 74634, 74635, 74636, 74637, 74638, 74639, 74640, 74641, 74642, 74643, 74644, 74645, 74646, 74647, 74648, 74649, 74880, 74881, 74882, 74883, 74884, 74885, 74886, 74887, 74888, 74889, 74890, 74891, 74892, 74893, 74894, 74895, 74896, 74897, 74898, 74899, 74900, 74901, 74902, 74903, 74904, 74905, 74906, 74907, 74908, 74909, 74910, 74911, 74912, 74913, 74914, 74915, 74916, 74917, 74918, 74919, 74920, 74921, 74922, 74923, 74924, 74925, 74926, 74927, 74928, 74929, 74930, 74931, 74932, 74933, 74934, 74935, 74936, 74937, 74938, 74939, 74940, 74941, 74942, 74943, 74944, 74945, 74946, 74947, 74948, 74949, 74950, 74951, 74952, 74953, 74954, 74955, 74956, 74957, 74958, 74959, 74960, 74961, 74962, 74963, 74964, 74965, 74966, 74967, 74968, 74969, 74970, 74971, 74972, 74973, 74974, 74975, 74976, 74977, 74978, 74979, 74980, 74981, 74982, 74983, 74984, 74985, 74986, 74987, 74988, 74989, 74990, 74991, 74992, 74993, 74994, 74995, 74996, 74997, 74998, 74999, 75000, 75001, 75002, 75003, 75004, 75005, 75006, 75007, 75008, 75009, 75010, 75011, 75012, 75013, 75014, 75015, 75016, 75017, 75018, 75019, 75020, 75021, 75022, 75023, 75024, 75025, 75026, 75027, 75028, 75029, 75030, 75031, 75032, 75033, 75034, 75035, 75036, 75037, 75038, 75039, 75040, 75041, 75042, 75043, 75044, 75045, 75046, 75047, 75048, 75049, 75050, 75051, 75052, 75053, 75054, 75055, 75056, 75057, 75058, 75059, 75060, 75061, 75062, 75063, 75064, 75065, 75066, 75067, 75068, 75069, 75070, 75071, 75072, 75073, 75074, 75075, 77824, 77825, 77826, 77827, 77828, 77829, 77830, 77831, 77832, 77833, 77834, 77835, 77836, 77837, 77838, 77839, 77840, 77841, 77842, 77843, 77844, 77845, 77846, 77847, 77848, 77849, 77850, 77851, 77852, 77853, 77854, 77855, 77856, 77857, 77858, 77859, 77860, 77861, 77862, 77863, 77864, 77865, 77866, 77867, 77868, 77869, 77870, 77871, 77872, 77873, 77874, 77875, 77876, 77877, 77878, 77879, 77880, 77881, 77882, 77883, 77884, 77885, 77886, 77887, 77888, 77889, 77890, 77891, 77892, 77893, 77894, 77895, 77896, 77897, 77898, 77899, 77900, 77901, 77902, 77903, 77904, 77905, 77906, 77907, 77908, 77909, 77910, 77911, 77912, 77913, 77914, 77915, 77916, 77917, 77918, 77919, 77920, 77921, 77922, 77923, 77924, 77925, 77926, 77927, 77928, 77929, 77930, 77931, 77932, 77933, 77934, 77935, 77936, 77937, 77938, 77939, 77940, 77941, 77942, 77943, 77944, 77945, 77946, 77947, 77948, 77949, 77950, 77951, 77952, 77953, 77954, 77955, 77956, 77957, 77958, 77959, 77960, 77961, 77962, 77963, 77964, 77965, 77966, 77967, 77968, 77969, 77970, 77971, 77972, 77973, 77974, 77975, 77976, 77977, 77978, 77979, 77980, 77981, 77982, 77983, 77984, 77985, 77986, 77987, 77988, 77989, 77990, 77991, 77992, 77993, 77994, 77995, 77996, 77997, 77998, 77999, 78000, 78001, 78002, 78003, 78004, 78005, 78006, 78007, 78008, 78009, 78010, 78011, 78012, 78013, 78014, 78015, 78016, 78017, 78018, 78019, 78020, 78021, 78022, 78023, 78024, 78025, 78026, 78027, 78028, 78029, 78030, 78031, 78032, 78033, 78034, 78035, 78036, 78037, 78038, 78039, 78040, 78041, 78042, 78043, 78044, 78045, 78046, 78047, 78048, 78049, 78050, 78051, 78052, 78053, 78054, 78055, 78056, 78057, 78058, 78059, 78060, 78061, 78062, 78063, 78064, 78065, 78066, 78067, 78068, 78069, 78070, 78071, 78072, 78073, 78074, 78075, 78076, 78077, 78078, 78079, 78080, 78081, 78082, 78083, 78084, 78085, 78086, 78087, 78088, 78089, 78090, 78091, 78092, 78093, 78094, 78095, 78096, 78097, 78098, 78099, 78100, 78101, 78102, 78103, 78104, 78105, 78106, 78107, 78108, 78109, 78110, 78111, 78112, 78113, 78114, 78115, 78116, 78117, 78118, 78119, 78120, 78121, 78122, 78123, 78124, 78125, 78126, 78127, 78128, 78129, 78130, 78131, 78132, 78133, 78134, 78135, 78136, 78137, 78138, 78139, 78140, 78141, 78142, 78143, 78144, 78145, 78146, 78147, 78148, 78149, 78150, 78151, 78152, 78153, 78154, 78155, 78156, 78157, 78158, 78159, 78160, 78161, 78162, 78163, 78164, 78165, 78166, 78167, 78168, 78169, 78170, 78171, 78172, 78173, 78174, 78175, 78176, 78177, 78178, 78179, 78180, 78181, 78182, 78183, 78184, 78185, 78186, 78187, 78188, 78189, 78190, 78191, 78192, 78193, 78194, 78195, 78196, 78197, 78198, 78199, 78200, 78201, 78202, 78203, 78204, 78205, 78206, 78207, 78208, 78209, 78210, 78211, 78212, 78213, 78214, 78215, 78216, 78217, 78218, 78219, 78220, 78221, 78222, 78223, 78224, 78225, 78226, 78227, 78228, 78229, 78230, 78231, 78232, 78233, 78234, 78235, 78236, 78237, 78238, 78239, 78240, 78241, 78242, 78243, 78244, 78245, 78246, 78247, 78248, 78249, 78250, 78251, 78252, 78253, 78254, 78255, 78256, 78257, 78258, 78259, 78260, 78261, 78262, 78263, 78264, 78265, 78266, 78267, 78268, 78269, 78270, 78271, 78272, 78273, 78274, 78275, 78276, 78277, 78278, 78279, 78280, 78281, 78282, 78283, 78284, 78285, 78286, 78287, 78288, 78289, 78290, 78291, 78292, 78293, 78294, 78295, 78296, 78297, 78298, 78299, 78300, 78301, 78302, 78303, 78304, 78305, 78306, 78307, 78308, 78309, 78310, 78311, 78312, 78313, 78314, 78315, 78316, 78317, 78318, 78319, 78320, 78321, 78322, 78323, 78324, 78325, 78326, 78327, 78328, 78329, 78330, 78331, 78332, 78333, 78334, 78335, 78336, 78337, 78338, 78339, 78340, 78341, 78342, 78343, 78344, 78345, 78346, 78347, 78348, 78349, 78350, 78351, 78352, 78353, 78354, 78355, 78356, 78357, 78358, 78359, 78360, 78361, 78362, 78363, 78364, 78365, 78366, 78367, 78368, 78369, 78370, 78371, 78372, 78373, 78374, 78375, 78376, 78377, 78378, 78379, 78380, 78381, 78382, 78383, 78384, 78385, 78386, 78387, 78388, 78389, 78390, 78391, 78392, 78393, 78394, 78395, 78396, 78397, 78398, 78399, 78400, 78401, 78402, 78403, 78404, 78405, 78406, 78407, 78408, 78409, 78410, 78411, 78412, 78413, 78414, 78415, 78416, 78417, 78418, 78419, 78420, 78421, 78422, 78423, 78424, 78425, 78426, 78427, 78428, 78429, 78430, 78431, 78432, 78433, 78434, 78435, 78436, 78437, 78438, 78439, 78440, 78441, 78442, 78443, 78444, 78445, 78446, 78447, 78448, 78449, 78450, 78451, 78452, 78453, 78454, 78455, 78456, 78457, 78458, 78459, 78460, 78461, 78462, 78463, 78464, 78465, 78466, 78467, 78468, 78469, 78470, 78471, 78472, 78473, 78474, 78475, 78476, 78477, 78478, 78479, 78480, 78481, 78482, 78483, 78484, 78485, 78486, 78487, 78488, 78489, 78490, 78491, 78492, 78493, 78494, 78495, 78496, 78497, 78498, 78499, 78500, 78501, 78502, 78503, 78504, 78505, 78506, 78507, 78508, 78509, 78510, 78511, 78512, 78513, 78514, 78515, 78516, 78517, 78518, 78519, 78520, 78521, 78522, 78523, 78524, 78525, 78526, 78527, 78528, 78529, 78530, 78531, 78532, 78533, 78534, 78535, 78536, 78537, 78538, 78539, 78540, 78541, 78542, 78543, 78544, 78545, 78546, 78547, 78548, 78549, 78550, 78551, 78552, 78553, 78554, 78555, 78556, 78557, 78558, 78559, 78560, 78561, 78562, 78563, 78564, 78565, 78566, 78567, 78568, 78569, 78570, 78571, 78572, 78573, 78574, 78575, 78576, 78577, 78578, 78579, 78580, 78581, 78582, 78583, 78584, 78585, 78586, 78587, 78588, 78589, 78590, 78591, 78592, 78593, 78594, 78595, 78596, 78597, 78598, 78599, 78600, 78601, 78602, 78603, 78604, 78605, 78606, 78607, 78608, 78609, 78610, 78611, 78612, 78613, 78614, 78615, 78616, 78617, 78618, 78619, 78620, 78621, 78622, 78623, 78624, 78625, 78626, 78627, 78628, 78629, 78630, 78631, 78632, 78633, 78634, 78635, 78636, 78637, 78638, 78639, 78640, 78641, 78642, 78643, 78644, 78645, 78646, 78647, 78648, 78649, 78650, 78651, 78652, 78653, 78654, 78655, 78656, 78657, 78658, 78659, 78660, 78661, 78662, 78663, 78664, 78665, 78666, 78667, 78668, 78669, 78670, 78671, 78672, 78673, 78674, 78675, 78676, 78677, 78678, 78679, 78680, 78681, 78682, 78683, 78684, 78685, 78686, 78687, 78688, 78689, 78690, 78691, 78692, 78693, 78694, 78695, 78696, 78697, 78698, 78699, 78700, 78701, 78702, 78703, 78704, 78705, 78706, 78707, 78708, 78709, 78710, 78711, 78712, 78713, 78714, 78715, 78716, 78717, 78718, 78719, 78720, 78721, 78722, 78723, 78724, 78725, 78726, 78727, 78728, 78729, 78730, 78731, 78732, 78733, 78734, 78735, 78736, 78737, 78738, 78739, 78740, 78741, 78742, 78743, 78744, 78745, 78746, 78747, 78748, 78749, 78750, 78751, 78752, 78753, 78754, 78755, 78756, 78757, 78758, 78759, 78760, 78761, 78762, 78763, 78764, 78765, 78766, 78767, 78768, 78769, 78770, 78771, 78772, 78773, 78774, 78775, 78776, 78777, 78778, 78779, 78780, 78781, 78782, 78783, 78784, 78785, 78786, 78787, 78788, 78789, 78790, 78791, 78792, 78793, 78794, 78795, 78796, 78797, 78798, 78799, 78800, 78801, 78802, 78803, 78804, 78805, 78806, 78807, 78808, 78809, 78810, 78811, 78812, 78813, 78814, 78815, 78816, 78817, 78818, 78819, 78820, 78821, 78822, 78823, 78824, 78825, 78826, 78827, 78828, 78829, 78830, 78831, 78832, 78833, 78834, 78835, 78836, 78837, 78838, 78839, 78840, 78841, 78842, 78843, 78844, 78845, 78846, 78847, 78848, 78849, 78850, 78851, 78852, 78853, 78854, 78855, 78856, 78857, 78858, 78859, 78860, 78861, 78862, 78863, 78864, 78865, 78866, 78867, 78868, 78869, 78870, 78871, 78872, 78873, 78874, 78875, 78876, 78877, 78878, 78879, 78880, 78881, 78882, 78883, 78884, 78885, 78886, 78887, 78888, 78889, 78890, 78891, 78892, 78893, 78894, 82944, 82945, 82946, 82947, 82948, 82949, 82950, 82951, 82952, 82953, 82954, 82955, 82956, 82957, 82958, 82959, 82960, 82961, 82962, 82963, 82964, 82965, 82966, 82967, 82968, 82969, 82970, 82971, 82972, 82973, 82974, 82975, 82976, 82977, 82978, 82979, 82980, 82981, 82982, 82983, 82984, 82985, 82986, 82987, 82988, 82989, 82990, 82991, 82992, 82993, 82994, 82995, 82996, 82997, 82998, 82999, 83000, 83001, 83002, 83003, 83004, 83005, 83006, 83007, 83008, 83009, 83010, 83011, 83012, 83013, 83014, 83015, 83016, 83017, 83018, 83019, 83020, 83021, 83022, 83023, 83024, 83025, 83026, 83027, 83028, 83029, 83030, 83031, 83032, 83033, 83034, 83035, 83036, 83037, 83038, 83039, 83040, 83041, 83042, 83043, 83044, 83045, 83046, 83047, 83048, 83049, 83050, 83051, 83052, 83053, 83054, 83055, 83056, 83057, 83058, 83059, 83060, 83061, 83062, 83063, 83064, 83065, 83066, 83067, 83068, 83069, 83070, 83071, 83072, 83073, 83074, 83075, 83076, 83077, 83078, 83079, 83080, 83081, 83082, 83083, 83084, 83085, 83086, 83087, 83088, 83089, 83090, 83091, 83092, 83093, 83094, 83095, 83096, 83097, 83098, 83099, 83100, 83101, 83102, 83103, 83104, 83105, 83106, 83107, 83108, 83109, 83110, 83111, 83112, 83113, 83114, 83115, 83116, 83117, 83118, 83119, 83120, 83121, 83122, 83123, 83124, 83125, 83126, 83127, 83128, 83129, 83130, 83131, 83132, 83133, 83134, 83135, 83136, 83137, 83138, 83139, 83140, 83141, 83142, 83143, 83144, 83145, 83146, 83147, 83148, 83149, 83150, 83151, 83152, 83153, 83154, 83155, 83156, 83157, 83158, 83159, 83160, 83161, 83162, 83163, 83164, 83165, 83166, 83167, 83168, 83169, 83170, 83171, 83172, 83173, 83174, 83175, 83176, 83177, 83178, 83179, 83180, 83181, 83182, 83183, 83184, 83185, 83186, 83187, 83188, 83189, 83190, 83191, 83192, 83193, 83194, 83195, 83196, 83197, 83198, 83199, 83200, 83201, 83202, 83203, 83204, 83205, 83206, 83207, 83208, 83209, 83210, 83211, 83212, 83213, 83214, 83215, 83216, 83217, 83218, 83219, 83220, 83221, 83222, 83223, 83224, 83225, 83226, 83227, 83228, 83229, 83230, 83231, 83232, 83233, 83234, 83235, 83236, 83237, 83238, 83239, 83240, 83241, 83242, 83243, 83244, 83245, 83246, 83247, 83248, 83249, 83250, 83251, 83252, 83253, 83254, 83255, 83256, 83257, 83258, 83259, 83260, 83261, 83262, 83263, 83264, 83265, 83266, 83267, 83268, 83269, 83270, 83271, 83272, 83273, 83274, 83275, 83276, 83277, 83278, 83279, 83280, 83281, 83282, 83283, 83284, 83285, 83286, 83287, 83288, 83289, 83290, 83291, 83292, 83293, 83294, 83295, 83296, 83297, 83298, 83299, 83300, 83301, 83302, 83303, 83304, 83305, 83306, 83307, 83308, 83309, 83310, 83311, 83312, 83313, 83314, 83315, 83316, 83317, 83318, 83319, 83320, 83321, 83322, 83323, 83324, 83325, 83326, 83327, 83328, 83329, 83330, 83331, 83332, 83333, 83334, 83335, 83336, 83337, 83338, 83339, 83340, 83341, 83342, 83343, 83344, 83345, 83346, 83347, 83348, 83349, 83350, 83351, 83352, 83353, 83354, 83355, 83356, 83357, 83358, 83359, 83360, 83361, 83362, 83363, 83364, 83365, 83366, 83367, 83368, 83369, 83370, 83371, 83372, 83373, 83374, 83375, 83376, 83377, 83378, 83379, 83380, 83381, 83382, 83383, 83384, 83385, 83386, 83387, 83388, 83389, 83390, 83391, 83392, 83393, 83394, 83395, 83396, 83397, 83398, 83399, 83400, 83401, 83402, 83403, 83404, 83405, 83406, 83407, 83408, 83409, 83410, 83411, 83412, 83413, 83414, 83415, 83416, 83417, 83418, 83419, 83420, 83421, 83422, 83423, 83424, 83425, 83426, 83427, 83428, 83429, 83430, 83431, 83432, 83433, 83434, 83435, 83436, 83437, 83438, 83439, 83440, 83441, 83442, 83443, 83444, 83445, 83446, 83447, 83448, 83449, 83450, 83451, 83452, 83453, 83454, 83455, 83456, 83457, 83458, 83459, 83460, 83461, 83462, 83463, 83464, 83465, 83466, 83467, 83468, 83469, 83470, 83471, 83472, 83473, 83474, 83475, 83476, 83477, 83478, 83479, 83480, 83481, 83482, 83483, 83484, 83485, 83486, 83487, 83488, 83489, 83490, 83491, 83492, 83493, 83494, 83495, 83496, 83497, 83498, 83499, 83500, 83501, 83502, 83503, 83504, 83505, 83506, 83507, 83508, 83509, 83510, 83511, 83512, 83513, 83514, 83515, 83516, 83517, 83518, 83519, 83520, 83521, 83522, 83523, 83524, 83525, 83526, 92160, 92161, 92162, 92163, 92164, 92165, 92166, 92167, 92168, 92169, 92170, 92171, 92172, 92173, 92174, 92175, 92176, 92177, 92178, 92179, 92180, 92181, 92182, 92183, 92184, 92185, 92186, 92187, 92188, 92189, 92190, 92191, 92192, 92193, 92194, 92195, 92196, 92197, 92198, 92199, 92200, 92201, 92202, 92203, 92204, 92205, 92206, 92207, 92208, 92209, 92210, 92211, 92212, 92213, 92214, 92215, 92216, 92217, 92218, 92219, 92220, 92221, 92222, 92223, 92224, 92225, 92226, 92227, 92228, 92229, 92230, 92231, 92232, 92233, 92234, 92235, 92236, 92237, 92238, 92239, 92240, 92241, 92242, 92243, 92244, 92245, 92246, 92247, 92248, 92249, 92250, 92251, 92252, 92253, 92254, 92255, 92256, 92257, 92258, 92259, 92260, 92261, 92262, 92263, 92264, 92265, 92266, 92267, 92268, 92269, 92270, 92271, 92272, 92273, 92274, 92275, 92276, 92277, 92278, 92279, 92280, 92281, 92282, 92283, 92284, 92285, 92286, 92287, 92288, 92289, 92290, 92291, 92292, 92293, 92294, 92295, 92296, 92297, 92298, 92299, 92300, 92301, 92302, 92303, 92304, 92305, 92306, 92307, 92308, 92309, 92310, 92311, 92312, 92313, 92314, 92315, 92316, 92317, 92318, 92319, 92320, 92321, 92322, 92323, 92324, 92325, 92326, 92327, 92328, 92329, 92330, 92331, 92332, 92333, 92334, 92335, 92336, 92337, 92338, 92339, 92340, 92341, 92342, 92343, 92344, 92345, 92346, 92347, 92348, 92349, 92350, 92351, 92352, 92353, 92354, 92355, 92356, 92357, 92358, 92359, 92360, 92361, 92362, 92363, 92364, 92365, 92366, 92367, 92368, 92369, 92370, 92371, 92372, 92373, 92374, 92375, 92376, 92377, 92378, 92379, 92380, 92381, 92382, 92383, 92384, 92385, 92386, 92387, 92388, 92389, 92390, 92391, 92392, 92393, 92394, 92395, 92396, 92397, 92398, 92399, 92400, 92401, 92402, 92403, 92404, 92405, 92406, 92407, 92408, 92409, 92410, 92411, 92412, 92413, 92414, 92415, 92416, 92417, 92418, 92419, 92420, 92421, 92422, 92423, 92424, 92425, 92426, 92427, 92428, 92429, 92430, 92431, 92432, 92433, 92434, 92435, 92436, 92437, 92438, 92439, 92440, 92441, 92442, 92443, 92444, 92445, 92446, 92447, 92448, 92449, 92450, 92451, 92452, 92453, 92454, 92455, 92456, 92457, 92458, 92459, 92460, 92461, 92462, 92463, 92464, 92465, 92466, 92467, 92468, 92469, 92470, 92471, 92472, 92473, 92474, 92475, 92476, 92477, 92478, 92479, 92480, 92481, 92482, 92483, 92484, 92485, 92486, 92487, 92488, 92489, 92490, 92491, 92492, 92493, 92494, 92495, 92496, 92497, 92498, 92499, 92500, 92501, 92502, 92503, 92504, 92505, 92506, 92507, 92508, 92509, 92510, 92511, 92512, 92513, 92514, 92515, 92516, 92517, 92518, 92519, 92520, 92521, 92522, 92523, 92524, 92525, 92526, 92527, 92528, 92529, 92530, 92531, 92532, 92533, 92534, 92535, 92536, 92537, 92538, 92539, 92540, 92541, 92542, 92543, 92544, 92545, 92546, 92547, 92548, 92549, 92550, 92551, 92552, 92553, 92554, 92555, 92556, 92557, 92558, 92559, 92560, 92561, 92562, 92563, 92564, 92565, 92566, 92567, 92568, 92569, 92570, 92571, 92572, 92573, 92574, 92575, 92576, 92577, 92578, 92579, 92580, 92581, 92582, 92583, 92584, 92585, 92586, 92587, 92588, 92589, 92590, 92591, 92592, 92593, 92594, 92595, 92596, 92597, 92598, 92599, 92600, 92601, 92602, 92603, 92604, 92605, 92606, 92607, 92608, 92609, 92610, 92611, 92612, 92613, 92614, 92615, 92616, 92617, 92618, 92619, 92620, 92621, 92622, 92623, 92624, 92625, 92626, 92627, 92628, 92629, 92630, 92631, 92632, 92633, 92634, 92635, 92636, 92637, 92638, 92639, 92640, 92641, 92642, 92643, 92644, 92645, 92646, 92647, 92648, 92649, 92650, 92651, 92652, 92653, 92654, 92655, 92656, 92657, 92658, 92659, 92660, 92661, 92662, 92663, 92664, 92665, 92666, 92667, 92668, 92669, 92670, 92671, 92672, 92673, 92674, 92675, 92676, 92677, 92678, 92679, 92680, 92681, 92682, 92683, 92684, 92685, 92686, 92687, 92688, 92689, 92690, 92691, 92692, 92693, 92694, 92695, 92696, 92697, 92698, 92699, 92700, 92701, 92702, 92703, 92704, 92705, 92706, 92707, 92708, 92709, 92710, 92711, 92712, 92713, 92714, 92715, 92716, 92717, 92718, 92719, 92720, 92721, 92722, 92723, 92724, 92725, 92726, 92727, 92728, 92736, 92737, 92738, 92739, 92740, 92741, 92742, 92743, 92744, 92745, 92746, 92747, 92748, 92749, 92750, 92751, 92752, 92753, 92754, 92755, 92756, 92757, 92758, 92759, 92760, 92761, 92762, 92763, 92764, 92765, 92766, 92880, 92881, 92882, 92883, 92884, 92885, 92886, 92887, 92888, 92889, 92890, 92891, 92892, 92893, 92894, 92895, 92896, 92897, 92898, 92899, 92900, 92901, 92902, 92903, 92904, 92905, 92906, 92907, 92908, 92909, 92928, 92929, 92930, 92931, 92932, 92933, 92934, 92935, 92936, 92937, 92938, 92939, 92940, 92941, 92942, 92943, 92944, 92945, 92946, 92947, 92948, 92949, 92950, 92951, 92952, 92953, 92954, 92955, 92956, 92957, 92958, 92959, 92960, 92961, 92962, 92963, 92964, 92965, 92966, 92967, 92968, 92969, 92970, 92971, 92972, 92973, 92974, 92975, 92992, 92993, 92994, 92995, 93027, 93028, 93029, 93030, 93031, 93032, 93033, 93034, 93035, 93036, 93037, 93038, 93039, 93040, 93041, 93042, 93043, 93044, 93045, 93046, 93047, 93053, 93054, 93055, 93056, 93057, 93058, 93059, 93060, 93061, 93062, 93063, 93064, 93065, 93066, 93067, 93068, 93069, 93070, 93071, 93952, 93953, 93954, 93955, 93956, 93957, 93958, 93959, 93960, 93961, 93962, 93963, 93964, 93965, 93966, 93967, 93968, 93969, 93970, 93971, 93972, 93973, 93974, 93975, 93976, 93977, 93978, 93979, 93980, 93981, 93982, 93983, 93984, 93985, 93986, 93987, 93988, 93989, 93990, 93991, 93992, 93993, 93994, 93995, 93996, 93997, 93998, 93999, 94000, 94001, 94002, 94003, 94004, 94005, 94006, 94007, 94008, 94009, 94010, 94011, 94012, 94013, 94014, 94015, 94016, 94017, 94018, 94019, 94020, 94032, 94099, 94100, 94101, 94102, 94103, 94104, 94105, 94106, 94107, 94108, 94109, 94110, 94111, 110592, 110593, 113664, 113665, 113666, 113667, 113668, 113669, 113670, 113671, 113672, 113673, 113674, 113675, 113676, 113677, 113678, 113679, 113680, 113681, 113682, 113683, 113684, 113685, 113686, 113687, 113688, 113689, 113690, 113691, 113692, 113693, 113694, 113695, 113696, 113697, 113698, 113699, 113700, 113701, 113702, 113703, 113704, 113705, 113706, 113707, 113708, 113709, 113710, 113711, 113712, 113713, 113714, 113715, 113716, 113717, 113718, 113719, 113720, 113721, 113722, 113723, 113724, 113725, 113726, 113727, 113728, 113729, 113730, 113731, 113732, 113733, 113734, 113735, 113736, 113737, 113738, 113739, 113740, 113741, 113742, 113743, 113744, 113745, 113746, 113747, 113748, 113749, 113750, 113751, 113752, 113753, 113754, 113755, 113756, 113757, 113758, 113759, 113760, 113761, 113762, 113763, 113764, 113765, 113766, 113767, 113768, 113769, 113770, 113776, 113777, 113778, 113779, 113780, 113781, 113782, 113783, 113784, 113785, 113786, 113787, 113788, 113792, 113793, 113794, 113795, 113796, 113797, 113798, 113799, 113800, 113808, 113809, 113810, 113811, 113812, 113813, 113814, 113815, 113816, 113817, 119808, 119809, 119810, 119811, 119812, 119813, 119814, 119815, 119816, 119817, 119818, 119819, 119820, 119821, 119822, 119823, 119824, 119825, 119826, 119827, 119828, 119829, 119830, 119831, 119832, 119833, 119834, 119835, 119836, 119837, 119838, 119839, 119840, 119841, 119842, 119843, 119844, 119845, 119846, 119847, 119848, 119849, 119850, 119851, 119852, 119853, 119854, 119855, 119856, 119857, 119858, 119859, 119860, 119861, 119862, 119863, 119864, 119865, 119866, 119867, 119868, 119869, 119870, 119871, 119872, 119873, 119874, 119875, 119876, 119877, 119878, 119879, 119880, 119881, 119882, 119883, 119884, 119885, 119886, 119887, 119888, 119889, 119890, 119891, 119892, 119894, 119895, 119896, 119897, 119898, 119899, 119900, 119901, 119902, 119903, 119904, 119905, 119906, 119907, 119908, 119909, 119910, 119911, 119912, 119913, 119914, 119915, 119916, 119917, 119918, 119919, 119920, 119921, 119922, 119923, 119924, 119925, 119926, 119927, 119928, 119929, 119930, 119931, 119932, 119933, 119934, 119935, 119936, 119937, 119938, 119939, 119940, 119941, 119942, 119943, 119944, 119945, 119946, 119947, 119948, 119949, 119950, 119951, 119952, 119953, 119954, 119955, 119956, 119957, 119958, 119959, 119960, 119961, 119962, 119963, 119964, 119966, 119967, 119970, 119973, 119974, 119977, 119978, 119979, 119980, 119982, 119983, 119984, 119985, 119986, 119987, 119988, 119989, 119990, 119991, 119992, 119993, 119995, 119997, 119998, 119999, 120000, 120001, 120002, 120003, 120005, 120006, 120007, 120008, 120009, 120010, 120011, 120012, 120013, 120014, 120015, 120016, 120017, 120018, 120019, 120020, 120021, 120022, 120023, 120024, 120025, 120026, 120027, 120028, 120029, 120030, 120031, 120032, 120033, 120034, 120035, 120036, 120037, 120038, 120039, 120040, 120041, 120042, 120043, 120044, 120045, 120046, 120047, 120048, 120049, 120050, 120051, 120052, 120053, 120054, 120055, 120056, 120057, 120058, 120059, 120060, 120061, 120062, 120063, 120064, 120065, 120066, 120067, 120068, 120069, 120071, 120072, 120073, 120074, 120077, 120078, 120079, 120080, 120081, 120082, 120083, 120084, 120086, 120087, 120088, 120089, 120090, 120091, 120092, 120094, 120095, 120096, 120097, 120098, 120099, 120100, 120101, 120102, 120103, 120104, 120105, 120106, 120107, 120108, 120109, 120110, 120111, 120112, 120113, 120114, 120115, 120116, 120117, 120118, 120119, 120120, 120121, 120123, 120124, 120125, 120126, 120128, 120129, 120130, 120131, 120132, 120134, 120138, 120139, 120140, 120141, 120142, 120143, 120144, 120146, 120147, 120148, 120149, 120150, 120151, 120152, 120153, 120154, 120155, 120156, 120157, 120158, 120159, 120160, 120161, 120162, 120163, 120164, 120165, 120166, 120167, 120168, 120169, 120170, 120171, 120172, 120173, 120174, 120175, 120176, 120177, 120178, 120179, 120180, 120181, 120182, 120183, 120184, 120185, 120186, 120187, 120188, 120189, 120190, 120191, 120192, 120193, 120194, 120195, 120196, 120197, 120198, 120199, 120200, 120201, 120202, 120203, 120204, 120205, 120206, 120207, 120208, 120209, 120210, 120211, 120212, 120213, 120214, 120215, 120216, 120217, 120218, 120219, 120220, 120221, 120222, 120223, 120224, 120225, 120226, 120227, 120228, 120229, 120230, 120231, 120232, 120233, 120234, 120235, 120236, 120237, 120238, 120239, 120240, 120241, 120242, 120243, 120244, 120245, 120246, 120247, 120248, 120249, 120250, 120251, 120252, 120253, 120254, 120255, 120256, 120257, 120258, 120259, 120260, 120261, 120262, 120263, 120264, 120265, 120266, 120267, 120268, 120269, 120270, 120271, 120272, 120273, 120274, 120275, 120276, 120277, 120278, 120279, 120280, 120281, 120282, 120283, 120284, 120285, 120286, 120287, 120288, 120289, 120290, 120291, 120292, 120293, 120294, 120295, 120296, 120297, 120298, 120299, 120300, 120301, 120302, 120303, 120304, 120305, 120306, 120307, 120308, 120309, 120310, 120311, 120312, 120313, 120314, 120315, 120316, 120317, 120318, 120319, 120320, 120321, 120322, 120323, 120324, 120325, 120326, 120327, 120328, 120329, 120330, 120331, 120332, 120333, 120334, 120335, 120336, 120337, 120338, 120339, 120340, 120341, 120342, 120343, 120344, 120345, 120346, 120347, 120348, 120349, 120350, 120351, 120352, 120353, 120354, 120355, 120356, 120357, 120358, 120359, 120360, 120361, 120362, 120363, 120364, 120365, 120366, 120367, 120368, 120369, 120370, 120371, 120372, 120373, 120374, 120375, 120376, 120377, 120378, 120379, 120380, 120381, 120382, 120383, 120384, 120385, 120386, 120387, 120388, 120389, 120390, 120391, 120392, 120393, 120394, 120395, 120396, 120397, 120398, 120399, 120400, 120401, 120402, 120403, 120404, 120405, 120406, 120407, 120408, 120409, 120410, 120411, 120412, 120413, 120414, 120415, 120416, 120417, 120418, 120419, 120420, 120421, 120422, 120423, 120424, 120425, 120426, 120427, 120428, 120429, 120430, 120431, 120432, 120433, 120434, 120435, 120436, 120437, 120438, 120439, 120440, 120441, 120442, 120443, 120444, 120445, 120446, 120447, 120448, 120449, 120450, 120451, 120452, 120453, 120454, 120455, 120456, 120457, 120458, 120459, 120460, 120461, 120462, 120463, 120464, 120465, 120466, 120467, 120468, 120469, 120470, 120471, 120472, 120473, 120474, 120475, 120476, 120477, 120478, 120479, 120480, 120481, 120482, 120483, 120484, 120485, 120488, 120489, 120490, 120491, 120492, 120493, 120494, 120495, 120496, 120497, 120498, 120499, 120500, 120501, 120502, 120503, 120504, 120505, 120506, 120507, 120508, 120509, 120510, 120511, 120512, 120514, 120515, 120516, 120517, 120518, 120519, 120520, 120521, 120522, 120523, 120524, 120525, 120526, 120527, 120528, 120529, 120530, 120531, 120532, 120533, 120534, 120535, 120536, 120537, 120538, 120540, 120541, 120542, 120543, 120544, 120545, 120546, 120547, 120548, 120549, 120550, 120551, 120552, 120553, 120554, 120555, 120556, 120557, 120558, 120559, 120560, 120561, 120562, 120563, 120564, 120565, 120566, 120567, 120568, 120569, 120570, 120572, 120573, 120574, 120575, 120576, 120577, 120578, 120579, 120580, 120581, 120582, 120583, 120584, 120585, 120586, 120587, 120588, 120589, 120590, 120591, 120592, 120593, 120594, 120595, 120596, 120598, 120599, 120600, 120601, 120602, 120603, 120604, 120605, 120606, 120607, 120608, 120609, 120610, 120611, 120612, 120613, 120614, 120615, 120616, 120617, 120618, 120619, 120620, 120621, 120622, 120623, 120624, 120625, 120626, 120627, 120628, 120630, 120631, 120632, 120633, 120634, 120635, 120636, 120637, 120638, 120639, 120640, 120641, 120642, 120643, 120644, 120645, 120646, 120647, 120648, 120649, 120650, 120651, 120652, 120653, 120654, 120656, 120657, 120658, 120659, 120660, 120661, 120662, 120663, 120664, 120665, 120666, 120667, 120668, 120669, 120670, 120671, 120672, 120673, 120674, 120675, 120676, 120677, 120678, 120679, 120680, 120681, 120682, 120683, 120684, 120685, 120686, 120688, 120689, 120690, 120691, 120692, 120693, 120694, 120695, 120696, 120697, 120698, 120699, 120700, 120701, 120702, 120703, 120704, 120705, 120706, 120707, 120708, 120709, 120710, 120711, 120712, 120714, 120715, 120716, 120717, 120718, 120719, 120720, 120721, 120722, 120723, 120724, 120725, 120726, 120727, 120728, 120729, 120730, 120731, 120732, 120733, 120734, 120735, 120736, 120737, 120738, 120739, 120740, 120741, 120742, 120743, 120744, 120746, 120747, 120748, 120749, 120750, 120751, 120752, 120753, 120754, 120755, 120756, 120757, 120758, 120759, 120760, 120761, 120762, 120763, 120764, 120765, 120766, 120767, 120768, 120769, 120770, 120772, 120773, 120774, 120775, 120776, 120777, 120778, 120779, 124928, 124929, 124930, 124931, 124932, 124933, 124934, 124935, 124936, 124937, 124938, 124939, 124940, 124941, 124942, 124943, 124944, 124945, 124946, 124947, 124948, 124949, 124950, 124951, 124952, 124953, 124954, 124955, 124956, 124957, 124958, 124959, 124960, 124961, 124962, 124963, 124964, 124965, 124966, 124967, 124968, 124969, 124970, 124971, 124972, 124973, 124974, 124975, 124976, 124977, 124978, 124979, 124980, 124981, 124982, 124983, 124984, 124985, 124986, 124987, 124988, 124989, 124990, 124991, 124992, 124993, 124994, 124995, 124996, 124997, 124998, 124999, 125000, 125001, 125002, 125003, 125004, 125005, 125006, 125007, 125008, 125009, 125010, 125011, 125012, 125013, 125014, 125015, 125016, 125017, 125018, 125019, 125020, 125021, 125022, 125023, 125024, 125025, 125026, 125027, 125028, 125029, 125030, 125031, 125032, 125033, 125034, 125035, 125036, 125037, 125038, 125039, 125040, 125041, 125042, 125043, 125044, 125045, 125046, 125047, 125048, 125049, 125050, 125051, 125052, 125053, 125054, 125055, 125056, 125057, 125058, 125059, 125060, 125061, 125062, 125063, 125064, 125065, 125066, 125067, 125068, 125069, 125070, 125071, 125072, 125073, 125074, 125075, 125076, 125077, 125078, 125079, 125080, 125081, 125082, 125083, 125084, 125085, 125086, 125087, 125088, 125089, 125090, 125091, 125092, 125093, 125094, 125095, 125096, 125097, 125098, 125099, 125100, 125101, 125102, 125103, 125104, 125105, 125106, 125107, 125108, 125109, 125110, 125111, 125112, 125113, 125114, 125115, 125116, 125117, 125118, 125119, 125120, 125121, 125122, 125123, 125124, 126464, 126465, 126466, 126467, 126469, 126470, 126471, 126472, 126473, 126474, 126475, 126476, 126477, 126478, 126479, 126480, 126481, 126482, 126483, 126484, 126485, 126486, 126487, 126488, 126489, 126490, 126491, 126492, 126493, 126494, 126495, 126497, 126498, 126500, 126503, 126505, 126506, 126507, 126508, 126509, 126510, 126511, 126512, 126513, 126514, 126516, 126517, 126518, 126519, 126521, 126523, 126530, 126535, 126537, 126539, 126541, 126542, 126543, 126545, 126546, 126548, 126551, 126553, 126555, 126557, 126559, 126561, 126562, 126564, 126567, 126568, 126569, 126570, 126572, 126573, 126574, 126575, 126576, 126577, 126578, 126580, 126581, 126582, 126583, 126585, 126586, 126587, 126588, 126590, 126592, 126593, 126594, 126595, 126596, 126597, 126598, 126599, 126600, 126601, 126603, 126604, 126605, 126606, 126607, 126608, 126609, 126610, 126611, 126612, 126613, 126614, 126615, 126616, 126617, 126618, 126619, 126625, 126626, 126627, 126629, 126630, 126631, 126632, 126633, 126635, 126636, 126637, 126638, 126639, 126640, 126641, 126642, 126643, 126644, 126645, 126646, 126647, 126648, 126649, 126650, 126651, 131072, 173782, 173824, 177972, 177984, 178205, 178208, 183969, 194560, 194561, 194562, 194563, 194564, 194565, 194566, 194567, 194568, 194569, 194570, 194571, 194572, 194573, 194574, 194575, 194576, 194577, 194578, 194579, 194580, 194581, 194582, 194583, 194584, 194585, 194586, 194587, 194588, 194589, 194590, 194591, 194592, 194593, 194594, 194595, 194596, 194597, 194598, 194599, 194600, 194601, 194602, 194603, 194604, 194605, 194606, 194607, 194608, 194609, 194610, 194611, 194612, 194613, 194614, 194615, 194616, 194617, 194618, 194619, 194620, 194621, 194622, 194623, 194624, 194625, 194626, 194627, 194628, 194629, 194630, 194631, 194632, 194633, 194634, 194635, 194636, 194637, 194638, 194639, 194640, 194641, 194642, 194643, 194644, 194645, 194646, 194647, 194648, 194649, 194650, 194651, 194652, 194653, 194654, 194655, 194656, 194657, 194658, 194659, 194660, 194661, 194662, 194663, 194664, 194665, 194666, 194667, 194668, 194669, 194670, 194671, 194672, 194673, 194674, 194675, 194676, 194677, 194678, 194679, 194680, 194681, 194682, 194683, 194684, 194685, 194686, 194687, 194688, 194689, 194690, 194691, 194692, 194693, 194694, 194695, 194696, 194697, 194698, 194699, 194700, 194701, 194702, 194703, 194704, 194705, 194706, 194707, 194708, 194709, 194710, 194711, 194712, 194713, 194714, 194715, 194716, 194717, 194718, 194719, 194720, 194721, 194722, 194723, 194724, 194725, 194726, 194727, 194728, 194729, 194730, 194731, 194732, 194733, 194734, 194735, 194736, 194737, 194738, 194739, 194740, 194741, 194742, 194743, 194744, 194745, 194746, 194747, 194748, 194749, 194750, 194751, 194752, 194753, 194754, 194755, 194756, 194757, 194758, 194759, 194760, 194761, 194762, 194763, 194764, 194765, 194766, 194767, 194768, 194769, 194770, 194771, 194772, 194773, 194774, 194775, 194776, 194777, 194778, 194779, 194780, 194781, 194782, 194783, 194784, 194785, 194786, 194787, 194788, 194789, 194790, 194791, 194792, 194793, 194794, 194795, 194796, 194797, 194798, 194799, 194800, 194801, 194802, 194803, 194804, 194805, 194806, 194807, 194808, 194809, 194810, 194811, 194812, 194813, 194814, 194815, 194816, 194817, 194818, 194819, 194820, 194821, 194822, 194823, 194824, 194825, 194826, 194827, 194828, 194829, 194830, 194831, 194832, 194833, 194834, 194835, 194836, 194837, 194838, 194839, 194840, 194841, 194842, 194843, 194844, 194845, 194846, 194847, 194848, 194849, 194850, 194851, 194852, 194853, 194854, 194855, 194856, 194857, 194858, 194859, 194860, 194861, 194862, 194863, 194864, 194865, 194866, 194867, 194868, 194869, 194870, 194871, 194872, 194873, 194874, 194875, 194876, 194877, 194878, 194879, 194880, 194881, 194882, 194883, 194884, 194885, 194886, 194887, 194888, 194889, 194890, 194891, 194892, 194893, 194894, 194895, 194896, 194897, 194898, 194899, 194900, 194901, 194902, 194903, 194904, 194905, 194906, 194907, 194908, 194909, 194910, 194911, 194912, 194913, 194914, 194915, 194916, 194917, 194918, 194919, 194920, 194921, 194922, 194923, 194924, 194925, 194926, 194927, 194928, 194929, 194930, 194931, 194932, 194933, 194934, 194935, 194936, 194937, 194938, 194939, 194940, 194941, 194942, 194943, 194944, 194945, 194946, 194947, 194948, 194949, 194950, 194951, 194952, 194953, 194954, 194955, 194956, 194957, 194958, 194959, 194960, 194961, 194962, 194963, 194964, 194965, 194966, 194967, 194968, 194969, 194970, 194971, 194972, 194973, 194974, 194975, 194976, 194977, 194978, 194979, 194980, 194981, 194982, 194983, 194984, 194985, 194986, 194987, 194988, 194989, 194990, 194991, 194992, 194993, 194994, 194995, 194996, 194997, 194998, 194999, 195000, 195001, 195002, 195003, 195004, 195005, 195006, 195007, 195008, 195009, 195010, 195011, 195012, 195013, 195014, 195015, 195016, 195017, 195018, 195019, 195020, 195021, 195022, 195023, 195024, 195025, 195026, 195027, 195028, 195029, 195030, 195031, 195032, 195033, 195034, 195035, 195036, 195037, 195038, 195039, 195040, 195041, 195042, 195043, 195044, 195045, 195046, 195047, 195048, 195049, 195050, 195051, 195052, 195053, 195054, 195055, 195056, 195057, 195058, 195059, 195060, 195061, 195062, 195063, 195064, 195065, 195066, 195067, 195068, 195069, 195070, 195071, 195072, 195073, 195074, 195075, 195076, 195077, 195078, 195079, 195080, 195081, 195082, 195083, 195084, 195085, 195086, 195087, 195088, 195089, 195090, 195091, 195092, 195093, 195094, 195095, 195096, 195097, 195098, 195099, 195100, 195101];
 
 
-/***/ },
-/* 92 */
-/***/ function(module, exports) {
+/***/ }),
+/* 149 */
+/***/ (function(module, exports) {
 
 	/*
 	 * List of Unicode code that are flagged as number.
@@ -14925,9 +13320,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.N = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 178, 179, 185, 188, 189, 190, 1632, 1633, 1634, 1635, 1636, 1637, 1638, 1639, 1640, 1641, 1776, 1777, 1778, 1779, 1780, 1781, 1782, 1783, 1784, 1785, 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 2406, 2407, 2408, 2409, 2410, 2411, 2412, 2413, 2414, 2415, 2534, 2535, 2536, 2537, 2538, 2539, 2540, 2541, 2542, 2543, 2548, 2549, 2550, 2551, 2552, 2553, 2662, 2663, 2664, 2665, 2666, 2667, 2668, 2669, 2670, 2671, 2790, 2791, 2792, 2793, 2794, 2795, 2796, 2797, 2798, 2799, 2918, 2919, 2920, 2921, 2922, 2923, 2924, 2925, 2926, 2927, 2930, 2931, 2932, 2933, 2934, 2935, 3046, 3047, 3048, 3049, 3050, 3051, 3052, 3053, 3054, 3055, 3056, 3057, 3058, 3174, 3175, 3176, 3177, 3178, 3179, 3180, 3181, 3182, 3183, 3192, 3193, 3194, 3195, 3196, 3197, 3198, 3302, 3303, 3304, 3305, 3306, 3307, 3308, 3309, 3310, 3311, 3430, 3431, 3432, 3433, 3434, 3435, 3436, 3437, 3438, 3439, 3440, 3441, 3442, 3443, 3444, 3445, 3558, 3559, 3560, 3561, 3562, 3563, 3564, 3565, 3566, 3567, 3664, 3665, 3666, 3667, 3668, 3669, 3670, 3671, 3672, 3673, 3792, 3793, 3794, 3795, 3796, 3797, 3798, 3799, 3800, 3801, 3872, 3873, 3874, 3875, 3876, 3877, 3878, 3879, 3880, 3881, 3882, 3883, 3884, 3885, 3886, 3887, 3888, 3889, 3890, 3891, 4160, 4161, 4162, 4163, 4164, 4165, 4166, 4167, 4168, 4169, 4240, 4241, 4242, 4243, 4244, 4245, 4246, 4247, 4248, 4249, 4969, 4970, 4971, 4972, 4973, 4974, 4975, 4976, 4977, 4978, 4979, 4980, 4981, 4982, 4983, 4984, 4985, 4986, 4987, 4988, 5870, 5871, 5872, 6112, 6113, 6114, 6115, 6116, 6117, 6118, 6119, 6120, 6121, 6128, 6129, 6130, 6131, 6132, 6133, 6134, 6135, 6136, 6137, 6160, 6161, 6162, 6163, 6164, 6165, 6166, 6167, 6168, 6169, 6470, 6471, 6472, 6473, 6474, 6475, 6476, 6477, 6478, 6479, 6608, 6609, 6610, 6611, 6612, 6613, 6614, 6615, 6616, 6617, 6618, 6784, 6785, 6786, 6787, 6788, 6789, 6790, 6791, 6792, 6793, 6800, 6801, 6802, 6803, 6804, 6805, 6806, 6807, 6808, 6809, 6992, 6993, 6994, 6995, 6996, 6997, 6998, 6999, 7000, 7001, 7088, 7089, 7090, 7091, 7092, 7093, 7094, 7095, 7096, 7097, 7232, 7233, 7234, 7235, 7236, 7237, 7238, 7239, 7240, 7241, 7248, 7249, 7250, 7251, 7252, 7253, 7254, 7255, 7256, 7257, 8304, 8308, 8309, 8310, 8311, 8312, 8313, 8320, 8321, 8322, 8323, 8324, 8325, 8326, 8327, 8328, 8329, 8528, 8529, 8530, 8531, 8532, 8533, 8534, 8535, 8536, 8537, 8538, 8539, 8540, 8541, 8542, 8543, 8544, 8545, 8546, 8547, 8548, 8549, 8550, 8551, 8552, 8553, 8554, 8555, 8556, 8557, 8558, 8559, 8560, 8561, 8562, 8563, 8564, 8565, 8566, 8567, 8568, 8569, 8570, 8571, 8572, 8573, 8574, 8575, 8576, 8577, 8578, 8581, 8582, 8583, 8584, 8585, 9312, 9313, 9314, 9315, 9316, 9317, 9318, 9319, 9320, 9321, 9322, 9323, 9324, 9325, 9326, 9327, 9328, 9329, 9330, 9331, 9332, 9333, 9334, 9335, 9336, 9337, 9338, 9339, 9340, 9341, 9342, 9343, 9344, 9345, 9346, 9347, 9348, 9349, 9350, 9351, 9352, 9353, 9354, 9355, 9356, 9357, 9358, 9359, 9360, 9361, 9362, 9363, 9364, 9365, 9366, 9367, 9368, 9369, 9370, 9371, 9450, 9451, 9452, 9453, 9454, 9455, 9456, 9457, 9458, 9459, 9460, 9461, 9462, 9463, 9464, 9465, 9466, 9467, 9468, 9469, 9470, 9471, 10102, 10103, 10104, 10105, 10106, 10107, 10108, 10109, 10110, 10111, 10112, 10113, 10114, 10115, 10116, 10117, 10118, 10119, 10120, 10121, 10122, 10123, 10124, 10125, 10126, 10127, 10128, 10129, 10130, 10131, 11517, 12295, 12321, 12322, 12323, 12324, 12325, 12326, 12327, 12328, 12329, 12344, 12345, 12346, 12690, 12691, 12692, 12693, 12832, 12833, 12834, 12835, 12836, 12837, 12838, 12839, 12840, 12841, 12872, 12873, 12874, 12875, 12876, 12877, 12878, 12879, 12881, 12882, 12883, 12884, 12885, 12886, 12887, 12888, 12889, 12890, 12891, 12892, 12893, 12894, 12895, 12928, 12929, 12930, 12931, 12932, 12933, 12934, 12935, 12936, 12937, 12977, 12978, 12979, 12980, 12981, 12982, 12983, 12984, 12985, 12986, 12987, 12988, 12989, 12990, 12991, 42528, 42529, 42530, 42531, 42532, 42533, 42534, 42535, 42536, 42537, 42726, 42727, 42728, 42729, 42730, 42731, 42732, 42733, 42734, 42735, 43056, 43057, 43058, 43059, 43060, 43061, 43216, 43217, 43218, 43219, 43220, 43221, 43222, 43223, 43224, 43225, 43264, 43265, 43266, 43267, 43268, 43269, 43270, 43271, 43272, 43273, 43472, 43473, 43474, 43475, 43476, 43477, 43478, 43479, 43480, 43481, 43504, 43505, 43506, 43507, 43508, 43509, 43510, 43511, 43512, 43513, 43600, 43601, 43602, 43603, 43604, 43605, 43606, 43607, 43608, 43609, 44016, 44017, 44018, 44019, 44020, 44021, 44022, 44023, 44024, 44025, 65296, 65297, 65298, 65299, 65300, 65301, 65302, 65303, 65304, 65305, 65799, 65800, 65801, 65802, 65803, 65804, 65805, 65806, 65807, 65808, 65809, 65810, 65811, 65812, 65813, 65814, 65815, 65816, 65817, 65818, 65819, 65820, 65821, 65822, 65823, 65824, 65825, 65826, 65827, 65828, 65829, 65830, 65831, 65832, 65833, 65834, 65835, 65836, 65837, 65838, 65839, 65840, 65841, 65842, 65843, 65856, 65857, 65858, 65859, 65860, 65861, 65862, 65863, 65864, 65865, 65866, 65867, 65868, 65869, 65870, 65871, 65872, 65873, 65874, 65875, 65876, 65877, 65878, 65879, 65880, 65881, 65882, 65883, 65884, 65885, 65886, 65887, 65888, 65889, 65890, 65891, 65892, 65893, 65894, 65895, 65896, 65897, 65898, 65899, 65900, 65901, 65902, 65903, 65904, 65905, 65906, 65907, 65908, 65909, 65910, 65911, 65912, 65930, 65931, 66273, 66274, 66275, 66276, 66277, 66278, 66279, 66280, 66281, 66282, 66283, 66284, 66285, 66286, 66287, 66288, 66289, 66290, 66291, 66292, 66293, 66294, 66295, 66296, 66297, 66298, 66299, 66336, 66337, 66338, 66339, 66369, 66378, 66513, 66514, 66515, 66516, 66517, 66720, 66721, 66722, 66723, 66724, 66725, 66726, 66727, 66728, 66729, 67672, 67673, 67674, 67675, 67676, 67677, 67678, 67679, 67705, 67706, 67707, 67708, 67709, 67710, 67711, 67751, 67752, 67753, 67754, 67755, 67756, 67757, 67758, 67759, 67835, 67836, 67837, 67838, 67839, 67862, 67863, 67864, 67865, 67866, 67867, 68028, 68029, 68032, 68033, 68034, 68035, 68036, 68037, 68038, 68039, 68040, 68041, 68042, 68043, 68044, 68045, 68046, 68047, 68050, 68051, 68052, 68053, 68054, 68055, 68056, 68057, 68058, 68059, 68060, 68061, 68062, 68063, 68064, 68065, 68066, 68067, 68068, 68069, 68070, 68071, 68072, 68073, 68074, 68075, 68076, 68077, 68078, 68079, 68080, 68081, 68082, 68083, 68084, 68085, 68086, 68087, 68088, 68089, 68090, 68091, 68092, 68093, 68094, 68095, 68160, 68161, 68162, 68163, 68164, 68165, 68166, 68167, 68221, 68222, 68253, 68254, 68255, 68331, 68332, 68333, 68334, 68335, 68440, 68441, 68442, 68443, 68444, 68445, 68446, 68447, 68472, 68473, 68474, 68475, 68476, 68477, 68478, 68479, 68521, 68522, 68523, 68524, 68525, 68526, 68527, 68858, 68859, 68860, 68861, 68862, 68863, 69216, 69217, 69218, 69219, 69220, 69221, 69222, 69223, 69224, 69225, 69226, 69227, 69228, 69229, 69230, 69231, 69232, 69233, 69234, 69235, 69236, 69237, 69238, 69239, 69240, 69241, 69242, 69243, 69244, 69245, 69246, 69714, 69715, 69716, 69717, 69718, 69719, 69720, 69721, 69722, 69723, 69724, 69725, 69726, 69727, 69728, 69729, 69730, 69731, 69732, 69733, 69734, 69735, 69736, 69737, 69738, 69739, 69740, 69741, 69742, 69743, 69872, 69873, 69874, 69875, 69876, 69877, 69878, 69879, 69880, 69881, 69942, 69943, 69944, 69945, 69946, 69947, 69948, 69949, 69950, 69951, 70096, 70097, 70098, 70099, 70100, 70101, 70102, 70103, 70104, 70105, 70113, 70114, 70115, 70116, 70117, 70118, 70119, 70120, 70121, 70122, 70123, 70124, 70125, 70126, 70127, 70128, 70129, 70130, 70131, 70132, 70384, 70385, 70386, 70387, 70388, 70389, 70390, 70391, 70392, 70393, 70864, 70865, 70866, 70867, 70868, 70869, 70870, 70871, 70872, 70873, 71248, 71249, 71250, 71251, 71252, 71253, 71254, 71255, 71256, 71257, 71360, 71361, 71362, 71363, 71364, 71365, 71366, 71367, 71368, 71369, 71472, 71473, 71474, 71475, 71476, 71477, 71478, 71479, 71480, 71481, 71482, 71483, 71904, 71905, 71906, 71907, 71908, 71909, 71910, 71911, 71912, 71913, 71914, 71915, 71916, 71917, 71918, 71919, 71920, 71921, 71922, 74752, 74753, 74754, 74755, 74756, 74757, 74758, 74759, 74760, 74761, 74762, 74763, 74764, 74765, 74766, 74767, 74768, 74769, 74770, 74771, 74772, 74773, 74774, 74775, 74776, 74777, 74778, 74779, 74780, 74781, 74782, 74783, 74784, 74785, 74786, 74787, 74788, 74789, 74790, 74791, 74792, 74793, 74794, 74795, 74796, 74797, 74798, 74799, 74800, 74801, 74802, 74803, 74804, 74805, 74806, 74807, 74808, 74809, 74810, 74811, 74812, 74813, 74814, 74815, 74816, 74817, 74818, 74819, 74820, 74821, 74822, 74823, 74824, 74825, 74826, 74827, 74828, 74829, 74830, 74831, 74832, 74833, 74834, 74835, 74836, 74837, 74838, 74839, 74840, 74841, 74842, 74843, 74844, 74845, 74846, 74847, 74848, 74849, 74850, 74851, 74852, 74853, 74854, 74855, 74856, 74857, 74858, 74859, 74860, 74861, 74862, 92768, 92769, 92770, 92771, 92772, 92773, 92774, 92775, 92776, 92777, 93008, 93009, 93010, 93011, 93012, 93013, 93014, 93015, 93016, 93017, 93019, 93020, 93021, 93022, 93023, 93024, 93025, 119648, 119649, 119650, 119651, 119652, 119653, 119654, 119655, 119656, 119657, 119658, 119659, 119660, 119661, 119662, 119663, 119664, 119665, 120782, 120783, 120784, 120785, 120786, 120787, 120788, 120789, 120790, 120791, 120792, 120793, 120794, 120795, 120796, 120797, 120798, 120799, 120800, 120801, 120802, 120803, 120804, 120805, 120806, 120807, 120808, 120809, 120810, 120811, 120812, 120813, 120814, 120815, 120816, 120817, 120818, 120819, 120820, 120821, 120822, 120823, 120824, 120825, 120826, 120827, 120828, 120829, 120830, 120831, 125127, 125128, 125129, 125130, 125131, 125132, 125133, 125134, 125135, 127232, 127233, 127234, 127235, 127236, 127237, 127238, 127239, 127240, 127241, 127242, 127243, 127244];
 
 
-/***/ },
-/* 93 */
-/***/ function(module, exports) {
+/***/ }),
+/* 150 */
+/***/ (function(module, exports) {
 
 	/*
 	 * List of Unicode code that are flagged as separator.
@@ -14944,9 +13339,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Z = [32, 160, 5760, 8192, 8193, 8194, 8195, 8196, 8197, 8198, 8199, 8200, 8201, 8202, 8232, 8233, 8239, 8287, 12288];
 
 
-/***/ },
-/* 94 */
-/***/ function(module, exports) {
+/***/ }),
+/* 151 */
+/***/ (function(module, exports) {
 
 	/*
 	 * List of Unicode code that are flagged as mark.
@@ -14963,9 +13358,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.M = [768, 769, 770, 771, 772, 773, 774, 775, 776, 777, 778, 779, 780, 781, 782, 783, 784, 785, 786, 787, 788, 789, 790, 791, 792, 793, 794, 795, 796, 797, 798, 799, 800, 801, 802, 803, 804, 805, 806, 807, 808, 809, 810, 811, 812, 813, 814, 815, 816, 817, 818, 819, 820, 821, 822, 823, 824, 825, 826, 827, 828, 829, 830, 831, 832, 833, 834, 835, 836, 837, 838, 839, 840, 841, 842, 843, 844, 845, 846, 847, 848, 849, 850, 851, 852, 853, 854, 855, 856, 857, 858, 859, 860, 861, 862, 863, 864, 865, 866, 867, 868, 869, 870, 871, 872, 873, 874, 875, 876, 877, 878, 879, 1155, 1156, 1157, 1158, 1159, 1160, 1161, 1425, 1426, 1427, 1428, 1429, 1430, 1431, 1432, 1433, 1434, 1435, 1436, 1437, 1438, 1439, 1440, 1441, 1442, 1443, 1444, 1445, 1446, 1447, 1448, 1449, 1450, 1451, 1452, 1453, 1454, 1455, 1456, 1457, 1458, 1459, 1460, 1461, 1462, 1463, 1464, 1465, 1466, 1467, 1468, 1469, 1471, 1473, 1474, 1476, 1477, 1479, 1552, 1553, 1554, 1555, 1556, 1557, 1558, 1559, 1560, 1561, 1562, 1611, 1612, 1613, 1614, 1615, 1616, 1617, 1618, 1619, 1620, 1621, 1622, 1623, 1624, 1625, 1626, 1627, 1628, 1629, 1630, 1631, 1648, 1750, 1751, 1752, 1753, 1754, 1755, 1756, 1759, 1760, 1761, 1762, 1763, 1764, 1767, 1768, 1770, 1771, 1772, 1773, 1809, 1840, 1841, 1842, 1843, 1844, 1845, 1846, 1847, 1848, 1849, 1850, 1851, 1852, 1853, 1854, 1855, 1856, 1857, 1858, 1859, 1860, 1861, 1862, 1863, 1864, 1865, 1866, 1958, 1959, 1960, 1961, 1962, 1963, 1964, 1965, 1966, 1967, 1968, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2070, 2071, 2072, 2073, 2075, 2076, 2077, 2078, 2079, 2080, 2081, 2082, 2083, 2085, 2086, 2087, 2089, 2090, 2091, 2092, 2093, 2137, 2138, 2139, 2275, 2276, 2277, 2278, 2279, 2280, 2281, 2282, 2283, 2284, 2285, 2286, 2287, 2288, 2289, 2290, 2291, 2292, 2293, 2294, 2295, 2296, 2297, 2298, 2299, 2300, 2301, 2302, 2303, 2304, 2305, 2306, 2307, 2362, 2363, 2364, 2366, 2367, 2368, 2369, 2370, 2371, 2372, 2373, 2374, 2375, 2376, 2377, 2378, 2379, 2380, 2381, 2382, 2383, 2385, 2386, 2387, 2388, 2389, 2390, 2391, 2402, 2403, 2433, 2434, 2435, 2492, 2494, 2495, 2496, 2497, 2498, 2499, 2500, 2503, 2504, 2507, 2508, 2509, 2519, 2530, 2531, 2561, 2562, 2563, 2620, 2622, 2623, 2624, 2625, 2626, 2631, 2632, 2635, 2636, 2637, 2641, 2672, 2673, 2677, 2689, 2690, 2691, 2748, 2750, 2751, 2752, 2753, 2754, 2755, 2756, 2757, 2759, 2760, 2761, 2763, 2764, 2765, 2786, 2787, 2817, 2818, 2819, 2876, 2878, 2879, 2880, 2881, 2882, 2883, 2884, 2887, 2888, 2891, 2892, 2893, 2902, 2903, 2914, 2915, 2946, 3006, 3007, 3008, 3009, 3010, 3014, 3015, 3016, 3018, 3019, 3020, 3021, 3031, 3072, 3073, 3074, 3075, 3134, 3135, 3136, 3137, 3138, 3139, 3140, 3142, 3143, 3144, 3146, 3147, 3148, 3149, 3157, 3158, 3170, 3171, 3201, 3202, 3203, 3260, 3262, 3263, 3264, 3265, 3266, 3267, 3268, 3270, 3271, 3272, 3274, 3275, 3276, 3277, 3285, 3286, 3298, 3299, 3329, 3330, 3331, 3390, 3391, 3392, 3393, 3394, 3395, 3396, 3398, 3399, 3400, 3402, 3403, 3404, 3405, 3415, 3426, 3427, 3458, 3459, 3530, 3535, 3536, 3537, 3538, 3539, 3540, 3542, 3544, 3545, 3546, 3547, 3548, 3549, 3550, 3551, 3570, 3571, 3633, 3636, 3637, 3638, 3639, 3640, 3641, 3642, 3655, 3656, 3657, 3658, 3659, 3660, 3661, 3662, 3761, 3764, 3765, 3766, 3767, 3768, 3769, 3771, 3772, 3784, 3785, 3786, 3787, 3788, 3789, 3864, 3865, 3893, 3895, 3897, 3902, 3903, 3953, 3954, 3955, 3956, 3957, 3958, 3959, 3960, 3961, 3962, 3963, 3964, 3965, 3966, 3967, 3968, 3969, 3970, 3971, 3972, 3974, 3975, 3981, 3982, 3983, 3984, 3985, 3986, 3987, 3988, 3989, 3990, 3991, 3993, 3994, 3995, 3996, 3997, 3998, 3999, 4000, 4001, 4002, 4003, 4004, 4005, 4006, 4007, 4008, 4009, 4010, 4011, 4012, 4013, 4014, 4015, 4016, 4017, 4018, 4019, 4020, 4021, 4022, 4023, 4024, 4025, 4026, 4027, 4028, 4038, 4139, 4140, 4141, 4142, 4143, 4144, 4145, 4146, 4147, 4148, 4149, 4150, 4151, 4152, 4153, 4154, 4155, 4156, 4157, 4158, 4182, 4183, 4184, 4185, 4190, 4191, 4192, 4194, 4195, 4196, 4199, 4200, 4201, 4202, 4203, 4204, 4205, 4209, 4210, 4211, 4212, 4226, 4227, 4228, 4229, 4230, 4231, 4232, 4233, 4234, 4235, 4236, 4237, 4239, 4250, 4251, 4252, 4253, 4957, 4958, 4959, 5906, 5907, 5908, 5938, 5939, 5940, 5970, 5971, 6002, 6003, 6068, 6069, 6070, 6071, 6072, 6073, 6074, 6075, 6076, 6077, 6078, 6079, 6080, 6081, 6082, 6083, 6084, 6085, 6086, 6087, 6088, 6089, 6090, 6091, 6092, 6093, 6094, 6095, 6096, 6097, 6098, 6099, 6109, 6155, 6156, 6157, 6313, 6432, 6433, 6434, 6435, 6436, 6437, 6438, 6439, 6440, 6441, 6442, 6443, 6448, 6449, 6450, 6451, 6452, 6453, 6454, 6455, 6456, 6457, 6458, 6459, 6679, 6680, 6681, 6682, 6683, 6741, 6742, 6743, 6744, 6745, 6746, 6747, 6748, 6749, 6750, 6752, 6753, 6754, 6755, 6756, 6757, 6758, 6759, 6760, 6761, 6762, 6763, 6764, 6765, 6766, 6767, 6768, 6769, 6770, 6771, 6772, 6773, 6774, 6775, 6776, 6777, 6778, 6779, 6780, 6783, 6832, 6833, 6834, 6835, 6836, 6837, 6838, 6839, 6840, 6841, 6842, 6843, 6844, 6845, 6846, 6912, 6913, 6914, 6915, 6916, 6964, 6965, 6966, 6967, 6968, 6969, 6970, 6971, 6972, 6973, 6974, 6975, 6976, 6977, 6978, 6979, 6980, 7019, 7020, 7021, 7022, 7023, 7024, 7025, 7026, 7027, 7040, 7041, 7042, 7073, 7074, 7075, 7076, 7077, 7078, 7079, 7080, 7081, 7082, 7083, 7084, 7085, 7142, 7143, 7144, 7145, 7146, 7147, 7148, 7149, 7150, 7151, 7152, 7153, 7154, 7155, 7204, 7205, 7206, 7207, 7208, 7209, 7210, 7211, 7212, 7213, 7214, 7215, 7216, 7217, 7218, 7219, 7220, 7221, 7222, 7223, 7376, 7377, 7378, 7380, 7381, 7382, 7383, 7384, 7385, 7386, 7387, 7388, 7389, 7390, 7391, 7392, 7393, 7394, 7395, 7396, 7397, 7398, 7399, 7400, 7405, 7410, 7411, 7412, 7416, 7417, 7616, 7617, 7618, 7619, 7620, 7621, 7622, 7623, 7624, 7625, 7626, 7627, 7628, 7629, 7630, 7631, 7632, 7633, 7634, 7635, 7636, 7637, 7638, 7639, 7640, 7641, 7642, 7643, 7644, 7645, 7646, 7647, 7648, 7649, 7650, 7651, 7652, 7653, 7654, 7655, 7656, 7657, 7658, 7659, 7660, 7661, 7662, 7663, 7664, 7665, 7666, 7667, 7668, 7669, 7676, 7677, 7678, 7679, 8400, 8401, 8402, 8403, 8404, 8405, 8406, 8407, 8408, 8409, 8410, 8411, 8412, 8413, 8414, 8415, 8416, 8417, 8418, 8419, 8420, 8421, 8422, 8423, 8424, 8425, 8426, 8427, 8428, 8429, 8430, 8431, 8432, 11503, 11504, 11505, 11647, 11744, 11745, 11746, 11747, 11748, 11749, 11750, 11751, 11752, 11753, 11754, 11755, 11756, 11757, 11758, 11759, 11760, 11761, 11762, 11763, 11764, 11765, 11766, 11767, 11768, 11769, 11770, 11771, 11772, 11773, 11774, 11775, 12330, 12331, 12332, 12333, 12334, 12335, 12441, 12442, 42607, 42608, 42609, 42610, 42612, 42613, 42614, 42615, 42616, 42617, 42618, 42619, 42620, 42621, 42654, 42655, 42736, 42737, 43010, 43014, 43019, 43043, 43044, 43045, 43046, 43047, 43136, 43137, 43188, 43189, 43190, 43191, 43192, 43193, 43194, 43195, 43196, 43197, 43198, 43199, 43200, 43201, 43202, 43203, 43204, 43232, 43233, 43234, 43235, 43236, 43237, 43238, 43239, 43240, 43241, 43242, 43243, 43244, 43245, 43246, 43247, 43248, 43249, 43302, 43303, 43304, 43305, 43306, 43307, 43308, 43309, 43335, 43336, 43337, 43338, 43339, 43340, 43341, 43342, 43343, 43344, 43345, 43346, 43347, 43392, 43393, 43394, 43395, 43443, 43444, 43445, 43446, 43447, 43448, 43449, 43450, 43451, 43452, 43453, 43454, 43455, 43456, 43493, 43561, 43562, 43563, 43564, 43565, 43566, 43567, 43568, 43569, 43570, 43571, 43572, 43573, 43574, 43587, 43596, 43597, 43643, 43644, 43645, 43696, 43698, 43699, 43700, 43703, 43704, 43710, 43711, 43713, 43755, 43756, 43757, 43758, 43759, 43765, 43766, 44003, 44004, 44005, 44006, 44007, 44008, 44009, 44010, 44012, 44013, 64286, 65024, 65025, 65026, 65027, 65028, 65029, 65030, 65031, 65032, 65033, 65034, 65035, 65036, 65037, 65038, 65039, 65056, 65057, 65058, 65059, 65060, 65061, 65062, 65063, 65064, 65065, 65066, 65067, 65068, 65069, 65070, 65071, 66045, 66272, 66422, 66423, 66424, 66425, 66426, 68097, 68098, 68099, 68101, 68102, 68108, 68109, 68110, 68111, 68152, 68153, 68154, 68159, 68325, 68326, 69632, 69633, 69634, 69688, 69689, 69690, 69691, 69692, 69693, 69694, 69695, 69696, 69697, 69698, 69699, 69700, 69701, 69702, 69759, 69760, 69761, 69762, 69808, 69809, 69810, 69811, 69812, 69813, 69814, 69815, 69816, 69817, 69818, 69888, 69889, 69890, 69927, 69928, 69929, 69930, 69931, 69932, 69933, 69934, 69935, 69936, 69937, 69938, 69939, 69940, 70003, 70016, 70017, 70018, 70067, 70068, 70069, 70070, 70071, 70072, 70073, 70074, 70075, 70076, 70077, 70078, 70079, 70080, 70090, 70091, 70092, 70188, 70189, 70190, 70191, 70192, 70193, 70194, 70195, 70196, 70197, 70198, 70199, 70367, 70368, 70369, 70370, 70371, 70372, 70373, 70374, 70375, 70376, 70377, 70378, 70400, 70401, 70402, 70403, 70460, 70462, 70463, 70464, 70465, 70466, 70467, 70468, 70471, 70472, 70475, 70476, 70477, 70487, 70498, 70499, 70502, 70503, 70504, 70505, 70506, 70507, 70508, 70512, 70513, 70514, 70515, 70516, 70832, 70833, 70834, 70835, 70836, 70837, 70838, 70839, 70840, 70841, 70842, 70843, 70844, 70845, 70846, 70847, 70848, 70849, 70850, 70851, 71087, 71088, 71089, 71090, 71091, 71092, 71093, 71096, 71097, 71098, 71099, 71100, 71101, 71102, 71103, 71104, 71132, 71133, 71216, 71217, 71218, 71219, 71220, 71221, 71222, 71223, 71224, 71225, 71226, 71227, 71228, 71229, 71230, 71231, 71232, 71339, 71340, 71341, 71342, 71343, 71344, 71345, 71346, 71347, 71348, 71349, 71350, 71351, 71453, 71454, 71455, 71456, 71457, 71458, 71459, 71460, 71461, 71462, 71463, 71464, 71465, 71466, 71467, 92912, 92913, 92914, 92915, 92916, 92976, 92977, 92978, 92979, 92980, 92981, 92982, 94033, 94034, 94035, 94036, 94037, 94038, 94039, 94040, 94041, 94042, 94043, 94044, 94045, 94046, 94047, 94048, 94049, 94050, 94051, 94052, 94053, 94054, 94055, 94056, 94057, 94058, 94059, 94060, 94061, 94062, 94063, 94064, 94065, 94066, 94067, 94068, 94069, 94070, 94071, 94072, 94073, 94074, 94075, 94076, 94077, 94078, 94095, 94096, 94097, 94098, 113821, 113822, 119141, 119142, 119143, 119144, 119145, 119149, 119150, 119151, 119152, 119153, 119154, 119163, 119164, 119165, 119166, 119167, 119168, 119169, 119170, 119173, 119174, 119175, 119176, 119177, 119178, 119179, 119210, 119211, 119212, 119213, 119362, 119363, 119364, 121344, 121345, 121346, 121347, 121348, 121349, 121350, 121351, 121352, 121353, 121354, 121355, 121356, 121357, 121358, 121359, 121360, 121361, 121362, 121363, 121364, 121365, 121366, 121367, 121368, 121369, 121370, 121371, 121372, 121373, 121374, 121375, 121376, 121377, 121378, 121379, 121380, 121381, 121382, 121383, 121384, 121385, 121386, 121387, 121388, 121389, 121390, 121391, 121392, 121393, 121394, 121395, 121396, 121397, 121398, 121403, 121404, 121405, 121406, 121407, 121408, 121409, 121410, 121411, 121412, 121413, 121414, 121415, 121416, 121417, 121418, 121419, 121420, 121421, 121422, 121423, 121424, 121425, 121426, 121427, 121428, 121429, 121430, 121431, 121432, 121433, 121434, 121435, 121436, 121437, 121438, 121439, 121440, 121441, 121442, 121443, 121444, 121445, 121446, 121447, 121448, 121449, 121450, 121451, 121452, 121461, 121476, 121499, 121500, 121501, 121502, 121503, 121505, 121506, 121507, 121508, 121509, 121510, 121511, 121512, 121513, 121514, 121515, 121516, 121517, 121518, 121519, 125136, 125137, 125138, 125139, 125140, 125141, 125142, 917760, 917761, 917762, 917763, 917764, 917765, 917766, 917767, 917768, 917769, 917770, 917771, 917772, 917773, 917774, 917775, 917776, 917777, 917778, 917779, 917780, 917781, 917782, 917783, 917784, 917785, 917786, 917787, 917788, 917789, 917790, 917791, 917792, 917793, 917794, 917795, 917796, 917797, 917798, 917799, 917800, 917801, 917802, 917803, 917804, 917805, 917806, 917807, 917808, 917809, 917810, 917811, 917812, 917813, 917814, 917815, 917816, 917817, 917818, 917819, 917820, 917821, 917822, 917823, 917824, 917825, 917826, 917827, 917828, 917829, 917830, 917831, 917832, 917833, 917834, 917835, 917836, 917837, 917838, 917839, 917840, 917841, 917842, 917843, 917844, 917845, 917846, 917847, 917848, 917849, 917850, 917851, 917852, 917853, 917854, 917855, 917856, 917857, 917858, 917859, 917860, 917861, 917862, 917863, 917864, 917865, 917866, 917867, 917868, 917869, 917870, 917871, 917872, 917873, 917874, 917875, 917876, 917877, 917878, 917879, 917880, 917881, 917882, 917883, 917884, 917885, 917886, 917887, 917888, 917889, 917890, 917891, 917892, 917893, 917894, 917895, 917896, 917897, 917898, 917899, 917900, 917901, 917902, 917903, 917904, 917905, 917906, 917907, 917908, 917909, 917910, 917911, 917912, 917913, 917914, 917915, 917916, 917917, 917918, 917919, 917920, 917921, 917922, 917923, 917924, 917925, 917926, 917927, 917928, 917929, 917930, 917931, 917932, 917933, 917934, 917935, 917936, 917937, 917938, 917939, 917940, 917941, 917942, 917943, 917944, 917945, 917946, 917947, 917948, 917949, 917950, 917951, 917952, 917953, 917954, 917955, 917956, 917957, 917958, 917959, 917960, 917961, 917962, 917963, 917964, 917965, 917966, 917967, 917968, 917969, 917970, 917971, 917972, 917973, 917974, 917975, 917976, 917977, 917978, 917979, 917980, 917981, 917982, 917983, 917984, 917985, 917986, 917987, 917988, 917989, 917990, 917991, 917992, 917993, 917994, 917995, 917996, 917997, 917998, 917999];
 
 
-/***/ },
-/* 95 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 152 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	(function (root) {
 	   "use strict";
@@ -15411,7 +13806,8643 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(this));
 
 
-/***/ }
+/***/ }),
+/* 153 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* Process inline math */
+	/*
+	Like markdown-it-simplemath, this is a stripped down, simplified version of:
+	https://github.com/runarberg/markdown-it-math
+
+	It differs in that it takes (a subset of) LaTeX as input and relies on KaTeX
+	for rendering output.
+	*/
+
+	/*jslint node: true */
+	'use strict';
+
+	var katex = __webpack_require__(154);
+
+	// Test if potential opening or closing delimieter
+	// Assumes that there is a "$" at state.src[pos]
+	function isValidDelim(state, pos) {
+	    var prevChar, nextChar,
+	        max = state.posMax,
+	        can_open = true,
+	        can_close = true;
+
+	    prevChar = pos > 0 ? state.src.charCodeAt(pos - 1) : -1;
+	    nextChar = pos + 1 <= max ? state.src.charCodeAt(pos + 1) : -1;
+
+	    // Check non-whitespace conditions for opening and closing, and
+	    // check that closing delimeter isn't followed by a number
+	    if (prevChar === 0x20/* " " */ || prevChar === 0x09/* \t */ ||
+	            (nextChar >= 0x30/* "0" */ && nextChar <= 0x39/* "9" */)) {
+	        can_close = false;
+	    }
+	    if (nextChar === 0x20/* " " */ || nextChar === 0x09/* \t */) {
+	        can_open = false;
+	    }
+
+	    return {
+	        can_open: can_open,
+	        can_close: can_close
+	    };
+	}
+
+	function math_inline(state, silent) {
+	    var start, match, token, res, pos, esc_count;
+
+	    if (state.src[state.pos] !== "$") { return false; }
+
+	    res = isValidDelim(state, state.pos);
+	    if (!res.can_open) {
+	        if (!silent) { state.pending += "$"; }
+	        state.pos += 1;
+	        return true;
+	    }
+
+	    // First check for and bypass all properly escaped delimieters
+	    // This loop will assume that the first leading backtick can not
+	    // be the first character in state.src, which is known since
+	    // we have found an opening delimieter already.
+	    start = state.pos + 1;
+	    match = start;
+	    while ( (match = state.src.indexOf("$", match)) !== -1) {
+	        // Found potential $, look for escapes, pos will point to
+	        // first non escape when complete
+	        pos = match - 1;
+	        while (state.src[pos] === "\\") { pos -= 1; }
+
+	        // Even number of escapes, potential closing delimiter found
+	        if ( ((match - pos) % 2) == 1 ) { break; }
+	        match += 1;
+	    }
+
+	    // No closing delimter found.  Consume $ and continue.
+	    if (match === -1) {
+	        if (!silent) { state.pending += "$"; }
+	        state.pos = start;
+	        return true;
+	    }
+
+	    // Check if we have empty content, ie: $$.  Do not parse.
+	    if (match - start === 0) {
+	        if (!silent) { state.pending += "$$"; }
+	        state.pos = start + 1;
+	        return true;
+	    }
+
+	    // Check for valid closing delimiter
+	    res = isValidDelim(state, match);
+	    if (!res.can_close) {
+	        if (!silent) { state.pending += "$"; }
+	        state.pos = start;
+	        return true;
+	    }
+
+	    if (!silent) {
+	        token         = state.push('math_inline', 'math', 0);
+	        token.markup  = "$";
+	        token.content = state.src.slice(start, match);
+	    }
+
+	    state.pos = match + 1;
+	    return true;
+	}
+
+	function math_block(state, start, end, silent){
+	    var firstLine, lastLine, next, lastPos, found = false, token,
+	        pos = state.bMarks[start] + state.tShift[start],
+	        max = state.eMarks[start]
+
+	    if(pos + 2 > max){ return false; }
+	    if(state.src.slice(pos,pos+2)!=='$$'){ return false; }
+
+	    pos += 2;
+	    firstLine = state.src.slice(pos,max);
+
+	    if(silent){ return true; }
+	    if(firstLine.trim().slice(-2)==='$$'){
+	        // Single line expression
+	        firstLine = firstLine.trim().slice(0, -2);
+	        found = true;
+	    }
+
+	    for(next = start; !found; ){
+
+	        next++;
+
+	        if(next >= end){ break; }
+
+	        pos = state.bMarks[next]+state.tShift[next];
+	        max = state.eMarks[next];
+
+	        if(pos < max && state.tShift[next] < state.blkIndent){
+	            // non-empty line with negative indent should stop the list:
+	            break;
+	        }
+
+	        if(state.src.slice(pos,max).trim().slice(-2)==='$$'){
+	            lastPos = state.src.slice(0,max).lastIndexOf('$$');
+	            lastLine = state.src.slice(pos,lastPos);
+	            found = true;
+	        }
+
+	    }
+
+	    state.line = next + 1;
+
+	    token = state.push('math_block', 'math', 0);
+	    token.block = true;
+	    token.content = (firstLine && firstLine.trim() ? firstLine + '\n' : '')
+	    + state.getLines(start + 1, next, state.tShift[start], true)
+	    + (lastLine && lastLine.trim() ? lastLine : '');
+	    token.map = [ start, state.line ];
+	    token.markup = '$$';
+	    return true;
+	}
+
+	module.exports = function math_plugin(md, options) {
+	    // Default options
+
+	    options = options || {};
+
+	    // set KaTeX as the renderer for markdown-it-simplemath
+	    var katexInline = function(latex){
+	        options.displayMode = false;
+	        try{
+	            return katex.renderToString(latex, options);
+	        }
+	        catch(error){
+	            if(options.throwOnError){ console.log(error); }
+	            return latex;
+	        }
+	    };
+
+	    var inlineRenderer = function(tokens, idx){
+	        return katexInline(tokens[idx].content);
+	    };
+
+	    var katexBlock = function(latex){
+	        options.displayMode = true;
+	        try{
+	            return "<p>" + katex.renderToString(latex, options) + "</p>";
+	        }
+	        catch(error){
+	            if(options.throwOnError){ console.log(error); }
+	            return latex;
+	        }
+	    }
+
+	    var blockRenderer = function(tokens, idx){
+	        return  katexBlock(tokens[idx].content) + '\n';
+	    }
+
+	    md.inline.ruler.after('escape', 'math_inline', math_inline);
+	    md.block.ruler.after('blockquote', 'math_block', math_block, {
+	        alt: [ 'paragraph', 'reference', 'blockquote', 'list' ]
+	    });
+	    md.renderer.rules.math_inline = inlineRenderer;
+	    md.renderer.rules.math_block = blockRenderer;
+	};
+
+
+/***/ }),
+/* 154 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* eslint no-console:0 */
+	/**
+	 * This is the main entry point for KaTeX. Here, we expose functions for
+	 * rendering expressions either to DOM nodes or to markup strings.
+	 *
+	 * We also expose the ParseError class to check if errors thrown from KaTeX are
+	 * errors in the expression, or errors in javascript handling.
+	 */
+
+	var ParseError = __webpack_require__(155);
+	var Settings = __webpack_require__(156);
+
+	var buildTree = __webpack_require__(157);
+	var parseTree = __webpack_require__(170);
+	var utils = __webpack_require__(162);
+
+	/**
+	 * Parse and build an expression, and place that expression in the DOM node
+	 * given.
+	 */
+	var render = function(expression, baseNode, options) {
+	    utils.clearNode(baseNode);
+
+	    var settings = new Settings(options);
+
+	    var tree = parseTree(expression, settings);
+	    var node = buildTree(tree, expression, settings).toNode();
+
+	    baseNode.appendChild(node);
+	};
+
+	// KaTeX's styles don't work properly in quirks mode. Print out an error, and
+	// disable rendering.
+	if (typeof document !== "undefined") {
+	    if (document.compatMode !== "CSS1Compat") {
+	        typeof console !== "undefined" && console.warn(
+	            "Warning: KaTeX doesn't work in quirks mode. Make sure your " +
+	                "website has a suitable doctype.");
+
+	        render = function() {
+	            throw new ParseError("KaTeX doesn't work in quirks mode.");
+	        };
+	    }
+	}
+
+	/**
+	 * Parse and build an expression, and return the markup for that.
+	 */
+	var renderToString = function(expression, options) {
+	    var settings = new Settings(options);
+
+	    var tree = parseTree(expression, settings);
+	    return buildTree(tree, expression, settings).toMarkup();
+	};
+
+	/**
+	 * Parse an expression and return the parse tree.
+	 */
+	var generateParseTree = function(expression, options) {
+	    var settings = new Settings(options);
+	    return parseTree(expression, settings);
+	};
+
+	module.exports = {
+	    render: render,
+	    renderToString: renderToString,
+	    /**
+	     * NOTE: This method is not currently recommended for public use.
+	     * The internal tree representation is unstable and is very likely
+	     * to change. Use at your own risk.
+	     */
+	    __parse: generateParseTree,
+	    ParseError: ParseError,
+	};
+
+
+/***/ }),
+/* 155 */
+/***/ (function(module, exports) {
+
+	/**
+	 * This is the ParseError class, which is the main error thrown by KaTeX
+	 * functions when something has gone wrong. This is used to distinguish internal
+	 * errors from errors in the expression that the user provided.
+	 */
+	function ParseError(message, lexer, position) {
+	    var error = "KaTeX parse error: " + message;
+
+	    if (lexer !== undefined && position !== undefined) {
+	        // If we have the input and a position, make the error a bit fancier
+
+	        // Prepend some information
+	        error += " at position " + position + ": ";
+
+	        // Get the input
+	        var input = lexer._input;
+	        // Insert a combining underscore at the correct position
+	        input = input.slice(0, position) + "\u0332" +
+	            input.slice(position);
+
+	        // Extract some context from the input and add it to the error
+	        var begin = Math.max(0, position - 15);
+	        var end = position + 15;
+	        error += input.slice(begin, end);
+	    }
+
+	    // Some hackery to make ParseError a prototype of Error
+	    // See http://stackoverflow.com/a/8460753
+	    var self = new Error(error);
+	    self.name = "ParseError";
+	    self.__proto__ = ParseError.prototype;
+
+	    self.position = position;
+	    return self;
+	}
+
+	// More hackery
+	ParseError.prototype.__proto__ = Error.prototype;
+
+	module.exports = ParseError;
+
+
+/***/ }),
+/* 156 */
+/***/ (function(module, exports) {
+
+	/**
+	 * This is a module for storing settings passed into KaTeX. It correctly handles
+	 * default settings.
+	 */
+
+	/**
+	 * Helper function for getting a default value if the value is undefined
+	 */
+	function get(option, defaultValue) {
+	    return option === undefined ? defaultValue : option;
+	}
+
+	/**
+	 * The main Settings object
+	 *
+	 * The current options stored are:
+	 *  - displayMode: Whether the expression should be typeset by default in
+	 *                 textstyle or displaystyle (default false)
+	 */
+	function Settings(options) {
+	    // allow null options
+	    options = options || {};
+	    this.displayMode = get(options.displayMode, false);
+	    this.throwOnError = get(options.throwOnError, true);
+	    this.errorColor = get(options.errorColor, "#cc0000");
+	}
+
+	module.exports = Settings;
+
+
+/***/ }),
+/* 157 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var buildHTML = __webpack_require__(158);
+	var buildMathML = __webpack_require__(167);
+	var buildCommon = __webpack_require__(160);
+	var Options = __webpack_require__(169);
+	var Settings = __webpack_require__(156);
+	var Style = __webpack_require__(159);
+
+	var makeSpan = buildCommon.makeSpan;
+
+	var buildTree = function(tree, expression, settings) {
+	    settings = settings || new Settings({});
+
+	    var startStyle = Style.TEXT;
+	    if (settings.displayMode) {
+	        startStyle = Style.DISPLAY;
+	    }
+
+	    // Setup the default options
+	    var options = new Options({
+	        style: startStyle,
+	        size: "size5",
+	    });
+
+	    // `buildHTML` sometimes messes with the parse tree (like turning bins ->
+	    // ords), so we build the MathML version first.
+	    var mathMLNode = buildMathML(tree, expression, options);
+	    var htmlNode = buildHTML(tree, options);
+
+	    var katexNode = makeSpan(["katex"], [
+	        mathMLNode, htmlNode,
+	    ]);
+
+	    if (settings.displayMode) {
+	        return makeSpan(["katex-display"], [katexNode]);
+	    } else {
+	        return katexNode;
+	    }
+	};
+
+	module.exports = buildTree;
+
+
+/***/ }),
+/* 158 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* eslint no-console:0 */
+	/**
+	 * This file does the main work of building a domTree structure from a parse
+	 * tree. The entry point is the `buildHTML` function, which takes a parse tree.
+	 * Then, the buildExpression, buildGroup, and various groupTypes functions are
+	 * called, to produce a final HTML tree.
+	 */
+
+	var ParseError = __webpack_require__(155);
+	var Style = __webpack_require__(159);
+
+	var buildCommon = __webpack_require__(160);
+	var delimiter = __webpack_require__(166);
+	var domTree = __webpack_require__(161);
+	var fontMetrics = __webpack_require__(163);
+	var utils = __webpack_require__(162);
+
+	var makeSpan = buildCommon.makeSpan;
+
+	/**
+	 * Take a list of nodes, build them in order, and return a list of the built
+	 * nodes. This function handles the `prev` node correctly, and passes the
+	 * previous element from the list as the prev of the next element.
+	 */
+	var buildExpression = function(expression, options, prev) {
+	    var groups = [];
+	    for (var i = 0; i < expression.length; i++) {
+	        var group = expression[i];
+	        groups.push(buildGroup(group, options, prev));
+	        prev = group;
+	    }
+	    return groups;
+	};
+
+	// List of types used by getTypeOfGroup,
+	// see https://github.com/Khan/KaTeX/wiki/Examining-TeX#group-types
+	var groupToType = {
+	    mathord: "mord",
+	    textord: "mord",
+	    bin: "mbin",
+	    rel: "mrel",
+	    text: "mord",
+	    open: "mopen",
+	    close: "mclose",
+	    inner: "minner",
+	    genfrac: "mord",
+	    array: "mord",
+	    spacing: "mord",
+	    punct: "mpunct",
+	    ordgroup: "mord",
+	    op: "mop",
+	    katex: "mord",
+	    overline: "mord",
+	    underline: "mord",
+	    rule: "mord",
+	    leftright: "minner",
+	    sqrt: "mord",
+	    accent: "mord",
+	};
+
+	/**
+	 * Gets the final math type of an expression, given its group type. This type is
+	 * used to determine spacing between elements, and affects bin elements by
+	 * causing them to change depending on what types are around them. This type
+	 * must be attached to the outermost node of an element as a CSS class so that
+	 * spacing with its surrounding elements works correctly.
+	 *
+	 * Some elements can be mapped one-to-one from group type to math type, and
+	 * those are listed in the `groupToType` table.
+	 *
+	 * Others (usually elements that wrap around other elements) often have
+	 * recursive definitions, and thus call `getTypeOfGroup` on their inner
+	 * elements.
+	 */
+	var getTypeOfGroup = function(group) {
+	    if (group == null) {
+	        // Like when typesetting $^3$
+	        return groupToType.mathord;
+	    } else if (group.type === "supsub") {
+	        return getTypeOfGroup(group.value.base);
+	    } else if (group.type === "llap" || group.type === "rlap") {
+	        return getTypeOfGroup(group.value);
+	    } else if (group.type === "color") {
+	        return getTypeOfGroup(group.value.value);
+	    } else if (group.type === "sizing") {
+	        return getTypeOfGroup(group.value.value);
+	    } else if (group.type === "styling") {
+	        return getTypeOfGroup(group.value.value);
+	    } else if (group.type === "delimsizing") {
+	        return groupToType[group.value.delimType];
+	    } else {
+	        return groupToType[group.type];
+	    }
+	};
+
+	/**
+	 * Sometimes, groups perform special rules when they have superscripts or
+	 * subscripts attached to them. This function lets the `supsub` group know that
+	 * its inner element should handle the superscripts and subscripts instead of
+	 * handling them itself.
+	 */
+	var shouldHandleSupSub = function(group, options) {
+	    if (!group) {
+	        return false;
+	    } else if (group.type === "op") {
+	        // Operators handle supsubs differently when they have limits
+	        // (e.g. `\displaystyle\sum_2^3`)
+	        return group.value.limits &&
+	            (options.style.size === Style.DISPLAY.size ||
+	            group.value.alwaysHandleSupSub);
+	    } else if (group.type === "accent") {
+	        return isCharacterBox(group.value.base);
+	    } else {
+	        return null;
+	    }
+	};
+
+	/**
+	 * Sometimes we want to pull out the innermost element of a group. In most
+	 * cases, this will just be the group itself, but when ordgroups and colors have
+	 * a single element, we want to pull that out.
+	 */
+	var getBaseElem = function(group) {
+	    if (!group) {
+	        return false;
+	    } else if (group.type === "ordgroup") {
+	        if (group.value.length === 1) {
+	            return getBaseElem(group.value[0]);
+	        } else {
+	            return group;
+	        }
+	    } else if (group.type === "color") {
+	        if (group.value.value.length === 1) {
+	            return getBaseElem(group.value.value[0]);
+	        } else {
+	            return group;
+	        }
+	    } else {
+	        return group;
+	    }
+	};
+
+	/**
+	 * TeXbook algorithms often reference "character boxes", which are simply groups
+	 * with a single character in them. To decide if something is a character box,
+	 * we find its innermost group, and see if it is a single character.
+	 */
+	var isCharacterBox = function(group) {
+	    var baseElem = getBaseElem(group);
+
+	    // These are all they types of groups which hold single characters
+	    return baseElem.type === "mathord" ||
+	        baseElem.type === "textord" ||
+	        baseElem.type === "bin" ||
+	        baseElem.type === "rel" ||
+	        baseElem.type === "inner" ||
+	        baseElem.type === "open" ||
+	        baseElem.type === "close" ||
+	        baseElem.type === "punct";
+	};
+
+	var makeNullDelimiter = function(options) {
+	    return makeSpan([
+	        "sizing", "reset-" + options.size, "size5",
+	        options.style.reset(), Style.TEXT.cls(),
+	        "nulldelimiter",
+	    ]);
+	};
+
+	/**
+	 * This is a map of group types to the function used to handle that type.
+	 * Simpler types come at the beginning, while complicated types come afterwards.
+	 */
+	var groupTypes = {};
+
+	groupTypes.mathord = function(group, options, prev) {
+	    return buildCommon.makeOrd(group, options, "mathord");
+	};
+
+	groupTypes.textord = function(group, options, prev) {
+	    return buildCommon.makeOrd(group, options, "textord");
+	};
+
+	groupTypes.bin = function(group, options, prev) {
+	    var className = "mbin";
+	    // Pull out the most recent element. Do some special handling to find
+	    // things at the end of a \color group. Note that we don't use the same
+	    // logic for ordgroups (which count as ords).
+	    var prevAtom = prev;
+	    while (prevAtom && prevAtom.type === "color") {
+	        var atoms = prevAtom.value.value;
+	        prevAtom = atoms[atoms.length - 1];
+	    }
+	    // See TeXbook pg. 442-446, Rules 5 and 6, and the text before Rule 19.
+	    // Here, we determine whether the bin should turn into an ord. We
+	    // currently only apply Rule 5.
+	    if (!prev || utils.contains(["mbin", "mopen", "mrel", "mop", "mpunct"],
+	            getTypeOfGroup(prevAtom))) {
+	        group.type = "textord";
+	        className = "mord";
+	    }
+
+	    return buildCommon.mathsym(
+	        group.value, group.mode, options.getColor(), [className]);
+	};
+
+	groupTypes.rel = function(group, options, prev) {
+	    return buildCommon.mathsym(
+	        group.value, group.mode, options.getColor(), ["mrel"]);
+	};
+
+	groupTypes.open = function(group, options, prev) {
+	    return buildCommon.mathsym(
+	        group.value, group.mode, options.getColor(), ["mopen"]);
+	};
+
+	groupTypes.close = function(group, options, prev) {
+	    return buildCommon.mathsym(
+	        group.value, group.mode, options.getColor(), ["mclose"]);
+	};
+
+	groupTypes.inner = function(group, options, prev) {
+	    return buildCommon.mathsym(
+	        group.value, group.mode, options.getColor(), ["minner"]);
+	};
+
+	groupTypes.punct = function(group, options, prev) {
+	    return buildCommon.mathsym(
+	        group.value, group.mode, options.getColor(), ["mpunct"]);
+	};
+
+	groupTypes.ordgroup = function(group, options, prev) {
+	    return makeSpan(
+	        ["mord", options.style.cls()],
+	        buildExpression(group.value, options.reset())
+	    );
+	};
+
+	groupTypes.text = function(group, options, prev) {
+	    return makeSpan(["text", "mord", options.style.cls()],
+	        buildExpression(group.value.body, options.reset()));
+	};
+
+	groupTypes.color = function(group, options, prev) {
+	    var elements = buildExpression(
+	        group.value.value,
+	        options.withColor(group.value.color),
+	        prev
+	    );
+
+	    // \color isn't supposed to affect the type of the elements it contains.
+	    // To accomplish this, we wrap the results in a fragment, so the inner
+	    // elements will be able to directly interact with their neighbors. For
+	    // example, `\color{red}{2 +} 3` has the same spacing as `2 + 3`
+	    return new buildCommon.makeFragment(elements);
+	};
+
+	groupTypes.supsub = function(group, options, prev) {
+	    // Superscript and subscripts are handled in the TeXbook on page
+	    // 445-446, rules 18(a-f).
+
+	    // Here is where we defer to the inner group if it should handle
+	    // superscripts and subscripts itself.
+	    if (shouldHandleSupSub(group.value.base, options)) {
+	        return groupTypes[group.value.base.type](group, options, prev);
+	    }
+
+	    var base = buildGroup(group.value.base, options.reset());
+	    var supmid;
+	    var submid;
+	    var sup;
+	    var sub;
+
+	    if (group.value.sup) {
+	        sup = buildGroup(group.value.sup,
+	                options.withStyle(options.style.sup()));
+	        supmid = makeSpan(
+	                [options.style.reset(), options.style.sup().cls()], [sup]);
+	    }
+
+	    if (group.value.sub) {
+	        sub = buildGroup(group.value.sub,
+	                options.withStyle(options.style.sub()));
+	        submid = makeSpan(
+	                [options.style.reset(), options.style.sub().cls()], [sub]);
+	    }
+
+	    // Rule 18a
+	    var supShift;
+	    var subShift;
+	    if (isCharacterBox(group.value.base)) {
+	        supShift = 0;
+	        subShift = 0;
+	    } else {
+	        supShift = base.height - fontMetrics.metrics.supDrop;
+	        subShift = base.depth + fontMetrics.metrics.subDrop;
+	    }
+
+	    // Rule 18c
+	    var minSupShift;
+	    if (options.style === Style.DISPLAY) {
+	        minSupShift = fontMetrics.metrics.sup1;
+	    } else if (options.style.cramped) {
+	        minSupShift = fontMetrics.metrics.sup3;
+	    } else {
+	        minSupShift = fontMetrics.metrics.sup2;
+	    }
+
+	    // scriptspace is a font-size-independent size, so scale it
+	    // appropriately
+	    var multiplier = Style.TEXT.sizeMultiplier *
+	            options.style.sizeMultiplier;
+	    var scriptspace =
+	        (0.5 / fontMetrics.metrics.ptPerEm) / multiplier + "em";
+
+	    var supsub;
+	    if (!group.value.sup) {
+	        // Rule 18b
+	        subShift = Math.max(
+	            subShift, fontMetrics.metrics.sub1,
+	            sub.height - 0.8 * fontMetrics.metrics.xHeight);
+
+	        supsub = buildCommon.makeVList([
+	            {type: "elem", elem: submid},
+	        ], "shift", subShift, options);
+
+	        supsub.children[0].style.marginRight = scriptspace;
+
+	        // Subscripts shouldn't be shifted by the base's italic correction.
+	        // Account for that by shifting the subscript back the appropriate
+	        // amount. Note we only do this when the base is a single symbol.
+	        if (base instanceof domTree.symbolNode) {
+	            supsub.children[0].style.marginLeft = -base.italic + "em";
+	        }
+	    } else if (!group.value.sub) {
+	        // Rule 18c, d
+	        supShift = Math.max(supShift, minSupShift,
+	            sup.depth + 0.25 * fontMetrics.metrics.xHeight);
+
+	        supsub = buildCommon.makeVList([
+	            {type: "elem", elem: supmid},
+	        ], "shift", -supShift, options);
+
+	        supsub.children[0].style.marginRight = scriptspace;
+	    } else {
+	        supShift = Math.max(
+	            supShift, minSupShift,
+	            sup.depth + 0.25 * fontMetrics.metrics.xHeight);
+	        subShift = Math.max(subShift, fontMetrics.metrics.sub2);
+
+	        var ruleWidth = fontMetrics.metrics.defaultRuleThickness;
+
+	        // Rule 18e
+	        if ((supShift - sup.depth) - (sub.height - subShift) <
+	                4 * ruleWidth) {
+	            subShift = 4 * ruleWidth - (supShift - sup.depth) + sub.height;
+	            var psi = 0.8 * fontMetrics.metrics.xHeight -
+	                (supShift - sup.depth);
+	            if (psi > 0) {
+	                supShift += psi;
+	                subShift -= psi;
+	            }
+	        }
+
+	        supsub = buildCommon.makeVList([
+	            {type: "elem", elem: submid, shift: subShift},
+	            {type: "elem", elem: supmid, shift: -supShift},
+	        ], "individualShift", null, options);
+
+	        // See comment above about subscripts not being shifted
+	        if (base instanceof domTree.symbolNode) {
+	            supsub.children[0].style.marginLeft = -base.italic + "em";
+	        }
+
+	        supsub.children[0].style.marginRight = scriptspace;
+	        supsub.children[1].style.marginRight = scriptspace;
+	    }
+
+	    return makeSpan([getTypeOfGroup(group.value.base)],
+	        [base, supsub]);
+	};
+
+	groupTypes.genfrac = function(group, options, prev) {
+	    // Fractions are handled in the TeXbook on pages 444-445, rules 15(a-e).
+	    // Figure out what style this fraction should be in based on the
+	    // function used
+	    var fstyle = options.style;
+	    if (group.value.size === "display") {
+	        fstyle = Style.DISPLAY;
+	    } else if (group.value.size === "text") {
+	        fstyle = Style.TEXT;
+	    }
+
+	    var nstyle = fstyle.fracNum();
+	    var dstyle = fstyle.fracDen();
+
+	    var numer = buildGroup(group.value.numer, options.withStyle(nstyle));
+	    var numerreset = makeSpan([fstyle.reset(), nstyle.cls()], [numer]);
+
+	    var denom = buildGroup(group.value.denom, options.withStyle(dstyle));
+	    var denomreset = makeSpan([fstyle.reset(), dstyle.cls()], [denom]);
+
+	    var ruleWidth;
+	    if (group.value.hasBarLine) {
+	        ruleWidth = fontMetrics.metrics.defaultRuleThickness /
+	            options.style.sizeMultiplier;
+	    } else {
+	        ruleWidth = 0;
+	    }
+
+	    // Rule 15b
+	    var numShift;
+	    var clearance;
+	    var denomShift;
+	    if (fstyle.size === Style.DISPLAY.size) {
+	        numShift = fontMetrics.metrics.num1;
+	        if (ruleWidth > 0) {
+	            clearance = 3 * ruleWidth;
+	        } else {
+	            clearance = 7 * fontMetrics.metrics.defaultRuleThickness;
+	        }
+	        denomShift = fontMetrics.metrics.denom1;
+	    } else {
+	        if (ruleWidth > 0) {
+	            numShift = fontMetrics.metrics.num2;
+	            clearance = ruleWidth;
+	        } else {
+	            numShift = fontMetrics.metrics.num3;
+	            clearance = 3 * fontMetrics.metrics.defaultRuleThickness;
+	        }
+	        denomShift = fontMetrics.metrics.denom2;
+	    }
+
+	    var frac;
+	    if (ruleWidth === 0) {
+	        // Rule 15c
+	        var candiateClearance =
+	            (numShift - numer.depth) - (denom.height - denomShift);
+	        if (candiateClearance < clearance) {
+	            numShift += 0.5 * (clearance - candiateClearance);
+	            denomShift += 0.5 * (clearance - candiateClearance);
+	        }
+
+	        frac = buildCommon.makeVList([
+	            {type: "elem", elem: denomreset, shift: denomShift},
+	            {type: "elem", elem: numerreset, shift: -numShift},
+	        ], "individualShift", null, options);
+	    } else {
+	        // Rule 15d
+	        var axisHeight = fontMetrics.metrics.axisHeight;
+
+	        if ((numShift - numer.depth) - (axisHeight + 0.5 * ruleWidth) <
+	                clearance) {
+	            numShift +=
+	                clearance - ((numShift - numer.depth) -
+	                             (axisHeight + 0.5 * ruleWidth));
+	        }
+
+	        if ((axisHeight - 0.5 * ruleWidth) - (denom.height - denomShift) <
+	                clearance) {
+	            denomShift +=
+	                clearance - ((axisHeight - 0.5 * ruleWidth) -
+	                             (denom.height - denomShift));
+	        }
+
+	        var mid = makeSpan(
+	            [options.style.reset(), Style.TEXT.cls(), "frac-line"]);
+	        // Manually set the height of the line because its height is
+	        // created in CSS
+	        mid.height = ruleWidth;
+
+	        var midShift = -(axisHeight - 0.5 * ruleWidth);
+
+	        frac = buildCommon.makeVList([
+	            {type: "elem", elem: denomreset, shift: denomShift},
+	            {type: "elem", elem: mid,        shift: midShift},
+	            {type: "elem", elem: numerreset, shift: -numShift},
+	        ], "individualShift", null, options);
+	    }
+
+	    // Since we manually change the style sometimes (with \dfrac or \tfrac),
+	    // account for the possible size change here.
+	    frac.height *= fstyle.sizeMultiplier / options.style.sizeMultiplier;
+	    frac.depth *= fstyle.sizeMultiplier / options.style.sizeMultiplier;
+
+	    // Rule 15e
+	    var delimSize;
+	    if (fstyle.size === Style.DISPLAY.size) {
+	        delimSize = fontMetrics.metrics.delim1;
+	    } else {
+	        delimSize = fontMetrics.metrics.getDelim2(fstyle);
+	    }
+
+	    var leftDelim;
+	    var rightDelim;
+	    if (group.value.leftDelim == null) {
+	        leftDelim = makeNullDelimiter(options);
+	    } else {
+	        leftDelim = delimiter.customSizedDelim(
+	            group.value.leftDelim, delimSize, true,
+	            options.withStyle(fstyle), group.mode);
+	    }
+	    if (group.value.rightDelim == null) {
+	        rightDelim = makeNullDelimiter(options);
+	    } else {
+	        rightDelim = delimiter.customSizedDelim(
+	            group.value.rightDelim, delimSize, true,
+	            options.withStyle(fstyle), group.mode);
+	    }
+
+	    return makeSpan(
+	        ["mord", options.style.reset(), fstyle.cls()],
+	        [leftDelim, makeSpan(["mfrac"], [frac]), rightDelim],
+	        options.getColor());
+	};
+
+	groupTypes.array = function(group, options, prev) {
+	    var r;
+	    var c;
+	    var nr = group.value.body.length;
+	    var nc = 0;
+	    var body = new Array(nr);
+
+	    // Horizontal spacing
+	    var pt = 1 / fontMetrics.metrics.ptPerEm;
+	    var arraycolsep = 5 * pt; // \arraycolsep in article.cls
+
+	    // Vertical spacing
+	    var baselineskip = 12 * pt; // see size10.clo
+	    // Default \arraystretch from lttab.dtx
+	    // TODO(gagern): may get redefined once we have user-defined macros
+	    var arraystretch = utils.deflt(group.value.arraystretch, 1);
+	    var arrayskip = arraystretch * baselineskip;
+	    var arstrutHeight = 0.7 * arrayskip; // \strutbox in ltfsstrc.dtx and
+	    var arstrutDepth = 0.3 * arrayskip;  // \@arstrutbox in lttab.dtx
+
+	    var totalHeight = 0;
+	    for (r = 0; r < group.value.body.length; ++r) {
+	        var inrow = group.value.body[r];
+	        var height = arstrutHeight; // \@array adds an \@arstrut
+	        var depth = arstrutDepth;   // to each tow (via the template)
+
+	        if (nc < inrow.length) {
+	            nc = inrow.length;
+	        }
+
+	        var outrow = new Array(inrow.length);
+	        for (c = 0; c < inrow.length; ++c) {
+	            var elt = buildGroup(inrow[c], options);
+	            if (depth < elt.depth) {
+	                depth = elt.depth;
+	            }
+	            if (height < elt.height) {
+	                height = elt.height;
+	            }
+	            outrow[c] = elt;
+	        }
+
+	        var gap = 0;
+	        if (group.value.rowGaps[r]) {
+	            gap = group.value.rowGaps[r].value;
+	            switch (gap.unit) {
+	                case "em":
+	                    gap = gap.number;
+	                    break;
+	                case "ex":
+	                    gap = gap.number * fontMetrics.metrics.emPerEx;
+	                    break;
+	                default:
+	                    console.error("Can't handle unit " + gap.unit);
+	                    gap = 0;
+	            }
+	            if (gap > 0) { // \@argarraycr
+	                gap += arstrutDepth;
+	                if (depth < gap) {
+	                    depth = gap; // \@xargarraycr
+	                }
+	                gap = 0;
+	            }
+	        }
+
+	        outrow.height = height;
+	        outrow.depth = depth;
+	        totalHeight += height;
+	        outrow.pos = totalHeight;
+	        totalHeight += depth + gap; // \@yargarraycr
+	        body[r] = outrow;
+	    }
+
+	    var offset = totalHeight / 2 + fontMetrics.metrics.axisHeight;
+	    var colDescriptions = group.value.cols || [];
+	    var cols = [];
+	    var colSep;
+	    var colDescrNum;
+	    for (c = 0, colDescrNum = 0;
+	         // Continue while either there are more columns or more column
+	         // descriptions, so trailing separators don't get lost.
+	         c < nc || colDescrNum < colDescriptions.length;
+	         ++c, ++colDescrNum) {
+
+	        var colDescr = colDescriptions[colDescrNum] || {};
+
+	        var firstSeparator = true;
+	        while (colDescr.type === "separator") {
+	            // If there is more than one separator in a row, add a space
+	            // between them.
+	            if (!firstSeparator) {
+	                colSep = makeSpan(["arraycolsep"], []);
+	                colSep.style.width =
+	                    fontMetrics.metrics.doubleRuleSep + "em";
+	                cols.push(colSep);
+	            }
+
+	            if (colDescr.separator === "|") {
+	                var separator = makeSpan(
+	                    ["vertical-separator"],
+	                    []);
+	                separator.style.height = totalHeight + "em";
+	                separator.style.verticalAlign =
+	                    -(totalHeight - offset) + "em";
+
+	                cols.push(separator);
+	            } else {
+	                throw new ParseError(
+	                    "Invalid separator type: " + colDescr.separator);
+	            }
+
+	            colDescrNum++;
+	            colDescr = colDescriptions[colDescrNum] || {};
+	            firstSeparator = false;
+	        }
+
+	        if (c >= nc) {
+	            continue;
+	        }
+
+	        var sepwidth;
+	        if (c > 0 || group.value.hskipBeforeAndAfter) {
+	            sepwidth = utils.deflt(colDescr.pregap, arraycolsep);
+	            if (sepwidth !== 0) {
+	                colSep = makeSpan(["arraycolsep"], []);
+	                colSep.style.width = sepwidth + "em";
+	                cols.push(colSep);
+	            }
+	        }
+
+	        var col = [];
+	        for (r = 0; r < nr; ++r) {
+	            var row = body[r];
+	            var elem = row[c];
+	            if (!elem) {
+	                continue;
+	            }
+	            var shift = row.pos - offset;
+	            elem.depth = row.depth;
+	            elem.height = row.height;
+	            col.push({type: "elem", elem: elem, shift: shift});
+	        }
+
+	        col = buildCommon.makeVList(col, "individualShift", null, options);
+	        col = makeSpan(
+	            ["col-align-" + (colDescr.align || "c")],
+	            [col]);
+	        cols.push(col);
+
+	        if (c < nc - 1 || group.value.hskipBeforeAndAfter) {
+	            sepwidth = utils.deflt(colDescr.postgap, arraycolsep);
+	            if (sepwidth !== 0) {
+	                colSep = makeSpan(["arraycolsep"], []);
+	                colSep.style.width = sepwidth + "em";
+	                cols.push(colSep);
+	            }
+	        }
+	    }
+	    body = makeSpan(["mtable"], cols);
+	    return makeSpan(["mord"], [body], options.getColor());
+	};
+
+	groupTypes.spacing = function(group, options, prev) {
+	    if (group.value === "\\ " || group.value === "\\space" ||
+	        group.value === " " || group.value === "~") {
+	        // Spaces are generated by adding an actual space. Each of these
+	        // things has an entry in the symbols table, so these will be turned
+	        // into appropriate outputs.
+	        return makeSpan(
+	            ["mord", "mspace"],
+	            [buildCommon.mathsym(group.value, group.mode)]
+	        );
+	    } else {
+	        // Other kinds of spaces are of arbitrary width. We use CSS to
+	        // generate these.
+	        return makeSpan(
+	            ["mord", "mspace",
+	             buildCommon.spacingFunctions[group.value].className]);
+	    }
+	};
+
+	groupTypes.llap = function(group, options, prev) {
+	    var inner = makeSpan(
+	        ["inner"], [buildGroup(group.value.body, options.reset())]);
+	    var fix = makeSpan(["fix"], []);
+	    return makeSpan(
+	        ["llap", options.style.cls()], [inner, fix]);
+	};
+
+	groupTypes.rlap = function(group, options, prev) {
+	    var inner = makeSpan(
+	        ["inner"], [buildGroup(group.value.body, options.reset())]);
+	    var fix = makeSpan(["fix"], []);
+	    return makeSpan(
+	        ["rlap", options.style.cls()], [inner, fix]);
+	};
+
+	groupTypes.op = function(group, options, prev) {
+	    // Operators are handled in the TeXbook pg. 443-444, rule 13(a).
+	    var supGroup;
+	    var subGroup;
+	    var hasLimits = false;
+	    if (group.type === "supsub" ) {
+	        // If we have limits, supsub will pass us its group to handle. Pull
+	        // out the superscript and subscript and set the group to the op in
+	        // its base.
+	        supGroup = group.value.sup;
+	        subGroup = group.value.sub;
+	        group = group.value.base;
+	        hasLimits = true;
+	    }
+
+	    // Most operators have a large successor symbol, but these don't.
+	    var noSuccessor = [
+	        "\\smallint",
+	    ];
+
+	    var large = false;
+	    if (options.style.size === Style.DISPLAY.size &&
+	        group.value.symbol &&
+	        !utils.contains(noSuccessor, group.value.body)) {
+
+	        // Most symbol operators get larger in displaystyle (rule 13)
+	        large = true;
+	    }
+
+	    var base;
+	    var baseShift = 0;
+	    var slant = 0;
+	    if (group.value.symbol) {
+	        // If this is a symbol, create the symbol.
+	        var style = large ? "Size2-Regular" : "Size1-Regular";
+	        base = buildCommon.makeSymbol(
+	            group.value.body, style, "math", options.getColor(),
+	            ["op-symbol", large ? "large-op" : "small-op", "mop"]);
+
+	        // Shift the symbol so its center lies on the axis (rule 13). It
+	        // appears that our fonts have the centers of the symbols already
+	        // almost on the axis, so these numbers are very small. Note we
+	        // don't actually apply this here, but instead it is used either in
+	        // the vlist creation or separately when there are no limits.
+	        baseShift = (base.height - base.depth) / 2 -
+	            fontMetrics.metrics.axisHeight *
+	            options.style.sizeMultiplier;
+
+	        // The slant of the symbol is just its italic correction.
+	        slant = base.italic;
+	    } else {
+	        // Otherwise, this is a text operator. Build the text from the
+	        // operator's name.
+	        // TODO(emily): Add a space in the middle of some of these
+	        // operators, like \limsup
+	        var output = [];
+	        for (var i = 1; i < group.value.body.length; i++) {
+	            output.push(buildCommon.mathsym(group.value.body[i], group.mode));
+	        }
+	        base = makeSpan(["mop"], output, options.getColor());
+	    }
+
+	    if (hasLimits) {
+	        // IE 8 clips \int if it is in a display: inline-block. We wrap it
+	        // in a new span so it is an inline, and works.
+	        base = makeSpan([], [base]);
+
+	        var supmid;
+	        var supKern;
+	        var submid;
+	        var subKern;
+	        // We manually have to handle the superscripts and subscripts. This,
+	        // aside from the kern calculations, is copied from supsub.
+	        if (supGroup) {
+	            var sup = buildGroup(
+	                supGroup, options.withStyle(options.style.sup()));
+	            supmid = makeSpan(
+	                [options.style.reset(), options.style.sup().cls()], [sup]);
+
+	            supKern = Math.max(
+	                fontMetrics.metrics.bigOpSpacing1,
+	                fontMetrics.metrics.bigOpSpacing3 - sup.depth);
+	        }
+
+	        if (subGroup) {
+	            var sub = buildGroup(
+	                subGroup, options.withStyle(options.style.sub()));
+	            submid = makeSpan(
+	                [options.style.reset(), options.style.sub().cls()],
+	                [sub]);
+
+	            subKern = Math.max(
+	                fontMetrics.metrics.bigOpSpacing2,
+	                fontMetrics.metrics.bigOpSpacing4 - sub.height);
+	        }
+
+	        // Build the final group as a vlist of the possible subscript, base,
+	        // and possible superscript.
+	        var finalGroup;
+	        var top;
+	        var bottom;
+	        if (!supGroup) {
+	            top = base.height - baseShift;
+
+	            finalGroup = buildCommon.makeVList([
+	                {type: "kern", size: fontMetrics.metrics.bigOpSpacing5},
+	                {type: "elem", elem: submid},
+	                {type: "kern", size: subKern},
+	                {type: "elem", elem: base},
+	            ], "top", top, options);
+
+	            // Here, we shift the limits by the slant of the symbol. Note
+	            // that we are supposed to shift the limits by 1/2 of the slant,
+	            // but since we are centering the limits adding a full slant of
+	            // margin will shift by 1/2 that.
+	            finalGroup.children[0].style.marginLeft = -slant + "em";
+	        } else if (!subGroup) {
+	            bottom = base.depth + baseShift;
+
+	            finalGroup = buildCommon.makeVList([
+	                {type: "elem", elem: base},
+	                {type: "kern", size: supKern},
+	                {type: "elem", elem: supmid},
+	                {type: "kern", size: fontMetrics.metrics.bigOpSpacing5},
+	            ], "bottom", bottom, options);
+
+	            // See comment above about slants
+	            finalGroup.children[1].style.marginLeft = slant + "em";
+	        } else if (!supGroup && !subGroup) {
+	            // This case probably shouldn't occur (this would mean the
+	            // supsub was sending us a group with no superscript or
+	            // subscript) but be safe.
+	            return base;
+	        } else {
+	            bottom = fontMetrics.metrics.bigOpSpacing5 +
+	                submid.height + submid.depth +
+	                subKern +
+	                base.depth + baseShift;
+
+	            finalGroup = buildCommon.makeVList([
+	                {type: "kern", size: fontMetrics.metrics.bigOpSpacing5},
+	                {type: "elem", elem: submid},
+	                {type: "kern", size: subKern},
+	                {type: "elem", elem: base},
+	                {type: "kern", size: supKern},
+	                {type: "elem", elem: supmid},
+	                {type: "kern", size: fontMetrics.metrics.bigOpSpacing5},
+	            ], "bottom", bottom, options);
+
+	            // See comment above about slants
+	            finalGroup.children[0].style.marginLeft = -slant + "em";
+	            finalGroup.children[2].style.marginLeft = slant + "em";
+	        }
+
+	        return makeSpan(["mop", "op-limits"], [finalGroup]);
+	    } else {
+	        if (group.value.symbol) {
+	            base.style.top = baseShift + "em";
+	        }
+
+	        return base;
+	    }
+	};
+
+	groupTypes.katex = function(group, options, prev) {
+	    // The KaTeX logo. The offsets for the K and a were chosen to look
+	    // good, but the offsets for the T, E, and X were taken from the
+	    // definition of \TeX in TeX (see TeXbook pg. 356)
+	    var k = makeSpan(
+	        ["k"], [buildCommon.mathsym("K", group.mode)]);
+	    var a = makeSpan(
+	        ["a"], [buildCommon.mathsym("A", group.mode)]);
+
+	    a.height = (a.height + 0.2) * 0.75;
+	    a.depth = (a.height - 0.2) * 0.75;
+
+	    var t = makeSpan(
+	        ["t"], [buildCommon.mathsym("T", group.mode)]);
+	    var e = makeSpan(
+	        ["e"], [buildCommon.mathsym("E", group.mode)]);
+
+	    e.height = (e.height - 0.2155);
+	    e.depth = (e.depth + 0.2155);
+
+	    var x = makeSpan(
+	        ["x"], [buildCommon.mathsym("X", group.mode)]);
+
+	    return makeSpan(
+	        ["katex-logo", "mord"], [k, a, t, e, x], options.getColor());
+	};
+
+	groupTypes.overline = function(group, options, prev) {
+	    // Overlines are handled in the TeXbook pg 443, Rule 9.
+
+	    // Build the inner group in the cramped style.
+	    var innerGroup = buildGroup(group.value.body,
+	            options.withStyle(options.style.cramp()));
+
+	    var ruleWidth = fontMetrics.metrics.defaultRuleThickness /
+	        options.style.sizeMultiplier;
+
+	    // Create the line above the body
+	    var line = makeSpan(
+	        [options.style.reset(), Style.TEXT.cls(), "overline-line"]);
+	    line.height = ruleWidth;
+	    line.maxFontSize = 1.0;
+
+	    // Generate the vlist, with the appropriate kerns
+	    var vlist = buildCommon.makeVList([
+	        {type: "elem", elem: innerGroup},
+	        {type: "kern", size: 3 * ruleWidth},
+	        {type: "elem", elem: line},
+	        {type: "kern", size: ruleWidth},
+	    ], "firstBaseline", null, options);
+
+	    return makeSpan(["overline", "mord"], [vlist], options.getColor());
+	};
+
+	groupTypes.underline = function(group, options, prev) {
+	    // Underlines are handled in the TeXbook pg 443, Rule 10.
+
+	    // Build the inner group.
+	    var innerGroup = buildGroup(group.value.body, options);
+
+	    var ruleWidth = fontMetrics.metrics.defaultRuleThickness /
+	        options.style.sizeMultiplier;
+
+	    // Create the line above the body
+	    var line = makeSpan(
+	        [options.style.reset(), Style.TEXT.cls(), "underline-line"]);
+	    line.height = ruleWidth;
+	    line.maxFontSize = 1.0;
+
+	    // Generate the vlist, with the appropriate kerns
+	    var vlist = buildCommon.makeVList([
+	        {type: "kern", size: ruleWidth},
+	        {type: "elem", elem: line},
+	        {type: "kern", size: 3 * ruleWidth},
+	        {type: "elem", elem: innerGroup},
+	    ], "top", innerGroup.height, options);
+
+	    return makeSpan(["underline", "mord"], [vlist], options.getColor());
+	};
+
+	groupTypes.sqrt = function(group, options, prev) {
+	    // Square roots are handled in the TeXbook pg. 443, Rule 11.
+
+	    // First, we do the same steps as in overline to build the inner group
+	    // and line
+	    var inner = buildGroup(group.value.body,
+	            options.withStyle(options.style.cramp()));
+
+	    var ruleWidth = fontMetrics.metrics.defaultRuleThickness /
+	        options.style.sizeMultiplier;
+
+	    var line = makeSpan(
+	        [options.style.reset(), Style.TEXT.cls(), "sqrt-line"], [],
+	        options.getColor());
+	    line.height = ruleWidth;
+	    line.maxFontSize = 1.0;
+
+	    var phi = ruleWidth;
+	    if (options.style.id < Style.TEXT.id) {
+	        phi = fontMetrics.metrics.xHeight;
+	    }
+
+	    // Calculate the clearance between the body and line
+	    var lineClearance = ruleWidth + phi / 4;
+
+	    var innerHeight =
+	        (inner.height + inner.depth) * options.style.sizeMultiplier;
+	    var minDelimiterHeight = innerHeight + lineClearance + ruleWidth;
+
+	    // Create a \surd delimiter of the required minimum size
+	    var delim = makeSpan(["sqrt-sign"], [
+	        delimiter.customSizedDelim("\\surd", minDelimiterHeight,
+	                                   false, options, group.mode)],
+	                         options.getColor());
+
+	    var delimDepth = (delim.height + delim.depth) - ruleWidth;
+
+	    // Adjust the clearance based on the delimiter size
+	    if (delimDepth > inner.height + inner.depth + lineClearance) {
+	        lineClearance =
+	            (lineClearance + delimDepth - inner.height - inner.depth) / 2;
+	    }
+
+	    // Shift the delimiter so that its top lines up with the top of the line
+	    var delimShift = -(inner.height + lineClearance + ruleWidth) + delim.height;
+	    delim.style.top = delimShift + "em";
+	    delim.height -= delimShift;
+	    delim.depth += delimShift;
+
+	    // We add a special case here, because even when `inner` is empty, we
+	    // still get a line. So, we use a simple heuristic to decide if we
+	    // should omit the body entirely. (note this doesn't work for something
+	    // like `\sqrt{\rlap{x}}`, but if someone is doing that they deserve for
+	    // it not to work.
+	    var body;
+	    if (inner.height === 0 && inner.depth === 0) {
+	        body = makeSpan();
+	    } else {
+	        body = buildCommon.makeVList([
+	            {type: "elem", elem: inner},
+	            {type: "kern", size: lineClearance},
+	            {type: "elem", elem: line},
+	            {type: "kern", size: ruleWidth},
+	        ], "firstBaseline", null, options);
+	    }
+
+	    if (!group.value.index) {
+	        return makeSpan(["sqrt", "mord"], [delim, body]);
+	    } else {
+	        // Handle the optional root index
+
+	        // The index is always in scriptscript style
+	        var root = buildGroup(
+	            group.value.index,
+	            options.withStyle(Style.SCRIPTSCRIPT));
+	        var rootWrap = makeSpan(
+	            [options.style.reset(), Style.SCRIPTSCRIPT.cls()],
+	            [root]);
+
+	        // Figure out the height and depth of the inner part
+	        var innerRootHeight = Math.max(delim.height, body.height);
+	        var innerRootDepth = Math.max(delim.depth, body.depth);
+
+	        // The amount the index is shifted by. This is taken from the TeX
+	        // source, in the definition of `\r@@t`.
+	        var toShift = 0.6 * (innerRootHeight - innerRootDepth);
+
+	        // Build a VList with the superscript shifted up correctly
+	        var rootVList = buildCommon.makeVList(
+	            [{type: "elem", elem: rootWrap}],
+	            "shift", -toShift, options);
+	        // Add a class surrounding it so we can add on the appropriate
+	        // kerning
+	        var rootVListWrap = makeSpan(["root"], [rootVList]);
+
+	        return makeSpan(["sqrt", "mord"], [rootVListWrap, delim, body]);
+	    }
+	};
+
+	groupTypes.sizing = function(group, options, prev) {
+	    // Handle sizing operators like \Huge. Real TeX doesn't actually allow
+	    // these functions inside of math expressions, so we do some special
+	    // handling.
+	    var inner = buildExpression(group.value.value,
+	            options.withSize(group.value.size), prev);
+
+	    var span = makeSpan(["mord"],
+	        [makeSpan(["sizing", "reset-" + options.size, group.value.size,
+	                   options.style.cls()],
+	                  inner)]);
+
+	    // Calculate the correct maxFontSize manually
+	    var fontSize = buildCommon.sizingMultiplier[group.value.size];
+	    span.maxFontSize = fontSize * options.style.sizeMultiplier;
+
+	    return span;
+	};
+
+	groupTypes.styling = function(group, options, prev) {
+	    // Style changes are handled in the TeXbook on pg. 442, Rule 3.
+
+	    // Figure out what style we're changing to.
+	    var style = {
+	        "display": Style.DISPLAY,
+	        "text": Style.TEXT,
+	        "script": Style.SCRIPT,
+	        "scriptscript": Style.SCRIPTSCRIPT,
+	    };
+
+	    var newStyle = style[group.value.style];
+
+	    // Build the inner expression in the new style.
+	    var inner = buildExpression(
+	        group.value.value, options.withStyle(newStyle), prev);
+
+	    return makeSpan([options.style.reset(), newStyle.cls()], inner);
+	};
+
+	groupTypes.font = function(group, options, prev) {
+	    var font = group.value.font;
+	    return buildGroup(group.value.body, options.withFont(font), prev);
+	};
+
+	groupTypes.delimsizing = function(group, options, prev) {
+	    var delim = group.value.value;
+
+	    if (delim === ".") {
+	        // Empty delimiters still count as elements, even though they don't
+	        // show anything.
+	        return makeSpan([groupToType[group.value.delimType]]);
+	    }
+
+	    // Use delimiter.sizedDelim to generate the delimiter.
+	    return makeSpan(
+	        [groupToType[group.value.delimType]],
+	        [delimiter.sizedDelim(
+	            delim, group.value.size, options, group.mode)]);
+	};
+
+	groupTypes.leftright = function(group, options, prev) {
+	    // Build the inner expression
+	    var inner = buildExpression(group.value.body, options.reset());
+
+	    var innerHeight = 0;
+	    var innerDepth = 0;
+
+	    // Calculate its height and depth
+	    for (var i = 0; i < inner.length; i++) {
+	        innerHeight = Math.max(inner[i].height, innerHeight);
+	        innerDepth = Math.max(inner[i].depth, innerDepth);
+	    }
+
+	    // The size of delimiters is the same, regardless of what style we are
+	    // in. Thus, to correctly calculate the size of delimiter we need around
+	    // a group, we scale down the inner size based on the size.
+	    innerHeight *= options.style.sizeMultiplier;
+	    innerDepth *= options.style.sizeMultiplier;
+
+	    var leftDelim;
+	    if (group.value.left === ".") {
+	        // Empty delimiters in \left and \right make null delimiter spaces.
+	        leftDelim = makeNullDelimiter(options);
+	    } else {
+	        // Otherwise, use leftRightDelim to generate the correct sized
+	        // delimiter.
+	        leftDelim = delimiter.leftRightDelim(
+	            group.value.left, innerHeight, innerDepth, options,
+	            group.mode);
+	    }
+	    // Add it to the beginning of the expression
+	    inner.unshift(leftDelim);
+
+	    var rightDelim;
+	    // Same for the right delimiter
+	    if (group.value.right === ".") {
+	        rightDelim = makeNullDelimiter(options);
+	    } else {
+	        rightDelim = delimiter.leftRightDelim(
+	            group.value.right, innerHeight, innerDepth, options,
+	            group.mode);
+	    }
+	    // Add it to the end of the expression.
+	    inner.push(rightDelim);
+
+	    return makeSpan(
+	        ["minner", options.style.cls()], inner, options.getColor());
+	};
+
+	groupTypes.rule = function(group, options, prev) {
+	    // Make an empty span for the rule
+	    var rule = makeSpan(["mord", "rule"], [], options.getColor());
+
+	    // Calculate the shift, width, and height of the rule, and account for units
+	    var shift = 0;
+	    if (group.value.shift) {
+	        shift = group.value.shift.number;
+	        if (group.value.shift.unit === "ex") {
+	            shift *= fontMetrics.metrics.xHeight;
+	        }
+	    }
+
+	    var width = group.value.width.number;
+	    if (group.value.width.unit === "ex") {
+	        width *= fontMetrics.metrics.xHeight;
+	    }
+
+	    var height = group.value.height.number;
+	    if (group.value.height.unit === "ex") {
+	        height *= fontMetrics.metrics.xHeight;
+	    }
+
+	    // The sizes of rules are absolute, so make it larger if we are in a
+	    // smaller style.
+	    shift /= options.style.sizeMultiplier;
+	    width /= options.style.sizeMultiplier;
+	    height /= options.style.sizeMultiplier;
+
+	    // Style the rule to the right size
+	    rule.style.borderRightWidth = width + "em";
+	    rule.style.borderTopWidth = height + "em";
+	    rule.style.bottom = shift + "em";
+
+	    // Record the height and width
+	    rule.width = width;
+	    rule.height = height + shift;
+	    rule.depth = -shift;
+
+	    return rule;
+	};
+
+	groupTypes.accent = function(group, options, prev) {
+	    // Accents are handled in the TeXbook pg. 443, rule 12.
+	    var base = group.value.base;
+
+	    var supsubGroup;
+	    if (group.type === "supsub") {
+	        // If our base is a character box, and we have superscripts and
+	        // subscripts, the supsub will defer to us. In particular, we want
+	        // to attach the superscripts and subscripts to the inner body (so
+	        // that the position of the superscripts and subscripts won't be
+	        // affected by the height of the accent). We accomplish this by
+	        // sticking the base of the accent into the base of the supsub, and
+	        // rendering that, while keeping track of where the accent is.
+
+	        // The supsub group is the group that was passed in
+	        var supsub = group;
+	        // The real accent group is the base of the supsub group
+	        group = supsub.value.base;
+	        // The character box is the base of the accent group
+	        base = group.value.base;
+	        // Stick the character box into the base of the supsub group
+	        supsub.value.base = base;
+
+	        // Rerender the supsub group with its new base, and store that
+	        // result.
+	        supsubGroup = buildGroup(
+	            supsub, options.reset(), prev);
+	    }
+
+	    // Build the base group
+	    var body = buildGroup(
+	        base, options.withStyle(options.style.cramp()));
+
+	    // Calculate the skew of the accent. This is based on the line "If the
+	    // nucleus is not a single character, let s = 0; otherwise set s to the
+	    // kern amount for the nucleus followed by the \skewchar of its font."
+	    // Note that our skew metrics are just the kern between each character
+	    // and the skewchar.
+	    var skew;
+	    if (isCharacterBox(base)) {
+	        // If the base is a character box, then we want the skew of the
+	        // innermost character. To do that, we find the innermost character:
+	        var baseChar = getBaseElem(base);
+	        // Then, we render its group to get the symbol inside it
+	        var baseGroup = buildGroup(
+	            baseChar, options.withStyle(options.style.cramp()));
+	        // Finally, we pull the skew off of the symbol.
+	        skew = baseGroup.skew;
+	        // Note that we now throw away baseGroup, because the layers we
+	        // removed with getBaseElem might contain things like \color which
+	        // we can't get rid of.
+	        // TODO(emily): Find a better way to get the skew
+	    } else {
+	        skew = 0;
+	    }
+
+	    // calculate the amount of space between the body and the accent
+	    var clearance = Math.min(body.height, fontMetrics.metrics.xHeight);
+
+	    // Build the accent
+	    var accent = buildCommon.makeSymbol(
+	        group.value.accent, "Main-Regular", "math", options.getColor());
+	    // Remove the italic correction of the accent, because it only serves to
+	    // shift the accent over to a place we don't want.
+	    accent.italic = 0;
+
+	    // The \vec character that the fonts use is a combining character, and
+	    // thus shows up much too far to the left. To account for this, we add a
+	    // specific class which shifts the accent over to where we want it.
+	    // TODO(emily): Fix this in a better way, like by changing the font
+	    var vecClass = group.value.accent === "\\vec" ? "accent-vec" : null;
+
+	    var accentBody = makeSpan(["accent-body", vecClass], [
+	        makeSpan([], [accent])]);
+
+	    accentBody = buildCommon.makeVList([
+	        {type: "elem", elem: body},
+	        {type: "kern", size: -clearance},
+	        {type: "elem", elem: accentBody},
+	    ], "firstBaseline", null, options);
+
+	    // Shift the accent over by the skew. Note we shift by twice the skew
+	    // because we are centering the accent, so by adding 2*skew to the left,
+	    // we shift it to the right by 1*skew.
+	    accentBody.children[1].style.marginLeft = 2 * skew + "em";
+
+	    var accentWrap = makeSpan(["mord", "accent"], [accentBody]);
+
+	    if (supsubGroup) {
+	        // Here, we replace the "base" child of the supsub with our newly
+	        // generated accent.
+	        supsubGroup.children[0] = accentWrap;
+
+	        // Since we don't rerun the height calculation after replacing the
+	        // accent, we manually recalculate height.
+	        supsubGroup.height = Math.max(accentWrap.height, supsubGroup.height);
+
+	        // Accents should always be ords, even when their innards are not.
+	        supsubGroup.classes[0] = "mord";
+
+	        return supsubGroup;
+	    } else {
+	        return accentWrap;
+	    }
+	};
+
+	groupTypes.phantom = function(group, options, prev) {
+	    var elements = buildExpression(
+	        group.value.value,
+	        options.withPhantom(),
+	        prev
+	    );
+
+	    // \phantom isn't supposed to affect the elements it contains.
+	    // See "color" for more details.
+	    return new buildCommon.makeFragment(elements);
+	};
+
+	/**
+	 * buildGroup is the function that takes a group and calls the correct groupType
+	 * function for it. It also handles the interaction of size and style changes
+	 * between parents and children.
+	 */
+	var buildGroup = function(group, options, prev) {
+	    if (!group) {
+	        return makeSpan();
+	    }
+
+	    if (groupTypes[group.type]) {
+	        // Call the groupTypes function
+	        var groupNode = groupTypes[group.type](group, options, prev);
+	        var multiplier;
+
+	        // If the style changed between the parent and the current group,
+	        // account for the size difference
+	        if (options.style !== options.parentStyle) {
+	            multiplier = options.style.sizeMultiplier /
+	                    options.parentStyle.sizeMultiplier;
+
+	            groupNode.height *= multiplier;
+	            groupNode.depth *= multiplier;
+	        }
+
+	        // If the size changed between the parent and the current group, account
+	        // for that size difference.
+	        if (options.size !== options.parentSize) {
+	            multiplier = buildCommon.sizingMultiplier[options.size] /
+	                    buildCommon.sizingMultiplier[options.parentSize];
+
+	            groupNode.height *= multiplier;
+	            groupNode.depth *= multiplier;
+	        }
+
+	        return groupNode;
+	    } else {
+	        throw new ParseError(
+	            "Got group of unknown type: '" + group.type + "'");
+	    }
+	};
+
+	/**
+	 * Take an entire parse tree, and build it into an appropriate set of HTML
+	 * nodes.
+	 */
+	var buildHTML = function(tree, options) {
+	    // buildExpression is destructive, so we need to make a clone
+	    // of the incoming tree so that it isn't accidentally changed
+	    tree = JSON.parse(JSON.stringify(tree));
+
+	    // Build the expression contained in the tree
+	    var expression = buildExpression(tree, options);
+	    var body = makeSpan(["base", options.style.cls()], expression);
+
+	    // Add struts, which ensure that the top of the HTML element falls at the
+	    // height of the expression, and the bottom of the HTML element falls at the
+	    // depth of the expression.
+	    var topStrut = makeSpan(["strut"]);
+	    var bottomStrut = makeSpan(["strut", "bottom"]);
+
+	    topStrut.style.height = body.height + "em";
+	    bottomStrut.style.height = (body.height + body.depth) + "em";
+	    // We'd like to use `vertical-align: top` but in IE 9 this lowers the
+	    // baseline of the box to the bottom of this strut (instead staying in the
+	    // normal place) so we use an absolute value for vertical-align instead
+	    bottomStrut.style.verticalAlign = -body.depth + "em";
+
+	    // Wrap the struts and body together
+	    var htmlNode = makeSpan(["katex-html"], [topStrut, bottomStrut, body]);
+
+	    htmlNode.setAttribute("aria-hidden", "true");
+
+	    return htmlNode;
+	};
+
+	module.exports = buildHTML;
+
+
+/***/ }),
+/* 159 */
+/***/ (function(module, exports) {
+
+	/**
+	 * This file contains information and classes for the various kinds of styles
+	 * used in TeX. It provides a generic `Style` class, which holds information
+	 * about a specific style. It then provides instances of all the different kinds
+	 * of styles possible, and provides functions to move between them and get
+	 * information about them.
+	 */
+
+	/**
+	 * The main style class. Contains a unique id for the style, a size (which is
+	 * the same for cramped and uncramped version of a style), a cramped flag, and a
+	 * size multiplier, which gives the size difference between a style and
+	 * textstyle.
+	 */
+	function Style(id, size, multiplier, cramped) {
+	    this.id = id;
+	    this.size = size;
+	    this.cramped = cramped;
+	    this.sizeMultiplier = multiplier;
+	}
+
+	/**
+	 * Get the style of a superscript given a base in the current style.
+	 */
+	Style.prototype.sup = function() {
+	    return styles[sup[this.id]];
+	};
+
+	/**
+	 * Get the style of a subscript given a base in the current style.
+	 */
+	Style.prototype.sub = function() {
+	    return styles[sub[this.id]];
+	};
+
+	/**
+	 * Get the style of a fraction numerator given the fraction in the current
+	 * style.
+	 */
+	Style.prototype.fracNum = function() {
+	    return styles[fracNum[this.id]];
+	};
+
+	/**
+	 * Get the style of a fraction denominator given the fraction in the current
+	 * style.
+	 */
+	Style.prototype.fracDen = function() {
+	    return styles[fracDen[this.id]];
+	};
+
+	/**
+	 * Get the cramped version of a style (in particular, cramping a cramped style
+	 * doesn't change the style).
+	 */
+	Style.prototype.cramp = function() {
+	    return styles[cramp[this.id]];
+	};
+
+	/**
+	 * HTML class name, like "displaystyle cramped"
+	 */
+	Style.prototype.cls = function() {
+	    return sizeNames[this.size] + (this.cramped ? " cramped" : " uncramped");
+	};
+
+	/**
+	 * HTML Reset class name, like "reset-textstyle"
+	 */
+	Style.prototype.reset = function() {
+	    return resetNames[this.size];
+	};
+
+	// IDs of the different styles
+	var D = 0;
+	var Dc = 1;
+	var T = 2;
+	var Tc = 3;
+	var S = 4;
+	var Sc = 5;
+	var SS = 6;
+	var SSc = 7;
+
+	// String names for the different sizes
+	var sizeNames = [
+	    "displaystyle textstyle",
+	    "textstyle",
+	    "scriptstyle",
+	    "scriptscriptstyle",
+	];
+
+	// Reset names for the different sizes
+	var resetNames = [
+	    "reset-textstyle",
+	    "reset-textstyle",
+	    "reset-scriptstyle",
+	    "reset-scriptscriptstyle",
+	];
+
+	// Instances of the different styles
+	var styles = [
+	    new Style(D, 0, 1.0, false),
+	    new Style(Dc, 0, 1.0, true),
+	    new Style(T, 1, 1.0, false),
+	    new Style(Tc, 1, 1.0, true),
+	    new Style(S, 2, 0.7, false),
+	    new Style(Sc, 2, 0.7, true),
+	    new Style(SS, 3, 0.5, false),
+	    new Style(SSc, 3, 0.5, true),
+	];
+
+	// Lookup tables for switching from one style to another
+	var sup = [S, Sc, S, Sc, SS, SSc, SS, SSc];
+	var sub = [Sc, Sc, Sc, Sc, SSc, SSc, SSc, SSc];
+	var fracNum = [T, Tc, S, Sc, SS, SSc, SS, SSc];
+	var fracDen = [Tc, Tc, Sc, Sc, SSc, SSc, SSc, SSc];
+	var cramp = [Dc, Dc, Tc, Tc, Sc, Sc, SSc, SSc];
+
+	// We only export some of the styles. Also, we don't export the `Style` class so
+	// no more styles can be generated.
+	module.exports = {
+	    DISPLAY: styles[D],
+	    TEXT: styles[T],
+	    SCRIPT: styles[S],
+	    SCRIPTSCRIPT: styles[SS],
+	};
+
+
+/***/ }),
+/* 160 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* eslint no-console:0 */
+	/**
+	 * This module contains general functions that can be used for building
+	 * different kinds of domTree nodes in a consistent manner.
+	 */
+
+	var domTree = __webpack_require__(161);
+	var fontMetrics = __webpack_require__(163);
+	var symbols = __webpack_require__(165);
+	var utils = __webpack_require__(162);
+
+	var greekCapitals = [
+	    "\\Gamma",
+	    "\\Delta",
+	    "\\Theta",
+	    "\\Lambda",
+	    "\\Xi",
+	    "\\Pi",
+	    "\\Sigma",
+	    "\\Upsilon",
+	    "\\Phi",
+	    "\\Psi",
+	    "\\Omega",
+	];
+
+	var dotlessLetters = [
+	    "\u0131",   // dotless i, \imath
+	    "\u0237",   // dotless j, \jmath
+	];
+
+	/**
+	 * Makes a symbolNode after translation via the list of symbols in symbols.js.
+	 * Correctly pulls out metrics for the character, and optionally takes a list of
+	 * classes to be attached to the node.
+	 */
+	var makeSymbol = function(value, style, mode, color, classes) {
+	    // Replace the value with its replaced value from symbol.js
+	    if (symbols[mode][value] && symbols[mode][value].replace) {
+	        value = symbols[mode][value].replace;
+	    }
+
+	    var metrics = fontMetrics.getCharacterMetrics(value, style);
+
+	    var symbolNode;
+	    if (metrics) {
+	        symbolNode = new domTree.symbolNode(
+	            value, metrics.height, metrics.depth, metrics.italic, metrics.skew,
+	            classes);
+	    } else {
+	        // TODO(emily): Figure out a good way to only print this in development
+	        typeof console !== "undefined" && console.warn(
+	            "No character metrics for '" + value + "' in style '" +
+	                style + "'");
+	        symbolNode = new domTree.symbolNode(value, 0, 0, 0, 0, classes);
+	    }
+
+	    if (color) {
+	        symbolNode.style.color = color;
+	    }
+
+	    return symbolNode;
+	};
+
+	/**
+	 * Makes a symbol in Main-Regular or AMS-Regular.
+	 * Used for rel, bin, open, close, inner, and punct.
+	 */
+	var mathsym = function(value, mode, color, classes) {
+	    // Decide what font to render the symbol in by its entry in the symbols
+	    // table.
+	    // Have a special case for when the value = \ because the \ is used as a
+	    // textord in unsupported command errors but cannot be parsed as a regular
+	    // text ordinal and is therefore not present as a symbol in the symbols
+	    // table for text
+	    if (value === "\\" || symbols[mode][value].font === "main") {
+	        return makeSymbol(value, "Main-Regular", mode, color, classes);
+	    } else {
+	        return makeSymbol(
+	            value, "AMS-Regular", mode, color, classes.concat(["amsrm"]));
+	    }
+	};
+
+	/**
+	 * Makes a symbol in the default font for mathords and textords.
+	 */
+	var mathDefault = function(value, mode, color, classes, type) {
+	    if (type === "mathord") {
+	        return mathit(value, mode, color, classes);
+	    } else if (type === "textord") {
+	        return makeSymbol(
+	            value, "Main-Regular", mode, color, classes.concat(["mathrm"]));
+	    } else {
+	        throw new Error("unexpected type: " + type + " in mathDefault");
+	    }
+	};
+
+	/**
+	 * Makes a symbol in the italic math font.
+	 */
+	var mathit = function(value, mode, color, classes) {
+	    if (/[0-9]/.test(value.charAt(0)) ||
+	            // glyphs for \imath and \jmath do not exist in Math-Italic so we
+	            // need to use Main-Italic instead
+	            utils.contains(dotlessLetters, value) ||
+	            utils.contains(greekCapitals, value)) {
+	        return makeSymbol(
+	            value, "Main-Italic", mode, color, classes.concat(["mainit"]));
+	    } else {
+	        return makeSymbol(
+	            value, "Math-Italic", mode, color, classes.concat(["mathit"]));
+	    }
+	};
+
+	/**
+	 * Makes either a mathord or textord in the correct font and color.
+	 */
+	var makeOrd = function(group, options, type) {
+	    var mode = group.mode;
+	    var value = group.value;
+	    if (symbols[mode][value] && symbols[mode][value].replace) {
+	        value = symbols[mode][value].replace;
+	    }
+
+	    var classes = ["mord"];
+	    var color = options.getColor();
+
+	    var font = options.font;
+	    if (font) {
+	        if (font === "mathit" || utils.contains(dotlessLetters, value)) {
+	            return mathit(value, mode, color, classes);
+	        } else {
+	            var fontName = fontMap[font].fontName;
+	            if (fontMetrics.getCharacterMetrics(value, fontName)) {
+	                return makeSymbol(
+	                    value, fontName, mode, color, classes.concat([font]));
+	            } else {
+	                return mathDefault(value, mode, color, classes, type);
+	            }
+	        }
+	    } else {
+	        return mathDefault(value, mode, color, classes, type);
+	    }
+	};
+
+	/**
+	 * Calculate the height, depth, and maxFontSize of an element based on its
+	 * children.
+	 */
+	var sizeElementFromChildren = function(elem) {
+	    var height = 0;
+	    var depth = 0;
+	    var maxFontSize = 0;
+
+	    if (elem.children) {
+	        for (var i = 0; i < elem.children.length; i++) {
+	            if (elem.children[i].height > height) {
+	                height = elem.children[i].height;
+	            }
+	            if (elem.children[i].depth > depth) {
+	                depth = elem.children[i].depth;
+	            }
+	            if (elem.children[i].maxFontSize > maxFontSize) {
+	                maxFontSize = elem.children[i].maxFontSize;
+	            }
+	        }
+	    }
+
+	    elem.height = height;
+	    elem.depth = depth;
+	    elem.maxFontSize = maxFontSize;
+	};
+
+	/**
+	 * Makes a span with the given list of classes, list of children, and color.
+	 */
+	var makeSpan = function(classes, children, color) {
+	    var span = new domTree.span(classes, children);
+
+	    sizeElementFromChildren(span);
+
+	    if (color) {
+	        span.style.color = color;
+	    }
+
+	    return span;
+	};
+
+	/**
+	 * Makes a document fragment with the given list of children.
+	 */
+	var makeFragment = function(children) {
+	    var fragment = new domTree.documentFragment(children);
+
+	    sizeElementFromChildren(fragment);
+
+	    return fragment;
+	};
+
+	/**
+	 * Makes an element placed in each of the vlist elements to ensure that each
+	 * element has the same max font size. To do this, we create a zero-width space
+	 * with the correct font size.
+	 */
+	var makeFontSizer = function(options, fontSize) {
+	    var fontSizeInner = makeSpan([], [new domTree.symbolNode("\u200b")]);
+	    fontSizeInner.style.fontSize =
+	        (fontSize / options.style.sizeMultiplier) + "em";
+
+	    var fontSizer = makeSpan(
+	        ["fontsize-ensurer", "reset-" + options.size, "size5"],
+	        [fontSizeInner]);
+
+	    return fontSizer;
+	};
+
+	/**
+	 * Makes a vertical list by stacking elements and kerns on top of each other.
+	 * Allows for many different ways of specifying the positioning method.
+	 *
+	 * Arguments:
+	 *  - children: A list of child or kern nodes to be stacked on top of each other
+	 *              (i.e. the first element will be at the bottom, and the last at
+	 *              the top). Element nodes are specified as
+	 *                {type: "elem", elem: node}
+	 *              while kern nodes are specified as
+	 *                {type: "kern", size: size}
+	 *  - positionType: The method by which the vlist should be positioned. Valid
+	 *                  values are:
+	 *                   - "individualShift": The children list only contains elem
+	 *                                        nodes, and each node contains an extra
+	 *                                        "shift" value of how much it should be
+	 *                                        shifted (note that shifting is always
+	 *                                        moving downwards). positionData is
+	 *                                        ignored.
+	 *                   - "top": The positionData specifies the topmost point of
+	 *                            the vlist (note this is expected to be a height,
+	 *                            so positive values move up)
+	 *                   - "bottom": The positionData specifies the bottommost point
+	 *                               of the vlist (note this is expected to be a
+	 *                               depth, so positive values move down
+	 *                   - "shift": The vlist will be positioned such that its
+	 *                              baseline is positionData away from the baseline
+	 *                              of the first child. Positive values move
+	 *                              downwards.
+	 *                   - "firstBaseline": The vlist will be positioned such that
+	 *                                      its baseline is aligned with the
+	 *                                      baseline of the first child.
+	 *                                      positionData is ignored. (this is
+	 *                                      equivalent to "shift" with
+	 *                                      positionData=0)
+	 *  - positionData: Data used in different ways depending on positionType
+	 *  - options: An Options object
+	 *
+	 */
+	var makeVList = function(children, positionType, positionData, options) {
+	    var depth;
+	    var currPos;
+	    var i;
+	    if (positionType === "individualShift") {
+	        var oldChildren = children;
+	        children = [oldChildren[0]];
+
+	        // Add in kerns to the list of children to get each element to be
+	        // shifted to the correct specified shift
+	        depth = -oldChildren[0].shift - oldChildren[0].elem.depth;
+	        currPos = depth;
+	        for (i = 1; i < oldChildren.length; i++) {
+	            var diff = -oldChildren[i].shift - currPos -
+	                oldChildren[i].elem.depth;
+	            var size = diff -
+	                (oldChildren[i - 1].elem.height +
+	                 oldChildren[i - 1].elem.depth);
+
+	            currPos = currPos + diff;
+
+	            children.push({type: "kern", size: size});
+	            children.push(oldChildren[i]);
+	        }
+	    } else if (positionType === "top") {
+	        // We always start at the bottom, so calculate the bottom by adding up
+	        // all the sizes
+	        var bottom = positionData;
+	        for (i = 0; i < children.length; i++) {
+	            if (children[i].type === "kern") {
+	                bottom -= children[i].size;
+	            } else {
+	                bottom -= children[i].elem.height + children[i].elem.depth;
+	            }
+	        }
+	        depth = bottom;
+	    } else if (positionType === "bottom") {
+	        depth = -positionData;
+	    } else if (positionType === "shift") {
+	        depth = -children[0].elem.depth - positionData;
+	    } else if (positionType === "firstBaseline") {
+	        depth = -children[0].elem.depth;
+	    } else {
+	        depth = 0;
+	    }
+
+	    // Make the fontSizer
+	    var maxFontSize = 0;
+	    for (i = 0; i < children.length; i++) {
+	        if (children[i].type === "elem") {
+	            maxFontSize = Math.max(maxFontSize, children[i].elem.maxFontSize);
+	        }
+	    }
+	    var fontSizer = makeFontSizer(options, maxFontSize);
+
+	    // Create a new list of actual children at the correct offsets
+	    var realChildren = [];
+	    currPos = depth;
+	    for (i = 0; i < children.length; i++) {
+	        if (children[i].type === "kern") {
+	            currPos += children[i].size;
+	        } else {
+	            var child = children[i].elem;
+
+	            var shift = -child.depth - currPos;
+	            currPos += child.height + child.depth;
+
+	            var childWrap = makeSpan([], [fontSizer, child]);
+	            childWrap.height -= shift;
+	            childWrap.depth += shift;
+	            childWrap.style.top = shift + "em";
+
+	            realChildren.push(childWrap);
+	        }
+	    }
+
+	    // Add in an element at the end with no offset to fix the calculation of
+	    // baselines in some browsers (namely IE, sometimes safari)
+	    var baselineFix = makeSpan(
+	        ["baseline-fix"], [fontSizer, new domTree.symbolNode("\u200b")]);
+	    realChildren.push(baselineFix);
+
+	    var vlist = makeSpan(["vlist"], realChildren);
+	    // Fix the final height and depth, in case there were kerns at the ends
+	    // since the makeSpan calculation won't take that in to account.
+	    vlist.height = Math.max(currPos, vlist.height);
+	    vlist.depth = Math.max(-depth, vlist.depth);
+	    return vlist;
+	};
+
+	// A table of size -> font size for the different sizing functions
+	var sizingMultiplier = {
+	    size1: 0.5,
+	    size2: 0.7,
+	    size3: 0.8,
+	    size4: 0.9,
+	    size5: 1.0,
+	    size6: 1.2,
+	    size7: 1.44,
+	    size8: 1.73,
+	    size9: 2.07,
+	    size10: 2.49,
+	};
+
+	// A map of spacing functions to their attributes, like size and corresponding
+	// CSS class
+	var spacingFunctions = {
+	    "\\qquad": {
+	        size: "2em",
+	        className: "qquad",
+	    },
+	    "\\quad": {
+	        size: "1em",
+	        className: "quad",
+	    },
+	    "\\enspace": {
+	        size: "0.5em",
+	        className: "enspace",
+	    },
+	    "\\;": {
+	        size: "0.277778em",
+	        className: "thickspace",
+	    },
+	    "\\:": {
+	        size: "0.22222em",
+	        className: "mediumspace",
+	    },
+	    "\\,": {
+	        size: "0.16667em",
+	        className: "thinspace",
+	    },
+	    "\\!": {
+	        size: "-0.16667em",
+	        className: "negativethinspace",
+	    },
+	};
+
+	/**
+	 * Maps TeX font commands to objects containing:
+	 * - variant: string used for "mathvariant" attribute in buildMathML.js
+	 * - fontName: the "style" parameter to fontMetrics.getCharacterMetrics
+	 */
+	// A map between tex font commands an MathML mathvariant attribute values
+	var fontMap = {
+	    // styles
+	    "mathbf": {
+	        variant: "bold",
+	        fontName: "Main-Bold",
+	    },
+	    "mathrm": {
+	        variant: "normal",
+	        fontName: "Main-Regular",
+	    },
+
+	    // "mathit" is missing because it requires the use of two fonts: Main-Italic
+	    // and Math-Italic.  This is handled by a special case in makeOrd which ends
+	    // up calling mathit.
+
+	    // families
+	    "mathbb": {
+	        variant: "double-struck",
+	        fontName: "AMS-Regular",
+	    },
+	    "mathcal": {
+	        variant: "script",
+	        fontName: "Caligraphic-Regular",
+	    },
+	    "mathfrak": {
+	        variant: "fraktur",
+	        fontName: "Fraktur-Regular",
+	    },
+	    "mathscr": {
+	        variant: "script",
+	        fontName: "Script-Regular",
+	    },
+	    "mathsf": {
+	        variant: "sans-serif",
+	        fontName: "SansSerif-Regular",
+	    },
+	    "mathtt": {
+	        variant: "monospace",
+	        fontName: "Typewriter-Regular",
+	    },
+	};
+
+	module.exports = {
+	    fontMap: fontMap,
+	    makeSymbol: makeSymbol,
+	    mathsym: mathsym,
+	    makeSpan: makeSpan,
+	    makeFragment: makeFragment,
+	    makeVList: makeVList,
+	    makeOrd: makeOrd,
+	    sizingMultiplier: sizingMultiplier,
+	    spacingFunctions: spacingFunctions,
+	};
+
+
+/***/ }),
+/* 161 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * These objects store the data about the DOM nodes we create, as well as some
+	 * extra data. They can then be transformed into real DOM nodes with the
+	 * `toNode` function or HTML markup using `toMarkup`. They are useful for both
+	 * storing extra properties on the nodes, as well as providing a way to easily
+	 * work with the DOM.
+	 *
+	 * Similar functions for working with MathML nodes exist in mathMLTree.js.
+	 */
+
+	var utils = __webpack_require__(162);
+
+	/**
+	 * Create an HTML className based on a list of classes. In addition to joining
+	 * with spaces, we also remove null or empty classes.
+	 */
+	var createClass = function(classes) {
+	    classes = classes.slice();
+	    for (var i = classes.length - 1; i >= 0; i--) {
+	        if (!classes[i]) {
+	            classes.splice(i, 1);
+	        }
+	    }
+
+	    return classes.join(" ");
+	};
+
+	/**
+	 * This node represents a span node, with a className, a list of children, and
+	 * an inline style. It also contains information about its height, depth, and
+	 * maxFontSize.
+	 */
+	function span(classes, children, height, depth, maxFontSize, style) {
+	    this.classes = classes || [];
+	    this.children = children || [];
+	    this.height = height || 0;
+	    this.depth = depth || 0;
+	    this.maxFontSize = maxFontSize || 0;
+	    this.style = style || {};
+	    this.attributes = {};
+	}
+
+	/**
+	 * Sets an arbitrary attribute on the span. Warning: use this wisely. Not all
+	 * browsers support attributes the same, and having too many custom attributes
+	 * is probably bad.
+	 */
+	span.prototype.setAttribute = function(attribute, value) {
+	    this.attributes[attribute] = value;
+	};
+
+	/**
+	 * Convert the span into an HTML node
+	 */
+	span.prototype.toNode = function() {
+	    var span = document.createElement("span");
+
+	    // Apply the class
+	    span.className = createClass(this.classes);
+
+	    // Apply inline styles
+	    for (var style in this.style) {
+	        if (Object.prototype.hasOwnProperty.call(this.style, style)) {
+	            span.style[style] = this.style[style];
+	        }
+	    }
+
+	    // Apply attributes
+	    for (var attr in this.attributes) {
+	        if (Object.prototype.hasOwnProperty.call(this.attributes, attr)) {
+	            span.setAttribute(attr, this.attributes[attr]);
+	        }
+	    }
+
+	    // Append the children, also as HTML nodes
+	    for (var i = 0; i < this.children.length; i++) {
+	        span.appendChild(this.children[i].toNode());
+	    }
+
+	    return span;
+	};
+
+	/**
+	 * Convert the span into an HTML markup string
+	 */
+	span.prototype.toMarkup = function() {
+	    var markup = "<span";
+
+	    // Add the class
+	    if (this.classes.length) {
+	        markup += " class=\"";
+	        markup += utils.escape(createClass(this.classes));
+	        markup += "\"";
+	    }
+
+	    var styles = "";
+
+	    // Add the styles, after hyphenation
+	    for (var style in this.style) {
+	        if (this.style.hasOwnProperty(style)) {
+	            styles += utils.hyphenate(style) + ":" + this.style[style] + ";";
+	        }
+	    }
+
+	    if (styles) {
+	        markup += " style=\"" + utils.escape(styles) + "\"";
+	    }
+
+	    // Add the attributes
+	    for (var attr in this.attributes) {
+	        if (Object.prototype.hasOwnProperty.call(this.attributes, attr)) {
+	            markup += " " + attr + "=\"";
+	            markup += utils.escape(this.attributes[attr]);
+	            markup += "\"";
+	        }
+	    }
+
+	    markup += ">";
+
+	    // Add the markup of the children, also as markup
+	    for (var i = 0; i < this.children.length; i++) {
+	        markup += this.children[i].toMarkup();
+	    }
+
+	    markup += "</span>";
+
+	    return markup;
+	};
+
+	/**
+	 * This node represents a document fragment, which contains elements, but when
+	 * placed into the DOM doesn't have any representation itself. Thus, it only
+	 * contains children and doesn't have any HTML properties. It also keeps track
+	 * of a height, depth, and maxFontSize.
+	 */
+	function documentFragment(children, height, depth, maxFontSize) {
+	    this.children = children || [];
+	    this.height = height || 0;
+	    this.depth = depth || 0;
+	    this.maxFontSize = maxFontSize || 0;
+	}
+
+	/**
+	 * Convert the fragment into a node
+	 */
+	documentFragment.prototype.toNode = function() {
+	    // Create a fragment
+	    var frag = document.createDocumentFragment();
+
+	    // Append the children
+	    for (var i = 0; i < this.children.length; i++) {
+	        frag.appendChild(this.children[i].toNode());
+	    }
+
+	    return frag;
+	};
+
+	/**
+	 * Convert the fragment into HTML markup
+	 */
+	documentFragment.prototype.toMarkup = function() {
+	    var markup = "";
+
+	    // Simply concatenate the markup for the children together
+	    for (var i = 0; i < this.children.length; i++) {
+	        markup += this.children[i].toMarkup();
+	    }
+
+	    return markup;
+	};
+
+	/**
+	 * A symbol node contains information about a single symbol. It either renders
+	 * to a single text node, or a span with a single text node in it, depending on
+	 * whether it has CSS classes, styles, or needs italic correction.
+	 */
+	function symbolNode(value, height, depth, italic, skew, classes, style) {
+	    this.value = value || "";
+	    this.height = height || 0;
+	    this.depth = depth || 0;
+	    this.italic = italic || 0;
+	    this.skew = skew || 0;
+	    this.classes = classes || [];
+	    this.style = style || {};
+	    this.maxFontSize = 0;
+	}
+
+	/**
+	 * Creates a text node or span from a symbol node. Note that a span is only
+	 * created if it is needed.
+	 */
+	symbolNode.prototype.toNode = function() {
+	    var node = document.createTextNode(this.value);
+	    var span = null;
+
+	    if (this.italic > 0) {
+	        span = document.createElement("span");
+	        span.style.marginRight = this.italic + "em";
+	    }
+
+	    if (this.classes.length > 0) {
+	        span = span || document.createElement("span");
+	        span.className = createClass(this.classes);
+	    }
+
+	    for (var style in this.style) {
+	        if (this.style.hasOwnProperty(style)) {
+	            span = span || document.createElement("span");
+	            span.style[style] = this.style[style];
+	        }
+	    }
+
+	    if (span) {
+	        span.appendChild(node);
+	        return span;
+	    } else {
+	        return node;
+	    }
+	};
+
+	/**
+	 * Creates markup for a symbol node.
+	 */
+	symbolNode.prototype.toMarkup = function() {
+	    // TODO(alpert): More duplication than I'd like from
+	    // span.prototype.toMarkup and symbolNode.prototype.toNode...
+	    var needsSpan = false;
+
+	    var markup = "<span";
+
+	    if (this.classes.length) {
+	        needsSpan = true;
+	        markup += " class=\"";
+	        markup += utils.escape(createClass(this.classes));
+	        markup += "\"";
+	    }
+
+	    var styles = "";
+
+	    if (this.italic > 0) {
+	        styles += "margin-right:" + this.italic + "em;";
+	    }
+	    for (var style in this.style) {
+	        if (this.style.hasOwnProperty(style)) {
+	            styles += utils.hyphenate(style) + ":" + this.style[style] + ";";
+	        }
+	    }
+
+	    if (styles) {
+	        needsSpan = true;
+	        markup += " style=\"" + utils.escape(styles) + "\"";
+	    }
+
+	    var escaped = utils.escape(this.value);
+	    if (needsSpan) {
+	        markup += ">";
+	        markup += escaped;
+	        markup += "</span>";
+	        return markup;
+	    } else {
+	        return escaped;
+	    }
+	};
+
+	module.exports = {
+	    span: span,
+	    documentFragment: documentFragment,
+	    symbolNode: symbolNode,
+	};
+
+
+/***/ }),
+/* 162 */
+/***/ (function(module, exports) {
+
+	/**
+	 * This file contains a list of utility functions which are useful in other
+	 * files.
+	 */
+
+	/**
+	 * Provide an `indexOf` function which works in IE8, but defers to native if
+	 * possible.
+	 */
+	var nativeIndexOf = Array.prototype.indexOf;
+	var indexOf = function(list, elem) {
+	    if (list == null) {
+	        return -1;
+	    }
+	    if (nativeIndexOf && list.indexOf === nativeIndexOf) {
+	        return list.indexOf(elem);
+	    }
+	    var i = 0;
+	    var l = list.length;
+	    for (; i < l; i++) {
+	        if (list[i] === elem) {
+	            return i;
+	        }
+	    }
+	    return -1;
+	};
+
+	/**
+	 * Return whether an element is contained in a list
+	 */
+	var contains = function(list, elem) {
+	    return indexOf(list, elem) !== -1;
+	};
+
+	/**
+	 * Provide a default value if a setting is undefined
+	 */
+	var deflt = function(setting, defaultIfUndefined) {
+	    return setting === undefined ? defaultIfUndefined : setting;
+	};
+
+	// hyphenate and escape adapted from Facebook's React under Apache 2 license
+
+	var uppercase = /([A-Z])/g;
+	var hyphenate = function(str) {
+	    return str.replace(uppercase, "-$1").toLowerCase();
+	};
+
+	var ESCAPE_LOOKUP = {
+	    "&": "&amp;",
+	    ">": "&gt;",
+	    "<": "&lt;",
+	    "\"": "&quot;",
+	    "'": "&#x27;",
+	};
+
+	var ESCAPE_REGEX = /[&><"']/g;
+
+	function escaper(match) {
+	    return ESCAPE_LOOKUP[match];
+	}
+
+	/**
+	 * Escapes text to prevent scripting attacks.
+	 *
+	 * @param {*} text Text value to escape.
+	 * @return {string} An escaped string.
+	 */
+	function escape(text) {
+	    return ("" + text).replace(ESCAPE_REGEX, escaper);
+	}
+
+	/**
+	 * A function to set the text content of a DOM element in all supported
+	 * browsers. Note that we don't define this if there is no document.
+	 */
+	var setTextContent;
+	if (typeof document !== "undefined") {
+	    var testNode = document.createElement("span");
+	    if ("textContent" in testNode) {
+	        setTextContent = function(node, text) {
+	            node.textContent = text;
+	        };
+	    } else {
+	        setTextContent = function(node, text) {
+	            node.innerText = text;
+	        };
+	    }
+	}
+
+	/**
+	 * A function to clear a node.
+	 */
+	function clearNode(node) {
+	    setTextContent(node, "");
+	}
+
+	module.exports = {
+	    contains: contains,
+	    deflt: deflt,
+	    escape: escape,
+	    hyphenate: hyphenate,
+	    indexOf: indexOf,
+	    setTextContent: setTextContent,
+	    clearNode: clearNode,
+	};
+
+
+/***/ }),
+/* 163 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* eslint no-unused-vars:0 */
+
+	var Style = __webpack_require__(159);
+
+	/**
+	 * This file contains metrics regarding fonts and individual symbols. The sigma
+	 * and xi variables, as well as the metricMap map contain data extracted from
+	 * TeX, TeX font metrics, and the TTF files. These data are then exposed via the
+	 * `metrics` variable and the getCharacterMetrics function.
+	 */
+
+	// These font metrics are extracted from TeX by using
+	// \font\a=cmmi10
+	// \showthe\fontdimenX\a
+	// where X is the corresponding variable number. These correspond to the font
+	// parameters of the symbol fonts. In TeX, there are actually three sets of
+	// dimensions, one for each of textstyle, scriptstyle, and scriptscriptstyle,
+	// but we only use the textstyle ones, and scale certain dimensions accordingly.
+	// See the TeXbook, page 441.
+	var sigma1 = 0.025;
+	var sigma2 = 0;
+	var sigma3 = 0;
+	var sigma4 = 0;
+	var sigma5 = 0.431;
+	var sigma6 = 1;
+	var sigma7 = 0;
+	var sigma8 = 0.677;
+	var sigma9 = 0.394;
+	var sigma10 = 0.444;
+	var sigma11 = 0.686;
+	var sigma12 = 0.345;
+	var sigma13 = 0.413;
+	var sigma14 = 0.363;
+	var sigma15 = 0.289;
+	var sigma16 = 0.150;
+	var sigma17 = 0.247;
+	var sigma18 = 0.386;
+	var sigma19 = 0.050;
+	var sigma20 = 2.390;
+	var sigma21 = 1.01;
+	var sigma21Script = 0.81;
+	var sigma21ScriptScript = 0.71;
+	var sigma22 = 0.250;
+
+	// These font metrics are extracted from TeX by using
+	// \font\a=cmex10
+	// \showthe\fontdimenX\a
+	// where X is the corresponding variable number. These correspond to the font
+	// parameters of the extension fonts (family 3). See the TeXbook, page 441.
+	var xi1 = 0;
+	var xi2 = 0;
+	var xi3 = 0;
+	var xi4 = 0;
+	var xi5 = 0.431;
+	var xi6 = 1;
+	var xi7 = 0;
+	var xi8 = 0.04;
+	var xi9 = 0.111;
+	var xi10 = 0.166;
+	var xi11 = 0.2;
+	var xi12 = 0.6;
+	var xi13 = 0.1;
+
+	// This value determines how large a pt is, for metrics which are defined in
+	// terms of pts.
+	// This value is also used in katex.less; if you change it make sure the values
+	// match.
+	var ptPerEm = 10.0;
+
+	// The space between adjacent `|` columns in an array definition. From
+	// `\showthe\doublerulesep` in LaTeX.
+	var doubleRuleSep = 2.0 / ptPerEm;
+
+	/**
+	 * This is just a mapping from common names to real metrics
+	 */
+	var metrics = {
+	    xHeight: sigma5,
+	    quad: sigma6,
+	    num1: sigma8,
+	    num2: sigma9,
+	    num3: sigma10,
+	    denom1: sigma11,
+	    denom2: sigma12,
+	    sup1: sigma13,
+	    sup2: sigma14,
+	    sup3: sigma15,
+	    sub1: sigma16,
+	    sub2: sigma17,
+	    supDrop: sigma18,
+	    subDrop: sigma19,
+	    axisHeight: sigma22,
+	    defaultRuleThickness: xi8,
+	    bigOpSpacing1: xi9,
+	    bigOpSpacing2: xi10,
+	    bigOpSpacing3: xi11,
+	    bigOpSpacing4: xi12,
+	    bigOpSpacing5: xi13,
+	    ptPerEm: ptPerEm,
+	    emPerEx: sigma5 / sigma6,
+	    doubleRuleSep: doubleRuleSep,
+
+	    // TODO(alpert): Missing parallel structure here. We should probably add
+	    // style-specific metrics for all of these.
+	    delim1: sigma20,
+	    getDelim2: function(style) {
+	        if (style.size === Style.TEXT.size) {
+	            return sigma21;
+	        } else if (style.size === Style.SCRIPT.size) {
+	            return sigma21Script;
+	        } else if (style.size === Style.SCRIPTSCRIPT.size) {
+	            return sigma21ScriptScript;
+	        }
+	        throw new Error("Unexpected style size: " + style.size);
+	    },
+	};
+
+	// This map contains a mapping from font name and character code to character
+	// metrics, including height, depth, italic correction, and skew (kern from the
+	// character to the corresponding \skewchar)
+	// This map is generated via `make metrics`. It should not be changed manually.
+	var metricMap = __webpack_require__(164);
+
+	/**
+	 * This function is a convenience function for looking up information in the
+	 * metricMap table. It takes a character as a string, and a style.
+	 *
+	 * Note: the `width` property may be undefined if fontMetricsData.js wasn't
+	 * built using `Make extended_metrics`.
+	 */
+	var getCharacterMetrics = function(character, style) {
+	    var metrics = metricMap[style][character.charCodeAt(0)];
+	    if (metrics) {
+	        return {
+	            depth: metrics[0],
+	            height: metrics[1],
+	            italic: metrics[2],
+	            skew: metrics[3],
+	            width: metrics[4],
+	        };
+	    }
+	};
+
+	module.exports = {
+	    metrics: metrics,
+	    getCharacterMetrics: getCharacterMetrics,
+	};
+
+
+/***/ }),
+/* 164 */
+/***/ (function(module, exports) {
+
+	module.exports = {
+	    "AMS-Regular": {
+	        "65": [0, 0.68889, 0, 0],
+	        "66": [0, 0.68889, 0, 0],
+	        "67": [0, 0.68889, 0, 0],
+	        "68": [0, 0.68889, 0, 0],
+	        "69": [0, 0.68889, 0, 0],
+	        "70": [0, 0.68889, 0, 0],
+	        "71": [0, 0.68889, 0, 0],
+	        "72": [0, 0.68889, 0, 0],
+	        "73": [0, 0.68889, 0, 0],
+	        "74": [0.16667, 0.68889, 0, 0],
+	        "75": [0, 0.68889, 0, 0],
+	        "76": [0, 0.68889, 0, 0],
+	        "77": [0, 0.68889, 0, 0],
+	        "78": [0, 0.68889, 0, 0],
+	        "79": [0.16667, 0.68889, 0, 0],
+	        "80": [0, 0.68889, 0, 0],
+	        "81": [0.16667, 0.68889, 0, 0],
+	        "82": [0, 0.68889, 0, 0],
+	        "83": [0, 0.68889, 0, 0],
+	        "84": [0, 0.68889, 0, 0],
+	        "85": [0, 0.68889, 0, 0],
+	        "86": [0, 0.68889, 0, 0],
+	        "87": [0, 0.68889, 0, 0],
+	        "88": [0, 0.68889, 0, 0],
+	        "89": [0, 0.68889, 0, 0],
+	        "90": [0, 0.68889, 0, 0],
+	        "107": [0, 0.68889, 0, 0],
+	        "165": [0, 0.675, 0.025, 0],
+	        "174": [0.15559, 0.69224, 0, 0],
+	        "240": [0, 0.68889, 0, 0],
+	        "295": [0, 0.68889, 0, 0],
+	        "710": [0, 0.825, 0, 0],
+	        "732": [0, 0.9, 0, 0],
+	        "770": [0, 0.825, 0, 0],
+	        "771": [0, 0.9, 0, 0],
+	        "989": [0.08167, 0.58167, 0, 0],
+	        "1008": [0, 0.43056, 0.04028, 0],
+	        "8245": [0, 0.54986, 0, 0],
+	        "8463": [0, 0.68889, 0, 0],
+	        "8487": [0, 0.68889, 0, 0],
+	        "8498": [0, 0.68889, 0, 0],
+	        "8502": [0, 0.68889, 0, 0],
+	        "8503": [0, 0.68889, 0, 0],
+	        "8504": [0, 0.68889, 0, 0],
+	        "8513": [0, 0.68889, 0, 0],
+	        "8592": [-0.03598, 0.46402, 0, 0],
+	        "8594": [-0.03598, 0.46402, 0, 0],
+	        "8602": [-0.13313, 0.36687, 0, 0],
+	        "8603": [-0.13313, 0.36687, 0, 0],
+	        "8606": [0.01354, 0.52239, 0, 0],
+	        "8608": [0.01354, 0.52239, 0, 0],
+	        "8610": [0.01354, 0.52239, 0, 0],
+	        "8611": [0.01354, 0.52239, 0, 0],
+	        "8619": [0, 0.54986, 0, 0],
+	        "8620": [0, 0.54986, 0, 0],
+	        "8621": [-0.13313, 0.37788, 0, 0],
+	        "8622": [-0.13313, 0.36687, 0, 0],
+	        "8624": [0, 0.69224, 0, 0],
+	        "8625": [0, 0.69224, 0, 0],
+	        "8630": [0, 0.43056, 0, 0],
+	        "8631": [0, 0.43056, 0, 0],
+	        "8634": [0.08198, 0.58198, 0, 0],
+	        "8635": [0.08198, 0.58198, 0, 0],
+	        "8638": [0.19444, 0.69224, 0, 0],
+	        "8639": [0.19444, 0.69224, 0, 0],
+	        "8642": [0.19444, 0.69224, 0, 0],
+	        "8643": [0.19444, 0.69224, 0, 0],
+	        "8644": [0.1808, 0.675, 0, 0],
+	        "8646": [0.1808, 0.675, 0, 0],
+	        "8647": [0.1808, 0.675, 0, 0],
+	        "8648": [0.19444, 0.69224, 0, 0],
+	        "8649": [0.1808, 0.675, 0, 0],
+	        "8650": [0.19444, 0.69224, 0, 0],
+	        "8651": [0.01354, 0.52239, 0, 0],
+	        "8652": [0.01354, 0.52239, 0, 0],
+	        "8653": [-0.13313, 0.36687, 0, 0],
+	        "8654": [-0.13313, 0.36687, 0, 0],
+	        "8655": [-0.13313, 0.36687, 0, 0],
+	        "8666": [0.13667, 0.63667, 0, 0],
+	        "8667": [0.13667, 0.63667, 0, 0],
+	        "8669": [-0.13313, 0.37788, 0, 0],
+	        "8672": [-0.064, 0.437, 0, 0],
+	        "8674": [-0.064, 0.437, 0, 0],
+	        "8705": [0, 0.825, 0, 0],
+	        "8708": [0, 0.68889, 0, 0],
+	        "8709": [0.08167, 0.58167, 0, 0],
+	        "8717": [0, 0.43056, 0, 0],
+	        "8722": [-0.03598, 0.46402, 0, 0],
+	        "8724": [0.08198, 0.69224, 0, 0],
+	        "8726": [0.08167, 0.58167, 0, 0],
+	        "8733": [0, 0.69224, 0, 0],
+	        "8736": [0, 0.69224, 0, 0],
+	        "8737": [0, 0.69224, 0, 0],
+	        "8738": [0.03517, 0.52239, 0, 0],
+	        "8739": [0.08167, 0.58167, 0, 0],
+	        "8740": [0.25142, 0.74111, 0, 0],
+	        "8741": [0.08167, 0.58167, 0, 0],
+	        "8742": [0.25142, 0.74111, 0, 0],
+	        "8756": [0, 0.69224, 0, 0],
+	        "8757": [0, 0.69224, 0, 0],
+	        "8764": [-0.13313, 0.36687, 0, 0],
+	        "8765": [-0.13313, 0.37788, 0, 0],
+	        "8769": [-0.13313, 0.36687, 0, 0],
+	        "8770": [-0.03625, 0.46375, 0, 0],
+	        "8774": [0.30274, 0.79383, 0, 0],
+	        "8776": [-0.01688, 0.48312, 0, 0],
+	        "8778": [0.08167, 0.58167, 0, 0],
+	        "8782": [0.06062, 0.54986, 0, 0],
+	        "8783": [0.06062, 0.54986, 0, 0],
+	        "8785": [0.08198, 0.58198, 0, 0],
+	        "8786": [0.08198, 0.58198, 0, 0],
+	        "8787": [0.08198, 0.58198, 0, 0],
+	        "8790": [0, 0.69224, 0, 0],
+	        "8791": [0.22958, 0.72958, 0, 0],
+	        "8796": [0.08198, 0.91667, 0, 0],
+	        "8806": [0.25583, 0.75583, 0, 0],
+	        "8807": [0.25583, 0.75583, 0, 0],
+	        "8808": [0.25142, 0.75726, 0, 0],
+	        "8809": [0.25142, 0.75726, 0, 0],
+	        "8812": [0.25583, 0.75583, 0, 0],
+	        "8814": [0.20576, 0.70576, 0, 0],
+	        "8815": [0.20576, 0.70576, 0, 0],
+	        "8816": [0.30274, 0.79383, 0, 0],
+	        "8817": [0.30274, 0.79383, 0, 0],
+	        "8818": [0.22958, 0.72958, 0, 0],
+	        "8819": [0.22958, 0.72958, 0, 0],
+	        "8822": [0.1808, 0.675, 0, 0],
+	        "8823": [0.1808, 0.675, 0, 0],
+	        "8828": [0.13667, 0.63667, 0, 0],
+	        "8829": [0.13667, 0.63667, 0, 0],
+	        "8830": [0.22958, 0.72958, 0, 0],
+	        "8831": [0.22958, 0.72958, 0, 0],
+	        "8832": [0.20576, 0.70576, 0, 0],
+	        "8833": [0.20576, 0.70576, 0, 0],
+	        "8840": [0.30274, 0.79383, 0, 0],
+	        "8841": [0.30274, 0.79383, 0, 0],
+	        "8842": [0.13597, 0.63597, 0, 0],
+	        "8843": [0.13597, 0.63597, 0, 0],
+	        "8847": [0.03517, 0.54986, 0, 0],
+	        "8848": [0.03517, 0.54986, 0, 0],
+	        "8858": [0.08198, 0.58198, 0, 0],
+	        "8859": [0.08198, 0.58198, 0, 0],
+	        "8861": [0.08198, 0.58198, 0, 0],
+	        "8862": [0, 0.675, 0, 0],
+	        "8863": [0, 0.675, 0, 0],
+	        "8864": [0, 0.675, 0, 0],
+	        "8865": [0, 0.675, 0, 0],
+	        "8872": [0, 0.69224, 0, 0],
+	        "8873": [0, 0.69224, 0, 0],
+	        "8874": [0, 0.69224, 0, 0],
+	        "8876": [0, 0.68889, 0, 0],
+	        "8877": [0, 0.68889, 0, 0],
+	        "8878": [0, 0.68889, 0, 0],
+	        "8879": [0, 0.68889, 0, 0],
+	        "8882": [0.03517, 0.54986, 0, 0],
+	        "8883": [0.03517, 0.54986, 0, 0],
+	        "8884": [0.13667, 0.63667, 0, 0],
+	        "8885": [0.13667, 0.63667, 0, 0],
+	        "8888": [0, 0.54986, 0, 0],
+	        "8890": [0.19444, 0.43056, 0, 0],
+	        "8891": [0.19444, 0.69224, 0, 0],
+	        "8892": [0.19444, 0.69224, 0, 0],
+	        "8901": [0, 0.54986, 0, 0],
+	        "8903": [0.08167, 0.58167, 0, 0],
+	        "8905": [0.08167, 0.58167, 0, 0],
+	        "8906": [0.08167, 0.58167, 0, 0],
+	        "8907": [0, 0.69224, 0, 0],
+	        "8908": [0, 0.69224, 0, 0],
+	        "8909": [-0.03598, 0.46402, 0, 0],
+	        "8910": [0, 0.54986, 0, 0],
+	        "8911": [0, 0.54986, 0, 0],
+	        "8912": [0.03517, 0.54986, 0, 0],
+	        "8913": [0.03517, 0.54986, 0, 0],
+	        "8914": [0, 0.54986, 0, 0],
+	        "8915": [0, 0.54986, 0, 0],
+	        "8916": [0, 0.69224, 0, 0],
+	        "8918": [0.0391, 0.5391, 0, 0],
+	        "8919": [0.0391, 0.5391, 0, 0],
+	        "8920": [0.03517, 0.54986, 0, 0],
+	        "8921": [0.03517, 0.54986, 0, 0],
+	        "8922": [0.38569, 0.88569, 0, 0],
+	        "8923": [0.38569, 0.88569, 0, 0],
+	        "8926": [0.13667, 0.63667, 0, 0],
+	        "8927": [0.13667, 0.63667, 0, 0],
+	        "8928": [0.30274, 0.79383, 0, 0],
+	        "8929": [0.30274, 0.79383, 0, 0],
+	        "8934": [0.23222, 0.74111, 0, 0],
+	        "8935": [0.23222, 0.74111, 0, 0],
+	        "8936": [0.23222, 0.74111, 0, 0],
+	        "8937": [0.23222, 0.74111, 0, 0],
+	        "8938": [0.20576, 0.70576, 0, 0],
+	        "8939": [0.20576, 0.70576, 0, 0],
+	        "8940": [0.30274, 0.79383, 0, 0],
+	        "8941": [0.30274, 0.79383, 0, 0],
+	        "8994": [0.19444, 0.69224, 0, 0],
+	        "8995": [0.19444, 0.69224, 0, 0],
+	        "9416": [0.15559, 0.69224, 0, 0],
+	        "9484": [0, 0.69224, 0, 0],
+	        "9488": [0, 0.69224, 0, 0],
+	        "9492": [0, 0.37788, 0, 0],
+	        "9496": [0, 0.37788, 0, 0],
+	        "9585": [0.19444, 0.68889, 0, 0],
+	        "9586": [0.19444, 0.74111, 0, 0],
+	        "9632": [0, 0.675, 0, 0],
+	        "9633": [0, 0.675, 0, 0],
+	        "9650": [0, 0.54986, 0, 0],
+	        "9651": [0, 0.54986, 0, 0],
+	        "9654": [0.03517, 0.54986, 0, 0],
+	        "9660": [0, 0.54986, 0, 0],
+	        "9661": [0, 0.54986, 0, 0],
+	        "9664": [0.03517, 0.54986, 0, 0],
+	        "9674": [0.11111, 0.69224, 0, 0],
+	        "9733": [0.19444, 0.69224, 0, 0],
+	        "10003": [0, 0.69224, 0, 0],
+	        "10016": [0, 0.69224, 0, 0],
+	        "10731": [0.11111, 0.69224, 0, 0],
+	        "10846": [0.19444, 0.75583, 0, 0],
+	        "10877": [0.13667, 0.63667, 0, 0],
+	        "10878": [0.13667, 0.63667, 0, 0],
+	        "10885": [0.25583, 0.75583, 0, 0],
+	        "10886": [0.25583, 0.75583, 0, 0],
+	        "10887": [0.13597, 0.63597, 0, 0],
+	        "10888": [0.13597, 0.63597, 0, 0],
+	        "10889": [0.26167, 0.75726, 0, 0],
+	        "10890": [0.26167, 0.75726, 0, 0],
+	        "10891": [0.48256, 0.98256, 0, 0],
+	        "10892": [0.48256, 0.98256, 0, 0],
+	        "10901": [0.13667, 0.63667, 0, 0],
+	        "10902": [0.13667, 0.63667, 0, 0],
+	        "10933": [0.25142, 0.75726, 0, 0],
+	        "10934": [0.25142, 0.75726, 0, 0],
+	        "10935": [0.26167, 0.75726, 0, 0],
+	        "10936": [0.26167, 0.75726, 0, 0],
+	        "10937": [0.26167, 0.75726, 0, 0],
+	        "10938": [0.26167, 0.75726, 0, 0],
+	        "10949": [0.25583, 0.75583, 0, 0],
+	        "10950": [0.25583, 0.75583, 0, 0],
+	        "10955": [0.28481, 0.79383, 0, 0],
+	        "10956": [0.28481, 0.79383, 0, 0],
+	        "57350": [0.08167, 0.58167, 0, 0],
+	        "57351": [0.08167, 0.58167, 0, 0],
+	        "57352": [0.08167, 0.58167, 0, 0],
+	        "57353": [0, 0.43056, 0.04028, 0],
+	        "57356": [0.25142, 0.75726, 0, 0],
+	        "57357": [0.25142, 0.75726, 0, 0],
+	        "57358": [0.41951, 0.91951, 0, 0],
+	        "57359": [0.30274, 0.79383, 0, 0],
+	        "57360": [0.30274, 0.79383, 0, 0],
+	        "57361": [0.41951, 0.91951, 0, 0],
+	        "57366": [0.25142, 0.75726, 0, 0],
+	        "57367": [0.25142, 0.75726, 0, 0],
+	        "57368": [0.25142, 0.75726, 0, 0],
+	        "57369": [0.25142, 0.75726, 0, 0],
+	        "57370": [0.13597, 0.63597, 0, 0],
+	        "57371": [0.13597, 0.63597, 0, 0],
+	    },
+	    "Caligraphic-Regular": {
+	        "48": [0, 0.43056, 0, 0],
+	        "49": [0, 0.43056, 0, 0],
+	        "50": [0, 0.43056, 0, 0],
+	        "51": [0.19444, 0.43056, 0, 0],
+	        "52": [0.19444, 0.43056, 0, 0],
+	        "53": [0.19444, 0.43056, 0, 0],
+	        "54": [0, 0.64444, 0, 0],
+	        "55": [0.19444, 0.43056, 0, 0],
+	        "56": [0, 0.64444, 0, 0],
+	        "57": [0.19444, 0.43056, 0, 0],
+	        "65": [0, 0.68333, 0, 0.19445],
+	        "66": [0, 0.68333, 0.03041, 0.13889],
+	        "67": [0, 0.68333, 0.05834, 0.13889],
+	        "68": [0, 0.68333, 0.02778, 0.08334],
+	        "69": [0, 0.68333, 0.08944, 0.11111],
+	        "70": [0, 0.68333, 0.09931, 0.11111],
+	        "71": [0.09722, 0.68333, 0.0593, 0.11111],
+	        "72": [0, 0.68333, 0.00965, 0.11111],
+	        "73": [0, 0.68333, 0.07382, 0],
+	        "74": [0.09722, 0.68333, 0.18472, 0.16667],
+	        "75": [0, 0.68333, 0.01445, 0.05556],
+	        "76": [0, 0.68333, 0, 0.13889],
+	        "77": [0, 0.68333, 0, 0.13889],
+	        "78": [0, 0.68333, 0.14736, 0.08334],
+	        "79": [0, 0.68333, 0.02778, 0.11111],
+	        "80": [0, 0.68333, 0.08222, 0.08334],
+	        "81": [0.09722, 0.68333, 0, 0.11111],
+	        "82": [0, 0.68333, 0, 0.08334],
+	        "83": [0, 0.68333, 0.075, 0.13889],
+	        "84": [0, 0.68333, 0.25417, 0],
+	        "85": [0, 0.68333, 0.09931, 0.08334],
+	        "86": [0, 0.68333, 0.08222, 0],
+	        "87": [0, 0.68333, 0.08222, 0.08334],
+	        "88": [0, 0.68333, 0.14643, 0.13889],
+	        "89": [0.09722, 0.68333, 0.08222, 0.08334],
+	        "90": [0, 0.68333, 0.07944, 0.13889],
+	    },
+	    "Fraktur-Regular": {
+	        "33": [0, 0.69141, 0, 0],
+	        "34": [0, 0.69141, 0, 0],
+	        "38": [0, 0.69141, 0, 0],
+	        "39": [0, 0.69141, 0, 0],
+	        "40": [0.24982, 0.74947, 0, 0],
+	        "41": [0.24982, 0.74947, 0, 0],
+	        "42": [0, 0.62119, 0, 0],
+	        "43": [0.08319, 0.58283, 0, 0],
+	        "44": [0, 0.10803, 0, 0],
+	        "45": [0.08319, 0.58283, 0, 0],
+	        "46": [0, 0.10803, 0, 0],
+	        "47": [0.24982, 0.74947, 0, 0],
+	        "48": [0, 0.47534, 0, 0],
+	        "49": [0, 0.47534, 0, 0],
+	        "50": [0, 0.47534, 0, 0],
+	        "51": [0.18906, 0.47534, 0, 0],
+	        "52": [0.18906, 0.47534, 0, 0],
+	        "53": [0.18906, 0.47534, 0, 0],
+	        "54": [0, 0.69141, 0, 0],
+	        "55": [0.18906, 0.47534, 0, 0],
+	        "56": [0, 0.69141, 0, 0],
+	        "57": [0.18906, 0.47534, 0, 0],
+	        "58": [0, 0.47534, 0, 0],
+	        "59": [0.12604, 0.47534, 0, 0],
+	        "61": [-0.13099, 0.36866, 0, 0],
+	        "63": [0, 0.69141, 0, 0],
+	        "65": [0, 0.69141, 0, 0],
+	        "66": [0, 0.69141, 0, 0],
+	        "67": [0, 0.69141, 0, 0],
+	        "68": [0, 0.69141, 0, 0],
+	        "69": [0, 0.69141, 0, 0],
+	        "70": [0.12604, 0.69141, 0, 0],
+	        "71": [0, 0.69141, 0, 0],
+	        "72": [0.06302, 0.69141, 0, 0],
+	        "73": [0, 0.69141, 0, 0],
+	        "74": [0.12604, 0.69141, 0, 0],
+	        "75": [0, 0.69141, 0, 0],
+	        "76": [0, 0.69141, 0, 0],
+	        "77": [0, 0.69141, 0, 0],
+	        "78": [0, 0.69141, 0, 0],
+	        "79": [0, 0.69141, 0, 0],
+	        "80": [0.18906, 0.69141, 0, 0],
+	        "81": [0.03781, 0.69141, 0, 0],
+	        "82": [0, 0.69141, 0, 0],
+	        "83": [0, 0.69141, 0, 0],
+	        "84": [0, 0.69141, 0, 0],
+	        "85": [0, 0.69141, 0, 0],
+	        "86": [0, 0.69141, 0, 0],
+	        "87": [0, 0.69141, 0, 0],
+	        "88": [0, 0.69141, 0, 0],
+	        "89": [0.18906, 0.69141, 0, 0],
+	        "90": [0.12604, 0.69141, 0, 0],
+	        "91": [0.24982, 0.74947, 0, 0],
+	        "93": [0.24982, 0.74947, 0, 0],
+	        "94": [0, 0.69141, 0, 0],
+	        "97": [0, 0.47534, 0, 0],
+	        "98": [0, 0.69141, 0, 0],
+	        "99": [0, 0.47534, 0, 0],
+	        "100": [0, 0.62119, 0, 0],
+	        "101": [0, 0.47534, 0, 0],
+	        "102": [0.18906, 0.69141, 0, 0],
+	        "103": [0.18906, 0.47534, 0, 0],
+	        "104": [0.18906, 0.69141, 0, 0],
+	        "105": [0, 0.69141, 0, 0],
+	        "106": [0, 0.69141, 0, 0],
+	        "107": [0, 0.69141, 0, 0],
+	        "108": [0, 0.69141, 0, 0],
+	        "109": [0, 0.47534, 0, 0],
+	        "110": [0, 0.47534, 0, 0],
+	        "111": [0, 0.47534, 0, 0],
+	        "112": [0.18906, 0.52396, 0, 0],
+	        "113": [0.18906, 0.47534, 0, 0],
+	        "114": [0, 0.47534, 0, 0],
+	        "115": [0, 0.47534, 0, 0],
+	        "116": [0, 0.62119, 0, 0],
+	        "117": [0, 0.47534, 0, 0],
+	        "118": [0, 0.52396, 0, 0],
+	        "119": [0, 0.52396, 0, 0],
+	        "120": [0.18906, 0.47534, 0, 0],
+	        "121": [0.18906, 0.47534, 0, 0],
+	        "122": [0.18906, 0.47534, 0, 0],
+	        "8216": [0, 0.69141, 0, 0],
+	        "8217": [0, 0.69141, 0, 0],
+	        "58112": [0, 0.62119, 0, 0],
+	        "58113": [0, 0.62119, 0, 0],
+	        "58114": [0.18906, 0.69141, 0, 0],
+	        "58115": [0.18906, 0.69141, 0, 0],
+	        "58116": [0.18906, 0.47534, 0, 0],
+	        "58117": [0, 0.69141, 0, 0],
+	        "58118": [0, 0.62119, 0, 0],
+	        "58119": [0, 0.47534, 0, 0],
+	    },
+	    "Main-Bold": {
+	        "33": [0, 0.69444, 0, 0],
+	        "34": [0, 0.69444, 0, 0],
+	        "35": [0.19444, 0.69444, 0, 0],
+	        "36": [0.05556, 0.75, 0, 0],
+	        "37": [0.05556, 0.75, 0, 0],
+	        "38": [0, 0.69444, 0, 0],
+	        "39": [0, 0.69444, 0, 0],
+	        "40": [0.25, 0.75, 0, 0],
+	        "41": [0.25, 0.75, 0, 0],
+	        "42": [0, 0.75, 0, 0],
+	        "43": [0.13333, 0.63333, 0, 0],
+	        "44": [0.19444, 0.15556, 0, 0],
+	        "45": [0, 0.44444, 0, 0],
+	        "46": [0, 0.15556, 0, 0],
+	        "47": [0.25, 0.75, 0, 0],
+	        "48": [0, 0.64444, 0, 0],
+	        "49": [0, 0.64444, 0, 0],
+	        "50": [0, 0.64444, 0, 0],
+	        "51": [0, 0.64444, 0, 0],
+	        "52": [0, 0.64444, 0, 0],
+	        "53": [0, 0.64444, 0, 0],
+	        "54": [0, 0.64444, 0, 0],
+	        "55": [0, 0.64444, 0, 0],
+	        "56": [0, 0.64444, 0, 0],
+	        "57": [0, 0.64444, 0, 0],
+	        "58": [0, 0.44444, 0, 0],
+	        "59": [0.19444, 0.44444, 0, 0],
+	        "60": [0.08556, 0.58556, 0, 0],
+	        "61": [-0.10889, 0.39111, 0, 0],
+	        "62": [0.08556, 0.58556, 0, 0],
+	        "63": [0, 0.69444, 0, 0],
+	        "64": [0, 0.69444, 0, 0],
+	        "65": [0, 0.68611, 0, 0],
+	        "66": [0, 0.68611, 0, 0],
+	        "67": [0, 0.68611, 0, 0],
+	        "68": [0, 0.68611, 0, 0],
+	        "69": [0, 0.68611, 0, 0],
+	        "70": [0, 0.68611, 0, 0],
+	        "71": [0, 0.68611, 0, 0],
+	        "72": [0, 0.68611, 0, 0],
+	        "73": [0, 0.68611, 0, 0],
+	        "74": [0, 0.68611, 0, 0],
+	        "75": [0, 0.68611, 0, 0],
+	        "76": [0, 0.68611, 0, 0],
+	        "77": [0, 0.68611, 0, 0],
+	        "78": [0, 0.68611, 0, 0],
+	        "79": [0, 0.68611, 0, 0],
+	        "80": [0, 0.68611, 0, 0],
+	        "81": [0.19444, 0.68611, 0, 0],
+	        "82": [0, 0.68611, 0, 0],
+	        "83": [0, 0.68611, 0, 0],
+	        "84": [0, 0.68611, 0, 0],
+	        "85": [0, 0.68611, 0, 0],
+	        "86": [0, 0.68611, 0.01597, 0],
+	        "87": [0, 0.68611, 0.01597, 0],
+	        "88": [0, 0.68611, 0, 0],
+	        "89": [0, 0.68611, 0.02875, 0],
+	        "90": [0, 0.68611, 0, 0],
+	        "91": [0.25, 0.75, 0, 0],
+	        "92": [0.25, 0.75, 0, 0],
+	        "93": [0.25, 0.75, 0, 0],
+	        "94": [0, 0.69444, 0, 0],
+	        "95": [0.31, 0.13444, 0.03194, 0],
+	        "96": [0, 0.69444, 0, 0],
+	        "97": [0, 0.44444, 0, 0],
+	        "98": [0, 0.69444, 0, 0],
+	        "99": [0, 0.44444, 0, 0],
+	        "100": [0, 0.69444, 0, 0],
+	        "101": [0, 0.44444, 0, 0],
+	        "102": [0, 0.69444, 0.10903, 0],
+	        "103": [0.19444, 0.44444, 0.01597, 0],
+	        "104": [0, 0.69444, 0, 0],
+	        "105": [0, 0.69444, 0, 0],
+	        "106": [0.19444, 0.69444, 0, 0],
+	        "107": [0, 0.69444, 0, 0],
+	        "108": [0, 0.69444, 0, 0],
+	        "109": [0, 0.44444, 0, 0],
+	        "110": [0, 0.44444, 0, 0],
+	        "111": [0, 0.44444, 0, 0],
+	        "112": [0.19444, 0.44444, 0, 0],
+	        "113": [0.19444, 0.44444, 0, 0],
+	        "114": [0, 0.44444, 0, 0],
+	        "115": [0, 0.44444, 0, 0],
+	        "116": [0, 0.63492, 0, 0],
+	        "117": [0, 0.44444, 0, 0],
+	        "118": [0, 0.44444, 0.01597, 0],
+	        "119": [0, 0.44444, 0.01597, 0],
+	        "120": [0, 0.44444, 0, 0],
+	        "121": [0.19444, 0.44444, 0.01597, 0],
+	        "122": [0, 0.44444, 0, 0],
+	        "123": [0.25, 0.75, 0, 0],
+	        "124": [0.25, 0.75, 0, 0],
+	        "125": [0.25, 0.75, 0, 0],
+	        "126": [0.35, 0.34444, 0, 0],
+	        "168": [0, 0.69444, 0, 0],
+	        "172": [0, 0.44444, 0, 0],
+	        "175": [0, 0.59611, 0, 0],
+	        "176": [0, 0.69444, 0, 0],
+	        "177": [0.13333, 0.63333, 0, 0],
+	        "180": [0, 0.69444, 0, 0],
+	        "215": [0.13333, 0.63333, 0, 0],
+	        "247": [0.13333, 0.63333, 0, 0],
+	        "305": [0, 0.44444, 0, 0],
+	        "567": [0.19444, 0.44444, 0, 0],
+	        "710": [0, 0.69444, 0, 0],
+	        "711": [0, 0.63194, 0, 0],
+	        "713": [0, 0.59611, 0, 0],
+	        "714": [0, 0.69444, 0, 0],
+	        "715": [0, 0.69444, 0, 0],
+	        "728": [0, 0.69444, 0, 0],
+	        "729": [0, 0.69444, 0, 0],
+	        "730": [0, 0.69444, 0, 0],
+	        "732": [0, 0.69444, 0, 0],
+	        "768": [0, 0.69444, 0, 0],
+	        "769": [0, 0.69444, 0, 0],
+	        "770": [0, 0.69444, 0, 0],
+	        "771": [0, 0.69444, 0, 0],
+	        "772": [0, 0.59611, 0, 0],
+	        "774": [0, 0.69444, 0, 0],
+	        "775": [0, 0.69444, 0, 0],
+	        "776": [0, 0.69444, 0, 0],
+	        "778": [0, 0.69444, 0, 0],
+	        "779": [0, 0.69444, 0, 0],
+	        "780": [0, 0.63194, 0, 0],
+	        "824": [0.19444, 0.69444, 0, 0],
+	        "915": [0, 0.68611, 0, 0],
+	        "916": [0, 0.68611, 0, 0],
+	        "920": [0, 0.68611, 0, 0],
+	        "923": [0, 0.68611, 0, 0],
+	        "926": [0, 0.68611, 0, 0],
+	        "928": [0, 0.68611, 0, 0],
+	        "931": [0, 0.68611, 0, 0],
+	        "933": [0, 0.68611, 0, 0],
+	        "934": [0, 0.68611, 0, 0],
+	        "936": [0, 0.68611, 0, 0],
+	        "937": [0, 0.68611, 0, 0],
+	        "8211": [0, 0.44444, 0.03194, 0],
+	        "8212": [0, 0.44444, 0.03194, 0],
+	        "8216": [0, 0.69444, 0, 0],
+	        "8217": [0, 0.69444, 0, 0],
+	        "8220": [0, 0.69444, 0, 0],
+	        "8221": [0, 0.69444, 0, 0],
+	        "8224": [0.19444, 0.69444, 0, 0],
+	        "8225": [0.19444, 0.69444, 0, 0],
+	        "8242": [0, 0.55556, 0, 0],
+	        "8407": [0, 0.72444, 0.15486, 0],
+	        "8463": [0, 0.69444, 0, 0],
+	        "8465": [0, 0.69444, 0, 0],
+	        "8467": [0, 0.69444, 0, 0],
+	        "8472": [0.19444, 0.44444, 0, 0],
+	        "8476": [0, 0.69444, 0, 0],
+	        "8501": [0, 0.69444, 0, 0],
+	        "8592": [-0.10889, 0.39111, 0, 0],
+	        "8593": [0.19444, 0.69444, 0, 0],
+	        "8594": [-0.10889, 0.39111, 0, 0],
+	        "8595": [0.19444, 0.69444, 0, 0],
+	        "8596": [-0.10889, 0.39111, 0, 0],
+	        "8597": [0.25, 0.75, 0, 0],
+	        "8598": [0.19444, 0.69444, 0, 0],
+	        "8599": [0.19444, 0.69444, 0, 0],
+	        "8600": [0.19444, 0.69444, 0, 0],
+	        "8601": [0.19444, 0.69444, 0, 0],
+	        "8636": [-0.10889, 0.39111, 0, 0],
+	        "8637": [-0.10889, 0.39111, 0, 0],
+	        "8640": [-0.10889, 0.39111, 0, 0],
+	        "8641": [-0.10889, 0.39111, 0, 0],
+	        "8656": [-0.10889, 0.39111, 0, 0],
+	        "8657": [0.19444, 0.69444, 0, 0],
+	        "8658": [-0.10889, 0.39111, 0, 0],
+	        "8659": [0.19444, 0.69444, 0, 0],
+	        "8660": [-0.10889, 0.39111, 0, 0],
+	        "8661": [0.25, 0.75, 0, 0],
+	        "8704": [0, 0.69444, 0, 0],
+	        "8706": [0, 0.69444, 0.06389, 0],
+	        "8707": [0, 0.69444, 0, 0],
+	        "8709": [0.05556, 0.75, 0, 0],
+	        "8711": [0, 0.68611, 0, 0],
+	        "8712": [0.08556, 0.58556, 0, 0],
+	        "8715": [0.08556, 0.58556, 0, 0],
+	        "8722": [0.13333, 0.63333, 0, 0],
+	        "8723": [0.13333, 0.63333, 0, 0],
+	        "8725": [0.25, 0.75, 0, 0],
+	        "8726": [0.25, 0.75, 0, 0],
+	        "8727": [-0.02778, 0.47222, 0, 0],
+	        "8728": [-0.02639, 0.47361, 0, 0],
+	        "8729": [-0.02639, 0.47361, 0, 0],
+	        "8730": [0.18, 0.82, 0, 0],
+	        "8733": [0, 0.44444, 0, 0],
+	        "8734": [0, 0.44444, 0, 0],
+	        "8736": [0, 0.69224, 0, 0],
+	        "8739": [0.25, 0.75, 0, 0],
+	        "8741": [0.25, 0.75, 0, 0],
+	        "8743": [0, 0.55556, 0, 0],
+	        "8744": [0, 0.55556, 0, 0],
+	        "8745": [0, 0.55556, 0, 0],
+	        "8746": [0, 0.55556, 0, 0],
+	        "8747": [0.19444, 0.69444, 0.12778, 0],
+	        "8764": [-0.10889, 0.39111, 0, 0],
+	        "8768": [0.19444, 0.69444, 0, 0],
+	        "8771": [0.00222, 0.50222, 0, 0],
+	        "8776": [0.02444, 0.52444, 0, 0],
+	        "8781": [0.00222, 0.50222, 0, 0],
+	        "8801": [0.00222, 0.50222, 0, 0],
+	        "8804": [0.19667, 0.69667, 0, 0],
+	        "8805": [0.19667, 0.69667, 0, 0],
+	        "8810": [0.08556, 0.58556, 0, 0],
+	        "8811": [0.08556, 0.58556, 0, 0],
+	        "8826": [0.08556, 0.58556, 0, 0],
+	        "8827": [0.08556, 0.58556, 0, 0],
+	        "8834": [0.08556, 0.58556, 0, 0],
+	        "8835": [0.08556, 0.58556, 0, 0],
+	        "8838": [0.19667, 0.69667, 0, 0],
+	        "8839": [0.19667, 0.69667, 0, 0],
+	        "8846": [0, 0.55556, 0, 0],
+	        "8849": [0.19667, 0.69667, 0, 0],
+	        "8850": [0.19667, 0.69667, 0, 0],
+	        "8851": [0, 0.55556, 0, 0],
+	        "8852": [0, 0.55556, 0, 0],
+	        "8853": [0.13333, 0.63333, 0, 0],
+	        "8854": [0.13333, 0.63333, 0, 0],
+	        "8855": [0.13333, 0.63333, 0, 0],
+	        "8856": [0.13333, 0.63333, 0, 0],
+	        "8857": [0.13333, 0.63333, 0, 0],
+	        "8866": [0, 0.69444, 0, 0],
+	        "8867": [0, 0.69444, 0, 0],
+	        "8868": [0, 0.69444, 0, 0],
+	        "8869": [0, 0.69444, 0, 0],
+	        "8900": [-0.02639, 0.47361, 0, 0],
+	        "8901": [-0.02639, 0.47361, 0, 0],
+	        "8902": [-0.02778, 0.47222, 0, 0],
+	        "8968": [0.25, 0.75, 0, 0],
+	        "8969": [0.25, 0.75, 0, 0],
+	        "8970": [0.25, 0.75, 0, 0],
+	        "8971": [0.25, 0.75, 0, 0],
+	        "8994": [-0.13889, 0.36111, 0, 0],
+	        "8995": [-0.13889, 0.36111, 0, 0],
+	        "9651": [0.19444, 0.69444, 0, 0],
+	        "9657": [-0.02778, 0.47222, 0, 0],
+	        "9661": [0.19444, 0.69444, 0, 0],
+	        "9667": [-0.02778, 0.47222, 0, 0],
+	        "9711": [0.19444, 0.69444, 0, 0],
+	        "9824": [0.12963, 0.69444, 0, 0],
+	        "9825": [0.12963, 0.69444, 0, 0],
+	        "9826": [0.12963, 0.69444, 0, 0],
+	        "9827": [0.12963, 0.69444, 0, 0],
+	        "9837": [0, 0.75, 0, 0],
+	        "9838": [0.19444, 0.69444, 0, 0],
+	        "9839": [0.19444, 0.69444, 0, 0],
+	        "10216": [0.25, 0.75, 0, 0],
+	        "10217": [0.25, 0.75, 0, 0],
+	        "10815": [0, 0.68611, 0, 0],
+	        "10927": [0.19667, 0.69667, 0, 0],
+	        "10928": [0.19667, 0.69667, 0, 0],
+	    },
+	    "Main-Italic": {
+	        "33": [0, 0.69444, 0.12417, 0],
+	        "34": [0, 0.69444, 0.06961, 0],
+	        "35": [0.19444, 0.69444, 0.06616, 0],
+	        "37": [0.05556, 0.75, 0.13639, 0],
+	        "38": [0, 0.69444, 0.09694, 0],
+	        "39": [0, 0.69444, 0.12417, 0],
+	        "40": [0.25, 0.75, 0.16194, 0],
+	        "41": [0.25, 0.75, 0.03694, 0],
+	        "42": [0, 0.75, 0.14917, 0],
+	        "43": [0.05667, 0.56167, 0.03694, 0],
+	        "44": [0.19444, 0.10556, 0, 0],
+	        "45": [0, 0.43056, 0.02826, 0],
+	        "46": [0, 0.10556, 0, 0],
+	        "47": [0.25, 0.75, 0.16194, 0],
+	        "48": [0, 0.64444, 0.13556, 0],
+	        "49": [0, 0.64444, 0.13556, 0],
+	        "50": [0, 0.64444, 0.13556, 0],
+	        "51": [0, 0.64444, 0.13556, 0],
+	        "52": [0.19444, 0.64444, 0.13556, 0],
+	        "53": [0, 0.64444, 0.13556, 0],
+	        "54": [0, 0.64444, 0.13556, 0],
+	        "55": [0.19444, 0.64444, 0.13556, 0],
+	        "56": [0, 0.64444, 0.13556, 0],
+	        "57": [0, 0.64444, 0.13556, 0],
+	        "58": [0, 0.43056, 0.0582, 0],
+	        "59": [0.19444, 0.43056, 0.0582, 0],
+	        "61": [-0.13313, 0.36687, 0.06616, 0],
+	        "63": [0, 0.69444, 0.1225, 0],
+	        "64": [0, 0.69444, 0.09597, 0],
+	        "65": [0, 0.68333, 0, 0],
+	        "66": [0, 0.68333, 0.10257, 0],
+	        "67": [0, 0.68333, 0.14528, 0],
+	        "68": [0, 0.68333, 0.09403, 0],
+	        "69": [0, 0.68333, 0.12028, 0],
+	        "70": [0, 0.68333, 0.13305, 0],
+	        "71": [0, 0.68333, 0.08722, 0],
+	        "72": [0, 0.68333, 0.16389, 0],
+	        "73": [0, 0.68333, 0.15806, 0],
+	        "74": [0, 0.68333, 0.14028, 0],
+	        "75": [0, 0.68333, 0.14528, 0],
+	        "76": [0, 0.68333, 0, 0],
+	        "77": [0, 0.68333, 0.16389, 0],
+	        "78": [0, 0.68333, 0.16389, 0],
+	        "79": [0, 0.68333, 0.09403, 0],
+	        "80": [0, 0.68333, 0.10257, 0],
+	        "81": [0.19444, 0.68333, 0.09403, 0],
+	        "82": [0, 0.68333, 0.03868, 0],
+	        "83": [0, 0.68333, 0.11972, 0],
+	        "84": [0, 0.68333, 0.13305, 0],
+	        "85": [0, 0.68333, 0.16389, 0],
+	        "86": [0, 0.68333, 0.18361, 0],
+	        "87": [0, 0.68333, 0.18361, 0],
+	        "88": [0, 0.68333, 0.15806, 0],
+	        "89": [0, 0.68333, 0.19383, 0],
+	        "90": [0, 0.68333, 0.14528, 0],
+	        "91": [0.25, 0.75, 0.1875, 0],
+	        "93": [0.25, 0.75, 0.10528, 0],
+	        "94": [0, 0.69444, 0.06646, 0],
+	        "95": [0.31, 0.12056, 0.09208, 0],
+	        "97": [0, 0.43056, 0.07671, 0],
+	        "98": [0, 0.69444, 0.06312, 0],
+	        "99": [0, 0.43056, 0.05653, 0],
+	        "100": [0, 0.69444, 0.10333, 0],
+	        "101": [0, 0.43056, 0.07514, 0],
+	        "102": [0.19444, 0.69444, 0.21194, 0],
+	        "103": [0.19444, 0.43056, 0.08847, 0],
+	        "104": [0, 0.69444, 0.07671, 0],
+	        "105": [0, 0.65536, 0.1019, 0],
+	        "106": [0.19444, 0.65536, 0.14467, 0],
+	        "107": [0, 0.69444, 0.10764, 0],
+	        "108": [0, 0.69444, 0.10333, 0],
+	        "109": [0, 0.43056, 0.07671, 0],
+	        "110": [0, 0.43056, 0.07671, 0],
+	        "111": [0, 0.43056, 0.06312, 0],
+	        "112": [0.19444, 0.43056, 0.06312, 0],
+	        "113": [0.19444, 0.43056, 0.08847, 0],
+	        "114": [0, 0.43056, 0.10764, 0],
+	        "115": [0, 0.43056, 0.08208, 0],
+	        "116": [0, 0.61508, 0.09486, 0],
+	        "117": [0, 0.43056, 0.07671, 0],
+	        "118": [0, 0.43056, 0.10764, 0],
+	        "119": [0, 0.43056, 0.10764, 0],
+	        "120": [0, 0.43056, 0.12042, 0],
+	        "121": [0.19444, 0.43056, 0.08847, 0],
+	        "122": [0, 0.43056, 0.12292, 0],
+	        "126": [0.35, 0.31786, 0.11585, 0],
+	        "163": [0, 0.69444, 0, 0],
+	        "305": [0, 0.43056, 0, 0.02778],
+	        "567": [0.19444, 0.43056, 0, 0.08334],
+	        "768": [0, 0.69444, 0, 0],
+	        "769": [0, 0.69444, 0.09694, 0],
+	        "770": [0, 0.69444, 0.06646, 0],
+	        "771": [0, 0.66786, 0.11585, 0],
+	        "772": [0, 0.56167, 0.10333, 0],
+	        "774": [0, 0.69444, 0.10806, 0],
+	        "775": [0, 0.66786, 0.11752, 0],
+	        "776": [0, 0.66786, 0.10474, 0],
+	        "778": [0, 0.69444, 0, 0],
+	        "779": [0, 0.69444, 0.1225, 0],
+	        "780": [0, 0.62847, 0.08295, 0],
+	        "915": [0, 0.68333, 0.13305, 0],
+	        "916": [0, 0.68333, 0, 0],
+	        "920": [0, 0.68333, 0.09403, 0],
+	        "923": [0, 0.68333, 0, 0],
+	        "926": [0, 0.68333, 0.15294, 0],
+	        "928": [0, 0.68333, 0.16389, 0],
+	        "931": [0, 0.68333, 0.12028, 0],
+	        "933": [0, 0.68333, 0.11111, 0],
+	        "934": [0, 0.68333, 0.05986, 0],
+	        "936": [0, 0.68333, 0.11111, 0],
+	        "937": [0, 0.68333, 0.10257, 0],
+	        "8211": [0, 0.43056, 0.09208, 0],
+	        "8212": [0, 0.43056, 0.09208, 0],
+	        "8216": [0, 0.69444, 0.12417, 0],
+	        "8217": [0, 0.69444, 0.12417, 0],
+	        "8220": [0, 0.69444, 0.1685, 0],
+	        "8221": [0, 0.69444, 0.06961, 0],
+	        "8463": [0, 0.68889, 0, 0],
+	    },
+	    "Main-Regular": {
+	        "32": [0, 0, 0, 0],
+	        "33": [0, 0.69444, 0, 0],
+	        "34": [0, 0.69444, 0, 0],
+	        "35": [0.19444, 0.69444, 0, 0],
+	        "36": [0.05556, 0.75, 0, 0],
+	        "37": [0.05556, 0.75, 0, 0],
+	        "38": [0, 0.69444, 0, 0],
+	        "39": [0, 0.69444, 0, 0],
+	        "40": [0.25, 0.75, 0, 0],
+	        "41": [0.25, 0.75, 0, 0],
+	        "42": [0, 0.75, 0, 0],
+	        "43": [0.08333, 0.58333, 0, 0],
+	        "44": [0.19444, 0.10556, 0, 0],
+	        "45": [0, 0.43056, 0, 0],
+	        "46": [0, 0.10556, 0, 0],
+	        "47": [0.25, 0.75, 0, 0],
+	        "48": [0, 0.64444, 0, 0],
+	        "49": [0, 0.64444, 0, 0],
+	        "50": [0, 0.64444, 0, 0],
+	        "51": [0, 0.64444, 0, 0],
+	        "52": [0, 0.64444, 0, 0],
+	        "53": [0, 0.64444, 0, 0],
+	        "54": [0, 0.64444, 0, 0],
+	        "55": [0, 0.64444, 0, 0],
+	        "56": [0, 0.64444, 0, 0],
+	        "57": [0, 0.64444, 0, 0],
+	        "58": [0, 0.43056, 0, 0],
+	        "59": [0.19444, 0.43056, 0, 0],
+	        "60": [0.0391, 0.5391, 0, 0],
+	        "61": [-0.13313, 0.36687, 0, 0],
+	        "62": [0.0391, 0.5391, 0, 0],
+	        "63": [0, 0.69444, 0, 0],
+	        "64": [0, 0.69444, 0, 0],
+	        "65": [0, 0.68333, 0, 0],
+	        "66": [0, 0.68333, 0, 0],
+	        "67": [0, 0.68333, 0, 0],
+	        "68": [0, 0.68333, 0, 0],
+	        "69": [0, 0.68333, 0, 0],
+	        "70": [0, 0.68333, 0, 0],
+	        "71": [0, 0.68333, 0, 0],
+	        "72": [0, 0.68333, 0, 0],
+	        "73": [0, 0.68333, 0, 0],
+	        "74": [0, 0.68333, 0, 0],
+	        "75": [0, 0.68333, 0, 0],
+	        "76": [0, 0.68333, 0, 0],
+	        "77": [0, 0.68333, 0, 0],
+	        "78": [0, 0.68333, 0, 0],
+	        "79": [0, 0.68333, 0, 0],
+	        "80": [0, 0.68333, 0, 0],
+	        "81": [0.19444, 0.68333, 0, 0],
+	        "82": [0, 0.68333, 0, 0],
+	        "83": [0, 0.68333, 0, 0],
+	        "84": [0, 0.68333, 0, 0],
+	        "85": [0, 0.68333, 0, 0],
+	        "86": [0, 0.68333, 0.01389, 0],
+	        "87": [0, 0.68333, 0.01389, 0],
+	        "88": [0, 0.68333, 0, 0],
+	        "89": [0, 0.68333, 0.025, 0],
+	        "90": [0, 0.68333, 0, 0],
+	        "91": [0.25, 0.75, 0, 0],
+	        "92": [0.25, 0.75, 0, 0],
+	        "93": [0.25, 0.75, 0, 0],
+	        "94": [0, 0.69444, 0, 0],
+	        "95": [0.31, 0.12056, 0.02778, 0],
+	        "96": [0, 0.69444, 0, 0],
+	        "97": [0, 0.43056, 0, 0],
+	        "98": [0, 0.69444, 0, 0],
+	        "99": [0, 0.43056, 0, 0],
+	        "100": [0, 0.69444, 0, 0],
+	        "101": [0, 0.43056, 0, 0],
+	        "102": [0, 0.69444, 0.07778, 0],
+	        "103": [0.19444, 0.43056, 0.01389, 0],
+	        "104": [0, 0.69444, 0, 0],
+	        "105": [0, 0.66786, 0, 0],
+	        "106": [0.19444, 0.66786, 0, 0],
+	        "107": [0, 0.69444, 0, 0],
+	        "108": [0, 0.69444, 0, 0],
+	        "109": [0, 0.43056, 0, 0],
+	        "110": [0, 0.43056, 0, 0],
+	        "111": [0, 0.43056, 0, 0],
+	        "112": [0.19444, 0.43056, 0, 0],
+	        "113": [0.19444, 0.43056, 0, 0],
+	        "114": [0, 0.43056, 0, 0],
+	        "115": [0, 0.43056, 0, 0],
+	        "116": [0, 0.61508, 0, 0],
+	        "117": [0, 0.43056, 0, 0],
+	        "118": [0, 0.43056, 0.01389, 0],
+	        "119": [0, 0.43056, 0.01389, 0],
+	        "120": [0, 0.43056, 0, 0],
+	        "121": [0.19444, 0.43056, 0.01389, 0],
+	        "122": [0, 0.43056, 0, 0],
+	        "123": [0.25, 0.75, 0, 0],
+	        "124": [0.25, 0.75, 0, 0],
+	        "125": [0.25, 0.75, 0, 0],
+	        "126": [0.35, 0.31786, 0, 0],
+	        "160": [0, 0, 0, 0],
+	        "168": [0, 0.66786, 0, 0],
+	        "172": [0, 0.43056, 0, 0],
+	        "175": [0, 0.56778, 0, 0],
+	        "176": [0, 0.69444, 0, 0],
+	        "177": [0.08333, 0.58333, 0, 0],
+	        "180": [0, 0.69444, 0, 0],
+	        "215": [0.08333, 0.58333, 0, 0],
+	        "247": [0.08333, 0.58333, 0, 0],
+	        "305": [0, 0.43056, 0, 0],
+	        "567": [0.19444, 0.43056, 0, 0],
+	        "710": [0, 0.69444, 0, 0],
+	        "711": [0, 0.62847, 0, 0],
+	        "713": [0, 0.56778, 0, 0],
+	        "714": [0, 0.69444, 0, 0],
+	        "715": [0, 0.69444, 0, 0],
+	        "728": [0, 0.69444, 0, 0],
+	        "729": [0, 0.66786, 0, 0],
+	        "730": [0, 0.69444, 0, 0],
+	        "732": [0, 0.66786, 0, 0],
+	        "768": [0, 0.69444, 0, 0],
+	        "769": [0, 0.69444, 0, 0],
+	        "770": [0, 0.69444, 0, 0],
+	        "771": [0, 0.66786, 0, 0],
+	        "772": [0, 0.56778, 0, 0],
+	        "774": [0, 0.69444, 0, 0],
+	        "775": [0, 0.66786, 0, 0],
+	        "776": [0, 0.66786, 0, 0],
+	        "778": [0, 0.69444, 0, 0],
+	        "779": [0, 0.69444, 0, 0],
+	        "780": [0, 0.62847, 0, 0],
+	        "824": [0.19444, 0.69444, 0, 0],
+	        "915": [0, 0.68333, 0, 0],
+	        "916": [0, 0.68333, 0, 0],
+	        "920": [0, 0.68333, 0, 0],
+	        "923": [0, 0.68333, 0, 0],
+	        "926": [0, 0.68333, 0, 0],
+	        "928": [0, 0.68333, 0, 0],
+	        "931": [0, 0.68333, 0, 0],
+	        "933": [0, 0.68333, 0, 0],
+	        "934": [0, 0.68333, 0, 0],
+	        "936": [0, 0.68333, 0, 0],
+	        "937": [0, 0.68333, 0, 0],
+	        "8211": [0, 0.43056, 0.02778, 0],
+	        "8212": [0, 0.43056, 0.02778, 0],
+	        "8216": [0, 0.69444, 0, 0],
+	        "8217": [0, 0.69444, 0, 0],
+	        "8220": [0, 0.69444, 0, 0],
+	        "8221": [0, 0.69444, 0, 0],
+	        "8224": [0.19444, 0.69444, 0, 0],
+	        "8225": [0.19444, 0.69444, 0, 0],
+	        "8230": [0, 0.12, 0, 0],
+	        "8242": [0, 0.55556, 0, 0],
+	        "8407": [0, 0.71444, 0.15382, 0],
+	        "8463": [0, 0.68889, 0, 0],
+	        "8465": [0, 0.69444, 0, 0],
+	        "8467": [0, 0.69444, 0, 0.11111],
+	        "8472": [0.19444, 0.43056, 0, 0.11111],
+	        "8476": [0, 0.69444, 0, 0],
+	        "8501": [0, 0.69444, 0, 0],
+	        "8592": [-0.13313, 0.36687, 0, 0],
+	        "8593": [0.19444, 0.69444, 0, 0],
+	        "8594": [-0.13313, 0.36687, 0, 0],
+	        "8595": [0.19444, 0.69444, 0, 0],
+	        "8596": [-0.13313, 0.36687, 0, 0],
+	        "8597": [0.25, 0.75, 0, 0],
+	        "8598": [0.19444, 0.69444, 0, 0],
+	        "8599": [0.19444, 0.69444, 0, 0],
+	        "8600": [0.19444, 0.69444, 0, 0],
+	        "8601": [0.19444, 0.69444, 0, 0],
+	        "8614": [0.011, 0.511, 0, 0],
+	        "8617": [0.011, 0.511, 0, 0],
+	        "8618": [0.011, 0.511, 0, 0],
+	        "8636": [-0.13313, 0.36687, 0, 0],
+	        "8637": [-0.13313, 0.36687, 0, 0],
+	        "8640": [-0.13313, 0.36687, 0, 0],
+	        "8641": [-0.13313, 0.36687, 0, 0],
+	        "8652": [0.011, 0.671, 0, 0],
+	        "8656": [-0.13313, 0.36687, 0, 0],
+	        "8657": [0.19444, 0.69444, 0, 0],
+	        "8658": [-0.13313, 0.36687, 0, 0],
+	        "8659": [0.19444, 0.69444, 0, 0],
+	        "8660": [-0.13313, 0.36687, 0, 0],
+	        "8661": [0.25, 0.75, 0, 0],
+	        "8704": [0, 0.69444, 0, 0],
+	        "8706": [0, 0.69444, 0.05556, 0.08334],
+	        "8707": [0, 0.69444, 0, 0],
+	        "8709": [0.05556, 0.75, 0, 0],
+	        "8711": [0, 0.68333, 0, 0],
+	        "8712": [0.0391, 0.5391, 0, 0],
+	        "8715": [0.0391, 0.5391, 0, 0],
+	        "8722": [0.08333, 0.58333, 0, 0],
+	        "8723": [0.08333, 0.58333, 0, 0],
+	        "8725": [0.25, 0.75, 0, 0],
+	        "8726": [0.25, 0.75, 0, 0],
+	        "8727": [-0.03472, 0.46528, 0, 0],
+	        "8728": [-0.05555, 0.44445, 0, 0],
+	        "8729": [-0.05555, 0.44445, 0, 0],
+	        "8730": [0.2, 0.8, 0, 0],
+	        "8733": [0, 0.43056, 0, 0],
+	        "8734": [0, 0.43056, 0, 0],
+	        "8736": [0, 0.69224, 0, 0],
+	        "8739": [0.25, 0.75, 0, 0],
+	        "8741": [0.25, 0.75, 0, 0],
+	        "8743": [0, 0.55556, 0, 0],
+	        "8744": [0, 0.55556, 0, 0],
+	        "8745": [0, 0.55556, 0, 0],
+	        "8746": [0, 0.55556, 0, 0],
+	        "8747": [0.19444, 0.69444, 0.11111, 0],
+	        "8764": [-0.13313, 0.36687, 0, 0],
+	        "8768": [0.19444, 0.69444, 0, 0],
+	        "8771": [-0.03625, 0.46375, 0, 0],
+	        "8773": [-0.022, 0.589, 0, 0],
+	        "8776": [-0.01688, 0.48312, 0, 0],
+	        "8781": [-0.03625, 0.46375, 0, 0],
+	        "8784": [-0.133, 0.67, 0, 0],
+	        "8800": [0.215, 0.716, 0, 0],
+	        "8801": [-0.03625, 0.46375, 0, 0],
+	        "8804": [0.13597, 0.63597, 0, 0],
+	        "8805": [0.13597, 0.63597, 0, 0],
+	        "8810": [0.0391, 0.5391, 0, 0],
+	        "8811": [0.0391, 0.5391, 0, 0],
+	        "8826": [0.0391, 0.5391, 0, 0],
+	        "8827": [0.0391, 0.5391, 0, 0],
+	        "8834": [0.0391, 0.5391, 0, 0],
+	        "8835": [0.0391, 0.5391, 0, 0],
+	        "8838": [0.13597, 0.63597, 0, 0],
+	        "8839": [0.13597, 0.63597, 0, 0],
+	        "8846": [0, 0.55556, 0, 0],
+	        "8849": [0.13597, 0.63597, 0, 0],
+	        "8850": [0.13597, 0.63597, 0, 0],
+	        "8851": [0, 0.55556, 0, 0],
+	        "8852": [0, 0.55556, 0, 0],
+	        "8853": [0.08333, 0.58333, 0, 0],
+	        "8854": [0.08333, 0.58333, 0, 0],
+	        "8855": [0.08333, 0.58333, 0, 0],
+	        "8856": [0.08333, 0.58333, 0, 0],
+	        "8857": [0.08333, 0.58333, 0, 0],
+	        "8866": [0, 0.69444, 0, 0],
+	        "8867": [0, 0.69444, 0, 0],
+	        "8868": [0, 0.69444, 0, 0],
+	        "8869": [0, 0.69444, 0, 0],
+	        "8872": [0.249, 0.75, 0, 0],
+	        "8900": [-0.05555, 0.44445, 0, 0],
+	        "8901": [-0.05555, 0.44445, 0, 0],
+	        "8902": [-0.03472, 0.46528, 0, 0],
+	        "8904": [0.005, 0.505, 0, 0],
+	        "8942": [0.03, 0.9, 0, 0],
+	        "8943": [-0.19, 0.31, 0, 0],
+	        "8945": [-0.1, 0.82, 0, 0],
+	        "8968": [0.25, 0.75, 0, 0],
+	        "8969": [0.25, 0.75, 0, 0],
+	        "8970": [0.25, 0.75, 0, 0],
+	        "8971": [0.25, 0.75, 0, 0],
+	        "8994": [-0.14236, 0.35764, 0, 0],
+	        "8995": [-0.14236, 0.35764, 0, 0],
+	        "9136": [0.244, 0.744, 0, 0],
+	        "9137": [0.244, 0.744, 0, 0],
+	        "9651": [0.19444, 0.69444, 0, 0],
+	        "9657": [-0.03472, 0.46528, 0, 0],
+	        "9661": [0.19444, 0.69444, 0, 0],
+	        "9667": [-0.03472, 0.46528, 0, 0],
+	        "9711": [0.19444, 0.69444, 0, 0],
+	        "9824": [0.12963, 0.69444, 0, 0],
+	        "9825": [0.12963, 0.69444, 0, 0],
+	        "9826": [0.12963, 0.69444, 0, 0],
+	        "9827": [0.12963, 0.69444, 0, 0],
+	        "9837": [0, 0.75, 0, 0],
+	        "9838": [0.19444, 0.69444, 0, 0],
+	        "9839": [0.19444, 0.69444, 0, 0],
+	        "10216": [0.25, 0.75, 0, 0],
+	        "10217": [0.25, 0.75, 0, 0],
+	        "10222": [0.244, 0.744, 0, 0],
+	        "10223": [0.244, 0.744, 0, 0],
+	        "10229": [0.011, 0.511, 0, 0],
+	        "10230": [0.011, 0.511, 0, 0],
+	        "10231": [0.011, 0.511, 0, 0],
+	        "10232": [0.024, 0.525, 0, 0],
+	        "10233": [0.024, 0.525, 0, 0],
+	        "10234": [0.024, 0.525, 0, 0],
+	        "10236": [0.011, 0.511, 0, 0],
+	        "10815": [0, 0.68333, 0, 0],
+	        "10927": [0.13597, 0.63597, 0, 0],
+	        "10928": [0.13597, 0.63597, 0, 0],
+	    },
+	    "Math-BoldItalic": {
+	        "47": [0.19444, 0.69444, 0, 0],
+	        "65": [0, 0.68611, 0, 0],
+	        "66": [0, 0.68611, 0.04835, 0],
+	        "67": [0, 0.68611, 0.06979, 0],
+	        "68": [0, 0.68611, 0.03194, 0],
+	        "69": [0, 0.68611, 0.05451, 0],
+	        "70": [0, 0.68611, 0.15972, 0],
+	        "71": [0, 0.68611, 0, 0],
+	        "72": [0, 0.68611, 0.08229, 0],
+	        "73": [0, 0.68611, 0.07778, 0],
+	        "74": [0, 0.68611, 0.10069, 0],
+	        "75": [0, 0.68611, 0.06979, 0],
+	        "76": [0, 0.68611, 0, 0],
+	        "77": [0, 0.68611, 0.11424, 0],
+	        "78": [0, 0.68611, 0.11424, 0],
+	        "79": [0, 0.68611, 0.03194, 0],
+	        "80": [0, 0.68611, 0.15972, 0],
+	        "81": [0.19444, 0.68611, 0, 0],
+	        "82": [0, 0.68611, 0.00421, 0],
+	        "83": [0, 0.68611, 0.05382, 0],
+	        "84": [0, 0.68611, 0.15972, 0],
+	        "85": [0, 0.68611, 0.11424, 0],
+	        "86": [0, 0.68611, 0.25555, 0],
+	        "87": [0, 0.68611, 0.15972, 0],
+	        "88": [0, 0.68611, 0.07778, 0],
+	        "89": [0, 0.68611, 0.25555, 0],
+	        "90": [0, 0.68611, 0.06979, 0],
+	        "97": [0, 0.44444, 0, 0],
+	        "98": [0, 0.69444, 0, 0],
+	        "99": [0, 0.44444, 0, 0],
+	        "100": [0, 0.69444, 0, 0],
+	        "101": [0, 0.44444, 0, 0],
+	        "102": [0.19444, 0.69444, 0.11042, 0],
+	        "103": [0.19444, 0.44444, 0.03704, 0],
+	        "104": [0, 0.69444, 0, 0],
+	        "105": [0, 0.69326, 0, 0],
+	        "106": [0.19444, 0.69326, 0.0622, 0],
+	        "107": [0, 0.69444, 0.01852, 0],
+	        "108": [0, 0.69444, 0.0088, 0],
+	        "109": [0, 0.44444, 0, 0],
+	        "110": [0, 0.44444, 0, 0],
+	        "111": [0, 0.44444, 0, 0],
+	        "112": [0.19444, 0.44444, 0, 0],
+	        "113": [0.19444, 0.44444, 0.03704, 0],
+	        "114": [0, 0.44444, 0.03194, 0],
+	        "115": [0, 0.44444, 0, 0],
+	        "116": [0, 0.63492, 0, 0],
+	        "117": [0, 0.44444, 0, 0],
+	        "118": [0, 0.44444, 0.03704, 0],
+	        "119": [0, 0.44444, 0.02778, 0],
+	        "120": [0, 0.44444, 0, 0],
+	        "121": [0.19444, 0.44444, 0.03704, 0],
+	        "122": [0, 0.44444, 0.04213, 0],
+	        "915": [0, 0.68611, 0.15972, 0],
+	        "916": [0, 0.68611, 0, 0],
+	        "920": [0, 0.68611, 0.03194, 0],
+	        "923": [0, 0.68611, 0, 0],
+	        "926": [0, 0.68611, 0.07458, 0],
+	        "928": [0, 0.68611, 0.08229, 0],
+	        "931": [0, 0.68611, 0.05451, 0],
+	        "933": [0, 0.68611, 0.15972, 0],
+	        "934": [0, 0.68611, 0, 0],
+	        "936": [0, 0.68611, 0.11653, 0],
+	        "937": [0, 0.68611, 0.04835, 0],
+	        "945": [0, 0.44444, 0, 0],
+	        "946": [0.19444, 0.69444, 0.03403, 0],
+	        "947": [0.19444, 0.44444, 0.06389, 0],
+	        "948": [0, 0.69444, 0.03819, 0],
+	        "949": [0, 0.44444, 0, 0],
+	        "950": [0.19444, 0.69444, 0.06215, 0],
+	        "951": [0.19444, 0.44444, 0.03704, 0],
+	        "952": [0, 0.69444, 0.03194, 0],
+	        "953": [0, 0.44444, 0, 0],
+	        "954": [0, 0.44444, 0, 0],
+	        "955": [0, 0.69444, 0, 0],
+	        "956": [0.19444, 0.44444, 0, 0],
+	        "957": [0, 0.44444, 0.06898, 0],
+	        "958": [0.19444, 0.69444, 0.03021, 0],
+	        "959": [0, 0.44444, 0, 0],
+	        "960": [0, 0.44444, 0.03704, 0],
+	        "961": [0.19444, 0.44444, 0, 0],
+	        "962": [0.09722, 0.44444, 0.07917, 0],
+	        "963": [0, 0.44444, 0.03704, 0],
+	        "964": [0, 0.44444, 0.13472, 0],
+	        "965": [0, 0.44444, 0.03704, 0],
+	        "966": [0.19444, 0.44444, 0, 0],
+	        "967": [0.19444, 0.44444, 0, 0],
+	        "968": [0.19444, 0.69444, 0.03704, 0],
+	        "969": [0, 0.44444, 0.03704, 0],
+	        "977": [0, 0.69444, 0, 0],
+	        "981": [0.19444, 0.69444, 0, 0],
+	        "982": [0, 0.44444, 0.03194, 0],
+	        "1009": [0.19444, 0.44444, 0, 0],
+	        "1013": [0, 0.44444, 0, 0],
+	    },
+	    "Math-Italic": {
+	        "47": [0.19444, 0.69444, 0, 0],
+	        "65": [0, 0.68333, 0, 0.13889],
+	        "66": [0, 0.68333, 0.05017, 0.08334],
+	        "67": [0, 0.68333, 0.07153, 0.08334],
+	        "68": [0, 0.68333, 0.02778, 0.05556],
+	        "69": [0, 0.68333, 0.05764, 0.08334],
+	        "70": [0, 0.68333, 0.13889, 0.08334],
+	        "71": [0, 0.68333, 0, 0.08334],
+	        "72": [0, 0.68333, 0.08125, 0.05556],
+	        "73": [0, 0.68333, 0.07847, 0.11111],
+	        "74": [0, 0.68333, 0.09618, 0.16667],
+	        "75": [0, 0.68333, 0.07153, 0.05556],
+	        "76": [0, 0.68333, 0, 0.02778],
+	        "77": [0, 0.68333, 0.10903, 0.08334],
+	        "78": [0, 0.68333, 0.10903, 0.08334],
+	        "79": [0, 0.68333, 0.02778, 0.08334],
+	        "80": [0, 0.68333, 0.13889, 0.08334],
+	        "81": [0.19444, 0.68333, 0, 0.08334],
+	        "82": [0, 0.68333, 0.00773, 0.08334],
+	        "83": [0, 0.68333, 0.05764, 0.08334],
+	        "84": [0, 0.68333, 0.13889, 0.08334],
+	        "85": [0, 0.68333, 0.10903, 0.02778],
+	        "86": [0, 0.68333, 0.22222, 0],
+	        "87": [0, 0.68333, 0.13889, 0],
+	        "88": [0, 0.68333, 0.07847, 0.08334],
+	        "89": [0, 0.68333, 0.22222, 0],
+	        "90": [0, 0.68333, 0.07153, 0.08334],
+	        "97": [0, 0.43056, 0, 0],
+	        "98": [0, 0.69444, 0, 0],
+	        "99": [0, 0.43056, 0, 0.05556],
+	        "100": [0, 0.69444, 0, 0.16667],
+	        "101": [0, 0.43056, 0, 0.05556],
+	        "102": [0.19444, 0.69444, 0.10764, 0.16667],
+	        "103": [0.19444, 0.43056, 0.03588, 0.02778],
+	        "104": [0, 0.69444, 0, 0],
+	        "105": [0, 0.65952, 0, 0],
+	        "106": [0.19444, 0.65952, 0.05724, 0],
+	        "107": [0, 0.69444, 0.03148, 0],
+	        "108": [0, 0.69444, 0.01968, 0.08334],
+	        "109": [0, 0.43056, 0, 0],
+	        "110": [0, 0.43056, 0, 0],
+	        "111": [0, 0.43056, 0, 0.05556],
+	        "112": [0.19444, 0.43056, 0, 0.08334],
+	        "113": [0.19444, 0.43056, 0.03588, 0.08334],
+	        "114": [0, 0.43056, 0.02778, 0.05556],
+	        "115": [0, 0.43056, 0, 0.05556],
+	        "116": [0, 0.61508, 0, 0.08334],
+	        "117": [0, 0.43056, 0, 0.02778],
+	        "118": [0, 0.43056, 0.03588, 0.02778],
+	        "119": [0, 0.43056, 0.02691, 0.08334],
+	        "120": [0, 0.43056, 0, 0.02778],
+	        "121": [0.19444, 0.43056, 0.03588, 0.05556],
+	        "122": [0, 0.43056, 0.04398, 0.05556],
+	        "915": [0, 0.68333, 0.13889, 0.08334],
+	        "916": [0, 0.68333, 0, 0.16667],
+	        "920": [0, 0.68333, 0.02778, 0.08334],
+	        "923": [0, 0.68333, 0, 0.16667],
+	        "926": [0, 0.68333, 0.07569, 0.08334],
+	        "928": [0, 0.68333, 0.08125, 0.05556],
+	        "931": [0, 0.68333, 0.05764, 0.08334],
+	        "933": [0, 0.68333, 0.13889, 0.05556],
+	        "934": [0, 0.68333, 0, 0.08334],
+	        "936": [0, 0.68333, 0.11, 0.05556],
+	        "937": [0, 0.68333, 0.05017, 0.08334],
+	        "945": [0, 0.43056, 0.0037, 0.02778],
+	        "946": [0.19444, 0.69444, 0.05278, 0.08334],
+	        "947": [0.19444, 0.43056, 0.05556, 0],
+	        "948": [0, 0.69444, 0.03785, 0.05556],
+	        "949": [0, 0.43056, 0, 0.08334],
+	        "950": [0.19444, 0.69444, 0.07378, 0.08334],
+	        "951": [0.19444, 0.43056, 0.03588, 0.05556],
+	        "952": [0, 0.69444, 0.02778, 0.08334],
+	        "953": [0, 0.43056, 0, 0.05556],
+	        "954": [0, 0.43056, 0, 0],
+	        "955": [0, 0.69444, 0, 0],
+	        "956": [0.19444, 0.43056, 0, 0.02778],
+	        "957": [0, 0.43056, 0.06366, 0.02778],
+	        "958": [0.19444, 0.69444, 0.04601, 0.11111],
+	        "959": [0, 0.43056, 0, 0.05556],
+	        "960": [0, 0.43056, 0.03588, 0],
+	        "961": [0.19444, 0.43056, 0, 0.08334],
+	        "962": [0.09722, 0.43056, 0.07986, 0.08334],
+	        "963": [0, 0.43056, 0.03588, 0],
+	        "964": [0, 0.43056, 0.1132, 0.02778],
+	        "965": [0, 0.43056, 0.03588, 0.02778],
+	        "966": [0.19444, 0.43056, 0, 0.08334],
+	        "967": [0.19444, 0.43056, 0, 0.05556],
+	        "968": [0.19444, 0.69444, 0.03588, 0.11111],
+	        "969": [0, 0.43056, 0.03588, 0],
+	        "977": [0, 0.69444, 0, 0.08334],
+	        "981": [0.19444, 0.69444, 0, 0.08334],
+	        "982": [0, 0.43056, 0.02778, 0],
+	        "1009": [0.19444, 0.43056, 0, 0.08334],
+	        "1013": [0, 0.43056, 0, 0.05556],
+	    },
+	    "Math-Regular": {
+	        "65": [0, 0.68333, 0, 0.13889],
+	        "66": [0, 0.68333, 0.05017, 0.08334],
+	        "67": [0, 0.68333, 0.07153, 0.08334],
+	        "68": [0, 0.68333, 0.02778, 0.05556],
+	        "69": [0, 0.68333, 0.05764, 0.08334],
+	        "70": [0, 0.68333, 0.13889, 0.08334],
+	        "71": [0, 0.68333, 0, 0.08334],
+	        "72": [0, 0.68333, 0.08125, 0.05556],
+	        "73": [0, 0.68333, 0.07847, 0.11111],
+	        "74": [0, 0.68333, 0.09618, 0.16667],
+	        "75": [0, 0.68333, 0.07153, 0.05556],
+	        "76": [0, 0.68333, 0, 0.02778],
+	        "77": [0, 0.68333, 0.10903, 0.08334],
+	        "78": [0, 0.68333, 0.10903, 0.08334],
+	        "79": [0, 0.68333, 0.02778, 0.08334],
+	        "80": [0, 0.68333, 0.13889, 0.08334],
+	        "81": [0.19444, 0.68333, 0, 0.08334],
+	        "82": [0, 0.68333, 0.00773, 0.08334],
+	        "83": [0, 0.68333, 0.05764, 0.08334],
+	        "84": [0, 0.68333, 0.13889, 0.08334],
+	        "85": [0, 0.68333, 0.10903, 0.02778],
+	        "86": [0, 0.68333, 0.22222, 0],
+	        "87": [0, 0.68333, 0.13889, 0],
+	        "88": [0, 0.68333, 0.07847, 0.08334],
+	        "89": [0, 0.68333, 0.22222, 0],
+	        "90": [0, 0.68333, 0.07153, 0.08334],
+	        "97": [0, 0.43056, 0, 0],
+	        "98": [0, 0.69444, 0, 0],
+	        "99": [0, 0.43056, 0, 0.05556],
+	        "100": [0, 0.69444, 0, 0.16667],
+	        "101": [0, 0.43056, 0, 0.05556],
+	        "102": [0.19444, 0.69444, 0.10764, 0.16667],
+	        "103": [0.19444, 0.43056, 0.03588, 0.02778],
+	        "104": [0, 0.69444, 0, 0],
+	        "105": [0, 0.65952, 0, 0],
+	        "106": [0.19444, 0.65952, 0.05724, 0],
+	        "107": [0, 0.69444, 0.03148, 0],
+	        "108": [0, 0.69444, 0.01968, 0.08334],
+	        "109": [0, 0.43056, 0, 0],
+	        "110": [0, 0.43056, 0, 0],
+	        "111": [0, 0.43056, 0, 0.05556],
+	        "112": [0.19444, 0.43056, 0, 0.08334],
+	        "113": [0.19444, 0.43056, 0.03588, 0.08334],
+	        "114": [0, 0.43056, 0.02778, 0.05556],
+	        "115": [0, 0.43056, 0, 0.05556],
+	        "116": [0, 0.61508, 0, 0.08334],
+	        "117": [0, 0.43056, 0, 0.02778],
+	        "118": [0, 0.43056, 0.03588, 0.02778],
+	        "119": [0, 0.43056, 0.02691, 0.08334],
+	        "120": [0, 0.43056, 0, 0.02778],
+	        "121": [0.19444, 0.43056, 0.03588, 0.05556],
+	        "122": [0, 0.43056, 0.04398, 0.05556],
+	        "915": [0, 0.68333, 0.13889, 0.08334],
+	        "916": [0, 0.68333, 0, 0.16667],
+	        "920": [0, 0.68333, 0.02778, 0.08334],
+	        "923": [0, 0.68333, 0, 0.16667],
+	        "926": [0, 0.68333, 0.07569, 0.08334],
+	        "928": [0, 0.68333, 0.08125, 0.05556],
+	        "931": [0, 0.68333, 0.05764, 0.08334],
+	        "933": [0, 0.68333, 0.13889, 0.05556],
+	        "934": [0, 0.68333, 0, 0.08334],
+	        "936": [0, 0.68333, 0.11, 0.05556],
+	        "937": [0, 0.68333, 0.05017, 0.08334],
+	        "945": [0, 0.43056, 0.0037, 0.02778],
+	        "946": [0.19444, 0.69444, 0.05278, 0.08334],
+	        "947": [0.19444, 0.43056, 0.05556, 0],
+	        "948": [0, 0.69444, 0.03785, 0.05556],
+	        "949": [0, 0.43056, 0, 0.08334],
+	        "950": [0.19444, 0.69444, 0.07378, 0.08334],
+	        "951": [0.19444, 0.43056, 0.03588, 0.05556],
+	        "952": [0, 0.69444, 0.02778, 0.08334],
+	        "953": [0, 0.43056, 0, 0.05556],
+	        "954": [0, 0.43056, 0, 0],
+	        "955": [0, 0.69444, 0, 0],
+	        "956": [0.19444, 0.43056, 0, 0.02778],
+	        "957": [0, 0.43056, 0.06366, 0.02778],
+	        "958": [0.19444, 0.69444, 0.04601, 0.11111],
+	        "959": [0, 0.43056, 0, 0.05556],
+	        "960": [0, 0.43056, 0.03588, 0],
+	        "961": [0.19444, 0.43056, 0, 0.08334],
+	        "962": [0.09722, 0.43056, 0.07986, 0.08334],
+	        "963": [0, 0.43056, 0.03588, 0],
+	        "964": [0, 0.43056, 0.1132, 0.02778],
+	        "965": [0, 0.43056, 0.03588, 0.02778],
+	        "966": [0.19444, 0.43056, 0, 0.08334],
+	        "967": [0.19444, 0.43056, 0, 0.05556],
+	        "968": [0.19444, 0.69444, 0.03588, 0.11111],
+	        "969": [0, 0.43056, 0.03588, 0],
+	        "977": [0, 0.69444, 0, 0.08334],
+	        "981": [0.19444, 0.69444, 0, 0.08334],
+	        "982": [0, 0.43056, 0.02778, 0],
+	        "1009": [0.19444, 0.43056, 0, 0.08334],
+	        "1013": [0, 0.43056, 0, 0.05556],
+	    },
+	    "SansSerif-Regular": {
+	        "33": [0, 0.69444, 0, 0],
+	        "34": [0, 0.69444, 0, 0],
+	        "35": [0.19444, 0.69444, 0, 0],
+	        "36": [0.05556, 0.75, 0, 0],
+	        "37": [0.05556, 0.75, 0, 0],
+	        "38": [0, 0.69444, 0, 0],
+	        "39": [0, 0.69444, 0, 0],
+	        "40": [0.25, 0.75, 0, 0],
+	        "41": [0.25, 0.75, 0, 0],
+	        "42": [0, 0.75, 0, 0],
+	        "43": [0.08333, 0.58333, 0, 0],
+	        "44": [0.125, 0.08333, 0, 0],
+	        "45": [0, 0.44444, 0, 0],
+	        "46": [0, 0.08333, 0, 0],
+	        "47": [0.25, 0.75, 0, 0],
+	        "48": [0, 0.65556, 0, 0],
+	        "49": [0, 0.65556, 0, 0],
+	        "50": [0, 0.65556, 0, 0],
+	        "51": [0, 0.65556, 0, 0],
+	        "52": [0, 0.65556, 0, 0],
+	        "53": [0, 0.65556, 0, 0],
+	        "54": [0, 0.65556, 0, 0],
+	        "55": [0, 0.65556, 0, 0],
+	        "56": [0, 0.65556, 0, 0],
+	        "57": [0, 0.65556, 0, 0],
+	        "58": [0, 0.44444, 0, 0],
+	        "59": [0.125, 0.44444, 0, 0],
+	        "61": [-0.13, 0.37, 0, 0],
+	        "63": [0, 0.69444, 0, 0],
+	        "64": [0, 0.69444, 0, 0],
+	        "65": [0, 0.69444, 0, 0],
+	        "66": [0, 0.69444, 0, 0],
+	        "67": [0, 0.69444, 0, 0],
+	        "68": [0, 0.69444, 0, 0],
+	        "69": [0, 0.69444, 0, 0],
+	        "70": [0, 0.69444, 0, 0],
+	        "71": [0, 0.69444, 0, 0],
+	        "72": [0, 0.69444, 0, 0],
+	        "73": [0, 0.69444, 0, 0],
+	        "74": [0, 0.69444, 0, 0],
+	        "75": [0, 0.69444, 0, 0],
+	        "76": [0, 0.69444, 0, 0],
+	        "77": [0, 0.69444, 0, 0],
+	        "78": [0, 0.69444, 0, 0],
+	        "79": [0, 0.69444, 0, 0],
+	        "80": [0, 0.69444, 0, 0],
+	        "81": [0.125, 0.69444, 0, 0],
+	        "82": [0, 0.69444, 0, 0],
+	        "83": [0, 0.69444, 0, 0],
+	        "84": [0, 0.69444, 0, 0],
+	        "85": [0, 0.69444, 0, 0],
+	        "86": [0, 0.69444, 0.01389, 0],
+	        "87": [0, 0.69444, 0.01389, 0],
+	        "88": [0, 0.69444, 0, 0],
+	        "89": [0, 0.69444, 0.025, 0],
+	        "90": [0, 0.69444, 0, 0],
+	        "91": [0.25, 0.75, 0, 0],
+	        "93": [0.25, 0.75, 0, 0],
+	        "94": [0, 0.69444, 0, 0],
+	        "95": [0.35, 0.09444, 0.02778, 0],
+	        "97": [0, 0.44444, 0, 0],
+	        "98": [0, 0.69444, 0, 0],
+	        "99": [0, 0.44444, 0, 0],
+	        "100": [0, 0.69444, 0, 0],
+	        "101": [0, 0.44444, 0, 0],
+	        "102": [0, 0.69444, 0.06944, 0],
+	        "103": [0.19444, 0.44444, 0.01389, 0],
+	        "104": [0, 0.69444, 0, 0],
+	        "105": [0, 0.67937, 0, 0],
+	        "106": [0.19444, 0.67937, 0, 0],
+	        "107": [0, 0.69444, 0, 0],
+	        "108": [0, 0.69444, 0, 0],
+	        "109": [0, 0.44444, 0, 0],
+	        "110": [0, 0.44444, 0, 0],
+	        "111": [0, 0.44444, 0, 0],
+	        "112": [0.19444, 0.44444, 0, 0],
+	        "113": [0.19444, 0.44444, 0, 0],
+	        "114": [0, 0.44444, 0.01389, 0],
+	        "115": [0, 0.44444, 0, 0],
+	        "116": [0, 0.57143, 0, 0],
+	        "117": [0, 0.44444, 0, 0],
+	        "118": [0, 0.44444, 0.01389, 0],
+	        "119": [0, 0.44444, 0.01389, 0],
+	        "120": [0, 0.44444, 0, 0],
+	        "121": [0.19444, 0.44444, 0.01389, 0],
+	        "122": [0, 0.44444, 0, 0],
+	        "126": [0.35, 0.32659, 0, 0],
+	        "305": [0, 0.44444, 0, 0],
+	        "567": [0.19444, 0.44444, 0, 0],
+	        "768": [0, 0.69444, 0, 0],
+	        "769": [0, 0.69444, 0, 0],
+	        "770": [0, 0.69444, 0, 0],
+	        "771": [0, 0.67659, 0, 0],
+	        "772": [0, 0.60889, 0, 0],
+	        "774": [0, 0.69444, 0, 0],
+	        "775": [0, 0.67937, 0, 0],
+	        "776": [0, 0.67937, 0, 0],
+	        "778": [0, 0.69444, 0, 0],
+	        "779": [0, 0.69444, 0, 0],
+	        "780": [0, 0.63194, 0, 0],
+	        "915": [0, 0.69444, 0, 0],
+	        "916": [0, 0.69444, 0, 0],
+	        "920": [0, 0.69444, 0, 0],
+	        "923": [0, 0.69444, 0, 0],
+	        "926": [0, 0.69444, 0, 0],
+	        "928": [0, 0.69444, 0, 0],
+	        "931": [0, 0.69444, 0, 0],
+	        "933": [0, 0.69444, 0, 0],
+	        "934": [0, 0.69444, 0, 0],
+	        "936": [0, 0.69444, 0, 0],
+	        "937": [0, 0.69444, 0, 0],
+	        "8211": [0, 0.44444, 0.02778, 0],
+	        "8212": [0, 0.44444, 0.02778, 0],
+	        "8216": [0, 0.69444, 0, 0],
+	        "8217": [0, 0.69444, 0, 0],
+	        "8220": [0, 0.69444, 0, 0],
+	        "8221": [0, 0.69444, 0, 0],
+	    },
+	    "Script-Regular": {
+	        "65": [0, 0.7, 0.22925, 0],
+	        "66": [0, 0.7, 0.04087, 0],
+	        "67": [0, 0.7, 0.1689, 0],
+	        "68": [0, 0.7, 0.09371, 0],
+	        "69": [0, 0.7, 0.18583, 0],
+	        "70": [0, 0.7, 0.13634, 0],
+	        "71": [0, 0.7, 0.17322, 0],
+	        "72": [0, 0.7, 0.29694, 0],
+	        "73": [0, 0.7, 0.19189, 0],
+	        "74": [0.27778, 0.7, 0.19189, 0],
+	        "75": [0, 0.7, 0.31259, 0],
+	        "76": [0, 0.7, 0.19189, 0],
+	        "77": [0, 0.7, 0.15981, 0],
+	        "78": [0, 0.7, 0.3525, 0],
+	        "79": [0, 0.7, 0.08078, 0],
+	        "80": [0, 0.7, 0.08078, 0],
+	        "81": [0, 0.7, 0.03305, 0],
+	        "82": [0, 0.7, 0.06259, 0],
+	        "83": [0, 0.7, 0.19189, 0],
+	        "84": [0, 0.7, 0.29087, 0],
+	        "85": [0, 0.7, 0.25815, 0],
+	        "86": [0, 0.7, 0.27523, 0],
+	        "87": [0, 0.7, 0.27523, 0],
+	        "88": [0, 0.7, 0.26006, 0],
+	        "89": [0, 0.7, 0.2939, 0],
+	        "90": [0, 0.7, 0.24037, 0],
+	    },
+	    "Size1-Regular": {
+	        "40": [0.35001, 0.85, 0, 0],
+	        "41": [0.35001, 0.85, 0, 0],
+	        "47": [0.35001, 0.85, 0, 0],
+	        "91": [0.35001, 0.85, 0, 0],
+	        "92": [0.35001, 0.85, 0, 0],
+	        "93": [0.35001, 0.85, 0, 0],
+	        "123": [0.35001, 0.85, 0, 0],
+	        "125": [0.35001, 0.85, 0, 0],
+	        "710": [0, 0.72222, 0, 0],
+	        "732": [0, 0.72222, 0, 0],
+	        "770": [0, 0.72222, 0, 0],
+	        "771": [0, 0.72222, 0, 0],
+	        "8214": [-0.00099, 0.601, 0, 0],
+	        "8593": [1e-05, 0.6, 0, 0],
+	        "8595": [1e-05, 0.6, 0, 0],
+	        "8657": [1e-05, 0.6, 0, 0],
+	        "8659": [1e-05, 0.6, 0, 0],
+	        "8719": [0.25001, 0.75, 0, 0],
+	        "8720": [0.25001, 0.75, 0, 0],
+	        "8721": [0.25001, 0.75, 0, 0],
+	        "8730": [0.35001, 0.85, 0, 0],
+	        "8739": [-0.00599, 0.606, 0, 0],
+	        "8741": [-0.00599, 0.606, 0, 0],
+	        "8747": [0.30612, 0.805, 0.19445, 0],
+	        "8748": [0.306, 0.805, 0.19445, 0],
+	        "8749": [0.306, 0.805, 0.19445, 0],
+	        "8750": [0.30612, 0.805, 0.19445, 0],
+	        "8896": [0.25001, 0.75, 0, 0],
+	        "8897": [0.25001, 0.75, 0, 0],
+	        "8898": [0.25001, 0.75, 0, 0],
+	        "8899": [0.25001, 0.75, 0, 0],
+	        "8968": [0.35001, 0.85, 0, 0],
+	        "8969": [0.35001, 0.85, 0, 0],
+	        "8970": [0.35001, 0.85, 0, 0],
+	        "8971": [0.35001, 0.85, 0, 0],
+	        "9168": [-0.00099, 0.601, 0, 0],
+	        "10216": [0.35001, 0.85, 0, 0],
+	        "10217": [0.35001, 0.85, 0, 0],
+	        "10752": [0.25001, 0.75, 0, 0],
+	        "10753": [0.25001, 0.75, 0, 0],
+	        "10754": [0.25001, 0.75, 0, 0],
+	        "10756": [0.25001, 0.75, 0, 0],
+	        "10758": [0.25001, 0.75, 0, 0],
+	    },
+	    "Size2-Regular": {
+	        "40": [0.65002, 1.15, 0, 0],
+	        "41": [0.65002, 1.15, 0, 0],
+	        "47": [0.65002, 1.15, 0, 0],
+	        "91": [0.65002, 1.15, 0, 0],
+	        "92": [0.65002, 1.15, 0, 0],
+	        "93": [0.65002, 1.15, 0, 0],
+	        "123": [0.65002, 1.15, 0, 0],
+	        "125": [0.65002, 1.15, 0, 0],
+	        "710": [0, 0.75, 0, 0],
+	        "732": [0, 0.75, 0, 0],
+	        "770": [0, 0.75, 0, 0],
+	        "771": [0, 0.75, 0, 0],
+	        "8719": [0.55001, 1.05, 0, 0],
+	        "8720": [0.55001, 1.05, 0, 0],
+	        "8721": [0.55001, 1.05, 0, 0],
+	        "8730": [0.65002, 1.15, 0, 0],
+	        "8747": [0.86225, 1.36, 0.44445, 0],
+	        "8748": [0.862, 1.36, 0.44445, 0],
+	        "8749": [0.862, 1.36, 0.44445, 0],
+	        "8750": [0.86225, 1.36, 0.44445, 0],
+	        "8896": [0.55001, 1.05, 0, 0],
+	        "8897": [0.55001, 1.05, 0, 0],
+	        "8898": [0.55001, 1.05, 0, 0],
+	        "8899": [0.55001, 1.05, 0, 0],
+	        "8968": [0.65002, 1.15, 0, 0],
+	        "8969": [0.65002, 1.15, 0, 0],
+	        "8970": [0.65002, 1.15, 0, 0],
+	        "8971": [0.65002, 1.15, 0, 0],
+	        "10216": [0.65002, 1.15, 0, 0],
+	        "10217": [0.65002, 1.15, 0, 0],
+	        "10752": [0.55001, 1.05, 0, 0],
+	        "10753": [0.55001, 1.05, 0, 0],
+	        "10754": [0.55001, 1.05, 0, 0],
+	        "10756": [0.55001, 1.05, 0, 0],
+	        "10758": [0.55001, 1.05, 0, 0],
+	    },
+	    "Size3-Regular": {
+	        "40": [0.95003, 1.45, 0, 0],
+	        "41": [0.95003, 1.45, 0, 0],
+	        "47": [0.95003, 1.45, 0, 0],
+	        "91": [0.95003, 1.45, 0, 0],
+	        "92": [0.95003, 1.45, 0, 0],
+	        "93": [0.95003, 1.45, 0, 0],
+	        "123": [0.95003, 1.45, 0, 0],
+	        "125": [0.95003, 1.45, 0, 0],
+	        "710": [0, 0.75, 0, 0],
+	        "732": [0, 0.75, 0, 0],
+	        "770": [0, 0.75, 0, 0],
+	        "771": [0, 0.75, 0, 0],
+	        "8730": [0.95003, 1.45, 0, 0],
+	        "8968": [0.95003, 1.45, 0, 0],
+	        "8969": [0.95003, 1.45, 0, 0],
+	        "8970": [0.95003, 1.45, 0, 0],
+	        "8971": [0.95003, 1.45, 0, 0],
+	        "10216": [0.95003, 1.45, 0, 0],
+	        "10217": [0.95003, 1.45, 0, 0],
+	    },
+	    "Size4-Regular": {
+	        "40": [1.25003, 1.75, 0, 0],
+	        "41": [1.25003, 1.75, 0, 0],
+	        "47": [1.25003, 1.75, 0, 0],
+	        "91": [1.25003, 1.75, 0, 0],
+	        "92": [1.25003, 1.75, 0, 0],
+	        "93": [1.25003, 1.75, 0, 0],
+	        "123": [1.25003, 1.75, 0, 0],
+	        "125": [1.25003, 1.75, 0, 0],
+	        "710": [0, 0.825, 0, 0],
+	        "732": [0, 0.825, 0, 0],
+	        "770": [0, 0.825, 0, 0],
+	        "771": [0, 0.825, 0, 0],
+	        "8730": [1.25003, 1.75, 0, 0],
+	        "8968": [1.25003, 1.75, 0, 0],
+	        "8969": [1.25003, 1.75, 0, 0],
+	        "8970": [1.25003, 1.75, 0, 0],
+	        "8971": [1.25003, 1.75, 0, 0],
+	        "9115": [0.64502, 1.155, 0, 0],
+	        "9116": [1e-05, 0.6, 0, 0],
+	        "9117": [0.64502, 1.155, 0, 0],
+	        "9118": [0.64502, 1.155, 0, 0],
+	        "9119": [1e-05, 0.6, 0, 0],
+	        "9120": [0.64502, 1.155, 0, 0],
+	        "9121": [0.64502, 1.155, 0, 0],
+	        "9122": [-0.00099, 0.601, 0, 0],
+	        "9123": [0.64502, 1.155, 0, 0],
+	        "9124": [0.64502, 1.155, 0, 0],
+	        "9125": [-0.00099, 0.601, 0, 0],
+	        "9126": [0.64502, 1.155, 0, 0],
+	        "9127": [1e-05, 0.9, 0, 0],
+	        "9128": [0.65002, 1.15, 0, 0],
+	        "9129": [0.90001, 0, 0, 0],
+	        "9130": [0, 0.3, 0, 0],
+	        "9131": [1e-05, 0.9, 0, 0],
+	        "9132": [0.65002, 1.15, 0, 0],
+	        "9133": [0.90001, 0, 0, 0],
+	        "9143": [0.88502, 0.915, 0, 0],
+	        "10216": [1.25003, 1.75, 0, 0],
+	        "10217": [1.25003, 1.75, 0, 0],
+	        "57344": [-0.00499, 0.605, 0, 0],
+	        "57345": [-0.00499, 0.605, 0, 0],
+	        "57680": [0, 0.12, 0, 0],
+	        "57681": [0, 0.12, 0, 0],
+	        "57682": [0, 0.12, 0, 0],
+	        "57683": [0, 0.12, 0, 0],
+	    },
+	    "Typewriter-Regular": {
+	        "33": [0, 0.61111, 0, 0],
+	        "34": [0, 0.61111, 0, 0],
+	        "35": [0, 0.61111, 0, 0],
+	        "36": [0.08333, 0.69444, 0, 0],
+	        "37": [0.08333, 0.69444, 0, 0],
+	        "38": [0, 0.61111, 0, 0],
+	        "39": [0, 0.61111, 0, 0],
+	        "40": [0.08333, 0.69444, 0, 0],
+	        "41": [0.08333, 0.69444, 0, 0],
+	        "42": [0, 0.52083, 0, 0],
+	        "43": [-0.08056, 0.53055, 0, 0],
+	        "44": [0.13889, 0.125, 0, 0],
+	        "45": [-0.08056, 0.53055, 0, 0],
+	        "46": [0, 0.125, 0, 0],
+	        "47": [0.08333, 0.69444, 0, 0],
+	        "48": [0, 0.61111, 0, 0],
+	        "49": [0, 0.61111, 0, 0],
+	        "50": [0, 0.61111, 0, 0],
+	        "51": [0, 0.61111, 0, 0],
+	        "52": [0, 0.61111, 0, 0],
+	        "53": [0, 0.61111, 0, 0],
+	        "54": [0, 0.61111, 0, 0],
+	        "55": [0, 0.61111, 0, 0],
+	        "56": [0, 0.61111, 0, 0],
+	        "57": [0, 0.61111, 0, 0],
+	        "58": [0, 0.43056, 0, 0],
+	        "59": [0.13889, 0.43056, 0, 0],
+	        "60": [-0.05556, 0.55556, 0, 0],
+	        "61": [-0.19549, 0.41562, 0, 0],
+	        "62": [-0.05556, 0.55556, 0, 0],
+	        "63": [0, 0.61111, 0, 0],
+	        "64": [0, 0.61111, 0, 0],
+	        "65": [0, 0.61111, 0, 0],
+	        "66": [0, 0.61111, 0, 0],
+	        "67": [0, 0.61111, 0, 0],
+	        "68": [0, 0.61111, 0, 0],
+	        "69": [0, 0.61111, 0, 0],
+	        "70": [0, 0.61111, 0, 0],
+	        "71": [0, 0.61111, 0, 0],
+	        "72": [0, 0.61111, 0, 0],
+	        "73": [0, 0.61111, 0, 0],
+	        "74": [0, 0.61111, 0, 0],
+	        "75": [0, 0.61111, 0, 0],
+	        "76": [0, 0.61111, 0, 0],
+	        "77": [0, 0.61111, 0, 0],
+	        "78": [0, 0.61111, 0, 0],
+	        "79": [0, 0.61111, 0, 0],
+	        "80": [0, 0.61111, 0, 0],
+	        "81": [0.13889, 0.61111, 0, 0],
+	        "82": [0, 0.61111, 0, 0],
+	        "83": [0, 0.61111, 0, 0],
+	        "84": [0, 0.61111, 0, 0],
+	        "85": [0, 0.61111, 0, 0],
+	        "86": [0, 0.61111, 0, 0],
+	        "87": [0, 0.61111, 0, 0],
+	        "88": [0, 0.61111, 0, 0],
+	        "89": [0, 0.61111, 0, 0],
+	        "90": [0, 0.61111, 0, 0],
+	        "91": [0.08333, 0.69444, 0, 0],
+	        "92": [0.08333, 0.69444, 0, 0],
+	        "93": [0.08333, 0.69444, 0, 0],
+	        "94": [0, 0.61111, 0, 0],
+	        "95": [0.09514, 0, 0, 0],
+	        "96": [0, 0.61111, 0, 0],
+	        "97": [0, 0.43056, 0, 0],
+	        "98": [0, 0.61111, 0, 0],
+	        "99": [0, 0.43056, 0, 0],
+	        "100": [0, 0.61111, 0, 0],
+	        "101": [0, 0.43056, 0, 0],
+	        "102": [0, 0.61111, 0, 0],
+	        "103": [0.22222, 0.43056, 0, 0],
+	        "104": [0, 0.61111, 0, 0],
+	        "105": [0, 0.61111, 0, 0],
+	        "106": [0.22222, 0.61111, 0, 0],
+	        "107": [0, 0.61111, 0, 0],
+	        "108": [0, 0.61111, 0, 0],
+	        "109": [0, 0.43056, 0, 0],
+	        "110": [0, 0.43056, 0, 0],
+	        "111": [0, 0.43056, 0, 0],
+	        "112": [0.22222, 0.43056, 0, 0],
+	        "113": [0.22222, 0.43056, 0, 0],
+	        "114": [0, 0.43056, 0, 0],
+	        "115": [0, 0.43056, 0, 0],
+	        "116": [0, 0.55358, 0, 0],
+	        "117": [0, 0.43056, 0, 0],
+	        "118": [0, 0.43056, 0, 0],
+	        "119": [0, 0.43056, 0, 0],
+	        "120": [0, 0.43056, 0, 0],
+	        "121": [0.22222, 0.43056, 0, 0],
+	        "122": [0, 0.43056, 0, 0],
+	        "123": [0.08333, 0.69444, 0, 0],
+	        "124": [0.08333, 0.69444, 0, 0],
+	        "125": [0.08333, 0.69444, 0, 0],
+	        "126": [0, 0.61111, 0, 0],
+	        "127": [0, 0.61111, 0, 0],
+	        "305": [0, 0.43056, 0, 0],
+	        "567": [0.22222, 0.43056, 0, 0],
+	        "768": [0, 0.61111, 0, 0],
+	        "769": [0, 0.61111, 0, 0],
+	        "770": [0, 0.61111, 0, 0],
+	        "771": [0, 0.61111, 0, 0],
+	        "772": [0, 0.56555, 0, 0],
+	        "774": [0, 0.61111, 0, 0],
+	        "776": [0, 0.61111, 0, 0],
+	        "778": [0, 0.61111, 0, 0],
+	        "780": [0, 0.56597, 0, 0],
+	        "915": [0, 0.61111, 0, 0],
+	        "916": [0, 0.61111, 0, 0],
+	        "920": [0, 0.61111, 0, 0],
+	        "923": [0, 0.61111, 0, 0],
+	        "926": [0, 0.61111, 0, 0],
+	        "928": [0, 0.61111, 0, 0],
+	        "931": [0, 0.61111, 0, 0],
+	        "933": [0, 0.61111, 0, 0],
+	        "934": [0, 0.61111, 0, 0],
+	        "936": [0, 0.61111, 0, 0],
+	        "937": [0, 0.61111, 0, 0],
+	        "2018": [0, 0.61111, 0, 0],
+	        "2019": [0, 0.61111, 0, 0],
+	        "8242": [0, 0.61111, 0, 0],
+	    },
+	};
+
+
+/***/ }),
+/* 165 */
+/***/ (function(module, exports) {
+
+	/**
+	 * This file holds a list of all no-argument functions and single-character
+	 * symbols (like 'a' or ';').
+	 *
+	 * For each of the symbols, there are three properties they can have:
+	 * - font (required): the font to be used for this symbol. Either "main" (the
+	     normal font), or "ams" (the ams fonts).
+	 * - group (required): the ParseNode group type the symbol should have (i.e.
+	     "textord", "mathord", etc).
+	     See https://github.com/Khan/KaTeX/wiki/Examining-TeX#group-types
+	 * - replace: the character that this symbol or function should be
+	 *   replaced with (i.e. "\phi" has a replace value of "\u03d5", the phi
+	 *   character in the main font).
+	 *
+	 * The outermost map in the table indicates what mode the symbols should be
+	 * accepted in (e.g. "math" or "text").
+	 */
+
+	module.exports = {
+	    math: {},
+	    text: {},
+	};
+
+	function defineSymbol(mode, font, group, replace, name) {
+	    module.exports[mode][name] = {
+	        font: font,
+	        group: group,
+	        replace: replace,
+	    };
+	}
+
+	// Some abbreviations for commonly used strings.
+	// This helps minify the code, and also spotting typos using jshint.
+
+	// modes:
+	var math = "math";
+	var text = "text";
+
+	// fonts:
+	var main = "main";
+	var ams = "ams";
+
+	// groups:
+	var accent = "accent";
+	var bin = "bin";
+	var close = "close";
+	var inner = "inner";
+	var mathord = "mathord";
+	var op = "op";
+	var open = "open";
+	var punct = "punct";
+	var rel = "rel";
+	var spacing = "spacing";
+	var textord = "textord";
+
+	// Now comes the symbol table
+
+	// Relation Symbols
+	defineSymbol(math, main, rel, "\u2261", "\\equiv");
+	defineSymbol(math, main, rel, "\u227a", "\\prec");
+	defineSymbol(math, main, rel, "\u227b", "\\succ");
+	defineSymbol(math, main, rel, "\u223c", "\\sim");
+	defineSymbol(math, main, rel, "\u22a5", "\\perp");
+	defineSymbol(math, main, rel, "\u2aaf", "\\preceq");
+	defineSymbol(math, main, rel, "\u2ab0", "\\succeq");
+	defineSymbol(math, main, rel, "\u2243", "\\simeq");
+	defineSymbol(math, main, rel, "\u2223", "\\mid");
+	defineSymbol(math, main, rel, "\u226a", "\\ll");
+	defineSymbol(math, main, rel, "\u226b", "\\gg");
+	defineSymbol(math, main, rel, "\u224d", "\\asymp");
+	defineSymbol(math, main, rel, "\u2225", "\\parallel");
+	defineSymbol(math, main, rel, "\u22c8", "\\bowtie");
+	defineSymbol(math, main, rel, "\u2323", "\\smile");
+	defineSymbol(math, main, rel, "\u2291", "\\sqsubseteq");
+	defineSymbol(math, main, rel, "\u2292", "\\sqsupseteq");
+	defineSymbol(math, main, rel, "\u2250", "\\doteq");
+	defineSymbol(math, main, rel, "\u2322", "\\frown");
+	defineSymbol(math, main, rel, "\u220b", "\\ni");
+	defineSymbol(math, main, rel, "\u221d", "\\propto");
+	defineSymbol(math, main, rel, "\u22a2", "\\vdash");
+	defineSymbol(math, main, rel, "\u22a3", "\\dashv");
+	defineSymbol(math, main, rel, "\u220b", "\\owns");
+
+	// Punctuation
+	defineSymbol(math, main, punct, "\u002e", "\\ldotp");
+	defineSymbol(math, main, punct, "\u22c5", "\\cdotp");
+
+	// Misc Symbols
+	defineSymbol(math, main, textord, "\u0023", "\\#");
+	defineSymbol(math, main, textord, "\u0026", "\\&");
+	defineSymbol(math, main, textord, "\u2135", "\\aleph");
+	defineSymbol(math, main, textord, "\u2200", "\\forall");
+	defineSymbol(math, main, textord, "\u210f", "\\hbar");
+	defineSymbol(math, main, textord, "\u2203", "\\exists");
+	defineSymbol(math, main, textord, "\u2207", "\\nabla");
+	defineSymbol(math, main, textord, "\u266d", "\\flat");
+	defineSymbol(math, main, textord, "\u2113", "\\ell");
+	defineSymbol(math, main, textord, "\u266e", "\\natural");
+	defineSymbol(math, main, textord, "\u2663", "\\clubsuit");
+	defineSymbol(math, main, textord, "\u2118", "\\wp");
+	defineSymbol(math, main, textord, "\u266f", "\\sharp");
+	defineSymbol(math, main, textord, "\u2662", "\\diamondsuit");
+	defineSymbol(math, main, textord, "\u211c", "\\Re");
+	defineSymbol(math, main, textord, "\u2661", "\\heartsuit");
+	defineSymbol(math, main, textord, "\u2111", "\\Im");
+	defineSymbol(math, main, textord, "\u2660", "\\spadesuit");
+
+	// Math and Text
+	defineSymbol(math, main, textord, "\u2020", "\\dag");
+	defineSymbol(math, main, textord, "\u2021", "\\ddag");
+
+	// Large Delimiters
+	defineSymbol(math, main, close, "\u23b1", "\\rmoustache");
+	defineSymbol(math, main, open, "\u23b0", "\\lmoustache");
+	defineSymbol(math, main, close, "\u27ef", "\\rgroup");
+	defineSymbol(math, main, open, "\u27ee", "\\lgroup");
+
+	// Binary Operators
+	defineSymbol(math, main, bin, "\u2213", "\\mp");
+	defineSymbol(math, main, bin, "\u2296", "\\ominus");
+	defineSymbol(math, main, bin, "\u228e", "\\uplus");
+	defineSymbol(math, main, bin, "\u2293", "\\sqcap");
+	defineSymbol(math, main, bin, "\u2217", "\\ast");
+	defineSymbol(math, main, bin, "\u2294", "\\sqcup");
+	defineSymbol(math, main, bin, "\u25ef", "\\bigcirc");
+	defineSymbol(math, main, bin, "\u2219", "\\bullet");
+	defineSymbol(math, main, bin, "\u2021", "\\ddagger");
+	defineSymbol(math, main, bin, "\u2240", "\\wr");
+	defineSymbol(math, main, bin, "\u2a3f", "\\amalg");
+
+	// Arrow Symbols
+	defineSymbol(math, main, rel, "\u27f5", "\\longleftarrow");
+	defineSymbol(math, main, rel, "\u21d0", "\\Leftarrow");
+	defineSymbol(math, main, rel, "\u27f8", "\\Longleftarrow");
+	defineSymbol(math, main, rel, "\u27f6", "\\longrightarrow");
+	defineSymbol(math, main, rel, "\u21d2", "\\Rightarrow");
+	defineSymbol(math, main, rel, "\u27f9", "\\Longrightarrow");
+	defineSymbol(math, main, rel, "\u2194", "\\leftrightarrow");
+	defineSymbol(math, main, rel, "\u27f7", "\\longleftrightarrow");
+	defineSymbol(math, main, rel, "\u21d4", "\\Leftrightarrow");
+	defineSymbol(math, main, rel, "\u27fa", "\\Longleftrightarrow");
+	defineSymbol(math, main, rel, "\u21a6", "\\mapsto");
+	defineSymbol(math, main, rel, "\u27fc", "\\longmapsto");
+	defineSymbol(math, main, rel, "\u2197", "\\nearrow");
+	defineSymbol(math, main, rel, "\u21a9", "\\hookleftarrow");
+	defineSymbol(math, main, rel, "\u21aa", "\\hookrightarrow");
+	defineSymbol(math, main, rel, "\u2198", "\\searrow");
+	defineSymbol(math, main, rel, "\u21bc", "\\leftharpoonup");
+	defineSymbol(math, main, rel, "\u21c0", "\\rightharpoonup");
+	defineSymbol(math, main, rel, "\u2199", "\\swarrow");
+	defineSymbol(math, main, rel, "\u21bd", "\\leftharpoondown");
+	defineSymbol(math, main, rel, "\u21c1", "\\rightharpoondown");
+	defineSymbol(math, main, rel, "\u2196", "\\nwarrow");
+	defineSymbol(math, main, rel, "\u21cc", "\\rightleftharpoons");
+
+	// AMS Negated Binary Relations
+	defineSymbol(math, ams, rel, "\u226e", "\\nless");
+	defineSymbol(math, ams, rel, "\ue010", "\\nleqslant");
+	defineSymbol(math, ams, rel, "\ue011", "\\nleqq");
+	defineSymbol(math, ams, rel, "\u2a87", "\\lneq");
+	defineSymbol(math, ams, rel, "\u2268", "\\lneqq");
+	defineSymbol(math, ams, rel, "\ue00c", "\\lvertneqq");
+	defineSymbol(math, ams, rel, "\u22e6", "\\lnsim");
+	defineSymbol(math, ams, rel, "\u2a89", "\\lnapprox");
+	defineSymbol(math, ams, rel, "\u2280", "\\nprec");
+	defineSymbol(math, ams, rel, "\u22e0", "\\npreceq");
+	defineSymbol(math, ams, rel, "\u22e8", "\\precnsim");
+	defineSymbol(math, ams, rel, "\u2ab9", "\\precnapprox");
+	defineSymbol(math, ams, rel, "\u2241", "\\nsim");
+	defineSymbol(math, ams, rel, "\ue006", "\\nshortmid");
+	defineSymbol(math, ams, rel, "\u2224", "\\nmid");
+	defineSymbol(math, ams, rel, "\u22ac", "\\nvdash");
+	defineSymbol(math, ams, rel, "\u22ad", "\\nvDash");
+	defineSymbol(math, ams, rel, "\u22ea", "\\ntriangleleft");
+	defineSymbol(math, ams, rel, "\u22ec", "\\ntrianglelefteq");
+	defineSymbol(math, ams, rel, "\u228a", "\\subsetneq");
+	defineSymbol(math, ams, rel, "\ue01a", "\\varsubsetneq");
+	defineSymbol(math, ams, rel, "\u2acb", "\\subsetneqq");
+	defineSymbol(math, ams, rel, "\ue017", "\\varsubsetneqq");
+	defineSymbol(math, ams, rel, "\u226f", "\\ngtr");
+	defineSymbol(math, ams, rel, "\ue00f", "\\ngeqslant");
+	defineSymbol(math, ams, rel, "\ue00e", "\\ngeqq");
+	defineSymbol(math, ams, rel, "\u2a88", "\\gneq");
+	defineSymbol(math, ams, rel, "\u2269", "\\gneqq");
+	defineSymbol(math, ams, rel, "\ue00d", "\\gvertneqq");
+	defineSymbol(math, ams, rel, "\u22e7", "\\gnsim");
+	defineSymbol(math, ams, rel, "\u2a8a", "\\gnapprox");
+	defineSymbol(math, ams, rel, "\u2281", "\\nsucc");
+	defineSymbol(math, ams, rel, "\u22e1", "\\nsucceq");
+	defineSymbol(math, ams, rel, "\u22e9", "\\succnsim");
+	defineSymbol(math, ams, rel, "\u2aba", "\\succnapprox");
+	defineSymbol(math, ams, rel, "\u2246", "\\ncong");
+	defineSymbol(math, ams, rel, "\ue007", "\\nshortparallel");
+	defineSymbol(math, ams, rel, "\u2226", "\\nparallel");
+	defineSymbol(math, ams, rel, "\u22af", "\\nVDash");
+	defineSymbol(math, ams, rel, "\u22eb", "\\ntriangleright");
+	defineSymbol(math, ams, rel, "\u22ed", "\\ntrianglerighteq");
+	defineSymbol(math, ams, rel, "\ue018", "\\nsupseteqq");
+	defineSymbol(math, ams, rel, "\u228b", "\\supsetneq");
+	defineSymbol(math, ams, rel, "\ue01b", "\\varsupsetneq");
+	defineSymbol(math, ams, rel, "\u2acc", "\\supsetneqq");
+	defineSymbol(math, ams, rel, "\ue019", "\\varsupsetneqq");
+	defineSymbol(math, ams, rel, "\u22ae", "\\nVdash");
+	defineSymbol(math, ams, rel, "\u2ab5", "\\precneqq");
+	defineSymbol(math, ams, rel, "\u2ab6", "\\succneqq");
+	defineSymbol(math, ams, rel, "\ue016", "\\nsubseteqq");
+	defineSymbol(math, ams, bin, "\u22b4", "\\unlhd");
+	defineSymbol(math, ams, bin, "\u22b5", "\\unrhd");
+
+	// AMS Negated Arrows
+	defineSymbol(math, ams, rel, "\u219a", "\\nleftarrow");
+	defineSymbol(math, ams, rel, "\u219b", "\\nrightarrow");
+	defineSymbol(math, ams, rel, "\u21cd", "\\nLeftarrow");
+	defineSymbol(math, ams, rel, "\u21cf", "\\nRightarrow");
+	defineSymbol(math, ams, rel, "\u21ae", "\\nleftrightarrow");
+	defineSymbol(math, ams, rel, "\u21ce", "\\nLeftrightarrow");
+
+	// AMS Misc
+	defineSymbol(math, ams, rel, "\u25b3", "\\vartriangle");
+	defineSymbol(math, ams, textord, "\u210f", "\\hslash");
+	defineSymbol(math, ams, textord, "\u25bd", "\\triangledown");
+	defineSymbol(math, ams, textord, "\u25ca", "\\lozenge");
+	defineSymbol(math, ams, textord, "\u24c8", "\\circledS");
+	defineSymbol(math, ams, textord, "\u00ae", "\\circledR");
+	defineSymbol(math, ams, textord, "\u2221", "\\measuredangle");
+	defineSymbol(math, ams, textord, "\u2204", "\\nexists");
+	defineSymbol(math, ams, textord, "\u2127", "\\mho");
+	defineSymbol(math, ams, textord, "\u2132", "\\Finv");
+	defineSymbol(math, ams, textord, "\u2141", "\\Game");
+	defineSymbol(math, ams, textord, "\u006b", "\\Bbbk");
+	defineSymbol(math, ams, textord, "\u2035", "\\backprime");
+	defineSymbol(math, ams, textord, "\u25b2", "\\blacktriangle");
+	defineSymbol(math, ams, textord, "\u25bc", "\\blacktriangledown");
+	defineSymbol(math, ams, textord, "\u25a0", "\\blacksquare");
+	defineSymbol(math, ams, textord, "\u29eb", "\\blacklozenge");
+	defineSymbol(math, ams, textord, "\u2605", "\\bigstar");
+	defineSymbol(math, ams, textord, "\u2222", "\\sphericalangle");
+	defineSymbol(math, ams, textord, "\u2201", "\\complement");
+	defineSymbol(math, ams, textord, "\u00f0", "\\eth");
+	defineSymbol(math, ams, textord, "\u2571", "\\diagup");
+	defineSymbol(math, ams, textord, "\u2572", "\\diagdown");
+	defineSymbol(math, ams, textord, "\u25a1", "\\square");
+	defineSymbol(math, ams, textord, "\u25a1", "\\Box");
+	defineSymbol(math, ams, textord, "\u25ca", "\\Diamond");
+	defineSymbol(math, ams, textord, "\u00a5", "\\yen");
+	defineSymbol(math, ams, textord, "\u2713", "\\checkmark");
+
+	// AMS Hebrew
+	defineSymbol(math, ams, textord, "\u2136", "\\beth");
+	defineSymbol(math, ams, textord, "\u2138", "\\daleth");
+	defineSymbol(math, ams, textord, "\u2137", "\\gimel");
+
+	// AMS Greek
+	defineSymbol(math, ams, textord, "\u03dd", "\\digamma");
+	defineSymbol(math, ams, textord, "\u03f0", "\\varkappa");
+
+	// AMS Delimiters
+	defineSymbol(math, ams, open, "\u250c", "\\ulcorner");
+	defineSymbol(math, ams, close, "\u2510", "\\urcorner");
+	defineSymbol(math, ams, open, "\u2514", "\\llcorner");
+	defineSymbol(math, ams, close, "\u2518", "\\lrcorner");
+
+	// AMS Binary Relations
+	defineSymbol(math, ams, rel, "\u2266", "\\leqq");
+	defineSymbol(math, ams, rel, "\u2a7d", "\\leqslant");
+	defineSymbol(math, ams, rel, "\u2a95", "\\eqslantless");
+	defineSymbol(math, ams, rel, "\u2272", "\\lesssim");
+	defineSymbol(math, ams, rel, "\u2a85", "\\lessapprox");
+	defineSymbol(math, ams, rel, "\u224a", "\\approxeq");
+	defineSymbol(math, ams, bin, "\u22d6", "\\lessdot");
+	defineSymbol(math, ams, rel, "\u22d8", "\\lll");
+	defineSymbol(math, ams, rel, "\u2276", "\\lessgtr");
+	defineSymbol(math, ams, rel, "\u22da", "\\lesseqgtr");
+	defineSymbol(math, ams, rel, "\u2a8b", "\\lesseqqgtr");
+	defineSymbol(math, ams, rel, "\u2251", "\\doteqdot");
+	defineSymbol(math, ams, rel, "\u2253", "\\risingdotseq");
+	defineSymbol(math, ams, rel, "\u2252", "\\fallingdotseq");
+	defineSymbol(math, ams, rel, "\u223d", "\\backsim");
+	defineSymbol(math, ams, rel, "\u22cd", "\\backsimeq");
+	defineSymbol(math, ams, rel, "\u2ac5", "\\subseteqq");
+	defineSymbol(math, ams, rel, "\u22d0", "\\Subset");
+	defineSymbol(math, ams, rel, "\u228f", "\\sqsubset");
+	defineSymbol(math, ams, rel, "\u227c", "\\preccurlyeq");
+	defineSymbol(math, ams, rel, "\u22de", "\\curlyeqprec");
+	defineSymbol(math, ams, rel, "\u227e", "\\precsim");
+	defineSymbol(math, ams, rel, "\u2ab7", "\\precapprox");
+	defineSymbol(math, ams, rel, "\u22b2", "\\vartriangleleft");
+	defineSymbol(math, ams, rel, "\u22b4", "\\trianglelefteq");
+	defineSymbol(math, ams, rel, "\u22a8", "\\vDash");
+	defineSymbol(math, ams, rel, "\u22aa", "\\Vvdash");
+	defineSymbol(math, ams, rel, "\u2323", "\\smallsmile");
+	defineSymbol(math, ams, rel, "\u2322", "\\smallfrown");
+	defineSymbol(math, ams, rel, "\u224f", "\\bumpeq");
+	defineSymbol(math, ams, rel, "\u224e", "\\Bumpeq");
+	defineSymbol(math, ams, rel, "\u2267", "\\geqq");
+	defineSymbol(math, ams, rel, "\u2a7e", "\\geqslant");
+	defineSymbol(math, ams, rel, "\u2a96", "\\eqslantgtr");
+	defineSymbol(math, ams, rel, "\u2273", "\\gtrsim");
+	defineSymbol(math, ams, rel, "\u2a86", "\\gtrapprox");
+	defineSymbol(math, ams, bin, "\u22d7", "\\gtrdot");
+	defineSymbol(math, ams, rel, "\u22d9", "\\ggg");
+	defineSymbol(math, ams, rel, "\u2277", "\\gtrless");
+	defineSymbol(math, ams, rel, "\u22db", "\\gtreqless");
+	defineSymbol(math, ams, rel, "\u2a8c", "\\gtreqqless");
+	defineSymbol(math, ams, rel, "\u2256", "\\eqcirc");
+	defineSymbol(math, ams, rel, "\u2257", "\\circeq");
+	defineSymbol(math, ams, rel, "\u225c", "\\triangleq");
+	defineSymbol(math, ams, rel, "\u223c", "\\thicksim");
+	defineSymbol(math, ams, rel, "\u2248", "\\thickapprox");
+	defineSymbol(math, ams, rel, "\u2ac6", "\\supseteqq");
+	defineSymbol(math, ams, rel, "\u22d1", "\\Supset");
+	defineSymbol(math, ams, rel, "\u2290", "\\sqsupset");
+	defineSymbol(math, ams, rel, "\u227d", "\\succcurlyeq");
+	defineSymbol(math, ams, rel, "\u22df", "\\curlyeqsucc");
+	defineSymbol(math, ams, rel, "\u227f", "\\succsim");
+	defineSymbol(math, ams, rel, "\u2ab8", "\\succapprox");
+	defineSymbol(math, ams, rel, "\u22b3", "\\vartriangleright");
+	defineSymbol(math, ams, rel, "\u22b5", "\\trianglerighteq");
+	defineSymbol(math, ams, rel, "\u22a9", "\\Vdash");
+	defineSymbol(math, ams, rel, "\u2223", "\\shortmid");
+	defineSymbol(math, ams, rel, "\u2225", "\\shortparallel");
+	defineSymbol(math, ams, rel, "\u226c", "\\between");
+	defineSymbol(math, ams, rel, "\u22d4", "\\pitchfork");
+	defineSymbol(math, ams, rel, "\u221d", "\\varpropto");
+	defineSymbol(math, ams, rel, "\u25c0", "\\blacktriangleleft");
+	defineSymbol(math, ams, rel, "\u2234", "\\therefore");
+	defineSymbol(math, ams, rel, "\u220d", "\\backepsilon");
+	defineSymbol(math, ams, rel, "\u25b6", "\\blacktriangleright");
+	defineSymbol(math, ams, rel, "\u2235", "\\because");
+	defineSymbol(math, ams, rel, "\u22d8", "\\llless");
+	defineSymbol(math, ams, rel, "\u22d9", "\\gggtr");
+	defineSymbol(math, ams, bin, "\u22b2", "\\lhd");
+	defineSymbol(math, ams, bin, "\u22b3", "\\rhd");
+	defineSymbol(math, ams, rel, "\u2242", "\\eqsim");
+	defineSymbol(math, main, rel, "\u22c8", "\\Join");
+	defineSymbol(math, ams, rel, "\u2251", "\\Doteq");
+
+	// AMS Binary Operators
+	defineSymbol(math, ams, bin, "\u2214", "\\dotplus");
+	defineSymbol(math, ams, bin, "\u2216", "\\smallsetminus");
+	defineSymbol(math, ams, bin, "\u22d2", "\\Cap");
+	defineSymbol(math, ams, bin, "\u22d3", "\\Cup");
+	defineSymbol(math, ams, bin, "\u2a5e", "\\doublebarwedge");
+	defineSymbol(math, ams, bin, "\u229f", "\\boxminus");
+	defineSymbol(math, ams, bin, "\u229e", "\\boxplus");
+	defineSymbol(math, ams, bin, "\u22c7", "\\divideontimes");
+	defineSymbol(math, ams, bin, "\u22c9", "\\ltimes");
+	defineSymbol(math, ams, bin, "\u22ca", "\\rtimes");
+	defineSymbol(math, ams, bin, "\u22cb", "\\leftthreetimes");
+	defineSymbol(math, ams, bin, "\u22cc", "\\rightthreetimes");
+	defineSymbol(math, ams, bin, "\u22cf", "\\curlywedge");
+	defineSymbol(math, ams, bin, "\u22ce", "\\curlyvee");
+	defineSymbol(math, ams, bin, "\u229d", "\\circleddash");
+	defineSymbol(math, ams, bin, "\u229b", "\\circledast");
+	defineSymbol(math, ams, bin, "\u22c5", "\\centerdot");
+	defineSymbol(math, ams, bin, "\u22ba", "\\intercal");
+	defineSymbol(math, ams, bin, "\u22d2", "\\doublecap");
+	defineSymbol(math, ams, bin, "\u22d3", "\\doublecup");
+	defineSymbol(math, ams, bin, "\u22a0", "\\boxtimes");
+
+	// AMS Arrows
+	defineSymbol(math, ams, rel, "\u21e2", "\\dashrightarrow");
+	defineSymbol(math, ams, rel, "\u21e0", "\\dashleftarrow");
+	defineSymbol(math, ams, rel, "\u21c7", "\\leftleftarrows");
+	defineSymbol(math, ams, rel, "\u21c6", "\\leftrightarrows");
+	defineSymbol(math, ams, rel, "\u21da", "\\Lleftarrow");
+	defineSymbol(math, ams, rel, "\u219e", "\\twoheadleftarrow");
+	defineSymbol(math, ams, rel, "\u21a2", "\\leftarrowtail");
+	defineSymbol(math, ams, rel, "\u21ab", "\\looparrowleft");
+	defineSymbol(math, ams, rel, "\u21cb", "\\leftrightharpoons");
+	defineSymbol(math, ams, rel, "\u21b6", "\\curvearrowleft");
+	defineSymbol(math, ams, rel, "\u21ba", "\\circlearrowleft");
+	defineSymbol(math, ams, rel, "\u21b0", "\\Lsh");
+	defineSymbol(math, ams, rel, "\u21c8", "\\upuparrows");
+	defineSymbol(math, ams, rel, "\u21bf", "\\upharpoonleft");
+	defineSymbol(math, ams, rel, "\u21c3", "\\downharpoonleft");
+	defineSymbol(math, ams, rel, "\u22b8", "\\multimap");
+	defineSymbol(math, ams, rel, "\u21ad", "\\leftrightsquigarrow");
+	defineSymbol(math, ams, rel, "\u21c9", "\\rightrightarrows");
+	defineSymbol(math, ams, rel, "\u21c4", "\\rightleftarrows");
+	defineSymbol(math, ams, rel, "\u21a0", "\\twoheadrightarrow");
+	defineSymbol(math, ams, rel, "\u21a3", "\\rightarrowtail");
+	defineSymbol(math, ams, rel, "\u21ac", "\\looparrowright");
+	defineSymbol(math, ams, rel, "\u21b7", "\\curvearrowright");
+	defineSymbol(math, ams, rel, "\u21bb", "\\circlearrowright");
+	defineSymbol(math, ams, rel, "\u21b1", "\\Rsh");
+	defineSymbol(math, ams, rel, "\u21ca", "\\downdownarrows");
+	defineSymbol(math, ams, rel, "\u21be", "\\upharpoonright");
+	defineSymbol(math, ams, rel, "\u21c2", "\\downharpoonright");
+	defineSymbol(math, ams, rel, "\u21dd", "\\rightsquigarrow");
+	defineSymbol(math, ams, rel, "\u21dd", "\\leadsto");
+	defineSymbol(math, ams, rel, "\u21db", "\\Rrightarrow");
+	defineSymbol(math, ams, rel, "\u21be", "\\restriction");
+
+	defineSymbol(math, main, textord, "\u2018", "`");
+	defineSymbol(math, main, textord, "$", "\\$");
+	defineSymbol(math, main, textord, "%", "\\%");
+	defineSymbol(math, main, textord, "_", "\\_");
+	defineSymbol(math, main, textord, "\u2220", "\\angle");
+	defineSymbol(math, main, textord, "\u221e", "\\infty");
+	defineSymbol(math, main, textord, "\u2032", "\\prime");
+	defineSymbol(math, main, textord, "\u25b3", "\\triangle");
+	defineSymbol(math, main, textord, "\u0393", "\\Gamma");
+	defineSymbol(math, main, textord, "\u0394", "\\Delta");
+	defineSymbol(math, main, textord, "\u0398", "\\Theta");
+	defineSymbol(math, main, textord, "\u039b", "\\Lambda");
+	defineSymbol(math, main, textord, "\u039e", "\\Xi");
+	defineSymbol(math, main, textord, "\u03a0", "\\Pi");
+	defineSymbol(math, main, textord, "\u03a3", "\\Sigma");
+	defineSymbol(math, main, textord, "\u03a5", "\\Upsilon");
+	defineSymbol(math, main, textord, "\u03a6", "\\Phi");
+	defineSymbol(math, main, textord, "\u03a8", "\\Psi");
+	defineSymbol(math, main, textord, "\u03a9", "\\Omega");
+	defineSymbol(math, main, textord, "\u00ac", "\\neg");
+	defineSymbol(math, main, textord, "\u00ac", "\\lnot");
+	defineSymbol(math, main, textord, "\u22a4", "\\top");
+	defineSymbol(math, main, textord, "\u22a5", "\\bot");
+	defineSymbol(math, main, textord, "\u2205", "\\emptyset");
+	defineSymbol(math, ams, textord, "\u2205", "\\varnothing");
+	defineSymbol(math, main, mathord, "\u03b1", "\\alpha");
+	defineSymbol(math, main, mathord, "\u03b2", "\\beta");
+	defineSymbol(math, main, mathord, "\u03b3", "\\gamma");
+	defineSymbol(math, main, mathord, "\u03b4", "\\delta");
+	defineSymbol(math, main, mathord, "\u03f5", "\\epsilon");
+	defineSymbol(math, main, mathord, "\u03b6", "\\zeta");
+	defineSymbol(math, main, mathord, "\u03b7", "\\eta");
+	defineSymbol(math, main, mathord, "\u03b8", "\\theta");
+	defineSymbol(math, main, mathord, "\u03b9", "\\iota");
+	defineSymbol(math, main, mathord, "\u03ba", "\\kappa");
+	defineSymbol(math, main, mathord, "\u03bb", "\\lambda");
+	defineSymbol(math, main, mathord, "\u03bc", "\\mu");
+	defineSymbol(math, main, mathord, "\u03bd", "\\nu");
+	defineSymbol(math, main, mathord, "\u03be", "\\xi");
+	defineSymbol(math, main, mathord, "o", "\\omicron");
+	defineSymbol(math, main, mathord, "\u03c0", "\\pi");
+	defineSymbol(math, main, mathord, "\u03c1", "\\rho");
+	defineSymbol(math, main, mathord, "\u03c3", "\\sigma");
+	defineSymbol(math, main, mathord, "\u03c4", "\\tau");
+	defineSymbol(math, main, mathord, "\u03c5", "\\upsilon");
+	defineSymbol(math, main, mathord, "\u03d5", "\\phi");
+	defineSymbol(math, main, mathord, "\u03c7", "\\chi");
+	defineSymbol(math, main, mathord, "\u03c8", "\\psi");
+	defineSymbol(math, main, mathord, "\u03c9", "\\omega");
+	defineSymbol(math, main, mathord, "\u03b5", "\\varepsilon");
+	defineSymbol(math, main, mathord, "\u03d1", "\\vartheta");
+	defineSymbol(math, main, mathord, "\u03d6", "\\varpi");
+	defineSymbol(math, main, mathord, "\u03f1", "\\varrho");
+	defineSymbol(math, main, mathord, "\u03c2", "\\varsigma");
+	defineSymbol(math, main, mathord, "\u03c6", "\\varphi");
+	defineSymbol(math, main, bin, "\u2217", "*");
+	defineSymbol(math, main, bin, "+", "+");
+	defineSymbol(math, main, bin, "\u2212", "-");
+	defineSymbol(math, main, bin, "\u22c5", "\\cdot");
+	defineSymbol(math, main, bin, "\u2218", "\\circ");
+	defineSymbol(math, main, bin, "\u00f7", "\\div");
+	defineSymbol(math, main, bin, "\u00b1", "\\pm");
+	defineSymbol(math, main, bin, "\u00d7", "\\times");
+	defineSymbol(math, main, bin, "\u2229", "\\cap");
+	defineSymbol(math, main, bin, "\u222a", "\\cup");
+	defineSymbol(math, main, bin, "\u2216", "\\setminus");
+	defineSymbol(math, main, bin, "\u2227", "\\land");
+	defineSymbol(math, main, bin, "\u2228", "\\lor");
+	defineSymbol(math, main, bin, "\u2227", "\\wedge");
+	defineSymbol(math, main, bin, "\u2228", "\\vee");
+	defineSymbol(math, main, textord, "\u221a", "\\surd");
+	defineSymbol(math, main, open, "(", "(");
+	defineSymbol(math, main, open, "[", "[");
+	defineSymbol(math, main, open, "\u27e8", "\\langle");
+	defineSymbol(math, main, open, "\u2223", "\\lvert");
+	defineSymbol(math, main, open, "\u2225", "\\lVert");
+	defineSymbol(math, main, close, ")", ")");
+	defineSymbol(math, main, close, "]", "]");
+	defineSymbol(math, main, close, "?", "?");
+	defineSymbol(math, main, close, "!", "!");
+	defineSymbol(math, main, close, "\u27e9", "\\rangle");
+	defineSymbol(math, main, close, "\u2223", "\\rvert");
+	defineSymbol(math, main, close, "\u2225", "\\rVert");
+	defineSymbol(math, main, rel, "=", "=");
+	defineSymbol(math, main, rel, "<", "<");
+	defineSymbol(math, main, rel, ">", ">");
+	defineSymbol(math, main, rel, ":", ":");
+	defineSymbol(math, main, rel, "\u2248", "\\approx");
+	defineSymbol(math, main, rel, "\u2245", "\\cong");
+	defineSymbol(math, main, rel, "\u2265", "\\ge");
+	defineSymbol(math, main, rel, "\u2265", "\\geq");
+	defineSymbol(math, main, rel, "\u2190", "\\gets");
+	defineSymbol(math, main, rel, ">", "\\gt");
+	defineSymbol(math, main, rel, "\u2208", "\\in");
+	defineSymbol(math, main, rel, "\u2209", "\\notin");
+	defineSymbol(math, main, rel, "\u2282", "\\subset");
+	defineSymbol(math, main, rel, "\u2283", "\\supset");
+	defineSymbol(math, main, rel, "\u2286", "\\subseteq");
+	defineSymbol(math, main, rel, "\u2287", "\\supseteq");
+	defineSymbol(math, ams, rel, "\u2288", "\\nsubseteq");
+	defineSymbol(math, ams, rel, "\u2289", "\\nsupseteq");
+	defineSymbol(math, main, rel, "\u22a8", "\\models");
+	defineSymbol(math, main, rel, "\u2190", "\\leftarrow");
+	defineSymbol(math, main, rel, "\u2264", "\\le");
+	defineSymbol(math, main, rel, "\u2264", "\\leq");
+	defineSymbol(math, main, rel, "<", "\\lt");
+	defineSymbol(math, main, rel, "\u2260", "\\ne");
+	defineSymbol(math, main, rel, "\u2260", "\\neq");
+	defineSymbol(math, main, rel, "\u2192", "\\rightarrow");
+	defineSymbol(math, main, rel, "\u2192", "\\to");
+	defineSymbol(math, ams, rel, "\u2271", "\\ngeq");
+	defineSymbol(math, ams, rel, "\u2270", "\\nleq");
+	defineSymbol(math, main, spacing, null, "\\!");
+	defineSymbol(math, main, spacing, "\u00a0", "\\ ");
+	defineSymbol(math, main, spacing, "\u00a0", "~");
+	defineSymbol(math, main, spacing, null, "\\,");
+	defineSymbol(math, main, spacing, null, "\\:");
+	defineSymbol(math, main, spacing, null, "\\;");
+	defineSymbol(math, main, spacing, null, "\\enspace");
+	defineSymbol(math, main, spacing, null, "\\qquad");
+	defineSymbol(math, main, spacing, null, "\\quad");
+	defineSymbol(math, main, spacing, "\u00a0", "\\space");
+	defineSymbol(math, main, punct, ",", ",");
+	defineSymbol(math, main, punct, ";", ";");
+	defineSymbol(math, main, punct, ":", "\\colon");
+	defineSymbol(math, ams, bin, "\u22bc", "\\barwedge");
+	defineSymbol(math, ams, bin, "\u22bb", "\\veebar");
+	defineSymbol(math, main, bin, "\u2299", "\\odot");
+	defineSymbol(math, main, bin, "\u2295", "\\oplus");
+	defineSymbol(math, main, bin, "\u2297", "\\otimes");
+	defineSymbol(math, main, textord, "\u2202", "\\partial");
+	defineSymbol(math, main, bin, "\u2298", "\\oslash");
+	defineSymbol(math, ams, bin, "\u229a", "\\circledcirc");
+	defineSymbol(math, ams, bin, "\u22a1", "\\boxdot");
+	defineSymbol(math, main, bin, "\u25b3", "\\bigtriangleup");
+	defineSymbol(math, main, bin, "\u25bd", "\\bigtriangledown");
+	defineSymbol(math, main, bin, "\u2020", "\\dagger");
+	defineSymbol(math, main, bin, "\u22c4", "\\diamond");
+	defineSymbol(math, main, bin, "\u22c6", "\\star");
+	defineSymbol(math, main, bin, "\u25c3", "\\triangleleft");
+	defineSymbol(math, main, bin, "\u25b9", "\\triangleright");
+	defineSymbol(math, main, open, "{", "\\{");
+	defineSymbol(math, main, close, "}", "\\}");
+	defineSymbol(math, main, open, "{", "\\lbrace");
+	defineSymbol(math, main, close, "}", "\\rbrace");
+	defineSymbol(math, main, open, "[", "\\lbrack");
+	defineSymbol(math, main, close, "]", "\\rbrack");
+	defineSymbol(math, main, open, "\u230a", "\\lfloor");
+	defineSymbol(math, main, close, "\u230b", "\\rfloor");
+	defineSymbol(math, main, open, "\u2308", "\\lceil");
+	defineSymbol(math, main, close, "\u2309", "\\rceil");
+	defineSymbol(math, main, textord, "\\", "\\backslash");
+	defineSymbol(math, main, textord, "\u2223", "|");
+	defineSymbol(math, main, textord, "\u2223", "\\vert");
+	defineSymbol(math, main, textord, "\u2225", "\\|");
+	defineSymbol(math, main, textord, "\u2225", "\\Vert");
+	defineSymbol(math, main, rel, "\u2191", "\\uparrow");
+	defineSymbol(math, main, rel, "\u21d1", "\\Uparrow");
+	defineSymbol(math, main, rel, "\u2193", "\\downarrow");
+	defineSymbol(math, main, rel, "\u21d3", "\\Downarrow");
+	defineSymbol(math, main, rel, "\u2195", "\\updownarrow");
+	defineSymbol(math, main, rel, "\u21d5", "\\Updownarrow");
+	defineSymbol(math, math, op, "\u2210", "\\coprod");
+	defineSymbol(math, math, op, "\u22c1", "\\bigvee");
+	defineSymbol(math, math, op, "\u22c0", "\\bigwedge");
+	defineSymbol(math, math, op, "\u2a04", "\\biguplus");
+	defineSymbol(math, math, op, "\u22c2", "\\bigcap");
+	defineSymbol(math, math, op, "\u22c3", "\\bigcup");
+	defineSymbol(math, math, op, "\u222b", "\\int");
+	defineSymbol(math, math, op, "\u222b", "\\intop");
+	defineSymbol(math, math, op, "\u222c", "\\iint");
+	defineSymbol(math, math, op, "\u222d", "\\iiint");
+	defineSymbol(math, math, op, "\u220f", "\\prod");
+	defineSymbol(math, math, op, "\u2211", "\\sum");
+	defineSymbol(math, math, op, "\u2a02", "\\bigotimes");
+	defineSymbol(math, math, op, "\u2a01", "\\bigoplus");
+	defineSymbol(math, math, op, "\u2a00", "\\bigodot");
+	defineSymbol(math, math, op, "\u222e", "\\oint");
+	defineSymbol(math, math, op, "\u2a06", "\\bigsqcup");
+	defineSymbol(math, math, op, "\u222b", "\\smallint");
+	defineSymbol(math, main, inner, "\u2026", "\\ldots");
+	defineSymbol(math, main, inner, "\u22ef", "\\cdots");
+	defineSymbol(math, main, inner, "\u22f1", "\\ddots");
+	defineSymbol(math, main, textord, "\u22ee", "\\vdots");
+	defineSymbol(math, main, accent, "\u00b4", "\\acute");
+	defineSymbol(math, main, accent, "\u0060", "\\grave");
+	defineSymbol(math, main, accent, "\u00a8", "\\ddot");
+	defineSymbol(math, main, accent, "\u007e", "\\tilde");
+	defineSymbol(math, main, accent, "\u00af", "\\bar");
+	defineSymbol(math, main, accent, "\u02d8", "\\breve");
+	defineSymbol(math, main, accent, "\u02c7", "\\check");
+	defineSymbol(math, main, accent, "\u005e", "\\hat");
+	defineSymbol(math, main, accent, "\u20d7", "\\vec");
+	defineSymbol(math, main, accent, "\u02d9", "\\dot");
+	defineSymbol(math, main, mathord, "\u0131", "\\imath");
+	defineSymbol(math, main, mathord, "\u0237", "\\jmath");
+
+	defineSymbol(text, main, spacing, "\u00a0", "\\ ");
+	defineSymbol(text, main, spacing, "\u00a0", " ");
+	defineSymbol(text, main, spacing, "\u00a0", "~");
+
+	// There are lots of symbols which are the same, so we add them in afterwards.
+	var i;
+	var ch;
+
+	// All of these are textords in math mode
+	var mathTextSymbols = "0123456789/@.\"";
+	for (i = 0; i < mathTextSymbols.length; i++) {
+	    ch = mathTextSymbols.charAt(i);
+	    defineSymbol(math, main, textord, ch, ch);
+	}
+
+	// All of these are textords in text mode
+	var textSymbols = "0123456789`!@*()-=+[]'\";:?/.,";
+	for (i = 0; i < textSymbols.length; i++) {
+	    ch = textSymbols.charAt(i);
+	    defineSymbol(text, main, textord, ch, ch);
+	}
+
+	// All of these are textords in text mode, and mathords in math mode
+	var letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	for (i = 0; i < letters.length; i++) {
+	    ch = letters.charAt(i);
+	    defineSymbol(math, main, mathord, ch, ch);
+	    defineSymbol(text, main, textord, ch, ch);
+	}
+
+
+/***/ }),
+/* 166 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * This file deals with creating delimiters of various sizes. The TeXbook
+	 * discusses these routines on page 441-442, in the "Another subroutine sets box
+	 * x to a specified variable delimiter" paragraph.
+	 *
+	 * There are three main routines here. `makeSmallDelim` makes a delimiter in the
+	 * normal font, but in either text, script, or scriptscript style.
+	 * `makeLargeDelim` makes a delimiter in textstyle, but in one of the Size1,
+	 * Size2, Size3, or Size4 fonts. `makeStackedDelim` makes a delimiter out of
+	 * smaller pieces that are stacked on top of one another.
+	 *
+	 * The functions take a parameter `center`, which determines if the delimiter
+	 * should be centered around the axis.
+	 *
+	 * Then, there are three exposed functions. `sizedDelim` makes a delimiter in
+	 * one of the given sizes. This is used for things like `\bigl`.
+	 * `customSizedDelim` makes a delimiter with a given total height+depth. It is
+	 * called in places like `\sqrt`. `leftRightDelim` makes an appropriate
+	 * delimiter which surrounds an expression of a given height an depth. It is
+	 * used in `\left` and `\right`.
+	 */
+
+	var ParseError = __webpack_require__(155);
+	var Style = __webpack_require__(159);
+
+	var buildCommon = __webpack_require__(160);
+	var fontMetrics = __webpack_require__(163);
+	var symbols = __webpack_require__(165);
+	var utils = __webpack_require__(162);
+
+	var makeSpan = buildCommon.makeSpan;
+
+	/**
+	 * Get the metrics for a given symbol and font, after transformation (i.e.
+	 * after following replacement from symbols.js)
+	 */
+	var getMetrics = function(symbol, font) {
+	    if (symbols.math[symbol] && symbols.math[symbol].replace) {
+	        return fontMetrics.getCharacterMetrics(
+	            symbols.math[symbol].replace, font);
+	    } else {
+	        return fontMetrics.getCharacterMetrics(
+	            symbol, font);
+	    }
+	};
+
+	/**
+	 * Builds a symbol in the given font size (note size is an integer)
+	 */
+	var mathrmSize = function(value, size, mode) {
+	    return buildCommon.makeSymbol(value, "Size" + size + "-Regular", mode);
+	};
+
+	/**
+	 * Puts a delimiter span in a given style, and adds appropriate height, depth,
+	 * and maxFontSizes.
+	 */
+	var styleWrap = function(delim, toStyle, options) {
+	    var span = makeSpan(
+	        ["style-wrap", options.style.reset(), toStyle.cls()], [delim]);
+
+	    var multiplier = toStyle.sizeMultiplier / options.style.sizeMultiplier;
+
+	    span.height *= multiplier;
+	    span.depth *= multiplier;
+	    span.maxFontSize = toStyle.sizeMultiplier;
+
+	    return span;
+	};
+
+	/**
+	 * Makes a small delimiter. This is a delimiter that comes in the Main-Regular
+	 * font, but is restyled to either be in textstyle, scriptstyle, or
+	 * scriptscriptstyle.
+	 */
+	var makeSmallDelim = function(delim, style, center, options, mode) {
+	    var text = buildCommon.makeSymbol(delim, "Main-Regular", mode);
+
+	    var span = styleWrap(text, style, options);
+
+	    if (center) {
+	        var shift =
+	            (1 - options.style.sizeMultiplier / style.sizeMultiplier) *
+	            fontMetrics.metrics.axisHeight;
+
+	        span.style.top = shift + "em";
+	        span.height -= shift;
+	        span.depth += shift;
+	    }
+
+	    return span;
+	};
+
+	/**
+	 * Makes a large delimiter. This is a delimiter that comes in the Size1, Size2,
+	 * Size3, or Size4 fonts. It is always rendered in textstyle.
+	 */
+	var makeLargeDelim = function(delim, size, center, options, mode) {
+	    var inner = mathrmSize(delim, size, mode);
+
+	    var span = styleWrap(
+	        makeSpan(["delimsizing", "size" + size],
+	                 [inner], options.getColor()),
+	        Style.TEXT, options);
+
+	    if (center) {
+	        var shift = (1 - options.style.sizeMultiplier) *
+	            fontMetrics.metrics.axisHeight;
+
+	        span.style.top = shift + "em";
+	        span.height -= shift;
+	        span.depth += shift;
+	    }
+
+	    return span;
+	};
+
+	/**
+	 * Make an inner span with the given offset and in the given font. This is used
+	 * in `makeStackedDelim` to make the stacking pieces for the delimiter.
+	 */
+	var makeInner = function(symbol, font, mode) {
+	    var sizeClass;
+	    // Apply the correct CSS class to choose the right font.
+	    if (font === "Size1-Regular") {
+	        sizeClass = "delim-size1";
+	    } else if (font === "Size4-Regular") {
+	        sizeClass = "delim-size4";
+	    }
+
+	    var inner = makeSpan(
+	        ["delimsizinginner", sizeClass],
+	        [makeSpan([], [buildCommon.makeSymbol(symbol, font, mode)])]);
+
+	    // Since this will be passed into `makeVList` in the end, wrap the element
+	    // in the appropriate tag that VList uses.
+	    return {type: "elem", elem: inner};
+	};
+
+	/**
+	 * Make a stacked delimiter out of a given delimiter, with the total height at
+	 * least `heightTotal`. This routine is mentioned on page 442 of the TeXbook.
+	 */
+	var makeStackedDelim = function(delim, heightTotal, center, options, mode) {
+	    // There are four parts, the top, an optional middle, a repeated part, and a
+	    // bottom.
+	    var top;
+	    var middle;
+	    var repeat;
+	    var bottom;
+	    top = repeat = bottom = delim;
+	    middle = null;
+	    // Also keep track of what font the delimiters are in
+	    var font = "Size1-Regular";
+
+	    // We set the parts and font based on the symbol. Note that we use
+	    // '\u23d0' instead of '|' and '\u2016' instead of '\\|' for the
+	    // repeats of the arrows
+	    if (delim === "\\uparrow") {
+	        repeat = bottom = "\u23d0";
+	    } else if (delim === "\\Uparrow") {
+	        repeat = bottom = "\u2016";
+	    } else if (delim === "\\downarrow") {
+	        top = repeat = "\u23d0";
+	    } else if (delim === "\\Downarrow") {
+	        top = repeat = "\u2016";
+	    } else if (delim === "\\updownarrow") {
+	        top = "\\uparrow";
+	        repeat = "\u23d0";
+	        bottom = "\\downarrow";
+	    } else if (delim === "\\Updownarrow") {
+	        top = "\\Uparrow";
+	        repeat = "\u2016";
+	        bottom = "\\Downarrow";
+	    } else if (delim === "[" || delim === "\\lbrack") {
+	        top = "\u23a1";
+	        repeat = "\u23a2";
+	        bottom = "\u23a3";
+	        font = "Size4-Regular";
+	    } else if (delim === "]" || delim === "\\rbrack") {
+	        top = "\u23a4";
+	        repeat = "\u23a5";
+	        bottom = "\u23a6";
+	        font = "Size4-Regular";
+	    } else if (delim === "\\lfloor") {
+	        repeat = top = "\u23a2";
+	        bottom = "\u23a3";
+	        font = "Size4-Regular";
+	    } else if (delim === "\\lceil") {
+	        top = "\u23a1";
+	        repeat = bottom = "\u23a2";
+	        font = "Size4-Regular";
+	    } else if (delim === "\\rfloor") {
+	        repeat = top = "\u23a5";
+	        bottom = "\u23a6";
+	        font = "Size4-Regular";
+	    } else if (delim === "\\rceil") {
+	        top = "\u23a4";
+	        repeat = bottom = "\u23a5";
+	        font = "Size4-Regular";
+	    } else if (delim === "(") {
+	        top = "\u239b";
+	        repeat = "\u239c";
+	        bottom = "\u239d";
+	        font = "Size4-Regular";
+	    } else if (delim === ")") {
+	        top = "\u239e";
+	        repeat = "\u239f";
+	        bottom = "\u23a0";
+	        font = "Size4-Regular";
+	    } else if (delim === "\\{" || delim === "\\lbrace") {
+	        top = "\u23a7";
+	        middle = "\u23a8";
+	        bottom = "\u23a9";
+	        repeat = "\u23aa";
+	        font = "Size4-Regular";
+	    } else if (delim === "\\}" || delim === "\\rbrace") {
+	        top = "\u23ab";
+	        middle = "\u23ac";
+	        bottom = "\u23ad";
+	        repeat = "\u23aa";
+	        font = "Size4-Regular";
+	    } else if (delim === "\\lgroup") {
+	        top = "\u23a7";
+	        bottom = "\u23a9";
+	        repeat = "\u23aa";
+	        font = "Size4-Regular";
+	    } else if (delim === "\\rgroup") {
+	        top = "\u23ab";
+	        bottom = "\u23ad";
+	        repeat = "\u23aa";
+	        font = "Size4-Regular";
+	    } else if (delim === "\\lmoustache") {
+	        top = "\u23a7";
+	        bottom = "\u23ad";
+	        repeat = "\u23aa";
+	        font = "Size4-Regular";
+	    } else if (delim === "\\rmoustache") {
+	        top = "\u23ab";
+	        bottom = "\u23a9";
+	        repeat = "\u23aa";
+	        font = "Size4-Regular";
+	    } else if (delim === "\\surd") {
+	        top = "\ue001";
+	        bottom = "\u23b7";
+	        repeat = "\ue000";
+	        font = "Size4-Regular";
+	    }
+
+	    // Get the metrics of the four sections
+	    var topMetrics = getMetrics(top, font);
+	    var topHeightTotal = topMetrics.height + topMetrics.depth;
+	    var repeatMetrics = getMetrics(repeat, font);
+	    var repeatHeightTotal = repeatMetrics.height + repeatMetrics.depth;
+	    var bottomMetrics = getMetrics(bottom, font);
+	    var bottomHeightTotal = bottomMetrics.height + bottomMetrics.depth;
+	    var middleHeightTotal = 0;
+	    var middleFactor = 1;
+	    if (middle !== null) {
+	        var middleMetrics = getMetrics(middle, font);
+	        middleHeightTotal = middleMetrics.height + middleMetrics.depth;
+	        middleFactor = 2; // repeat symmetrically above and below middle
+	    }
+
+	    // Calcuate the minimal height that the delimiter can have.
+	    // It is at least the size of the top, bottom, and optional middle combined.
+	    var minHeight = topHeightTotal + bottomHeightTotal + middleHeightTotal;
+
+	    // Compute the number of copies of the repeat symbol we will need
+	    var repeatCount = Math.ceil(
+	        (heightTotal - minHeight) / (middleFactor * repeatHeightTotal));
+
+	    // Compute the total height of the delimiter including all the symbols
+	    var realHeightTotal =
+	        minHeight + repeatCount * middleFactor * repeatHeightTotal;
+
+	    // The center of the delimiter is placed at the center of the axis. Note
+	    // that in this context, "center" means that the delimiter should be
+	    // centered around the axis in the current style, while normally it is
+	    // centered around the axis in textstyle.
+	    var axisHeight = fontMetrics.metrics.axisHeight;
+	    if (center) {
+	        axisHeight *= options.style.sizeMultiplier;
+	    }
+	    // Calculate the depth
+	    var depth = realHeightTotal / 2 - axisHeight;
+
+	    // Now, we start building the pieces that will go into the vlist
+
+	    // Keep a list of the inner pieces
+	    var inners = [];
+
+	    // Add the bottom symbol
+	    inners.push(makeInner(bottom, font, mode));
+
+	    var i;
+	    if (middle === null) {
+	        // Add that many symbols
+	        for (i = 0; i < repeatCount; i++) {
+	            inners.push(makeInner(repeat, font, mode));
+	        }
+	    } else {
+	        // When there is a middle bit, we need the middle part and two repeated
+	        // sections
+	        for (i = 0; i < repeatCount; i++) {
+	            inners.push(makeInner(repeat, font, mode));
+	        }
+	        inners.push(makeInner(middle, font, mode));
+	        for (i = 0; i < repeatCount; i++) {
+	            inners.push(makeInner(repeat, font, mode));
+	        }
+	    }
+
+	    // Add the top symbol
+	    inners.push(makeInner(top, font, mode));
+
+	    // Finally, build the vlist
+	    var inner = buildCommon.makeVList(inners, "bottom", depth, options);
+
+	    return styleWrap(
+	        makeSpan(["delimsizing", "mult"], [inner], options.getColor()),
+	        Style.TEXT, options);
+	};
+
+	// There are three kinds of delimiters, delimiters that stack when they become
+	// too large
+	var stackLargeDelimiters = [
+	    "(", ")", "[", "\\lbrack", "]", "\\rbrack",
+	    "\\{", "\\lbrace", "\\}", "\\rbrace",
+	    "\\lfloor", "\\rfloor", "\\lceil", "\\rceil",
+	    "\\surd",
+	];
+
+	// delimiters that always stack
+	var stackAlwaysDelimiters = [
+	    "\\uparrow", "\\downarrow", "\\updownarrow",
+	    "\\Uparrow", "\\Downarrow", "\\Updownarrow",
+	    "|", "\\|", "\\vert", "\\Vert",
+	    "\\lvert", "\\rvert", "\\lVert", "\\rVert",
+	    "\\lgroup", "\\rgroup", "\\lmoustache", "\\rmoustache",
+	];
+
+	// and delimiters that never stack
+	var stackNeverDelimiters = [
+	    "<", ">", "\\langle", "\\rangle", "/", "\\backslash", "\\lt", "\\gt",
+	];
+
+	// Metrics of the different sizes. Found by looking at TeX's output of
+	// $\bigl| // \Bigl| \biggl| \Biggl| \showlists$
+	// Used to create stacked delimiters of appropriate sizes in makeSizedDelim.
+	var sizeToMaxHeight = [0, 1.2, 1.8, 2.4, 3.0];
+
+	/**
+	 * Used to create a delimiter of a specific size, where `size` is 1, 2, 3, or 4.
+	 */
+	var makeSizedDelim = function(delim, size, options, mode) {
+	    // < and > turn into \langle and \rangle in delimiters
+	    if (delim === "<" || delim === "\\lt") {
+	        delim = "\\langle";
+	    } else if (delim === ">" || delim === "\\gt") {
+	        delim = "\\rangle";
+	    }
+
+	    // Sized delimiters are never centered.
+	    if (utils.contains(stackLargeDelimiters, delim) ||
+	        utils.contains(stackNeverDelimiters, delim)) {
+	        return makeLargeDelim(delim, size, false, options, mode);
+	    } else if (utils.contains(stackAlwaysDelimiters, delim)) {
+	        return makeStackedDelim(
+	            delim, sizeToMaxHeight[size], false, options, mode);
+	    } else {
+	        throw new ParseError("Illegal delimiter: '" + delim + "'");
+	    }
+	};
+
+	/**
+	 * There are three different sequences of delimiter sizes that the delimiters
+	 * follow depending on the kind of delimiter. This is used when creating custom
+	 * sized delimiters to decide whether to create a small, large, or stacked
+	 * delimiter.
+	 *
+	 * In real TeX, these sequences aren't explicitly defined, but are instead
+	 * defined inside the font metrics. Since there are only three sequences that
+	 * are possible for the delimiters that TeX defines, it is easier to just encode
+	 * them explicitly here.
+	 */
+
+	// Delimiters that never stack try small delimiters and large delimiters only
+	var stackNeverDelimiterSequence = [
+	    {type: "small", style: Style.SCRIPTSCRIPT},
+	    {type: "small", style: Style.SCRIPT},
+	    {type: "small", style: Style.TEXT},
+	    {type: "large", size: 1},
+	    {type: "large", size: 2},
+	    {type: "large", size: 3},
+	    {type: "large", size: 4},
+	];
+
+	// Delimiters that always stack try the small delimiters first, then stack
+	var stackAlwaysDelimiterSequence = [
+	    {type: "small", style: Style.SCRIPTSCRIPT},
+	    {type: "small", style: Style.SCRIPT},
+	    {type: "small", style: Style.TEXT},
+	    {type: "stack"},
+	];
+
+	// Delimiters that stack when large try the small and then large delimiters, and
+	// stack afterwards
+	var stackLargeDelimiterSequence = [
+	    {type: "small", style: Style.SCRIPTSCRIPT},
+	    {type: "small", style: Style.SCRIPT},
+	    {type: "small", style: Style.TEXT},
+	    {type: "large", size: 1},
+	    {type: "large", size: 2},
+	    {type: "large", size: 3},
+	    {type: "large", size: 4},
+	    {type: "stack"},
+	];
+
+	/**
+	 * Get the font used in a delimiter based on what kind of delimiter it is.
+	 */
+	var delimTypeToFont = function(type) {
+	    if (type.type === "small") {
+	        return "Main-Regular";
+	    } else if (type.type === "large") {
+	        return "Size" + type.size + "-Regular";
+	    } else if (type.type === "stack") {
+	        return "Size4-Regular";
+	    }
+	};
+
+	/**
+	 * Traverse a sequence of types of delimiters to decide what kind of delimiter
+	 * should be used to create a delimiter of the given height+depth.
+	 */
+	var traverseSequence = function(delim, height, sequence, options) {
+	    // Here, we choose the index we should start at in the sequences. In smaller
+	    // sizes (which correspond to larger numbers in style.size) we start earlier
+	    // in the sequence. Thus, scriptscript starts at index 3-3=0, script starts
+	    // at index 3-2=1, text starts at 3-1=2, and display starts at min(2,3-0)=2
+	    var start = Math.min(2, 3 - options.style.size);
+	    for (var i = start; i < sequence.length; i++) {
+	        if (sequence[i].type === "stack") {
+	            // This is always the last delimiter, so we just break the loop now.
+	            break;
+	        }
+
+	        var metrics = getMetrics(delim, delimTypeToFont(sequence[i]));
+	        var heightDepth = metrics.height + metrics.depth;
+
+	        // Small delimiters are scaled down versions of the same font, so we
+	        // account for the style change size.
+
+	        if (sequence[i].type === "small") {
+	            heightDepth *= sequence[i].style.sizeMultiplier;
+	        }
+
+	        // Check if the delimiter at this size works for the given height.
+	        if (heightDepth > height) {
+	            return sequence[i];
+	        }
+	    }
+
+	    // If we reached the end of the sequence, return the last sequence element.
+	    return sequence[sequence.length - 1];
+	};
+
+	/**
+	 * Make a delimiter of a given height+depth, with optional centering. Here, we
+	 * traverse the sequences, and create a delimiter that the sequence tells us to.
+	 */
+	var makeCustomSizedDelim = function(delim, height, center, options, mode) {
+	    if (delim === "<" || delim === "\\lt") {
+	        delim = "\\langle";
+	    } else if (delim === ">" || delim === "\\gt") {
+	        delim = "\\rangle";
+	    }
+
+	    // Decide what sequence to use
+	    var sequence;
+	    if (utils.contains(stackNeverDelimiters, delim)) {
+	        sequence = stackNeverDelimiterSequence;
+	    } else if (utils.contains(stackLargeDelimiters, delim)) {
+	        sequence = stackLargeDelimiterSequence;
+	    } else {
+	        sequence = stackAlwaysDelimiterSequence;
+	    }
+
+	    // Look through the sequence
+	    var delimType = traverseSequence(delim, height, sequence, options);
+
+	    // Depending on the sequence element we decided on, call the appropriate
+	    // function.
+	    if (delimType.type === "small") {
+	        return makeSmallDelim(delim, delimType.style, center, options, mode);
+	    } else if (delimType.type === "large") {
+	        return makeLargeDelim(delim, delimType.size, center, options, mode);
+	    } else if (delimType.type === "stack") {
+	        return makeStackedDelim(delim, height, center, options, mode);
+	    }
+	};
+
+	/**
+	 * Make a delimiter for use with `\left` and `\right`, given a height and depth
+	 * of an expression that the delimiters surround.
+	 */
+	var makeLeftRightDelim = function(delim, height, depth, options, mode) {
+	    // We always center \left/\right delimiters, so the axis is always shifted
+	    var axisHeight =
+	        fontMetrics.metrics.axisHeight * options.style.sizeMultiplier;
+
+	    // Taken from TeX source, tex.web, function make_left_right
+	    var delimiterFactor = 901;
+	    var delimiterExtend = 5.0 / fontMetrics.metrics.ptPerEm;
+
+	    var maxDistFromAxis = Math.max(
+	        height - axisHeight, depth + axisHeight);
+
+	    var totalHeight = Math.max(
+	        // In real TeX, calculations are done using integral values which are
+	        // 65536 per pt, or 655360 per em. So, the division here truncates in
+	        // TeX but doesn't here, producing different results. If we wanted to
+	        // exactly match TeX's calculation, we could do
+	        //   Math.floor(655360 * maxDistFromAxis / 500) *
+	        //    delimiterFactor / 655360
+	        // (To see the difference, compare
+	        //    x^{x^{\left(\rule{0.1em}{0.68em}\right)}}
+	        // in TeX and KaTeX)
+	        maxDistFromAxis / 500 * delimiterFactor,
+	        2 * maxDistFromAxis - delimiterExtend);
+
+	    // Finally, we defer to `makeCustomSizedDelim` with our calculated total
+	    // height
+	    return makeCustomSizedDelim(delim, totalHeight, true, options, mode);
+	};
+
+	module.exports = {
+	    sizedDelim: makeSizedDelim,
+	    customSizedDelim: makeCustomSizedDelim,
+	    leftRightDelim: makeLeftRightDelim,
+	};
+
+
+/***/ }),
+/* 167 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * This file converts a parse tree into a cooresponding MathML tree. The main
+	 * entry point is the `buildMathML` function, which takes a parse tree from the
+	 * parser.
+	 */
+
+	var buildCommon = __webpack_require__(160);
+	var fontMetrics = __webpack_require__(163);
+	var mathMLTree = __webpack_require__(168);
+	var ParseError = __webpack_require__(155);
+	var symbols = __webpack_require__(165);
+	var utils = __webpack_require__(162);
+
+	var makeSpan = buildCommon.makeSpan;
+	var fontMap = buildCommon.fontMap;
+
+	/**
+	 * Takes a symbol and converts it into a MathML text node after performing
+	 * optional replacement from symbols.js.
+	 */
+	var makeText = function(text, mode) {
+	    if (symbols[mode][text] && symbols[mode][text].replace) {
+	        text = symbols[mode][text].replace;
+	    }
+
+	    return new mathMLTree.TextNode(text);
+	};
+
+	/**
+	 * Returns the math variant as a string or null if none is required.
+	 */
+	var getVariant = function(group, options) {
+	    var font = options.font;
+	    if (!font) {
+	        return null;
+	    }
+
+	    var mode = group.mode;
+	    if (font === "mathit") {
+	        return "italic";
+	    }
+
+	    var value = group.value;
+	    if (utils.contains(["\\imath", "\\jmath"], value)) {
+	        return null;
+	    }
+
+	    if (symbols[mode][value] && symbols[mode][value].replace) {
+	        value = symbols[mode][value].replace;
+	    }
+
+	    var fontName = fontMap[font].fontName;
+	    if (fontMetrics.getCharacterMetrics(value, fontName)) {
+	        return fontMap[options.font].variant;
+	    }
+
+	    return null;
+	};
+
+	/**
+	 * Functions for handling the different types of groups found in the parse
+	 * tree. Each function should take a parse group and return a MathML node.
+	 */
+	var groupTypes = {};
+
+	groupTypes.mathord = function(group, options) {
+	    var node = new mathMLTree.MathNode(
+	        "mi",
+	        [makeText(group.value, group.mode)]);
+
+	    var variant = getVariant(group, options);
+	    if (variant) {
+	        node.setAttribute("mathvariant", variant);
+	    }
+	    return node;
+	};
+
+	groupTypes.textord = function(group, options) {
+	    var text = makeText(group.value, group.mode);
+
+	    var variant = getVariant(group, options) || "normal";
+
+	    var node;
+	    if (/[0-9]/.test(group.value)) {
+	        // TODO(kevinb) merge adjacent <mn> nodes
+	        // do it as a post processing step
+	        node = new mathMLTree.MathNode("mn", [text]);
+	        if (options.font) {
+	            node.setAttribute("mathvariant", variant);
+	        }
+	    } else {
+	        node = new mathMLTree.MathNode("mi", [text]);
+	        node.setAttribute("mathvariant", variant);
+	    }
+
+	    return node;
+	};
+
+	groupTypes.bin = function(group) {
+	    var node = new mathMLTree.MathNode(
+	        "mo", [makeText(group.value, group.mode)]);
+
+	    return node;
+	};
+
+	groupTypes.rel = function(group) {
+	    var node = new mathMLTree.MathNode(
+	        "mo", [makeText(group.value, group.mode)]);
+
+	    return node;
+	};
+
+	groupTypes.open = function(group) {
+	    var node = new mathMLTree.MathNode(
+	        "mo", [makeText(group.value, group.mode)]);
+
+	    return node;
+	};
+
+	groupTypes.close = function(group) {
+	    var node = new mathMLTree.MathNode(
+	        "mo", [makeText(group.value, group.mode)]);
+
+	    return node;
+	};
+
+	groupTypes.inner = function(group) {
+	    var node = new mathMLTree.MathNode(
+	        "mo", [makeText(group.value, group.mode)]);
+
+	    return node;
+	};
+
+	groupTypes.punct = function(group) {
+	    var node = new mathMLTree.MathNode(
+	        "mo", [makeText(group.value, group.mode)]);
+
+	    node.setAttribute("separator", "true");
+
+	    return node;
+	};
+
+	groupTypes.ordgroup = function(group, options) {
+	    var inner = buildExpression(group.value, options);
+
+	    var node = new mathMLTree.MathNode("mrow", inner);
+
+	    return node;
+	};
+
+	groupTypes.text = function(group, options) {
+	    var inner = buildExpression(group.value.body, options);
+
+	    var node = new mathMLTree.MathNode("mtext", inner);
+
+	    return node;
+	};
+
+	groupTypes.color = function(group, options) {
+	    var inner = buildExpression(group.value.value, options);
+
+	    var node = new mathMLTree.MathNode("mstyle", inner);
+
+	    node.setAttribute("mathcolor", group.value.color);
+
+	    return node;
+	};
+
+	groupTypes.supsub = function(group, options) {
+	    var children = [buildGroup(group.value.base, options)];
+
+	    if (group.value.sub) {
+	        children.push(buildGroup(group.value.sub, options));
+	    }
+
+	    if (group.value.sup) {
+	        children.push(buildGroup(group.value.sup, options));
+	    }
+
+	    var nodeType;
+	    if (!group.value.sub) {
+	        nodeType = "msup";
+	    } else if (!group.value.sup) {
+	        nodeType = "msub";
+	    } else {
+	        nodeType = "msubsup";
+	    }
+
+	    var node = new mathMLTree.MathNode(nodeType, children);
+
+	    return node;
+	};
+
+	groupTypes.genfrac = function(group, options) {
+	    var node = new mathMLTree.MathNode(
+	        "mfrac",
+	        [buildGroup(group.value.numer, options),
+	         buildGroup(group.value.denom, options)]);
+
+	    if (!group.value.hasBarLine) {
+	        node.setAttribute("linethickness", "0px");
+	    }
+
+	    if (group.value.leftDelim != null || group.value.rightDelim != null) {
+	        var withDelims = [];
+
+	        if (group.value.leftDelim != null) {
+	            var leftOp = new mathMLTree.MathNode(
+	                "mo", [new mathMLTree.TextNode(group.value.leftDelim)]);
+
+	            leftOp.setAttribute("fence", "true");
+
+	            withDelims.push(leftOp);
+	        }
+
+	        withDelims.push(node);
+
+	        if (group.value.rightDelim != null) {
+	            var rightOp = new mathMLTree.MathNode(
+	                "mo", [new mathMLTree.TextNode(group.value.rightDelim)]);
+
+	            rightOp.setAttribute("fence", "true");
+
+	            withDelims.push(rightOp);
+	        }
+
+	        var outerNode = new mathMLTree.MathNode("mrow", withDelims);
+
+	        return outerNode;
+	    }
+
+	    return node;
+	};
+
+	groupTypes.array = function(group, options) {
+	    return new mathMLTree.MathNode(
+	        "mtable", group.value.body.map(function(row) {
+	            return new mathMLTree.MathNode(
+	                "mtr", row.map(function(cell) {
+	                    return new mathMLTree.MathNode(
+	                        "mtd", [buildGroup(cell, options)]);
+	                }));
+	        }));
+	};
+
+	groupTypes.sqrt = function(group, options) {
+	    var node;
+	    if (group.value.index) {
+	        node = new mathMLTree.MathNode(
+	            "mroot", [
+	                buildGroup(group.value.body, options),
+	                buildGroup(group.value.index, options),
+	            ]);
+	    } else {
+	        node = new mathMLTree.MathNode(
+	            "msqrt", [buildGroup(group.value.body, options)]);
+	    }
+
+	    return node;
+	};
+
+	groupTypes.leftright = function(group, options) {
+	    var inner = buildExpression(group.value.body, options);
+
+	    if (group.value.left !== ".") {
+	        var leftNode = new mathMLTree.MathNode(
+	            "mo", [makeText(group.value.left, group.mode)]);
+
+	        leftNode.setAttribute("fence", "true");
+
+	        inner.unshift(leftNode);
+	    }
+
+	    if (group.value.right !== ".") {
+	        var rightNode = new mathMLTree.MathNode(
+	            "mo", [makeText(group.value.right, group.mode)]);
+
+	        rightNode.setAttribute("fence", "true");
+
+	        inner.push(rightNode);
+	    }
+
+	    var outerNode = new mathMLTree.MathNode("mrow", inner);
+
+	    return outerNode;
+	};
+
+	groupTypes.accent = function(group, options) {
+	    var accentNode = new mathMLTree.MathNode(
+	        "mo", [makeText(group.value.accent, group.mode)]);
+
+	    var node = new mathMLTree.MathNode(
+	        "mover",
+	        [buildGroup(group.value.base, options),
+	         accentNode]);
+
+	    node.setAttribute("accent", "true");
+
+	    return node;
+	};
+
+	groupTypes.spacing = function(group) {
+	    var node;
+
+	    if (group.value === "\\ " || group.value === "\\space" ||
+	        group.value === " " || group.value === "~") {
+	        node = new mathMLTree.MathNode(
+	            "mtext", [new mathMLTree.TextNode("\u00a0")]);
+	    } else {
+	        node = new mathMLTree.MathNode("mspace");
+
+	        node.setAttribute(
+	            "width", buildCommon.spacingFunctions[group.value].size);
+	    }
+
+	    return node;
+	};
+
+	groupTypes.op = function(group) {
+	    var node;
+
+	    // TODO(emily): handle big operators using the `largeop` attribute
+
+	    if (group.value.symbol) {
+	        // This is a symbol. Just add the symbol.
+	        node = new mathMLTree.MathNode(
+	            "mo", [makeText(group.value.body, group.mode)]);
+	    } else {
+	        // This is a text operator. Add all of the characters from the
+	        // operator's name.
+	        // TODO(emily): Add a space in the middle of some of these
+	        // operators, like \limsup.
+	        node = new mathMLTree.MathNode(
+	            "mi", [new mathMLTree.TextNode(group.value.body.slice(1))]);
+	    }
+
+	    return node;
+	};
+
+	groupTypes.katex = function(group) {
+	    var node = new mathMLTree.MathNode(
+	        "mtext", [new mathMLTree.TextNode("KaTeX")]);
+
+	    return node;
+	};
+
+	groupTypes.font = function(group, options) {
+	    var font = group.value.font;
+	    return buildGroup(group.value.body, options.withFont(font));
+	};
+
+	groupTypes.delimsizing = function(group) {
+	    var children = [];
+
+	    if (group.value.value !== ".") {
+	        children.push(makeText(group.value.value, group.mode));
+	    }
+
+	    var node = new mathMLTree.MathNode("mo", children);
+
+	    if (group.value.delimType === "open" ||
+	        group.value.delimType === "close") {
+	        // Only some of the delimsizing functions act as fences, and they
+	        // return "open" or "close" delimTypes.
+	        node.setAttribute("fence", "true");
+	    } else {
+	        // Explicitly disable fencing if it's not a fence, to override the
+	        // defaults.
+	        node.setAttribute("fence", "false");
+	    }
+
+	    return node;
+	};
+
+	groupTypes.styling = function(group, options) {
+	    var inner = buildExpression(group.value.value, options);
+
+	    var node = new mathMLTree.MathNode("mstyle", inner);
+
+	    var styleAttributes = {
+	        "display": ["0", "true"],
+	        "text": ["0", "false"],
+	        "script": ["1", "false"],
+	        "scriptscript": ["2", "false"],
+	    };
+
+	    var attr = styleAttributes[group.value.style];
+
+	    node.setAttribute("scriptlevel", attr[0]);
+	    node.setAttribute("displaystyle", attr[1]);
+
+	    return node;
+	};
+
+	groupTypes.sizing = function(group, options) {
+	    var inner = buildExpression(group.value.value, options);
+
+	    var node = new mathMLTree.MathNode("mstyle", inner);
+
+	    // TODO(emily): This doesn't produce the correct size for nested size
+	    // changes, because we don't keep state of what style we're currently
+	    // in, so we can't reset the size to normal before changing it.  Now
+	    // that we're passing an options parameter we should be able to fix
+	    // this.
+	    node.setAttribute(
+	        "mathsize", buildCommon.sizingMultiplier[group.value.size] + "em");
+
+	    return node;
+	};
+
+	groupTypes.overline = function(group, options) {
+	    var operator = new mathMLTree.MathNode(
+	        "mo", [new mathMLTree.TextNode("\u203e")]);
+	    operator.setAttribute("stretchy", "true");
+
+	    var node = new mathMLTree.MathNode(
+	        "mover",
+	        [buildGroup(group.value.body, options),
+	         operator]);
+	    node.setAttribute("accent", "true");
+
+	    return node;
+	};
+
+	groupTypes.underline = function(group, options) {
+	    var operator = new mathMLTree.MathNode(
+	        "mo", [new mathMLTree.TextNode("\u203e")]);
+	    operator.setAttribute("stretchy", "true");
+
+	    var node = new mathMLTree.MathNode(
+	        "munder",
+	        [buildGroup(group.value.body, options),
+	         operator]);
+	    node.setAttribute("accentunder", "true");
+
+	    return node;
+	};
+
+	groupTypes.rule = function(group) {
+	    // TODO(emily): Figure out if there's an actual way to draw black boxes
+	    // in MathML.
+	    var node = new mathMLTree.MathNode("mrow");
+
+	    return node;
+	};
+
+	groupTypes.llap = function(group, options) {
+	    var node = new mathMLTree.MathNode(
+	        "mpadded", [buildGroup(group.value.body, options)]);
+
+	    node.setAttribute("lspace", "-1width");
+	    node.setAttribute("width", "0px");
+
+	    return node;
+	};
+
+	groupTypes.rlap = function(group, options) {
+	    var node = new mathMLTree.MathNode(
+	        "mpadded", [buildGroup(group.value.body, options)]);
+
+	    node.setAttribute("width", "0px");
+
+	    return node;
+	};
+
+	groupTypes.phantom = function(group, options, prev) {
+	    var inner = buildExpression(group.value.value, options);
+	    return new mathMLTree.MathNode("mphantom", inner);
+	};
+
+	/**
+	 * Takes a list of nodes, builds them, and returns a list of the generated
+	 * MathML nodes. A little simpler than the HTML version because we don't do any
+	 * previous-node handling.
+	 */
+	var buildExpression = function(expression, options) {
+	    var groups = [];
+	    for (var i = 0; i < expression.length; i++) {
+	        var group = expression[i];
+	        groups.push(buildGroup(group, options));
+	    }
+	    return groups;
+	};
+
+	/**
+	 * Takes a group from the parser and calls the appropriate groupTypes function
+	 * on it to produce a MathML node.
+	 */
+	var buildGroup = function(group, options) {
+	    if (!group) {
+	        return new mathMLTree.MathNode("mrow");
+	    }
+
+	    if (groupTypes[group.type]) {
+	        // Call the groupTypes function
+	        return groupTypes[group.type](group, options);
+	    } else {
+	        throw new ParseError(
+	            "Got group of unknown type: '" + group.type + "'");
+	    }
+	};
+
+	/**
+	 * Takes a full parse tree and settings and builds a MathML representation of
+	 * it. In particular, we put the elements from building the parse tree into a
+	 * <semantics> tag so we can also include that TeX source as an annotation.
+	 *
+	 * Note that we actually return a domTree element with a `<math>` inside it so
+	 * we can do appropriate styling.
+	 */
+	var buildMathML = function(tree, texExpression, options) {
+	    var expression = buildExpression(tree, options);
+
+	    // Wrap up the expression in an mrow so it is presented in the semantics
+	    // tag correctly.
+	    var wrapper = new mathMLTree.MathNode("mrow", expression);
+
+	    // Build a TeX annotation of the source
+	    var annotation = new mathMLTree.MathNode(
+	        "annotation", [new mathMLTree.TextNode(texExpression)]);
+
+	    annotation.setAttribute("encoding", "application/x-tex");
+
+	    var semantics = new mathMLTree.MathNode(
+	        "semantics", [wrapper, annotation]);
+
+	    var math = new mathMLTree.MathNode("math", [semantics]);
+
+	    // You can't style <math> nodes, so we wrap the node in a span.
+	    return makeSpan(["katex-mathml"], [math]);
+	};
+
+	module.exports = buildMathML;
+
+
+/***/ }),
+/* 168 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * These objects store data about MathML nodes. This is the MathML equivalent
+	 * of the types in domTree.js. Since MathML handles its own rendering, and
+	 * since we're mainly using MathML to improve accessibility, we don't manage
+	 * any of the styling state that the plain DOM nodes do.
+	 *
+	 * The `toNode` and `toMarkup` functions work simlarly to how they do in
+	 * domTree.js, creating namespaced DOM nodes and HTML text markup respectively.
+	 */
+
+	var utils = __webpack_require__(162);
+
+	/**
+	 * This node represents a general purpose MathML node of any type. The
+	 * constructor requires the type of node to create (for example, `"mo"` or
+	 * `"mspace"`, corresponding to `<mo>` and `<mspace>` tags).
+	 */
+	function MathNode(type, children) {
+	    this.type = type;
+	    this.attributes = {};
+	    this.children = children || [];
+	}
+
+	/**
+	 * Sets an attribute on a MathML node. MathML depends on attributes to convey a
+	 * semantic content, so this is used heavily.
+	 */
+	MathNode.prototype.setAttribute = function(name, value) {
+	    this.attributes[name] = value;
+	};
+
+	/**
+	 * Converts the math node into a MathML-namespaced DOM element.
+	 */
+	MathNode.prototype.toNode = function() {
+	    var node = document.createElementNS(
+	        "http://www.w3.org/1998/Math/MathML", this.type);
+
+	    for (var attr in this.attributes) {
+	        if (Object.prototype.hasOwnProperty.call(this.attributes, attr)) {
+	            node.setAttribute(attr, this.attributes[attr]);
+	        }
+	    }
+
+	    for (var i = 0; i < this.children.length; i++) {
+	        node.appendChild(this.children[i].toNode());
+	    }
+
+	    return node;
+	};
+
+	/**
+	 * Converts the math node into an HTML markup string.
+	 */
+	MathNode.prototype.toMarkup = function() {
+	    var markup = "<" + this.type;
+
+	    // Add the attributes
+	    for (var attr in this.attributes) {
+	        if (Object.prototype.hasOwnProperty.call(this.attributes, attr)) {
+	            markup += " " + attr + "=\"";
+	            markup += utils.escape(this.attributes[attr]);
+	            markup += "\"";
+	        }
+	    }
+
+	    markup += ">";
+
+	    for (var i = 0; i < this.children.length; i++) {
+	        markup += this.children[i].toMarkup();
+	    }
+
+	    markup += "</" + this.type + ">";
+
+	    return markup;
+	};
+
+	/**
+	 * This node represents a piece of text.
+	 */
+	function TextNode(text) {
+	    this.text = text;
+	}
+
+	/**
+	 * Converts the text node into a DOM text node.
+	 */
+	TextNode.prototype.toNode = function() {
+	    return document.createTextNode(this.text);
+	};
+
+	/**
+	 * Converts the text node into HTML markup (which is just the text itself).
+	 */
+	TextNode.prototype.toMarkup = function() {
+	    return utils.escape(this.text);
+	};
+
+	module.exports = {
+	    MathNode: MathNode,
+	    TextNode: TextNode,
+	};
+
+
+/***/ }),
+/* 169 */
+/***/ (function(module, exports) {
+
+	/**
+	 * This file contains information about the options that the Parser carries
+	 * around with it while parsing. Data is held in an `Options` object, and when
+	 * recursing, a new `Options` object can be created with the `.with*` and
+	 * `.reset` functions.
+	 */
+
+	/**
+	 * This is the main options class. It contains the style, size, color, and font
+	 * of the current parse level. It also contains the style and size of the parent
+	 * parse level, so size changes can be handled efficiently.
+	 *
+	 * Each of the `.with*` and `.reset` functions passes its current style and size
+	 * as the parentStyle and parentSize of the new options class, so parent
+	 * handling is taken care of automatically.
+	 */
+	function Options(data) {
+	    this.style = data.style;
+	    this.color = data.color;
+	    this.size = data.size;
+	    this.phantom = data.phantom;
+	    this.font = data.font;
+
+	    if (data.parentStyle === undefined) {
+	        this.parentStyle = data.style;
+	    } else {
+	        this.parentStyle = data.parentStyle;
+	    }
+
+	    if (data.parentSize === undefined) {
+	        this.parentSize = data.size;
+	    } else {
+	        this.parentSize = data.parentSize;
+	    }
+	}
+
+	/**
+	 * Returns a new options object with the same properties as "this".  Properties
+	 * from "extension" will be copied to the new options object.
+	 */
+	Options.prototype.extend = function(extension) {
+	    var data = {
+	        style: this.style,
+	        size: this.size,
+	        color: this.color,
+	        parentStyle: this.style,
+	        parentSize: this.size,
+	        phantom: this.phantom,
+	        font: this.font,
+	    };
+
+	    for (var key in extension) {
+	        if (extension.hasOwnProperty(key)) {
+	            data[key] = extension[key];
+	        }
+	    }
+
+	    return new Options(data);
+	};
+
+	/**
+	 * Create a new options object with the given style.
+	 */
+	Options.prototype.withStyle = function(style) {
+	    return this.extend({
+	        style: style,
+	    });
+	};
+
+	/**
+	 * Create a new options object with the given size.
+	 */
+	Options.prototype.withSize = function(size) {
+	    return this.extend({
+	        size: size,
+	    });
+	};
+
+	/**
+	 * Create a new options object with the given color.
+	 */
+	Options.prototype.withColor = function(color) {
+	    return this.extend({
+	        color: color,
+	    });
+	};
+
+	/**
+	 * Create a new options object with "phantom" set to true.
+	 */
+	Options.prototype.withPhantom = function() {
+	    return this.extend({
+	        phantom: true,
+	    });
+	};
+
+	/**
+	 * Create a new options objects with the give font.
+	 */
+	Options.prototype.withFont = function(font) {
+	    return this.extend({
+	        font: font,
+	    });
+	};
+
+	/**
+	 * Create a new options object with the same style, size, and color. This is
+	 * used so that parent style and size changes are handled correctly.
+	 */
+	Options.prototype.reset = function() {
+	    return this.extend({});
+	};
+
+	/**
+	 * A map of color names to CSS colors.
+	 * TODO(emily): Remove this when we have real macros
+	 */
+	var colorMap = {
+	    "katex-blue": "#6495ed",
+	    "katex-orange": "#ffa500",
+	    "katex-pink": "#ff00af",
+	    "katex-red": "#df0030",
+	    "katex-green": "#28ae7b",
+	    "katex-gray": "gray",
+	    "katex-purple": "#9d38bd",
+	    "katex-blueA": "#c7e9f1",
+	    "katex-blueB": "#9cdceb",
+	    "katex-blueC": "#58c4dd",
+	    "katex-blueD": "#29abca",
+	    "katex-blueE": "#1c758a",
+	    "katex-tealA": "#acead7",
+	    "katex-tealB": "#76ddc0",
+	    "katex-tealC": "#5cd0b3",
+	    "katex-tealD": "#55c1a7",
+	    "katex-tealE": "#49a88f",
+	    "katex-greenA": "#c9e2ae",
+	    "katex-greenB": "#a6cf8c",
+	    "katex-greenC": "#83c167",
+	    "katex-greenD": "#77b05d",
+	    "katex-greenE": "#699c52",
+	    "katex-goldA": "#f7c797",
+	    "katex-goldB": "#f9b775",
+	    "katex-goldC": "#f0ac5f",
+	    "katex-goldD": "#e1a158",
+	    "katex-goldE": "#c78d46",
+	    "katex-redA": "#f7a1a3",
+	    "katex-redB": "#ff8080",
+	    "katex-redC": "#fc6255",
+	    "katex-redD": "#e65a4c",
+	    "katex-redE": "#cf5044",
+	    "katex-maroonA": "#ecabc1",
+	    "katex-maroonB": "#ec92ab",
+	    "katex-maroonC": "#c55f73",
+	    "katex-maroonD": "#a24d61",
+	    "katex-maroonE": "#94424f",
+	    "katex-purpleA": "#caa3e8",
+	    "katex-purpleB": "#b189c6",
+	    "katex-purpleC": "#9a72ac",
+	    "katex-purpleD": "#715582",
+	    "katex-purpleE": "#644172",
+	    "katex-mintA": "#f5f9e8",
+	    "katex-mintB": "#edf2df",
+	    "katex-mintC": "#e0e5cc",
+	    "katex-grayA": "#fdfdfd",
+	    "katex-grayB": "#f7f7f7",
+	    "katex-grayC": "#eeeeee",
+	    "katex-grayD": "#dddddd",
+	    "katex-grayE": "#cccccc",
+	    "katex-grayF": "#aaaaaa",
+	    "katex-grayG": "#999999",
+	    "katex-grayH": "#555555",
+	    "katex-grayI": "#333333",
+	    "katex-kaBlue": "#314453",
+	    "katex-kaGreen": "#639b24",
+	};
+
+	/**
+	 * Gets the CSS color of the current options object, accounting for the
+	 * `colorMap`.
+	 */
+	Options.prototype.getColor = function() {
+	    if (this.phantom) {
+	        return "transparent";
+	    } else {
+	        return colorMap[this.color] || this.color;
+	    }
+	};
+
+	module.exports = Options;
+
+
+/***/ }),
+/* 170 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Provides a single function for parsing an expression using a Parser
+	 * TODO(emily): Remove this
+	 */
+
+	var Parser = __webpack_require__(171);
+
+	/**
+	 * Parses an expression using a Parser, then returns the parsed result.
+	 */
+	var parseTree = function(toParse, settings) {
+	    var parser = new Parser(toParse, settings);
+
+	    return parser.parse();
+	};
+
+	module.exports = parseTree;
+
+
+/***/ }),
+/* 171 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* eslint no-constant-condition:0 */
+	var functions = __webpack_require__(172);
+	var environments = __webpack_require__(173);
+	var Lexer = __webpack_require__(175);
+	var symbols = __webpack_require__(165);
+	var utils = __webpack_require__(162);
+
+	var parseData = __webpack_require__(174);
+	var ParseError = __webpack_require__(155);
+
+	/**
+	 * This file contains the parser used to parse out a TeX expression from the
+	 * input. Since TeX isn't context-free, standard parsers don't work particularly
+	 * well.
+	 *
+	 * The strategy of this parser is as such:
+	 *
+	 * The main functions (the `.parse...` ones) take a position in the current
+	 * parse string to parse tokens from. The lexer (found in Lexer.js, stored at
+	 * this.lexer) also supports pulling out tokens at arbitrary places. When
+	 * individual tokens are needed at a position, the lexer is called to pull out a
+	 * token, which is then used.
+	 *
+	 * The parser has a property called "mode" indicating the mode that
+	 * the parser is currently in. Currently it has to be one of "math" or
+	 * "text", which denotes whether the current environment is a math-y
+	 * one or a text-y one (e.g. inside \text). Currently, this serves to
+	 * limit the functions which can be used in text mode.
+	 *
+	 * The main functions then return an object which contains the useful data that
+	 * was parsed at its given point, and a new position at the end of the parsed
+	 * data. The main functions can call each other and continue the parsing by
+	 * using the returned position as a new starting point.
+	 *
+	 * There are also extra `.handle...` functions, which pull out some reused
+	 * functionality into self-contained functions.
+	 *
+	 * The earlier functions return ParseNodes.
+	 * The later functions (which are called deeper in the parse) sometimes return
+	 * ParseFuncOrArgument, which contain a ParseNode as well as some data about
+	 * whether the parsed object is a function which is missing some arguments, or a
+	 * standalone object which can be used as an argument to another function.
+	 */
+
+	/**
+	 * Main Parser class
+	 */
+	function Parser(input, settings) {
+	    // Make a new lexer
+	    this.lexer = new Lexer(input);
+	    // Store the settings for use in parsing
+	    this.settings = settings;
+	}
+
+	var ParseNode = parseData.ParseNode;
+
+	/**
+	 * An initial function (without its arguments), or an argument to a function.
+	 * The `result` argument should be a ParseNode.
+	 */
+	function ParseFuncOrArgument(result, isFunction) {
+	    this.result = result;
+	    // Is this a function (i.e. is it something defined in functions.js)?
+	    this.isFunction = isFunction;
+	}
+
+	/**
+	 * Checks a result to make sure it has the right type, and throws an
+	 * appropriate error otherwise.
+	 *
+	 * @param {boolean=} consume whether to consume the expected token,
+	 *                           defaults to true
+	 */
+	Parser.prototype.expect = function(text, consume) {
+	    if (this.nextToken.text !== text) {
+	        throw new ParseError(
+	            "Expected '" + text + "', got '" + this.nextToken.text + "'",
+	            this.lexer, this.nextToken.position
+	        );
+	    }
+	    if (consume !== false) {
+	        this.consume();
+	    }
+	};
+
+	/**
+	 * Considers the current look ahead token as consumed,
+	 * and fetches the one after that as the new look ahead.
+	 */
+	Parser.prototype.consume = function() {
+	    this.pos = this.nextToken.position;
+	    this.nextToken = this.lexer.lex(this.pos, this.mode);
+	};
+
+	/**
+	 * Main parsing function, which parses an entire input.
+	 *
+	 * @return {?Array.<ParseNode>}
+	 */
+	Parser.prototype.parse = function() {
+	    // Try to parse the input
+	    this.mode = "math";
+	    this.pos = 0;
+	    this.nextToken = this.lexer.lex(this.pos, this.mode);
+	    var parse = this.parseInput();
+	    return parse;
+	};
+
+	/**
+	 * Parses an entire input tree.
+	 */
+	Parser.prototype.parseInput = function() {
+	    // Parse an expression
+	    var expression = this.parseExpression(false);
+	    // If we succeeded, make sure there's an EOF at the end
+	    this.expect("EOF", false);
+	    return expression;
+	};
+
+	var endOfExpression = ["}", "\\end", "\\right", "&", "\\\\", "\\cr"];
+
+	/**
+	 * Parses an "expression", which is a list of atoms.
+	 *
+	 * @param {boolean} breakOnInfix Should the parsing stop when we hit infix
+	 *                  nodes? This happens when functions have higher precendence
+	 *                  than infix nodes in implicit parses.
+	 *
+	 * @param {?string} breakOnToken The token that the expression should end with,
+	 *                  or `null` if something else should end the expression.
+	 *
+	 * @return {ParseNode}
+	 */
+	Parser.prototype.parseExpression = function(breakOnInfix, breakOnToken) {
+	    var body = [];
+	    // Keep adding atoms to the body until we can't parse any more atoms (either
+	    // we reached the end, a }, or a \right)
+	    while (true) {
+	        var lex = this.nextToken;
+	        var pos = this.pos;
+	        if (endOfExpression.indexOf(lex.text) !== -1) {
+	            break;
+	        }
+	        if (breakOnToken && lex.text === breakOnToken) {
+	            break;
+	        }
+	        var atom = this.parseAtom();
+	        if (!atom) {
+	            if (!this.settings.throwOnError && lex.text[0] === "\\") {
+	                var errorNode = this.handleUnsupportedCmd();
+	                body.push(errorNode);
+
+	                pos = lex.position;
+	                continue;
+	            }
+
+	            break;
+	        }
+	        if (breakOnInfix && atom.type === "infix") {
+	            // rewind so we can parse the infix atom again
+	            this.pos = pos;
+	            this.nextToken = lex;
+	            break;
+	        }
+	        body.push(atom);
+	    }
+	    return this.handleInfixNodes(body);
+	};
+
+	/**
+	 * Rewrites infix operators such as \over with corresponding commands such
+	 * as \frac.
+	 *
+	 * There can only be one infix operator per group.  If there's more than one
+	 * then the expression is ambiguous.  This can be resolved by adding {}.
+	 *
+	 * @returns {Array}
+	 */
+	Parser.prototype.handleInfixNodes = function(body) {
+	    var overIndex = -1;
+	    var funcName;
+
+	    for (var i = 0; i < body.length; i++) {
+	        var node = body[i];
+	        if (node.type === "infix") {
+	            if (overIndex !== -1) {
+	                throw new ParseError("only one infix operator per group",
+	                    this.lexer, -1);
+	            }
+	            overIndex = i;
+	            funcName = node.value.replaceWith;
+	        }
+	    }
+
+	    if (overIndex !== -1) {
+	        var numerNode;
+	        var denomNode;
+
+	        var numerBody = body.slice(0, overIndex);
+	        var denomBody = body.slice(overIndex + 1);
+
+	        if (numerBody.length === 1 && numerBody[0].type === "ordgroup") {
+	            numerNode = numerBody[0];
+	        } else {
+	            numerNode = new ParseNode("ordgroup", numerBody, this.mode);
+	        }
+
+	        if (denomBody.length === 1 && denomBody[0].type === "ordgroup") {
+	            denomNode = denomBody[0];
+	        } else {
+	            denomNode = new ParseNode("ordgroup", denomBody, this.mode);
+	        }
+
+	        var value = this.callFunction(
+	            funcName, [numerNode, denomNode], null);
+	        return [new ParseNode(value.type, value, this.mode)];
+	    } else {
+	        return body;
+	    }
+	};
+
+	// The greediness of a superscript or subscript
+	var SUPSUB_GREEDINESS = 1;
+
+	/**
+	 * Handle a subscript or superscript with nice errors.
+	 */
+	Parser.prototype.handleSupSubscript = function(name) {
+	    var symbol = this.nextToken.text;
+	    var symPos = this.pos;
+	    this.consume();
+	    var group = this.parseGroup();
+
+	    if (!group) {
+	        if (!this.settings.throwOnError && this.nextToken.text[0] === "\\") {
+	            return this.handleUnsupportedCmd();
+	        } else {
+	            throw new ParseError(
+	                "Expected group after '" + symbol + "'",
+	                this.lexer,
+	                symPos + 1
+	            );
+	        }
+	    } else if (group.isFunction) {
+	        // ^ and _ have a greediness, so handle interactions with functions'
+	        // greediness
+	        var funcGreediness = functions[group.result].greediness;
+	        if (funcGreediness > SUPSUB_GREEDINESS) {
+	            return this.parseFunction(group);
+	        } else {
+	            throw new ParseError(
+	                "Got function '" + group.result + "' with no arguments " +
+	                    "as " + name,
+	                this.lexer, symPos + 1);
+	        }
+	    } else {
+	        return group.result;
+	    }
+	};
+
+	/**
+	 * Converts the textual input of an unsupported command into a text node
+	 * contained within a color node whose color is determined by errorColor
+	 */
+	Parser.prototype.handleUnsupportedCmd = function() {
+	    var text = this.nextToken.text;
+	    var textordArray = [];
+
+	    for (var i = 0; i < text.length; i++) {
+	        textordArray.push(new ParseNode("textord", text[i], "text"));
+	    }
+
+	    var textNode = new ParseNode(
+	        "text",
+	        {
+	            body: textordArray,
+	            type: "text",
+	        },
+	        this.mode);
+
+	    var colorNode = new ParseNode(
+	        "color",
+	        {
+	            color: this.settings.errorColor,
+	            value: [textNode],
+	            type: "color",
+	        },
+	        this.mode);
+
+	    this.consume();
+	    return colorNode;
+	};
+
+	/**
+	 * Parses a group with optional super/subscripts.
+	 *
+	 * @return {?ParseNode}
+	 */
+	Parser.prototype.parseAtom = function() {
+	    // The body of an atom is an implicit group, so that things like
+	    // \left(x\right)^2 work correctly.
+	    var base = this.parseImplicitGroup();
+
+	    // In text mode, we don't have superscripts or subscripts
+	    if (this.mode === "text") {
+	        return base;
+	    }
+
+	    // Note that base may be empty (i.e. null) at this point.
+
+	    var superscript;
+	    var subscript;
+	    while (true) {
+	        // Lex the first token
+	        var lex = this.nextToken;
+
+	        if (lex.text === "\\limits" || lex.text === "\\nolimits") {
+	            // We got a limit control
+	            if (!base || base.type !== "op") {
+	                throw new ParseError(
+	                    "Limit controls must follow a math operator",
+	                    this.lexer, this.pos);
+	            } else {
+	                var limits = lex.text === "\\limits";
+	                base.value.limits = limits;
+	                base.value.alwaysHandleSupSub = true;
+	            }
+	            this.consume();
+	        } else if (lex.text === "^") {
+	            // We got a superscript start
+	            if (superscript) {
+	                throw new ParseError(
+	                    "Double superscript", this.lexer, this.pos);
+	            }
+	            superscript = this.handleSupSubscript("superscript");
+	        } else if (lex.text === "_") {
+	            // We got a subscript start
+	            if (subscript) {
+	                throw new ParseError(
+	                    "Double subscript", this.lexer, this.pos);
+	            }
+	            subscript = this.handleSupSubscript("subscript");
+	        } else if (lex.text === "'") {
+	            // We got a prime
+	            var prime = new ParseNode("textord", "\\prime", this.mode);
+
+	            // Many primes can be grouped together, so we handle this here
+	            var primes = [prime];
+	            this.consume();
+	            // Keep lexing tokens until we get something that's not a prime
+	            while (this.nextToken.text === "'") {
+	                // For each one, add another prime to the list
+	                primes.push(prime);
+	                this.consume();
+	            }
+	            // Put them into an ordgroup as the superscript
+	            superscript = new ParseNode("ordgroup", primes, this.mode);
+	        } else {
+	            // If it wasn't ^, _, or ', stop parsing super/subscripts
+	            break;
+	        }
+	    }
+
+	    if (superscript || subscript) {
+	        // If we got either a superscript or subscript, create a supsub
+	        return new ParseNode("supsub", {
+	            base: base,
+	            sup: superscript,
+	            sub: subscript,
+	        }, this.mode);
+	    } else {
+	        // Otherwise return the original body
+	        return base;
+	    }
+	};
+
+	// A list of the size-changing functions, for use in parseImplicitGroup
+	var sizeFuncs = [
+	    "\\tiny", "\\scriptsize", "\\footnotesize", "\\small", "\\normalsize",
+	    "\\large", "\\Large", "\\LARGE", "\\huge", "\\Huge",
+	];
+
+	// A list of the style-changing functions, for use in parseImplicitGroup
+	var styleFuncs = [
+	    "\\displaystyle", "\\textstyle", "\\scriptstyle", "\\scriptscriptstyle",
+	];
+
+	/**
+	 * Parses an implicit group, which is a group that starts at the end of a
+	 * specified, and ends right before a higher explicit group ends, or at EOL. It
+	 * is used for functions that appear to affect the current style, like \Large or
+	 * \textrm, where instead of keeping a style we just pretend that there is an
+	 * implicit grouping after it until the end of the group. E.g.
+	 *   small text {\Large large text} small text again
+	 * It is also used for \left and \right to get the correct grouping.
+	 *
+	 * @return {?ParseNode}
+	 */
+	Parser.prototype.parseImplicitGroup = function() {
+	    var start = this.parseSymbol();
+
+	    if (start == null) {
+	        // If we didn't get anything we handle, fall back to parseFunction
+	        return this.parseFunction();
+	    }
+
+	    var func = start.result;
+	    var body;
+
+	    if (func === "\\left") {
+	        // If we see a left:
+	        // Parse the entire left function (including the delimiter)
+	        var left = this.parseFunction(start);
+	        // Parse out the implicit body
+	        body = this.parseExpression(false);
+	        // Check the next token
+	        this.expect("\\right", false);
+	        var right = this.parseFunction();
+	        return new ParseNode("leftright", {
+	            body: body,
+	            left: left.value.value,
+	            right: right.value.value,
+	        }, this.mode);
+	    } else if (func === "\\begin") {
+	        // begin...end is similar to left...right
+	        var begin = this.parseFunction(start);
+	        var envName = begin.value.name;
+	        if (!environments.hasOwnProperty(envName)) {
+	            throw new ParseError(
+	                "No such environment: " + envName,
+	                this.lexer, begin.value.namepos);
+	        }
+	        // Build the environment object. Arguments and other information will
+	        // be made available to the begin and end methods using properties.
+	        var env = environments[envName];
+	        var args = this.parseArguments("\\begin{" + envName + "}", env);
+	        var context = {
+	            mode: this.mode,
+	            envName: envName,
+	            parser: this,
+	            lexer: this.lexer,
+	            positions: args.pop(),
+	        };
+	        var result = env.handler(context, args);
+	        this.expect("\\end", false);
+	        var end = this.parseFunction();
+	        if (end.value.name !== envName) {
+	            throw new ParseError(
+	                "Mismatch: \\begin{" + envName + "} matched " +
+	                "by \\end{" + end.value.name + "}",
+	                this.lexer /* , end.value.namepos */);
+	            // TODO: Add position to the above line and adjust test case,
+	            // requires #385 to get merged first
+	        }
+	        result.position = end.position;
+	        return result;
+	    } else if (utils.contains(sizeFuncs, func)) {
+	        // If we see a sizing function, parse out the implict body
+	        body = this.parseExpression(false);
+	        return new ParseNode("sizing", {
+	            // Figure out what size to use based on the list of functions above
+	            size: "size" + (utils.indexOf(sizeFuncs, func) + 1),
+	            value: body,
+	        }, this.mode);
+	    } else if (utils.contains(styleFuncs, func)) {
+	        // If we see a styling function, parse out the implict body
+	        body = this.parseExpression(true);
+	        return new ParseNode("styling", {
+	            // Figure out what style to use by pulling out the style from
+	            // the function name
+	            style: func.slice(1, func.length - 5),
+	            value: body,
+	        }, this.mode);
+	    } else {
+	        // Defer to parseFunction if it's not a function we handle
+	        return this.parseFunction(start);
+	    }
+	};
+
+	/**
+	 * Parses an entire function, including its base and all of its arguments.
+	 * The base might either have been parsed already, in which case
+	 * it is provided as an argument, or it's the next group in the input.
+	 *
+	 * @param {ParseFuncOrArgument=} baseGroup optional as described above
+	 * @return {?ParseNode}
+	 */
+	Parser.prototype.parseFunction = function(baseGroup) {
+	    if (!baseGroup) {
+	        baseGroup = this.parseGroup();
+	    }
+
+	    if (baseGroup) {
+	        if (baseGroup.isFunction) {
+	            var func = baseGroup.result;
+	            var funcData = functions[func];
+	            if (this.mode === "text" && !funcData.allowedInText) {
+	                throw new ParseError(
+	                    "Can't use function '" + func + "' in text mode",
+	                    this.lexer, baseGroup.position);
+	            }
+
+	            var args = this.parseArguments(func, funcData);
+	            var result = this.callFunction(func, args, args.pop());
+	            return new ParseNode(result.type, result, this.mode);
+	        } else {
+	            return baseGroup.result;
+	        }
+	    } else {
+	        return null;
+	    }
+	};
+
+	/**
+	 * Call a function handler with a suitable context and arguments.
+	 */
+	Parser.prototype.callFunction = function(name, args, positions) {
+	    var context = {
+	        funcName: name,
+	        parser: this,
+	        lexer: this.lexer,
+	        positions: positions,
+	    };
+	    return functions[name].handler(context, args);
+	};
+
+	/**
+	 * Parses the arguments of a function or environment
+	 *
+	 * @param {string} func  "\name" or "\begin{name}"
+	 * @param {{numArgs:number,numOptionalArgs:number|undefined}} funcData
+	 * @return the array of arguments, with the list of positions as last element
+	 */
+	Parser.prototype.parseArguments = function(func, funcData) {
+	    var totalArgs = funcData.numArgs + funcData.numOptionalArgs;
+	    if (totalArgs === 0) {
+	        return [[this.pos]];
+	    }
+
+	    var baseGreediness = funcData.greediness;
+	    var positions = [this.pos];
+	    var args = [];
+
+	    for (var i = 0; i < totalArgs; i++) {
+	        var argType = funcData.argTypes && funcData.argTypes[i];
+	        var arg;
+	        if (i < funcData.numOptionalArgs) {
+	            if (argType) {
+	                arg = this.parseSpecialGroup(argType, true);
+	            } else {
+	                arg = this.parseOptionalGroup();
+	            }
+	            if (!arg) {
+	                args.push(null);
+	                positions.push(this.pos);
+	                continue;
+	            }
+	        } else {
+	            if (argType) {
+	                arg = this.parseSpecialGroup(argType);
+	            } else {
+	                arg = this.parseGroup();
+	            }
+	            if (!arg) {
+	                if (!this.settings.throwOnError &&
+	                    this.nextToken.text[0] === "\\") {
+	                    arg = new ParseFuncOrArgument(
+	                        this.handleUnsupportedCmd(this.nextToken.text),
+	                        false);
+	                } else {
+	                    throw new ParseError(
+	                        "Expected group after '" + func + "'",
+	                        this.lexer, this.pos);
+	                }
+	            }
+	        }
+	        var argNode;
+	        if (arg.isFunction) {
+	            var argGreediness =
+	                functions[arg.result].greediness;
+	            if (argGreediness > baseGreediness) {
+	                argNode = this.parseFunction(arg);
+	            } else {
+	                throw new ParseError(
+	                    "Got function '" + arg.result + "' as " +
+	                    "argument to '" + func + "'",
+	                    this.lexer, this.pos - 1);
+	            }
+	        } else {
+	            argNode = arg.result;
+	        }
+	        args.push(argNode);
+	        positions.push(this.pos);
+	    }
+
+	    args.push(positions);
+
+	    return args;
+	};
+
+
+	/**
+	 * Parses a group when the mode is changing. Takes a position, a new mode, and
+	 * an outer mode that is used to parse the outside.
+	 *
+	 * @return {?ParseFuncOrArgument}
+	 */
+	Parser.prototype.parseSpecialGroup = function(innerMode, optional) {
+	    var outerMode = this.mode;
+	    // Handle `original` argTypes
+	    if (innerMode === "original") {
+	        innerMode = outerMode;
+	    }
+
+	    if (innerMode === "color" || innerMode === "size") {
+	        // color and size modes are special because they should have braces and
+	        // should only lex a single symbol inside
+	        var openBrace = this.nextToken;
+	        if (optional && openBrace.text !== "[") {
+	            // optional arguments should return null if they don't exist
+	            return null;
+	        }
+	        // The call to expect will lex the token after the '{' in inner mode
+	        this.mode = innerMode;
+	        this.expect(optional ? "[" : "{");
+	        var inner = this.nextToken;
+	        this.mode = outerMode;
+	        var data;
+	        if (innerMode === "color") {
+	            data = inner.text;
+	        } else {
+	            data = inner.data;
+	        }
+	        this.consume(); // consume the token stored in inner
+	        this.expect(optional ? "]" : "}");
+	        return new ParseFuncOrArgument(
+	            new ParseNode(innerMode, data, outerMode),
+	            false);
+	    } else if (innerMode === "text") {
+	        // text mode is special because it should ignore the whitespace before
+	        // it
+	        var whitespace = this.lexer.lex(this.pos, "whitespace");
+	        this.pos = whitespace.position;
+	    }
+
+	    // By the time we get here, innerMode is one of "text" or "math".
+	    // We switch the mode of the parser, recurse, then restore the old mode.
+	    this.mode = innerMode;
+	    this.nextToken = this.lexer.lex(this.pos, innerMode);
+	    var res;
+	    if (optional) {
+	        res = this.parseOptionalGroup();
+	    } else {
+	        res = this.parseGroup();
+	    }
+	    this.mode = outerMode;
+	    this.nextToken = this.lexer.lex(this.pos, outerMode);
+	    return res;
+	};
+
+	/**
+	 * Parses a group, which is either a single nucleus (like "x") or an expression
+	 * in braces (like "{x+y}")
+	 *
+	 * @return {?ParseFuncOrArgument}
+	 */
+	Parser.prototype.parseGroup = function() {
+	    // Try to parse an open brace
+	    if (this.nextToken.text === "{") {
+	        // If we get a brace, parse an expression
+	        this.consume();
+	        var expression = this.parseExpression(false);
+	        // Make sure we get a close brace
+	        this.expect("}");
+	        return new ParseFuncOrArgument(
+	            new ParseNode("ordgroup", expression, this.mode),
+	            false);
+	    } else {
+	        // Otherwise, just return a nucleus
+	        return this.parseSymbol();
+	    }
+	};
+
+	/**
+	 * Parses a group, which is an expression in brackets (like "[x+y]")
+	 *
+	 * @return {?ParseFuncOrArgument}
+	 */
+	Parser.prototype.parseOptionalGroup = function() {
+	    // Try to parse an open bracket
+	    if (this.nextToken.text === "[") {
+	        // If we get a brace, parse an expression
+	        this.consume();
+	        var expression = this.parseExpression(false, "]");
+	        // Make sure we get a close bracket
+	        this.expect("]");
+	        return new ParseFuncOrArgument(
+	            new ParseNode("ordgroup", expression, this.mode),
+	            false);
+	    } else {
+	        // Otherwise, return null,
+	        return null;
+	    }
+	};
+
+	/**
+	 * Parse a single symbol out of the string. Here, we handle both the functions
+	 * we have defined, as well as the single character symbols
+	 *
+	 * @return {?ParseFuncOrArgument}
+	 */
+	Parser.prototype.parseSymbol = function() {
+	    var nucleus = this.nextToken;
+
+	    if (functions[nucleus.text]) {
+	        this.consume();
+	        // If there exists a function with this name, we return the function and
+	        // say that it is a function.
+	        return new ParseFuncOrArgument(
+	            nucleus.text,
+	            true);
+	    } else if (symbols[this.mode][nucleus.text]) {
+	        this.consume();
+	        // Otherwise if this is a no-argument function, find the type it
+	        // corresponds to in the symbols map
+	        return new ParseFuncOrArgument(
+	            new ParseNode(symbols[this.mode][nucleus.text].group,
+	                          nucleus.text, this.mode),
+	            false);
+	    } else {
+	        return null;
+	    }
+	};
+
+	Parser.prototype.ParseNode = ParseNode;
+
+	module.exports = Parser;
+
+
+/***/ }),
+/* 172 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var utils = __webpack_require__(162);
+	var ParseError = __webpack_require__(155);
+
+	/* This file contains a list of functions that we parse, identified by
+	 * the calls to defineFunction.
+	 *
+	 * The first argument to defineFunction is a single name or a list of names.
+	 * All functions named in such a list will share a single implementation.
+	 *
+	 * Each declared function can have associated properties, which
+	 * include the following:
+	 *
+	 *  - numArgs: The number of arguments the function takes.
+	 *             If this is the only property, it can be passed as a number
+	 *             instead of an element of a properties object.
+	 *  - argTypes: (optional) An array corresponding to each argument of the
+	 *              function, giving the type of argument that should be parsed. Its
+	 *              length should be equal to `numArgs + numOptionalArgs`. Valid
+	 *              types:
+	 *               - "size": A size-like thing, such as "1em" or "5ex"
+	 *               - "color": An html color, like "#abc" or "blue"
+	 *               - "original": The same type as the environment that the
+	 *                             function being parsed is in (e.g. used for the
+	 *                             bodies of functions like \color where the first
+	 *                             argument is special and the second argument is
+	 *                             parsed normally)
+	 *              Other possible types (probably shouldn't be used)
+	 *               - "text": Text-like (e.g. \text)
+	 *               - "math": Normal math
+	 *              If undefined, this will be treated as an appropriate length
+	 *              array of "original" strings
+	 *  - greediness: (optional) The greediness of the function to use ungrouped
+	 *                arguments.
+	 *
+	 *                E.g. if you have an expression
+	 *                  \sqrt \frac 1 2
+	 *                since \frac has greediness=2 vs \sqrt's greediness=1, \frac
+	 *                will use the two arguments '1' and '2' as its two arguments,
+	 *                then that whole function will be used as the argument to
+	 *                \sqrt. On the other hand, the expressions
+	 *                  \frac \frac 1 2 3
+	 *                and
+	 *                  \frac \sqrt 1 2
+	 *                will fail because \frac and \frac have equal greediness
+	 *                and \sqrt has a lower greediness than \frac respectively. To
+	 *                make these parse, we would have to change them to:
+	 *                  \frac {\frac 1 2} 3
+	 *                and
+	 *                  \frac {\sqrt 1} 2
+	 *
+	 *                The default value is `1`
+	 *  - allowedInText: (optional) Whether or not the function is allowed inside
+	 *                   text mode (default false)
+	 *  - numOptionalArgs: (optional) The number of optional arguments the function
+	 *                     should parse. If the optional arguments aren't found,
+	 *                     `null` will be passed to the handler in their place.
+	 *                     (default 0)
+	 *
+	 * The last argument is that implementation, the handler for the function(s).
+	 * It is called to handle these functions and their arguments.
+	 * It receives two arguments:
+	 *  - context contains information and references provided by the parser
+	 *  - args is an array of arguments obtained from TeX input
+	 * The context contains the following properties:
+	 *  - funcName: the text (i.e. name) of the function, including \
+	 *  - parser: the parser object
+	 *  - lexer: the lexer object
+	 *  - positions: the positions in the overall string of the function
+	 *               and the arguments.
+	 * The latter three should only be used to produce error messages.
+	 *
+	 * The function should return an object with the following keys:
+	 *  - type: The type of element that this is. This is then used in
+	 *          buildHTML/buildMathML to determine which function
+	 *          should be called to build this node into a DOM node
+	 * Any other data can be added to the object, which will be passed
+	 * in to the function in buildHTML/buildMathML as `group.value`.
+	 */
+
+	function defineFunction(names, props, handler) {
+	    if (typeof names === "string") {
+	        names = [names];
+	    }
+	    if (typeof props === "number") {
+	        props = { numArgs: props };
+	    }
+	    // Set default values of functions
+	    var data = {
+	        numArgs: props.numArgs,
+	        argTypes: props.argTypes,
+	        greediness: (props.greediness === undefined) ? 1 : props.greediness,
+	        allowedInText: !!props.allowedInText,
+	        numOptionalArgs: props.numOptionalArgs || 0,
+	        handler: handler,
+	    };
+	    for (var i = 0; i < names.length; ++i) {
+	        module.exports[names[i]] = data;
+	    }
+	}
+
+	// A normal square root
+	defineFunction("\\sqrt", {
+	    numArgs: 1,
+	    numOptionalArgs: 1,
+	}, function(context, args) {
+	    var index = args[0];
+	    var body = args[1];
+	    return {
+	        type: "sqrt",
+	        body: body,
+	        index: index,
+	    };
+	});
+
+	// Some non-mathy text
+	defineFunction("\\text", {
+	    numArgs: 1,
+	    argTypes: ["text"],
+	    greediness: 2,
+	}, function(context, args) {
+	    var body = args[0];
+	    // Since the corresponding buildHTML/buildMathML function expects a
+	    // list of elements, we normalize for different kinds of arguments
+	    // TODO(emily): maybe this should be done somewhere else
+	    var inner;
+	    if (body.type === "ordgroup") {
+	        inner = body.value;
+	    } else {
+	        inner = [body];
+	    }
+
+	    return {
+	        type: "text",
+	        body: inner,
+	    };
+	});
+
+	// A two-argument custom color
+	defineFunction("\\color", {
+	    numArgs: 2,
+	    allowedInText: true,
+	    greediness: 3,
+	    argTypes: ["color", "original"],
+	}, function(context, args) {
+	    var color = args[0];
+	    var body = args[1];
+	    // Normalize the different kinds of bodies (see \text above)
+	    var inner;
+	    if (body.type === "ordgroup") {
+	        inner = body.value;
+	    } else {
+	        inner = [body];
+	    }
+
+	    return {
+	        type: "color",
+	        color: color.value,
+	        value: inner,
+	    };
+	});
+
+	// An overline
+	defineFunction("\\overline", {
+	    numArgs: 1,
+	}, function(context, args) {
+	    var body = args[0];
+	    return {
+	        type: "overline",
+	        body: body,
+	    };
+	});
+
+	// An underline
+	defineFunction("\\underline", {
+	    numArgs: 1,
+	}, function(context, args) {
+	    var body = args[0];
+	    return {
+	        type: "underline",
+	        body: body,
+	    };
+	});
+
+	// A box of the width and height
+	defineFunction("\\rule", {
+	    numArgs: 2,
+	    numOptionalArgs: 1,
+	    argTypes: ["size", "size", "size"],
+	}, function(context, args) {
+	    var shift = args[0];
+	    var width = args[1];
+	    var height = args[2];
+	    return {
+	        type: "rule",
+	        shift: shift && shift.value,
+	        width: width.value,
+	        height: height.value,
+	    };
+	});
+
+	// A KaTeX logo
+	defineFunction("\\KaTeX", {
+	    numArgs: 0,
+	}, function(context) {
+	    return {
+	        type: "katex",
+	    };
+	});
+
+	defineFunction("\\phantom", {
+	    numArgs: 1,
+	}, function(context, args) {
+	    var body = args[0];
+	    var inner;
+	    if (body.type === "ordgroup") {
+	        inner = body.value;
+	    } else {
+	        inner = [body];
+	    }
+
+	    return {
+	        type: "phantom",
+	        value: inner,
+	    };
+	});
+
+	// Extra data needed for the delimiter handler down below
+	var delimiterSizes = {
+	    "\\bigl" : {type: "open",    size: 1},
+	    "\\Bigl" : {type: "open",    size: 2},
+	    "\\biggl": {type: "open",    size: 3},
+	    "\\Biggl": {type: "open",    size: 4},
+	    "\\bigr" : {type: "close",   size: 1},
+	    "\\Bigr" : {type: "close",   size: 2},
+	    "\\biggr": {type: "close",   size: 3},
+	    "\\Biggr": {type: "close",   size: 4},
+	    "\\bigm" : {type: "rel",     size: 1},
+	    "\\Bigm" : {type: "rel",     size: 2},
+	    "\\biggm": {type: "rel",     size: 3},
+	    "\\Biggm": {type: "rel",     size: 4},
+	    "\\big"  : {type: "textord", size: 1},
+	    "\\Big"  : {type: "textord", size: 2},
+	    "\\bigg" : {type: "textord", size: 3},
+	    "\\Bigg" : {type: "textord", size: 4},
+	};
+
+	var delimiters = [
+	    "(", ")", "[", "\\lbrack", "]", "\\rbrack",
+	    "\\{", "\\lbrace", "\\}", "\\rbrace",
+	    "\\lfloor", "\\rfloor", "\\lceil", "\\rceil",
+	    "<", ">", "\\langle", "\\rangle", "\\lt", "\\gt",
+	    "\\lvert", "\\rvert", "\\lVert", "\\rVert",
+	    "\\lgroup", "\\rgroup", "\\lmoustache", "\\rmoustache",
+	    "/", "\\backslash",
+	    "|", "\\vert", "\\|", "\\Vert",
+	    "\\uparrow", "\\Uparrow",
+	    "\\downarrow", "\\Downarrow",
+	    "\\updownarrow", "\\Updownarrow",
+	    ".",
+	];
+
+	var fontAliases = {
+	    "\\Bbb": "\\mathbb",
+	    "\\bold": "\\mathbf",
+	    "\\frak": "\\mathfrak",
+	};
+
+	// Single-argument color functions
+	defineFunction([
+	    "\\blue", "\\orange", "\\pink", "\\red",
+	    "\\green", "\\gray", "\\purple",
+	    "\\blueA", "\\blueB", "\\blueC", "\\blueD", "\\blueE",
+	    "\\tealA", "\\tealB", "\\tealC", "\\tealD", "\\tealE",
+	    "\\greenA", "\\greenB", "\\greenC", "\\greenD", "\\greenE",
+	    "\\goldA", "\\goldB", "\\goldC", "\\goldD", "\\goldE",
+	    "\\redA", "\\redB", "\\redC", "\\redD", "\\redE",
+	    "\\maroonA", "\\maroonB", "\\maroonC", "\\maroonD", "\\maroonE",
+	    "\\purpleA", "\\purpleB", "\\purpleC", "\\purpleD", "\\purpleE",
+	    "\\mintA", "\\mintB", "\\mintC",
+	    "\\grayA", "\\grayB", "\\grayC", "\\grayD", "\\grayE",
+	    "\\grayF", "\\grayG", "\\grayH", "\\grayI",
+	    "\\kaBlue", "\\kaGreen",
+	], {
+	    numArgs: 1,
+	    allowedInText: true,
+	    greediness: 3,
+	}, function(context, args) {
+	    var body = args[0];
+	    var atoms;
+	    if (body.type === "ordgroup") {
+	        atoms = body.value;
+	    } else {
+	        atoms = [body];
+	    }
+
+	    return {
+	        type: "color",
+	        color: "katex-" + context.funcName.slice(1),
+	        value: atoms,
+	    };
+	});
+
+	// There are 2 flags for operators; whether they produce limits in
+	// displaystyle, and whether they are symbols and should grow in
+	// displaystyle. These four groups cover the four possible choices.
+
+	// No limits, not symbols
+	defineFunction([
+	    "\\arcsin", "\\arccos", "\\arctan", "\\arg", "\\cos", "\\cosh",
+	    "\\cot", "\\coth", "\\csc", "\\deg", "\\dim", "\\exp", "\\hom",
+	    "\\ker", "\\lg", "\\ln", "\\log", "\\sec", "\\sin", "\\sinh",
+	    "\\tan", "\\tanh",
+	], {
+	    numArgs: 0,
+	}, function(context) {
+	    return {
+	        type: "op",
+	        limits: false,
+	        symbol: false,
+	        body: context.funcName,
+	    };
+	});
+
+	// Limits, not symbols
+	defineFunction([
+	    "\\det", "\\gcd", "\\inf", "\\lim", "\\liminf", "\\limsup", "\\max",
+	    "\\min", "\\Pr", "\\sup",
+	], {
+	    numArgs: 0,
+	}, function(context) {
+	    return {
+	        type: "op",
+	        limits: true,
+	        symbol: false,
+	        body: context.funcName,
+	    };
+	});
+
+	// No limits, symbols
+	defineFunction([
+	    "\\int", "\\iint", "\\iiint", "\\oint",
+	], {
+	    numArgs: 0,
+	}, function(context) {
+	    return {
+	        type: "op",
+	        limits: false,
+	        symbol: true,
+	        body: context.funcName,
+	    };
+	});
+
+	// Limits, symbols
+	defineFunction([
+	    "\\coprod", "\\bigvee", "\\bigwedge", "\\biguplus", "\\bigcap",
+	    "\\bigcup", "\\intop", "\\prod", "\\sum", "\\bigotimes",
+	    "\\bigoplus", "\\bigodot", "\\bigsqcup", "\\smallint",
+	], {
+	    numArgs: 0,
+	}, function(context) {
+	    return {
+	        type: "op",
+	        limits: true,
+	        symbol: true,
+	        body: context.funcName,
+	    };
+	});
+
+	// Fractions
+	defineFunction([
+	    "\\dfrac", "\\frac", "\\tfrac",
+	    "\\dbinom", "\\binom", "\\tbinom",
+	], {
+	    numArgs: 2,
+	    greediness: 2,
+	}, function(context, args) {
+	    var numer = args[0];
+	    var denom = args[1];
+	    var hasBarLine;
+	    var leftDelim = null;
+	    var rightDelim = null;
+	    var size = "auto";
+
+	    switch (context.funcName) {
+	        case "\\dfrac":
+	        case "\\frac":
+	        case "\\tfrac":
+	            hasBarLine = true;
+	            break;
+	        case "\\dbinom":
+	        case "\\binom":
+	        case "\\tbinom":
+	            hasBarLine = false;
+	            leftDelim = "(";
+	            rightDelim = ")";
+	            break;
+	        default:
+	            throw new Error("Unrecognized genfrac command");
+	    }
+
+	    switch (context.funcName) {
+	        case "\\dfrac":
+	        case "\\dbinom":
+	            size = "display";
+	            break;
+	        case "\\tfrac":
+	        case "\\tbinom":
+	            size = "text";
+	            break;
+	    }
+
+	    return {
+	        type: "genfrac",
+	        numer: numer,
+	        denom: denom,
+	        hasBarLine: hasBarLine,
+	        leftDelim: leftDelim,
+	        rightDelim: rightDelim,
+	        size: size,
+	    };
+	});
+
+	// Left and right overlap functions
+	defineFunction(["\\llap", "\\rlap"], {
+	    numArgs: 1,
+	    allowedInText: true,
+	}, function(context, args) {
+	    var body = args[0];
+	    return {
+	        type: context.funcName.slice(1),
+	        body: body,
+	    };
+	});
+
+	// Delimiter functions
+	defineFunction([
+	    "\\bigl", "\\Bigl", "\\biggl", "\\Biggl",
+	    "\\bigr", "\\Bigr", "\\biggr", "\\Biggr",
+	    "\\bigm", "\\Bigm", "\\biggm", "\\Biggm",
+	    "\\big",  "\\Big",  "\\bigg",  "\\Bigg",
+	    "\\left", "\\right",
+	], {
+	    numArgs: 1,
+	}, function(context, args) {
+	    var delim = args[0];
+	    if (!utils.contains(delimiters, delim.value)) {
+	        throw new ParseError(
+	            "Invalid delimiter: '" + delim.value + "' after '" +
+	                context.funcName + "'",
+	            context.lexer, context.positions[1]);
+	    }
+
+	    // \left and \right are caught somewhere in Parser.js, which is
+	    // why this data doesn't match what is in buildHTML.
+	    if (context.funcName === "\\left" || context.funcName === "\\right") {
+	        return {
+	            type: "leftright",
+	            value: delim.value,
+	        };
+	    } else {
+	        return {
+	            type: "delimsizing",
+	            size: delimiterSizes[context.funcName].size,
+	            delimType: delimiterSizes[context.funcName].type,
+	            value: delim.value,
+	        };
+	    }
+	});
+
+	// Sizing functions (handled in Parser.js explicitly, hence no handler)
+	defineFunction([
+	    "\\tiny", "\\scriptsize", "\\footnotesize", "\\small",
+	    "\\normalsize", "\\large", "\\Large", "\\LARGE", "\\huge", "\\Huge",
+	], 0, null);
+
+	// Style changing functions (handled in Parser.js explicitly, hence no
+	// handler)
+	defineFunction([
+	    "\\displaystyle", "\\textstyle", "\\scriptstyle",
+	    "\\scriptscriptstyle",
+	], 0, null);
+
+	defineFunction([
+	    // styles
+	    "\\mathrm", "\\mathit", "\\mathbf",
+
+	    // families
+	    "\\mathbb", "\\mathcal", "\\mathfrak", "\\mathscr", "\\mathsf",
+	    "\\mathtt",
+
+	    // aliases
+	    "\\Bbb", "\\bold", "\\frak",
+	], {
+	    numArgs: 1,
+	    greediness: 2,
+	}, function(context, args) {
+	    var body = args[0];
+	    var func = context.funcName;
+	    if (func in fontAliases) {
+	        func = fontAliases[func];
+	    }
+	    return {
+	        type: "font",
+	        font: func.slice(1),
+	        body: body,
+	    };
+	});
+
+	// Accents
+	defineFunction([
+	    "\\acute", "\\grave", "\\ddot", "\\tilde", "\\bar", "\\breve",
+	    "\\check", "\\hat", "\\vec", "\\dot",
+	    // We don't support expanding accents yet
+	    // "\\widetilde", "\\widehat"
+	], {
+	    numArgs: 1,
+	}, function(context, args) {
+	    var base = args[0];
+	    return {
+	        type: "accent",
+	        accent: context.funcName,
+	        base: base,
+	    };
+	});
+
+	// Infix generalized fractions
+	defineFunction(["\\over", "\\choose"], {
+	    numArgs: 0,
+	}, function(context) {
+	    var replaceWith;
+	    switch (context.funcName) {
+	        case "\\over":
+	            replaceWith = "\\frac";
+	            break;
+	        case "\\choose":
+	            replaceWith = "\\binom";
+	            break;
+	        default:
+	            throw new Error("Unrecognized infix genfrac command");
+	    }
+	    return {
+	        type: "infix",
+	        replaceWith: replaceWith,
+	    };
+	});
+
+	// Row breaks for aligned data
+	defineFunction(["\\\\", "\\cr"], {
+	    numArgs: 0,
+	    numOptionalArgs: 1,
+	    argTypes: ["size"],
+	}, function(context, args) {
+	    var size = args[0];
+	    return {
+	        type: "cr",
+	        size: size,
+	    };
+	});
+
+	// Environment delimiters
+	defineFunction(["\\begin", "\\end"], {
+	    numArgs: 1,
+	    argTypes: ["text"],
+	}, function(context, args) {
+	    var nameGroup = args[0];
+	    if (nameGroup.type !== "ordgroup") {
+	        throw new ParseError(
+	            "Invalid environment name",
+	            context.lexer, context.positions[1]);
+	    }
+	    var name = "";
+	    for (var i = 0; i < nameGroup.value.length; ++i) {
+	        name += nameGroup.value[i].value;
+	    }
+	    return {
+	        type: "environment",
+	        name: name,
+	        namepos: context.positions[1],
+	    };
+	});
+
+
+/***/ }),
+/* 173 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* eslint no-constant-condition:0 */
+	var fontMetrics = __webpack_require__(163);
+	var parseData = __webpack_require__(174);
+	var ParseError = __webpack_require__(155);
+
+	var ParseNode = parseData.ParseNode;
+
+	/**
+	 * Parse the body of the environment, with rows delimited by \\ and
+	 * columns delimited by &, and create a nested list in row-major order
+	 * with one group per cell.
+	 */
+	function parseArray(parser, result) {
+	    var row = [];
+	    var body = [row];
+	    var rowGaps = [];
+	    while (true) {
+	        var cell = parser.parseExpression(false, null);
+	        row.push(new ParseNode("ordgroup", cell, parser.mode));
+	        var next = parser.nextToken.text;
+	        if (next === "&") {
+	            parser.consume();
+	        } else if (next === "\\end") {
+	            break;
+	        } else if (next === "\\\\" || next === "\\cr") {
+	            var cr = parser.parseFunction();
+	            rowGaps.push(cr.value.size);
+	            row = [];
+	            body.push(row);
+	        } else {
+	            // TODO: Clean up the following hack once #385 got merged
+	            var pos = Math.min(parser.pos + 1, parser.lexer._input.length);
+	            throw new ParseError("Expected & or \\\\ or \\end",
+	                                 parser.lexer, pos);
+	        }
+	    }
+	    result.body = body;
+	    result.rowGaps = rowGaps;
+	    return new ParseNode(result.type, result, parser.mode);
+	}
+
+	/*
+	 * An environment definition is very similar to a function definition:
+	 * it is declared with a name or a list of names, a set of properties
+	 * and a handler containing the actual implementation.
+	 *
+	 * The properties include:
+	 *  - numArgs: The number of arguments after the \begin{name} function.
+	 *  - argTypes: (optional) Just like for a function
+	 *  - allowedInText: (optional) Whether or not the environment is allowed inside
+	 *                   text mode (default false) (not enforced yet)
+	 *  - numOptionalArgs: (optional) Just like for a function
+	 * A bare number instead of that object indicates the numArgs value.
+	 *
+	 * The handler function will receive two arguments
+	 *  - context: information and references provided by the parser
+	 *  - args: an array of arguments passed to \begin{name}
+	 * The context contains the following properties:
+	 *  - envName: the name of the environment, one of the listed names.
+	 *  - parser: the parser object
+	 *  - lexer: the lexer object
+	 *  - positions: the positions associated with these arguments from args.
+	 * The handler must return a ParseResult.
+	 */
+
+	function defineEnvironment(names, props, handler) {
+	    if (typeof names === "string") {
+	        names = [names];
+	    }
+	    if (typeof props === "number") {
+	        props = { numArgs: props };
+	    }
+	    // Set default values of environments
+	    var data = {
+	        numArgs: props.numArgs || 0,
+	        argTypes: props.argTypes,
+	        greediness: 1,
+	        allowedInText: !!props.allowedInText,
+	        numOptionalArgs: props.numOptionalArgs || 0,
+	        handler: handler,
+	    };
+	    for (var i = 0; i < names.length; ++i) {
+	        module.exports[names[i]] = data;
+	    }
+	}
+
+	// Arrays are part of LaTeX, defined in lttab.dtx so its documentation
+	// is part of the source2e.pdf file of LaTeX2e source documentation.
+	defineEnvironment("array", {
+	    numArgs: 1,
+	}, function(context, args) {
+	    var colalign = args[0];
+	    colalign = colalign.value.map ? colalign.value : [colalign];
+	    var cols = colalign.map(function(node) {
+	        var ca = node.value;
+	        if ("lcr".indexOf(ca) !== -1) {
+	            return {
+	                type: "align",
+	                align: ca,
+	            };
+	        } else if (ca === "|") {
+	            return {
+	                type: "separator",
+	                separator: "|",
+	            };
+	        }
+	        throw new ParseError(
+	            "Unknown column alignment: " + node.value,
+	            context.lexer, context.positions[1]);
+	    });
+	    var res = {
+	        type: "array",
+	        cols: cols,
+	        hskipBeforeAndAfter: true, // \@preamble in lttab.dtx
+	    };
+	    res = parseArray(context.parser, res);
+	    return res;
+	});
+
+	// The matrix environments of amsmath builds on the array environment
+	// of LaTeX, which is discussed above.
+	defineEnvironment([
+	    "matrix",
+	    "pmatrix",
+	    "bmatrix",
+	    "Bmatrix",
+	    "vmatrix",
+	    "Vmatrix",
+	], {
+	}, function(context) {
+	    var delimiters = {
+	        "matrix": null,
+	        "pmatrix": ["(", ")"],
+	        "bmatrix": ["[", "]"],
+	        "Bmatrix": ["\\{", "\\}"],
+	        "vmatrix": ["|", "|"],
+	        "Vmatrix": ["\\Vert", "\\Vert"],
+	    }[context.envName];
+	    var res = {
+	        type: "array",
+	        hskipBeforeAndAfter: false, // \hskip -\arraycolsep in amsmath
+	    };
+	    res = parseArray(context.parser, res);
+	    if (delimiters) {
+	        res = new ParseNode("leftright", {
+	            body: [res],
+	            left: delimiters[0],
+	            right: delimiters[1],
+	        }, context.mode);
+	    }
+	    return res;
+	});
+
+	// A cases environment (in amsmath.sty) is almost equivalent to
+	// \def\arraystretch{1.2}%
+	// \left\{\begin{array}{@{}l@{\quad}l@{}} … \end{array}\right.
+	defineEnvironment("cases", {
+	}, function(context) {
+	    var res = {
+	        type: "array",
+	        arraystretch: 1.2,
+	        cols: [{
+	            type: "align",
+	            align: "l",
+	            pregap: 0,
+	            postgap: fontMetrics.metrics.quad,
+	        }, {
+	            type: "align",
+	            align: "l",
+	            pregap: 0,
+	            postgap: 0,
+	        }],
+	    };
+	    res = parseArray(context.parser, res);
+	    res = new ParseNode("leftright", {
+	        body: [res],
+	        left: "\\{",
+	        right: ".",
+	    }, context.mode);
+	    return res;
+	});
+
+	// An aligned environment is like the align* environment
+	// except it operates within math mode.
+	// Note that we assume \nomallineskiplimit to be zero,
+	// so that \strut@ is the same as \strut.
+	defineEnvironment("aligned", {
+	}, function(context) {
+	    var res = {
+	        type: "array",
+	        cols: [],
+	    };
+	    res = parseArray(context.parser, res);
+	    var emptyGroup = new ParseNode("ordgroup", [], context.mode);
+	    var numCols = 0;
+	    res.value.body.forEach(function(row) {
+	        var i;
+	        for (i = 1; i < row.length; i += 2) {
+	            row[i].value.unshift(emptyGroup);
+	        }
+	        if (numCols < row.length) {
+	            numCols = row.length;
+	        }
+	    });
+	    for (var i = 0; i < numCols; ++i) {
+	        var align = "r";
+	        var pregap = 0;
+	        if (i % 2 === 1) {
+	            align = "l";
+	        } else if (i > 0) {
+	            pregap = 2; // one \qquad between columns
+	        }
+	        res.value.cols[i] = {
+	            type: "align",
+	            align: align,
+	            pregap: pregap,
+	            postgap: 0,
+	        };
+	    }
+	    return res;
+	});
+
+
+/***/ }),
+/* 174 */
+/***/ (function(module, exports) {
+
+	/**
+	 * The resulting parse tree nodes of the parse tree.
+	 */
+	function ParseNode(type, value, mode) {
+	    this.type = type;
+	    this.value = value;
+	    this.mode = mode;
+	}
+
+	module.exports = {
+	    ParseNode: ParseNode,
+	};
+
+
+
+/***/ }),
+/* 175 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * The Lexer class handles tokenizing the input in various ways. Since our
+	 * parser expects us to be able to backtrack, the lexer allows lexing from any
+	 * given starting point.
+	 *
+	 * Its main exposed function is the `lex` function, which takes a position to
+	 * lex from and a type of token to lex. It defers to the appropriate `_innerLex`
+	 * function.
+	 *
+	 * The various `_innerLex` functions perform the actual lexing of different
+	 * kinds.
+	 */
+
+	var matchAt = __webpack_require__(176);
+
+	var ParseError = __webpack_require__(155);
+
+	// The main lexer class
+	function Lexer(input) {
+	    this._input = input;
+	}
+
+	// The resulting token returned from `lex`.
+	function Token(text, data, position) {
+	    this.text = text;
+	    this.data = data;
+	    this.position = position;
+	}
+
+	/* The following tokenRegex
+	 * - matches typical whitespace (but not NBSP etc.) using its first group
+	 * - matches symbol combinations which result in a single output character
+	 * - does not match any control character \x00-\x1f except whitespace
+	 * - does not match a bare backslash
+	 * - matches any ASCII character except those just mentioned
+	 * - does not match the BMP private use area \uE000-\uF8FF
+	 * - does not match bare surrogate code units
+	 * - matches any BMP character except for those just described
+	 * - matches any valid Unicode surrogate pair
+	 * - matches a backslash followed by one or more letters
+	 * - matches a backslash followed by any BMP character, including newline
+	 * Just because the Lexer matches something doesn't mean it's valid input:
+	 * If there is no matching function or symbol definition, the Parser will
+	 * still reject the input.
+	 */
+	var tokenRegex = new RegExp(
+	    "([ \r\n\t]+)|(" +                                // whitespace
+	    "---?" +                                          // special combinations
+	    "|[!-\\[\\]-\u2027\u202A-\uD7FF\uF900-\uFFFF]" +  // single codepoint
+	    "|[\uD800-\uDBFF][\uDC00-\uDFFF]" +               // surrogate pair
+	    "|\\\\(?:[a-zA-Z]+|[^\uD800-\uDFFF])" +           // function name
+	    ")"
+	);
+
+	var whitespaceRegex = /\s*/;
+
+	/**
+	 * This function lexes a single normal token. It takes a position and
+	 * whether it should completely ignore whitespace or not.
+	 */
+	Lexer.prototype._innerLex = function(pos, ignoreWhitespace) {
+	    var input = this._input;
+	    if (pos === input.length) {
+	        return new Token("EOF", null, pos);
+	    }
+	    var match = matchAt(tokenRegex, input, pos);
+	    if (match === null) {
+	        throw new ParseError(
+	            "Unexpected character: '" + input[pos] + "'",
+	            this, pos);
+	    } else if (match[2]) { // matched non-whitespace
+	        return new Token(match[2], null, pos + match[2].length);
+	    } else if (ignoreWhitespace) {
+	        return this._innerLex(pos + match[1].length, true);
+	    } else { // concatenate whitespace to a single space
+	        return new Token(" ", null, pos + match[1].length);
+	    }
+	};
+
+	// A regex to match a CSS color (like #ffffff or BlueViolet)
+	var cssColor = /#[a-z0-9]+|[a-z]+/i;
+
+	/**
+	 * This function lexes a CSS color.
+	 */
+	Lexer.prototype._innerLexColor = function(pos) {
+	    var input = this._input;
+
+	    // Ignore whitespace
+	    var whitespace = matchAt(whitespaceRegex, input, pos)[0];
+	    pos += whitespace.length;
+
+	    var match;
+	    if ((match = matchAt(cssColor, input, pos))) {
+	        // If we look like a color, return a color
+	        return new Token(match[0], null, pos + match[0].length);
+	    } else {
+	        throw new ParseError("Invalid color", this, pos);
+	    }
+	};
+
+	// A regex to match a dimension. Dimensions look like
+	// "1.2em" or ".4pt" or "1 ex"
+	var sizeRegex = /(-?)\s*(\d+(?:\.\d*)?|\.\d+)\s*([a-z]{2})/;
+
+	/**
+	 * This function lexes a dimension.
+	 */
+	Lexer.prototype._innerLexSize = function(pos) {
+	    var input = this._input;
+
+	    // Ignore whitespace
+	    var whitespace = matchAt(whitespaceRegex, input, pos)[0];
+	    pos += whitespace.length;
+
+	    var match;
+	    if ((match = matchAt(sizeRegex, input, pos))) {
+	        var unit = match[3];
+	        // We only currently handle "em" and "ex" units
+	        if (unit !== "em" && unit !== "ex") {
+	            throw new ParseError("Invalid unit: '" + unit + "'", this, pos);
+	        }
+	        return new Token(match[0], {
+	            number: +(match[1] + match[2]),
+	            unit: unit,
+	        }, pos + match[0].length);
+	    }
+
+	    throw new ParseError("Invalid size", this, pos);
+	};
+
+	/**
+	 * This function lexes a string of whitespace.
+	 */
+	Lexer.prototype._innerLexWhitespace = function(pos) {
+	    var input = this._input;
+
+	    var whitespace = matchAt(whitespaceRegex, input, pos)[0];
+	    pos += whitespace.length;
+
+	    return new Token(whitespace[0], null, pos);
+	};
+
+	/**
+	 * This function lexes a single token starting at `pos` and of the given mode.
+	 * Based on the mode, we defer to one of the `_innerLex` functions.
+	 */
+	Lexer.prototype.lex = function(pos, mode) {
+	    if (mode === "math") {
+	        return this._innerLex(pos, true);
+	    } else if (mode === "text") {
+	        return this._innerLex(pos, false);
+	    } else if (mode === "color") {
+	        return this._innerLexColor(pos);
+	    } else if (mode === "size") {
+	        return this._innerLexSize(pos);
+	    } else if (mode === "whitespace") {
+	        return this._innerLexWhitespace(pos);
+	    }
+	};
+
+	module.exports = Lexer;
+
+
+/***/ }),
+/* 176 */
+/***/ (function(module, exports) {
+
+	/** @flow */
+
+	"use strict";
+
+	function getRelocatable(re) {
+	  // In the future, this could use a WeakMap instead of an expando.
+	  if (!re.__matchAtRelocatable) {
+	    // Disjunctions are the lowest-precedence operator, so we can make any
+	    // pattern match the empty string by appending `|()` to it:
+	    // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-patterns
+	    var source = re.source + "|()";
+
+	    // We always make the new regex global.
+	    var flags = "g" + (re.ignoreCase ? "i" : "") + (re.multiline ? "m" : "") + (re.unicode ? "u" : "")
+	    // sticky (/.../y) doesn't make sense in conjunction with our relocation
+	    // logic, so we ignore it here.
+	    ;
+
+	    re.__matchAtRelocatable = new RegExp(source, flags);
+	  }
+	  return re.__matchAtRelocatable;
+	}
+
+	function matchAt(re, str, pos) {
+	  if (re.global || re.sticky) {
+	    throw new Error("matchAt(...): Only non-global regexes are supported");
+	  }
+	  var reloc = getRelocatable(re);
+	  reloc.lastIndex = pos;
+	  var match = reloc.exec(str);
+	  // Last capturing group is our sentinel that indicates whether the regex
+	  // matched at the given location.
+	  if (match[match.length - 1] == null) {
+	    // Original regex matched.
+	    match.length = match.length - 1;
+	    return match;
+	  } else {
+	    return null;
+	  }
+	}
+
+	module.exports = matchAt;
+
+/***/ }),
+/* 177 */
+/***/ (function(module, exports) {
+
+	// Markdown-it plugin to render GitHub-style task lists; see
+	//
+	// https://github.com/blog/1375-task-lists-in-gfm-issues-pulls-comments
+	// https://github.com/blog/1825-task-lists-in-all-markdown-documents
+
+	var disableCheckboxes = true;
+	var useLabelWrapper = false;
+
+	module.exports = function(md, options) {
+		if (options) {
+			disableCheckboxes = !options.enabled;
+			useLabelWrapper = !!options.label;
+		}
+
+		md.core.ruler.after('inline', 'github-task-lists', function(state) {
+			var tokens = state.tokens;
+			for (var i = 2; i < tokens.length; i++) {
+				if (isTodoItem(tokens, i)) {
+					todoify(tokens[i], state.Token);
+					attrSet(tokens[i-2], 'class', 'task-list-item' + (!disableCheckboxes ? ' enabled' : ''));
+					attrSet(tokens[parentToken(tokens, i-2)], 'class', 'contains-task-list');
+				}
+			}
+		});
+	};
+
+	function attrSet(token, name, value) {
+		var index = token.attrIndex(name);
+		var attr = [name, value];
+
+		if (index < 0) {
+			token.attrPush(attr);
+		} else {
+			token.attrs[index] = attr;
+		}
+	}
+
+	function parentToken(tokens, index) {
+		var targetLevel = tokens[index].level - 1;
+		for (var i = index - 1; i >= 0; i--) {
+			if (tokens[i].level === targetLevel) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	function isTodoItem(tokens, index) {
+		return isInline(tokens[index]) &&
+		       isParagraph(tokens[index - 1]) &&
+		       isListItem(tokens[index - 2]) &&
+		       startsWithTodoMarkdown(tokens[index]);
+	}
+
+	function todoify(token, TokenConstructor) {
+		token.children.unshift(makeCheckbox(token, TokenConstructor));
+		token.children[1].content = token.children[1].content.slice(3);
+		token.content = token.content.slice(3);
+
+		if (useLabelWrapper) {
+			token.children.unshift(beginLabel(TokenConstructor));
+			token.children.push(endLabel(TokenConstructor));
+		}
+	}
+
+	function makeCheckbox(token, TokenConstructor) {
+		var checkbox = new TokenConstructor('html_inline', '', 0);
+		var disabledAttr = disableCheckboxes ? ' disabled="" ' : '';
+		if (token.content.indexOf('[ ] ') === 0) {
+			checkbox.content = '<input class="task-list-item-checkbox"' + disabledAttr + 'type="checkbox">';
+		} else if (token.content.indexOf('[x] ') === 0 || token.content.indexOf('[X] ') === 0) {
+			checkbox.content = '<input class="task-list-item-checkbox" checked=""' + disabledAttr + 'type="checkbox">';
+		}
+		return checkbox;
+	}
+
+	// these next two functions are kind of hacky; probably should really be a
+	// true block-level token with .tag=='label'
+	function beginLabel(TokenConstructor) {
+		var token = new TokenConstructor('html_inline', '', 0);
+		token.content = '<label>';
+		return token;
+	}
+
+	function endLabel(TokenConstructor) {
+		var token = new TokenConstructor('html_inline', '', 0);
+		token.content = '</label>';
+		return token;
+	}
+
+	function isInline(token) { return token.type === 'inline'; }
+	function isParagraph(token) { return token.type === 'paragraph_open'; }
+	function isListItem(token) { return token.type === 'list_item_open'; }
+
+	function startsWithTodoMarkdown(token) {
+		// leading whitespace in a list item is already trimmed off by markdown-it
+		return token.content.indexOf('[ ] ') === 0 || token.content.indexOf('[x] ') === 0 || token.content.indexOf('[X] ') === 0;
+	}
+
+
+/***/ })
 /******/ ])
 });
 ;
