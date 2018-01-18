@@ -10,6 +10,7 @@ import mark from 'markdown-it-mark'
 import toc from 'markdown-it-toc-and-anchor'
 import katex from 'markdown-it-katex'
 import tasklists from 'markdown-it-task-lists'
+import markdownvideo from 'markdown-it-video'
 
 export default {
   md: new markdownIt(),
@@ -121,6 +122,15 @@ export default {
       type: Object,
       default: () => ({})
     },
+    videoAttributes: {
+      type: Object,
+      default: () => ({
+        youtube: { width: 640, height: 390 },
+        vimeo: { width: 500, height: 281 },
+        vine: { width: 600, height: 600, embed: 'simple' },
+        prezi: { width: 550, height: 400 }
+      })
+    },
     prerender: {
       type: Function,
       default: (sourceData) => { return sourceData }
@@ -148,6 +158,11 @@ export default {
       .use(mark)
       .use(katex, { "throwOnError": false, "errorColor": " #cc0000" })
       .use(tasklists, { enabled: this.taskLists })
+      .use(markdownvideo, this.videoAttributes )
+      // .use(require('markdown-it-video', { // <-- this use(package_name) is required
+      //   youtube: { width: 640, height: 390 },
+      //   vimeo: { width: 500, height: 281 }
+      // }))
 
     if (this.emoji) {
       this.md.use(emoji)
